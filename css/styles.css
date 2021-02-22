@@ -1,0 +1,390 @@
+/*General*/
+
+*:focus {
+    outline: none;
+}
+
+html {
+    scrollbar-width: none;
+}
+
+body {
+    background: url("/images/background.png") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    text-align: center;
+}
+
+h {
+    font-size: 50px;
+}
+
+.form-control {
+    border-color: inherit;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.form-control:focus {
+    border-color: inherit;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.form-control::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    color: white;
+}
+
+.form-control:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: white;
+}
+
+.form-control::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: white;
+}
+
+.form-control:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: white;
+}
+
+.form-control::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: white;
+}
+
+
+/*Navbar and Sections*/
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgba(66, 66, 66, 0.822);
+    width: 100%;
+    left: 0px;
+}
+
+li {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li:hover:not(.active) {
+    background-color: rgb(90, 90, 90);
+}
+
+.active {
+    background: #7f7f7f;
+}
+
+.left {
+    float: left;
+    cursor: pointer;
+}
+
+.right {
+    float: right;
+    cursor: pointer;
+}
+
+section:first-of-type {
+    display: block;
+}
+
+.section {
+    position: absolute;
+    background: #7f7f7fe0;
+    display: none;
+    min-width: 100px;
+    max-width: 3000px;
+    min-height: 500px;
+    left: 50%;
+    padding: 10px;
+    transform: translateX(-50%);
+    color: #fff;
+}
+
+
+/*PD Games*/
+
+button[name="Android"] {
+    border: transparent;
+    padding: 10px;
+    background: url("/images/android.png") no-repeat center;
+    background-size: 80%;
+    height: 70px;
+    width: 70px;
+}
+
+button[name="Windows"] {
+    border: transparent;
+    padding: 10px;
+    background: url("/images/windows.png") no-repeat center;
+    background-size: 80%;
+    height: 70px;
+    width: 70px;
+}
+
+button[name="gibtsnich"] {
+    border: transparent;
+    padding: 10px;
+    background: url("/images/kreuz.png") no-repeat center;
+    background-size: 80%;
+    height: 70px;
+    width: 70px;
+    cursor: not-allowed;
+}
+
+.box {
+    border: 2px solid rgb(71, 71, 71);
+    margin-top: 10px;
+}
+
+
+/*Mindustry Mods Searchbar*/
+
+input[type="text"],
+textarea {
+    background-color: rgba(255, 255, 255, 0.25);
+    border: none;
+}
+
+.from {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    z-index: 1;
+}
+
+.homepage {
+    position: fixed;
+    top: 50px;
+    right: 0px;
+    display: none;
+}
+
+.invisible {
+    display: none;
+    /*visibility: hidden;*/
+}
+
+.lang {
+    display: none;
+}
+
+.li {
+    background: #c3c3c3;
+    width: 100%;
+    height: 32px;
+    line-height: 32px;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    border: 4px solid #000;
+}
+
+.mc,
+.mi {
+    height: 50px;
+    transition: transform .2s;
+    cursor: default;
+}
+
+.mc:hover,
+.mi:hover,
+.te:hover {
+    /* IE 9 */
+    -ms-transform: scale(1.25);
+    /* Safari 3-8 */
+    -webkit-transform: scale(1.25);
+    transform: scale(1.25);
+}
+
+.mods {
+    color: rgb(142, 172, 255);
+    text-decoration: none!important;
+}
+
+.noselect {
+    /* iOS Safari */
+    -webkit-touch-callout: none;
+    /* Safari */
+    -webkit-user-select: none;
+    /* Konqueror HTML */
+    -khtml-user-select: none;
+    /* Old versions of Firefox */
+    -moz-user-select: none;
+    /* Internet Explorer/Edge */
+    -ms-user-select: none;
+    /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+    user-select: none;
+}
+
+.overlay {
+    position: absolute;
+    display: none;
+    width: 71px;
+    height: 71px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-49%, 21%);
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    pointer-events: none;
+    line-height: 71px;
+    border-radius: 50%;
+}
+
+.radio {
+    transition: transform .2s;
+    cursor: default;
+    width: 100px;
+}
+
+.radio:hover {
+    /* IE 9 */
+    -ms-transform: scale(1.15);
+    /* Safari 3-8 */
+    -webkit-transform: scale(1.15);
+    transform: scale(1.15);
+}
+
+#logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.logo path:nth-child(1) {
+    stroke-dasharray: 515px;
+    stroke-dashoffset: 515px;
+    animation: line-anim1 1s ease forwards;
+    animation-iteration-count: infinite;
+}
+
+@keyframes line-anim1 {
+    to {
+        stroke-dashoffset: 0px;
+    }
+}
+
+.round {
+    border-radius: 50%;
+}
+
+.sticky {
+    position: fixed;
+    top: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    width: 100%;
+    z-index: 1;
+}
+
+.te {
+    height: 60px;
+    transition: transform .2s;
+    cursor: default;
+}
+
+.ul {
+    list-style: none;
+}
+
+.visible {
+    display: block;
+    /*visibility: visible;*/
+}
+
+
+/*Disable Scrollbar*/
+
+@-moz-document url-prefix() {
+    /* Disable scrollbar Firefox */
+    html {
+        scrollbar-width: none;
+    }
+}
+
+body {
+    margin: 0;
+    /* remove default margin */
+    scrollbar-width: none;
+    /* Also needed to disable scrollbar Firefox */
+    -ms-overflow-style: none;
+    /* Disable scrollbar IE 10+ */
+    overflow-y: scroll;
+}
+
+body::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+    /* Disable scrollbar Chrome/Safari/Webkit */
+}
+
+
+/*Languages*/
+
+#lang-de .de,
+#lang-en .en {
+    display: block;
+}
+
+#lang-de .deFlex,
+#lang-en .enFlex {
+    display: flex;
+}
+
+
+/*Volume Slider*/
+
+.slidecontainer {
+    padding-right: 25px;
+    padding-left: 25px;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #464646;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #464646;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb:hover {
+    background: #7e7e7e;
+}
