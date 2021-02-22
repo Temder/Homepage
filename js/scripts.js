@@ -25,9 +25,9 @@
      var de = document.getElementById(e);
 
      // Delete all overlays
-     var number = document.getElementsByClassName('overlay').length;
+     var number = document.getElementsByClassName('playingOverlay').length;
      for (var i = 0, n = number; i < n; i++) {
-         document.getElementsByClassName('overlay')[i].style.display = "none";
+         document.getElementsByClassName('playingOverlay')[i].style.display = "none";
      }
      // Avoid caching a stream
      if (de.paused) {
@@ -62,7 +62,7 @@
  slider.oninput = function() {
      output.innerHTML = this.value;
 
-     for (var i = 1; i <= document.getElementsByClassName('overlay').length; i++) {
+     for (var i = 1; i <= document.getElementsByClassName('playingOverlay').length; i++) {
          var audio = document.getElementById(i);
          audio.volume = slider.value / 100;
      }
