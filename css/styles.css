@@ -375,10 +375,3 @@ body::-webkit-scrollbar {
 .slider::-moz-range-thumb:hover {
     background: #7e7e7e;
 }
-
-
-/*Don't know*/
-
-.wrapper {
-    position: static;
-}
