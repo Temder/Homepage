@@ -5,7 +5,7 @@
 }
 
 body {
-    background: url("/images/background.png") no-repeat center fixed;
+    background: url("images/background.png") no-repeat center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -125,7 +125,7 @@ section:first-of-type {
 button[name="Android"] {
     border: transparent;
     padding: 10px;
-    background: url("/images/android.png") no-repeat center;
+    background: url("images/android.png") no-repeat center;
     background-size: 80%;
     height: 70px;
     width: 70px;
@@ -134,7 +134,7 @@ button[name="Android"] {
 button[name="Windows"] {
     border: transparent;
     padding: 10px;
-    background: url("/images/windows.png") no-repeat center;
+    background: url("images/windows.png") no-repeat center;
     background-size: 80%;
     height: 70px;
     width: 70px;
@@ -143,7 +143,7 @@ button[name="Windows"] {
 button[name="gibtsnich"] {
     border: transparent;
     padding: 10px;
-    background: url("/images/kreuz.png") no-repeat center;
+    background: url("images/kreuz.png") no-repeat center;
     background-size: 80%;
     height: 70px;
     width: 70px;
