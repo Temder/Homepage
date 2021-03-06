@@ -1,4 +1,16 @@
+ // Variables
+
+ var bgBrightness = 0; // (0 -100)
+ var bgColorR = 41;
+ var bgColorB = 45;
+ var bgColorG = 62;
+ var volume = 50; // (0 - 100)
+
+
+
+
  // Navbar fading effect
+
  (function($) {
      $('div li').click(function() {
          $(this).addClass('active').siblings('li').removeClass('active');
@@ -10,6 +22,7 @@
 
 
  // Radio Player
+
  jQuery(document).ready(function($) {
      $("audio").on("play", function(me) {
          $("audio").each(function(i, e) {
@@ -53,25 +66,11 @@
      }
  }
 
- // Volume
-
- var slider = document.getElementById("volumeSlider");
- var output = document.getElementById("volume");
- output.innerHTML = slider.value;
-
- slider.oninput = function() {
-     output.innerHTML = this.value;
-
-     for (var i = 1; i <= document.getElementsByClassName('playingOverlay').length; i++) {
-         var audio = document.getElementById(i);
-         audio.volume = slider.value / 100;
-     }
- }
-
 
 
 
  // Language changer
+
  var language = window.navigator.userLanguage || window.navigator.language;
 
  if (language.indexOf('de') !== -1) {
@@ -91,6 +90,7 @@
 
 
  // List sorter
+
  var list, i, switching, b, shouldSwitch;
  list = document.getElementById("id01");
  switching = true;
@@ -121,6 +121,7 @@
 
 
  // Search in list
+
  $(document).ready(function() {
      $("#searchEN").on("keyup", function() {
          var value = $(this).val().toLowerCase();
@@ -138,3 +139,85 @@
          });
      });
  });
+
+
+
+
+ // Volume
+
+ var sliderV = document.getElementById("volumeSlider");
+ var outputV = document.getElementById("volume");
+
+ outputV.innerHTML = sliderV.value = volume;
+
+ for (var i = 1; i <= document.getElementsByClassName('playingOverlay').length; i++) {
+     var audio = document.getElementById(i);
+     audio.volume = volume / 100;
+ }
+
+ sliderV.oninput = function() {
+     outputV.innerHTML = volume = this.value;
+     for (var i = 1; i <= document.getElementsByClassName('playingOverlay').length; i++) {
+         var audio = document.getElementById(i);
+         audio.volume = volume / 100;
+     }
+ }
+
+
+
+
+ // Background brightness
+
+ var sliderB = document.getElementById("brightnessSlider");
+ var outputB = document.getElementById("brightness");
+
+ outputB.innerHTML = sliderB.value = bgBrightness;
+
+ document.getElementById('bg').style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorB + ", " + bgColorG + ", " + bgBrightness / 100 + ")";
+
+ sliderB.oninput = function() {
+     outputB.innerHTML = bgBrightness = this.value;
+
+     document.getElementById('bg').style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorB + ", " + bgColorG + ", " + bgBrightness / 100 + ")";
+ }
+
+
+
+
+ // Background color
+
+ var sliderCR = document.getElementById("colorSliderR");
+ var sliderCB = document.getElementById("colorSliderB");
+ var sliderCG = document.getElementById("colorSliderG");
+
+ var bgColor = document.getElementById('bg');
+
+ sliderCR.value = bgColorR;
+ sliderCB.value = bgColorB;
+ sliderCG.value = bgColorG;
+
+ bgColor.style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorB + ", " + bgColorG + ", " + bgBrightness / 100 + ")";
+
+ sliderCR.oninput = function() {
+     bgColorR = this.value;
+     bgColor.style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorB + ", " + bgColorG + ", " + bgBrightness / 100 + ")";
+ }
+ sliderCB.oninput = function() {
+     bgColorB = this.value;
+     bgColor.style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorB + ", " + bgColorG + ", " + bgBrightness / 100 + ")";
+ }
+ sliderCG.oninput = function() {
+     bgColorG = this.value;
+     bgColor.style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorB + ", " + bgColorG + ", " + bgBrightness / 100 + ")";
+ }
+
+
+
+
+ //Background blend mode
+
+ var dpBlendmode = document.getElementById('blendmode');
+
+ dpBlendmode.oninput = function() {
+     document.getElementById('bg').style.backgroundBlendMode = this.value;
+ }

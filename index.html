@@ -15,6 +15,7 @@
 </head>
 
 <body>
+    <div id="bg"></div>
 
     <br/>
 
@@ -28,9 +29,9 @@
             <li data-rel="4" class="left lang de">Spiele</li>
             <li data-rel="5" class="left lang en">Contact</li>
             <li data-rel="5" class="left lang de">Kontakt</li>
-            <li data-rel="7" class="left">Test</li>
-            <li data-rel="6" class="right lang en">Settings</li>
-            <li data-rel="6" class="right lang de">Einstellungen</li>
+            <li data-rel="6" class="left">Test</li>
+            <li data-rel="7" class="right lang en">Settings</li>
+            <li data-rel="7" class="right lang de">Einstellungen</li>
         </ul>
     </div>
 
@@ -414,6 +415,17 @@
 
         <section class="section">
             <article>
+                <h>Test</h>
+
+                <div class="d-flex flex-wrap justify-content-center webgl-wrapper">
+                    <div class="p-4">
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <section class="section">
+            <article>
                 <h class="lang en">Settings</h>
                 <h class="lang de">Einstellungen</h>
 
@@ -422,38 +434,59 @@
                         <h3 class="lang en">Volume</h3>
                         <h3 class="lang de">Lautstärke</h3>
 
-                        <div class="slidecontainer" style="min-width: 200px;">
-                            <input type="range" min="0" max="100" value="50" id="volumeSlider" class="slider">
+                        <div class="slidecontainer">
+                            <input autocomplete="off" type="range" min="0" max="100" id="volumeSlider" class="slider">
                         </div>
                         <span id="volume"></span> %
                     </div>
-                </div>
-            </article>
-        </section>
-
-        <section class="section">
-            <article>
-                <h>Test</h>
-
-                <div class="d-flex flex-wrap justify-content-center">
                     <div class="p-4">
-                        <div id="unity-container" class="unity-desktop">
-                            <canvas id="unity-canvas"></canvas>
-                            <div id="unity-loading-bar">
-                                <div id="unity-logo"></div>
-                                <div id="unity-progress-bar-empty">
-                                    <div id="unity-progress-bar-full"></div>
-                                </div>
-                            </div>
-                            <div id="unity-mobile-warning">
-                                WebGL builds are not supported on mobile devices.
-                            </div>
-                            <div id="unity-footer">
-                                <div id="unity-webgl-logo"></div>
-                                <div id="unity-fullscreen-button"></div>
-                                <div id="unity-build-title">Slimy</div>
-                            </div>
+                        <h3 class="lang en">Background Brightness</h3>
+                        <h3 class="lang de">Hintergrundhelligkeit</h3>
+
+                        <div class="slidecontainer">
+                            <input autocomplete="off" type="range" min="0" max="100" id="brightnessSlider" class="slider">
                         </div>
+                        <span id="brightness"></span> %
+                    </div>
+                    <div class="p-4">
+                        <h3 class="lang en">Background Color</h3>
+                        <h3 class="lang de">Hintergrundfarbe</h3>
+
+                        <div class="slidecontainer">
+                            red
+                            <input autocomplete="off" type="range" min="41" max="255" id="colorSliderR" class="slider">
+                        </div>
+                        <div class="slidecontainer">
+                            green
+                            <input autocomplete="off" type="range" min="45" max="255" id="colorSliderB" class="slider">
+                        </div>
+                        <div class="slidecontainer">
+                            blue
+                            <input autocomplete="off" type="range" min="62" max="255" id="colorSliderG" class="slider">
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="lang en">Background Blend Mode</h3>
+                        <h3 class="lang de">Hintergrundmischmodus</h3>
+
+                        <select autocomplete="off" id="blendmode">
+                            <option value="color">Color</option>
+                            <option value="color-burn">Color Burn</option>
+                            <option value="color-dodge">Color Dodge</option>
+                            <option value="darken">Darken</option>
+                            <option value="difference">Difference</option>
+                            <option value="exclusion">Exclusion</option>
+                            <option value="hard-light">Hard Light</option>
+                            <option value="hue">Hue</option>
+                            <option value="lighten">Lighten</option>
+                            <option value="luminosity">Luminosity</option>
+                            <option value="multiply">Multiply</option>
+                            <option value="normal">Normal</option>
+                            <option value="overlay">Overlay</option>
+                            <option value="saturation">Saturation</option>
+                            <option value="screen">Screen</option>
+                            <option value="soft-light">Soft Light</option>
+                        </select>
                     </div>
                 </div>
             </article>
@@ -517,7 +550,7 @@
         </div>
         <div class="p-2">
             <svg width="40" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100">
-                <polygon points="0,0 50,0 50,10 10,10 10,45 50,45 50,55 10,55 10,90 50,90 50,100 0,100" style="fill:white" />
+                <polygon points="0,0 50,0 50,10 10,10 10,45 40,45 40,55 10,55 10,90 50,90 50,100 0,100" style="fill:white" />
             </svg>
             <svg width="40" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100">
                 <polygon points="10,50 0,50 0,100 10,100 10,65 40,100 50,100 50,50 40,50 40,85" style="fill:white" />
@@ -534,55 +567,6 @@
             </svg>
         </div>
     </div>
-    <script>
-        var buildUrl = "Build";
-        var loaderUrl = buildUrl + "/Slimy.loader.js";
-        var config = {
-            dataUrl: buildUrl + "/Slimy.data",
-            frameworkUrl: buildUrl + "/Slimy.framework.js",
-            codeUrl: buildUrl + "/Slimy.wasm",
-            streamingAssetsUrl: "StreamingAssets",
-            companyName: "com.pdgames.Temder",
-            productName: "Slimy",
-            productVersion: "1.0",
-        };
-
-        var container = document.querySelector("#unity-container");
-        var canvas = document.querySelector("#unity-canvas");
-        var loadingBar = document.querySelector("#unity-loading-bar");
-        var progressBarFull = document.querySelector("#unity-progress-bar-full");
-        var fullscreenButton = document.querySelector("#unity-fullscreen-button");
-        var mobileWarning = document.querySelector("#unity-mobile-warning");
-
-        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-            container.className = "unity-mobile";
-            config.devicePixelRatio = 1;
-            mobileWarning.style.display = "block";
-            setTimeout(() => {
-                mobileWarning.style.display = "none";
-            }, 5000);
-        } else {
-            canvas.style.width = "1440px";
-            canvas.style.height = "900px";
-        }
-        loadingBar.style.display = "block";
-
-        var script = document.createElement("script");
-        script.src = loaderUrl;
-        script.onload = () => {
-            createUnityInstance(canvas, config, (progress) => {
-                progressBarFull.style.width = 100 * progress + "%";
-            }).then((unityInstance) => {
-                loadingBar.style.display = "none";
-                fullscreenButton.onclick = () => {
-                    unityInstance.SetFullscreen(1);
-                };
-            }).catch((message) => {
-                alert(message);
-            });
-        };
-        document.body.appendChild(script);
-    </script>
 </body>
 
 <script src="scripts.js"></script>
