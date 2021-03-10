@@ -363,6 +363,7 @@ body::-webkit-scrollbar {
     opacity: 0.7;
     -webkit-transition: .2s;
     transition: opacity .2s;
+    box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.3);
 }
 
 .slider::-webkit-slider-thumb {
@@ -385,4 +386,34 @@ body::-webkit-scrollbar {
 
 .slider::-moz-range-thumb:hover {
     background: #7e7e7e;
+}
+
+
+/*Dropdown*/
+
+select {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    border: none;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+select {
+    width: 200px;
+    height: 40px;
+    -moz-padding-start: calc(10px - 3px);
+    padding-left: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+}
+
+select:focus,
+select:hover {
+    background-color: rgba(255, 255, 255, 0.3);
 }

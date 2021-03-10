@@ -440,13 +440,13 @@
                         <span id="volume"></span> %
                     </div>
                     <div class="p-4">
-                        <h3 class="lang en">Background Brightness</h3>
-                        <h3 class="lang de">Hintergrundhelligkeit</h3>
+                        <h3 class="lang en">Background Intensity</h3>
+                        <h3 class="lang de">Hintergrundintensität</h3>
 
                         <div class="slidecontainer">
-                            <input autocomplete="off" type="range" min="0" max="100" id="brightnessSlider" class="slider">
+                            <input autocomplete="off" type="range" min="0" max="100" id="intensitySlider" class="slider">
                         </div>
-                        <span id="brightness"></span> %
+                        <span id="intensity"></span> %
                     </div>
                     <div class="p-4">
                         <h3 class="lang en">Background Color</h3>
@@ -458,11 +458,11 @@
                         </div>
                         <div class="slidecontainer">
                             green
-                            <input autocomplete="off" type="range" min="45" max="255" id="colorSliderB" class="slider">
+                            <input autocomplete="off" type="range" min="45" max="255" id="colorSliderG" class="slider">
                         </div>
                         <div class="slidecontainer">
                             blue
-                            <input autocomplete="off" type="range" min="62" max="255" id="colorSliderG" class="slider">
+                            <input autocomplete="off" type="range" min="62" max="255" id="colorSliderB" class="slider">
                         </div>
                     </div>
                     <div class="p-4">
@@ -487,6 +487,13 @@
                             <option value="screen">Screen</option>
                             <option value="soft-light">Soft Light</option>
                         </select>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="lang en">Background Configuration</h3>
+                        <h3 class="lang de">Hintergrundkonfiguration</h3>
+                        <button id="save" style="background-color: greenyellow; border: 0px; border-radius: 5px;"><div class="lang de">speichern</div><div class="lang en">save</div></button>
+                        <button id="load" style="background-color: aqua; border: 0px; border-radius: 5px;"><div class="lang de">laden</div><div class="lang en">load</div></button>
+                        <button id="reset" style="background-color: red; border: 0px; border-radius: 5px;"><div class="lang de">reset</div><div class="lang en">reset</div></button>
                     </div>
                 </div>
             </article>

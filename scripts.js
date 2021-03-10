@@ -1,11 +1,30 @@
  // Variables
 
- var bgBrightness = 0; // (0 -100)
- var bgColorR = 41;
- var bgColorB = 45;
- var bgColorG = 62;
+ var bgBlendMode = "color"; // (1: color, color-burn, color-dodge, darken, difference, exclusion, hard-light, hue, lighten, luminosity, multiply, normal, overlay, saturation, screen, soft-light)
+ var bgColorR = 41; // (41 - 255)
+ var bgColorG = 45; // (45 - 255)
+ var bgColorB = 62; // (62 - 225)
+ var bgIntensity = 0; // (0 - 100)
  var volume = 50; // (0 - 100)
 
+
+ var bg = document.getElementById('bg');
+
+ var sliderI = document.getElementById("intensitySlider");
+ var outputI = document.getElementById("intensity");
+
+ var sliderCR = document.getElementById("colorSliderR");
+ var sliderCG = document.getElementById("colorSliderG");
+ var sliderCB = document.getElementById("colorSliderB");
+
+ var dpBlendmode = document.getElementById('blendmode');
+
+ var sliderV = document.getElementById("volumeSlider");
+ var outputV = document.getElementById("volume");
+
+ var save = document.getElementById('save');
+ var load = document.getElementById('load');
+ var reset = document.getElementById('reset');
 
 
 
@@ -145,9 +164,6 @@
 
  // Volume
 
- var sliderV = document.getElementById("volumeSlider");
- var outputV = document.getElementById("volume");
-
  outputV.innerHTML = sliderV.value = volume;
 
  for (var i = 1; i <= document.getElementsByClassName('playingOverlay').length; i++) {
@@ -166,58 +182,132 @@
 
 
 
- // Background brightness
+ // Background Intensity
 
- var sliderB = document.getElementById("brightnessSlider");
- var outputB = document.getElementById("brightness");
+ outputI.innerHTML = sliderI.value = bgIntensity;
 
- outputB.innerHTML = sliderB.value = bgBrightness;
+ bg.style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + bgIntensity / 100 + ")";
 
- document.getElementById('bg').style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorB + ", " + bgColorG + ", " + bgBrightness / 100 + ")";
+ sliderI.oninput = function() {
+     outputI.innerHTML = bgIntensity = this.value;
 
- sliderB.oninput = function() {
-     outputB.innerHTML = bgBrightness = this.value;
-
-     document.getElementById('bg').style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorB + ", " + bgColorG + ", " + bgBrightness / 100 + ")";
+     bg.style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + bgIntensity / 100 + ")";
  }
 
 
 
 
- // Background color
-
- var sliderCR = document.getElementById("colorSliderR");
- var sliderCB = document.getElementById("colorSliderB");
- var sliderCG = document.getElementById("colorSliderG");
-
- var bgColor = document.getElementById('bg');
+ // Background Color
 
  sliderCR.value = bgColorR;
  sliderCB.value = bgColorB;
  sliderCG.value = bgColorG;
 
- bgColor.style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorB + ", " + bgColorG + ", " + bgBrightness / 100 + ")";
+ bg.style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + bgIntensity / 100 + ")";
 
  sliderCR.oninput = function() {
      bgColorR = this.value;
-     bgColor.style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorB + ", " + bgColorG + ", " + bgBrightness / 100 + ")";
+     bg.style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + bgIntensity / 100 + ")";
  }
  sliderCB.oninput = function() {
      bgColorB = this.value;
-     bgColor.style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorB + ", " + bgColorG + ", " + bgBrightness / 100 + ")";
+     bg.style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + bgIntensity / 100 + ")";
  }
  sliderCG.oninput = function() {
      bgColorG = this.value;
-     bgColor.style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorB + ", " + bgColorG + ", " + bgBrightness / 100 + ")";
+     bg.style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + bgIntensity / 100 + ")";
  }
 
 
 
 
- //Background blend mode
+ // Background blend mode
 
- var dpBlendmode = document.getElementById('blendmode');
+ dpBlendmode.value = bgBlendMode;
+ bg.style.backgroundBlendMode = bgBlendMode;
 
  dpBlendmode.oninput = function() {
-     document.getElementById('bg').style.backgroundBlendMode = this.value;
+     bg.style.backgroundBlendMode = this.value;
+ }
+
+
+
+
+ // Cookies
+
+ function createCookie(key, value, date) {
+     let expiration = new Date(date).toUTCString();
+     let cookie = escape(key) + "=" + escape(value) + ";expires=" + expiration + ";";
+     document.cookie = cookie;
+ }
+
+ function getCookie(cname) {
+     var name = cname + "=";
+     var decodedCookie = decodeURIComponent(document.cookie);
+     var ca = decodedCookie.split(';');
+     for (var i = 0; i < ca.length; i++) {
+         var c = ca[i];
+         while (c.charAt(0) == ' ') {
+             c = c.substring(1);
+         }
+         if (c.indexOf(name) == 0) {
+             return c.substring(name.length, c.length);
+         }
+     }
+     return "";
+ }
+
+ save.onclick = function() {
+     createCookie("volume", volume);
+     createCookie("bgIntensity", bgIntensity);
+     createCookie("bgRed", bgColorR);
+     createCookie("bgGreen", bgColorG);
+     createCookie("bgBlue", bgColorB);
+     createCookie("bgBlendmode", dpBlendmode.value);
+ }
+
+ load.onclick = function() {
+     volume = getCookie("volume");
+     bgIntensity = getCookie("bgIntensity");
+     bgColorR = getCookie("bgRed");
+     bgColorG = getCookie("bgGreen");
+     bgColorB = getCookie("bgBlue");
+     bgBlendMode = getCookie("bgBlendmode");
+
+     sliderV.value = outputV.innerHTML = volume;
+     for (var i = 1; i <= document.getElementsByClassName('playingOverlay').length; i++) {
+         var audio = document.getElementById(i);
+         audio.volume = volume / 100;
+     }
+     sliderI.value = outputI.innerHTML = bgIntensity;
+     sliderCR.value = bgColorR;
+     sliderCG.value = bgColorG;
+     sliderCB.value = bgColorB;
+     dpBlendmode.value = bgBlendMode;
+
+     bg.style.backgroundColor = "rgba(" + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + bgIntensity / 100 + ")";
+     bg.style.backgroundBlendMode = bgBlendMode;
+ }
+
+ reset.onclick = function() {
+     volume = 50;
+     bgIntensity = 0;
+     bgColorR = 41;
+     bgColorG = 45;
+     bgColorB = 62;
+     bgBlendMode = "color";
+
+     sliderV.value = outputV.innerHTML = volume;
+     for (var i = 1; i <= document.getElementsByClassName('playingOverlay').length; i++) {
+         var audio = document.getElementById(i);
+         audio.volume = volume / 100;
+     }
+     sliderI.value = outputI.innerHTML = bgIntensity;
+     sliderCR.value = bgColorR;
+     sliderCG.value = bgColorG;
+     sliderCB.value = bgColorB;
+     dpBlendmode.value = bgBlendMode;
+
+     bg.style.backgroundColor = "rgba(" + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + bgIntensity / 100 + ")";
+     bg.style.backgroundBlendMode = bgBlendMode;
  }
