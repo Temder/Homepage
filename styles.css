@@ -411,6 +411,13 @@ select {
     color: #fff;
     box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.3);
     border-radius: 3px;
+    scrollbar-width: none;
+}
+
+select option {
+    margin: 40px;
+    background-color: rgba(0, 0, 0, 0.575);
+    color: #fff;
 }
 
 select:focus,

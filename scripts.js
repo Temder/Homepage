@@ -25,6 +25,7 @@
  var save = document.getElementById('save');
  var load = document.getElementById('load');
  var reset = document.getElementById('reset');
+ var inputBgConf = document.getElementById('inputBgConf');
 
 
 
@@ -237,12 +238,12 @@
 
  function createCookie(key, value, date) {
      let expiration = new Date(date).toUTCString();
-     let cookie = escape(key) + "=" + escape(value) + ";expires=" + expiration + ";";
+     let cookie = escape(key) + escape(inputBgConf.value) + "=" + escape(value) + ";expires=" + expiration + ";";
      document.cookie = cookie;
  }
 
  function getCookie(cname) {
-     var name = cname + "=";
+     var name = cname + escape(inputBgConf.value) + "=";
      var decodedCookie = decodeURIComponent(document.cookie);
      var ca = decodedCookie.split(';');
      for (var i = 0; i < ca.length; i++) {
