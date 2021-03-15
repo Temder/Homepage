@@ -238,12 +238,13 @@
 
  function createCookie(key, value, date) {
      let expiration = new Date(date).toUTCString();
-     let cookie = escape(key) + escape(inputBgConf.value) + "=" + escape(value) + ";expires=" + expiration + ";";
+     let cookie = escape(key) + "_" + escape(inputBgConf.value) + "=" + escape(value) + ";expires=" + expiration + ";";
      document.cookie = cookie;
+     console.log(volume + ", " + bgIntensity + ", " + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + dpBlendmode);
  }
 
  function getCookie(cname) {
-     var name = cname + escape(inputBgConf.value) + "=";
+     var name = cname + "_" + escape(inputBgConf.value) + "=";
      var decodedCookie = decodeURIComponent(document.cookie);
      var ca = decodedCookie.split(';');
      for (var i = 0; i < ca.length; i++) {
@@ -275,19 +276,21 @@
      bgColorB = getCookie("bgBlue");
      bgBlendMode = getCookie("bgBlendmode");
 
-     sliderV.value = outputV.innerHTML = volume;
-     for (var i = 1; i <= document.getElementsByClassName('playingOverlay').length; i++) {
-         var audio = document.getElementById(i);
-         audio.volume = volume / 100;
-     }
-     sliderI.value = outputI.innerHTML = bgIntensity;
-     sliderCR.value = bgColorR;
-     sliderCG.value = bgColorG;
-     sliderCB.value = bgColorB;
-     dpBlendmode.value = bgBlendMode;
+     if (volume != "" && bgIntensity != "" && bgColorR != "" && bgColorG != "" && bgColorB != "" && bgBlendMode != "") {
+         sliderV.value = outputV.innerHTML = volume;
+         for (var i = 1; i <= document.getElementsByClassName('playingOverlay').length; i++) {
+             var audio = document.getElementById(i);
+             audio.volume = volume / 100;
+         }
+         sliderI.value = outputI.innerHTML = bgIntensity;
+         sliderCR.value = bgColorR;
+         sliderCG.value = bgColorG;
+         sliderCB.value = bgColorB;
+         dpBlendmode.value = bgBlendMode;
 
-     bg.style.backgroundColor = "rgba(" + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + bgIntensity / 100 + ")";
-     bg.style.backgroundBlendMode = bgBlendMode;
+         bg.style.backgroundColor = "rgba(" + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + bgIntensity / 100 + ")";
+         bg.style.backgroundBlendMode = bgBlendMode;
+     }
  }
 
  reset.onclick = function() {
