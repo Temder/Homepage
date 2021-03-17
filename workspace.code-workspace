@@ -8,9 +8,12 @@
 		},
 		{
 			"path": "..\\..\\Rainmeter\\Skins\\launcher"
+		},
+		{
+			"path": "..\\..\\Programmieren\\Python"
 		}
 	],
     "settings": {
-        "liveServer.settings.multiRootWorkspaceName": "HTML"
+        "liveServer.settings.multiRootWorkspaceName": "Homepage"
     }
 }

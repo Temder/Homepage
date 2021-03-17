@@ -415,14 +415,7 @@
     }
     
     polygon {
-        fill: white;
-    }
-    
-    polygon {
-        font-family: Helvetica, Arial, sansserif;
-        font-size: 100px;
-        font-weight: 900;
-        fill: white;
+        fill: rgb(0, 255, 255);
         filter: url(#red-glow);
     }
     
