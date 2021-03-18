@@ -584,9 +584,9 @@
         </feMerge>
         <!-- recolour the merged blurs red-->
         <feColorMatrix result="red-blur" in="blur-merged" type="matrix"
-                       values="0.25  0     0.1   0     0
-                               0     0.025 0     0     0
-                               0     0     1     0     0
+                       values="0     0     0     0     0
+                               0     0     0     0     0
+                               0     0     0     1     0
                                0     0     0     1     0" />
         <feMerge>
             <feMergeNode in="red-blur"/>       <!-- largest blurs coloured red -->
