@@ -155,8 +155,8 @@
             content: "";
             position: absolute;
             top: 310px;
-            left: 2.4vw;
-            width: 95.2vw;
+            left: 10px;
+            right: 10px;
             height: 5px;
             background-color: rgb(50, 50, 50);
         }
