@@ -27,6 +27,8 @@
  var reset = document.getElementById('reset');
  var inputBgConf = document.getElementById('inputBgConf');
 
+ var open = document.getElementById('open');
+
 
 
  // Navbar fading effect
@@ -315,3 +317,25 @@
      bg.style.backgroundColor = "rgba(" + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + bgIntensity / 100 + ")";
      bg.style.backgroundBlendMode = bgBlendMode;
  }
+
+
+
+
+ // Nav open and close
+
+ open.onclick = function() {
+     if (document.getElementsByClassName("nav")[0].style.display == "block") {
+         document.getElementsByClassName("nav")[0].style.display = "none";
+     } else {
+         document.getElementsByClassName("nav")[0].style.display = "block";
+     }
+ }
+
+ $(window).resize(function() {
+     if (window.innerWidth > 900) {
+         document.getElementsByClassName("nav")[0].style.display = "block";
+     }
+     if (window.innerWidth < 900) {
+         document.getElementsByClassName("nav")[0].style.display = "none";
+     }
+ });

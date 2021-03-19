@@ -63,7 +63,15 @@
     }
     /*Navbar and Sections*/
     
+    #open {
+        display: none;
+        background-color: red;
+        position: absolute;
+        z-index: 2;
+    }
+    
     .nav {
+        display: block;
         position: fixed;
         top: 10px;
         padding-right: 10px;
@@ -108,7 +116,7 @@
         cursor: pointer;
     }
     
-    section:nth-of-type(1) {
+    section:nth-of-type(6) {
         display: block;
     }
     
@@ -123,12 +131,38 @@
     }
     
     @media screen and (max-width: 900px) {
+        #open {
+            display: block;
+        }
+        .nav {
+            display: none;
+        }
+        ul {
+            background-color: rgba(66, 66, 66, 1);
+        }
+        .left,
+        .right {
+            float: none;
+        }
+        .right {
+            border-bottom: 5px solid rgb(50, 50, 50);
+        }
+        .right::before {
+            content: "";
+            position: absolute;
+            top: 310px;
+            left: 2.4vw;
+            width: 95.2vw;
+            height: 5px;
+            background-color: rgb(50, 50, 50);
+        }
         .section {
             position: absolute;
+            top: clamp(0%, 5vw, 100%);
             background: #7f7f7fe0;
             display: none;
-            left: clamp(0%, 2vw, 100%);
-            right: clamp(0%, 2vw, 100%);
+            left: clamp(0%, 5vw, 100%);
+            right: clamp(0%, 5vw, 100%);
             color: #fff;
         }
     }
@@ -412,6 +446,7 @@
         bottom: 0px;
         right: 0px;
         z-index: 1;
+        pointer-events: none;
     }
     
     polygon {

@@ -19,6 +19,8 @@
 
     <br/>
 
+    <div id="open" class="noselect">open</div>
+
     <div class="nav noselect">
         <ul>
             <li data-rel="1" class="left active">Home</li>
@@ -413,7 +415,7 @@
             <div class="d-flex flex-wrap justify-content-center webgl-wrapper">
                 <div class="p-4">
                     <svg width="180" viewbox="0 0 90 90">
-                        <polygon points="20,45 45,20 70,45 60,45 60,70 30,70 30,45" />
+                        <polygon points="20,45 45,20 70,45 62.5,45 62.5,70 50,70 50,55 45,55 45,43 47.5,43 50.5,40 50.5,35 47.5,32 42.5,32 39.5,35 39.5,40 42.5,43 45,43 45,55 40,55 40,70 27.5,70 27.5,45" />
                     </svg>
                 </div>
             </div>
@@ -439,7 +441,7 @@
                     <h3 class="lang en">Background Intensity</h3>
                     <h3 class="lang de">Hintergrundintensität</h3>
 
-                    <div class="slidecontainer">
+                    <div class="slidecontinaer">
                         <input autocomplete="off" type="range" min="0" max="100" id="intensitySlider" class="slider">
                     </div>
                     <span id="intensity"></span> %
@@ -586,7 +588,7 @@
         <feColorMatrix result="red-blur" in="blur-merged" type="matrix"
                        values="0     0     0     0     0
                                0     0     0     0     0
-                               0     0     0     1     0
+                               0     0     1     1     0
                                0     0     0     1     0" />
         <feMerge>
             <feMergeNode in="red-blur"/>       <!-- largest blurs coloured red -->
