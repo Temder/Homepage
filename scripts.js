@@ -27,7 +27,9 @@
  var reset = document.getElementById('reset');
  var inputBgConf = document.getElementById('inputBgConf');
 
- var open = document.getElementById('open');
+ var openNav = document.getElementById('openClick');
+
+ var dpSPA = document.getElementById('SPA');
 
 
 
@@ -323,7 +325,7 @@
 
  // Nav open and close
 
- open.onclick = function() {
+ openNav.onclick = function() {
      if (document.getElementsByClassName("nav")[0].style.display == "block") {
          document.getElementsByClassName("nav")[0].style.display = "none";
      } else {
@@ -339,3 +341,17 @@
          document.getElementsByClassName("nav")[0].style.display = "none";
      }
  });
+
+
+
+
+ // Dropdown Apps
+
+ dpSPA.oninput = function() {
+     if (this.value == "playstore") {
+         window.open("https://play.google.com/store/apps/details?id=com.PdGames.Leon.SpeedSlidder", "_black");
+     }
+     if (this.value == "apk") {
+         window.location.href = "Games/Android/SpeedSlidder.apk";
+     }
+ }

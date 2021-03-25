@@ -66,11 +66,20 @@
     #open {
         display: none;
         position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 90px;
-        height: 90px;
+        top: clamp(0%, 5vh, 100%);
+        left: clamp(0%, 5vw, 100%);
+        width: 75px;
         z-index: 2;
+    }
+    
+    #openClick {
+        position: absolute;
+        top: clamp(5%, 5vh, 100%);
+        left: clamp(5%, 5vw, 100%);
+        width: 55px;
+        height: 50px;
+        margin: 10px;
+        z-index: 3;
     }
     
     .nav {
@@ -119,7 +128,7 @@
         cursor: pointer;
     }
     
-    section:nth-of-type(6) {
+    section:nth-of-type(2) {
         display: block;
     }
     
@@ -161,7 +170,7 @@
         }
         .section {
             position: absolute;
-            top: clamp(0%, 5vw, 100%);
+            top: clamp(0%, 5vh, 100%);
             background: #7f7f7fe0;
             display: none;
             left: clamp(0%, 5vw, 100%);
@@ -178,6 +187,7 @@
         background-size: 80%;
         height: 70px;
         width: 70px;
+        border: 2px #000;
     }
     
     button[name="Windows"] {
@@ -275,29 +285,32 @@
     }
     /*Game Tab*/
     
-    .te {
+    #te {
         padding-bottom: 10px;
         height: clamp(60px, 7vw, 70px);
         transition: transform .2s;
         cursor: default;
     }
     
-    .mc,
-    .mi {
+    #mc,
+    #mi {
         padding-bottom: 10px;
         height: clamp(50px, 5vw, 60px);
         transition: transform .2s;
         cursor: default;
     }
     
-    .mc:hover,
-    .mi:hover,
-    .te:hover {
+    #mi:hover,
+    #te:hover {
         /* IE 9 */
         -ms-transform: scale(1.25);
         /* Safari 3-8 */
         -webkit-transform: scale(1.25);
         transform: scale(1.25);
+    }
+    
+    #picLinkMc:focus+#mc {
+        height: 100px;
     }
     
     .mods {
@@ -409,18 +422,18 @@
     }
     /*Dropdown*/
     
-    select {
+    #blendmode {
         appearance: none;
         -moz-appearance: none;
         -webkit-appearance: none;
         border: none;
     }
     
-    select::-ms-expand {
+    #blendmode::-ms-expand {
         display: none;
     }
     
-    select {
+    #blendmode {
         width: 200px;
         height: 40px;
         -moz-padding-start: calc(10px - 3px);
@@ -432,15 +445,28 @@
         scrollbar-width: none;
     }
     
-    select option {
+    #blendmode option {
         margin: 40px;
         background-color: rgba(0, 0, 0, 0.575);
         color: #fff;
     }
     
-    select:focus,
-    select:hover {
+    #blendmode:focus,
+    #blendmode:hover {
         background-color: rgba(255, 255, 255, 0.3);
+    }
+    
+    #SPA {
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        border: none;
+        border: transparent;
+        background: url("images/android.png") no-repeat center;
+        background-size: 80%;
+        height: 70px;
+        width: 70px;
+        color: rgba(0, 0, 0, 0);
     }
     /*Made By Text*/
     
