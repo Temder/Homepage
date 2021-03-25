@@ -187,7 +187,7 @@
         background-size: 80%;
         height: 70px;
         width: 70px;
-        border: 2px #000;
+        cursor: default;
     }
     
     button[name="Windows"] {
@@ -197,11 +197,11 @@
         background-size: 80%;
         height: 70px;
         width: 70px;
+        cursor: default;
     }
     
     button[name="gibtsnich"] {
         border: transparent;
-        padding: 10px;
         background: url("images/kreuz.png") no-repeat center;
         background-size: 80%;
         height: 70px;
