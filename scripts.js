@@ -341,16 +341,3 @@
          document.getElementsByClassName("nav")[0].style.display = "none";
      }
  });
-
-
-
-
- // Dropdown Apps
-
- dpSPA[0].onclick = function() {
-     window.open("https://play.google.com/store/apps/details?id=com.PdGames.Leon.SpeedSlidder", "_black");
- }
-
- dpSPA[1].onclick = function() {
-     window.location.href = "Games/Android/SpeedSlidder.apk";
- }
