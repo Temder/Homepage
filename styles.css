@@ -180,6 +180,24 @@
     }
     /*PD Games*/
     
+    .appimg {
+        max-height: 100px;
+    }
+    
+    .appimg[src="images/SC.png"] {
+        max-height: 50px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .appimg[src="images/Me.png"],
+    .appimg[src="images/Ma.png"],
+    .appimg[src="images/Ss.png"] {
+        max-height: 75px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    
     button[name="Android"] {
         border: transparent;
         padding: 10px;
