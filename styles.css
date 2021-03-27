@@ -140,6 +140,7 @@
         right: clamp(0%, 25vw, 100%);
         min-height: 75vh;
         color: #fff;
+        padding-bottom: 100px;
     }
     
     @media screen and (max-width: 900px) {
