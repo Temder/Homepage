@@ -70,6 +70,7 @@
         left: clamp(0%, 5vw, 100%);
         width: 75px;
         z-index: 2;
+        transition: transform .2s;
     }
     
     #openClick {
@@ -80,6 +81,11 @@
         height: 50px;
         margin: 10px;
         z-index: 3;
+    }
+    
+    #openClick:hover+#open,
+    #open:focus {
+        transform: scale(1.25);
     }
     
     .nav {
@@ -114,6 +120,10 @@
         background-color: rgb(90, 90, 90);
     }
     
+    div ul li:focus:not(.active) {
+        background-color: rgb(90, 90, 90);
+    }
+    
     .active {
         background: #7f7f7f;
     }
@@ -134,13 +144,17 @@
     
     .section {
         position: absolute;
-        background: #7f7f7fe0;
+        background: #616161e0;
         display: none;
         left: clamp(0%, 25vw, 100%);
         right: clamp(0%, 25vw, 100%);
         min-height: 75vh;
+        padding-bottom: 5vh;
         color: #fff;
-        padding-bottom: 100px;
+    }
+    
+    .hideSection {
+        background-color: rgba(0, 0, 0, 0);
     }
     
     @media screen and (max-width: 900px) {
@@ -172,65 +186,59 @@
         .section {
             position: absolute;
             top: clamp(0%, 5vh, 100%);
-            background: #7f7f7fe0;
+            background: #616161e0;
             display: none;
             left: clamp(0%, 5vw, 100%);
             right: clamp(0%, 5vw, 100%);
             color: #fff;
         }
+        .hideSection {
+            background-color: rgba(0, 0, 0, 0);
+        }
     }
     /*PD Games*/
     
-    .appimg {
-        max-height: 100px;
+    .box {
+        margin: 10px;
+        border-radius: 2.5%;
+        background-color: #616161e0;
     }
     
-    .appimg[src="images/SC.png"] {
+    .download {
+        width: min-content;
+        padding: 10px;
+        margin: auto;
+        border-radius: 10%;
+        background-color: #00000044;
+    }
+    
+    img {
+        max-height: 100px;
+        transition: transform .2s;
+    }
+    
+    img[src="images/SC.png"] {
         max-height: 50px;
         margin-top: 10px;
         margin-bottom: 10px;
     }
     
-    .appimg[src="images/Me.png"],
-    .appimg[src="images/Ma.png"],
-    .appimg[src="images/Ss.png"] {
+    img[src="images/Me.png"],
+    img[src="images/Ma.png"],
+    img[src="images/Ss.png"] {
         max-height: 75px;
         margin-top: 10px;
         margin-bottom: 10px;
     }
     
-    button[name="Android"] {
+    img[src="images/android.png"],
+    img[src="images/windows.png"],
+    img[src="images/cross.png"] {
+        width: auto;
+        height: 75px;
+        padding: 7.5px;
         border: transparent;
-        padding: 10px;
-        background: url("images/android.png") no-repeat center;
-        background-size: 80%;
-        height: 70px;
-        width: 70px;
         cursor: default;
-    }
-    
-    button[name="Windows"] {
-        border: transparent;
-        padding: 10px;
-        background: url("images/windows.png") no-repeat center;
-        background-size: 80%;
-        height: 70px;
-        width: 70px;
-        cursor: default;
-    }
-    
-    button[name="gibtsnich"] {
-        border: transparent;
-        background: url("images/kreuz.png") no-repeat center;
-        background-size: 80%;
-        height: 70px;
-        width: 70px;
-        cursor: not-allowed;
-    }
-    
-    .box {
-        border: 2px solid rgb(71, 71, 71);
-        margin: 10px;
     }
     /*Stop user from selecting elements*/
     
@@ -256,6 +264,7 @@
         width: 100px;
     }
     
+    .radio:focus,
     .radio:hover {
         /* IE 9 */
         -ms-transform: scale(1.15);
@@ -319,6 +328,7 @@
         cursor: default;
     }
     
+    #mc:hover,
     #mi:hover,
     #te:hover {
         /* IE 9 */
@@ -326,10 +336,6 @@
         /* Safari 3-8 */
         -webkit-transform: scale(1.25);
         transform: scale(1.25);
-    }
-    
-    #picLinkMc:focus+#mc {
-        height: 100px;
     }
     
     .mods {

@@ -27,6 +27,7 @@
  var reset = document.getElementById('reset');
  var inputBgConf = document.getElementById('inputBgConf');
 
+ var openSVG = document.getElementById('open');
  var openNav = document.getElementById('openClick');
 
  var dpSPA = document.getElementsByClassName('choose');
@@ -39,6 +40,12 @@
      $('div li').click(function() {
          $(this).addClass('active').siblings('li').removeClass('active');
          $('section:nth-of-type(' + $(this).data('rel') + ')').stop().fadeIn(500, 'linear').siblings('section').stop().fadeOut(500, 'linear');
+     });
+     $('div li').keydown(function() {
+         if (event.which == 13) {
+             $(this).addClass('active').siblings('li').removeClass('active');
+             $('section:nth-of-type(' + $(this).data('rel') + ')').stop().fadeIn(500, 'linear').siblings('section').stop().fadeOut(500, 'linear');
+         }
      });
  })(jQuery);
 
@@ -333,6 +340,19 @@
      }
  }
 
+ openSVG.onkeydown = function(e) {
+     if (!e) {
+         var e = window.event;
+     }
+     if (e.keyCode == 13) {
+         if (document.getElementsByClassName("nav")[0].style.display == "block") {
+             document.getElementsByClassName("nav")[0].style.display = "none";
+         } else {
+             document.getElementsByClassName("nav")[0].style.display = "block";
+         }
+     }
+ }
+
  $(window).resize(function() {
      if (window.innerWidth > 900) {
          document.getElementsByClassName("nav")[0].style.display = "block";
@@ -341,3 +361,16 @@
          document.getElementsByClassName("nav")[0].style.display = "none";
      }
  });
+
+
+
+
+ // Image Scale
+
+ function scaleImageUp(object) {
+     document.getElementById(object).style.transform = "scale(1.25)";
+ }
+
+ function scaleImageDown(object) {
+     document.getElementById(object).style.transform = "scale(1)";
+ }

@@ -19,25 +19,25 @@
 
     <br/>
 
-    <svg id="open" viewbox="0 0 100 90">
+    <div id="openClick"></div>
+
+    <svg tabindex="1" id="open" viewbox="0 0 100 90">
         <polygon points="20,22 23,20 77,20 80,22 80,27 77,30 22,30 20,27 20,42 22,40 77,40 80,42 80,47 77,50 22,50 20,47 20,62 22,60 77,60 80,62 80,67 77,70 22,70 20,67" />
     </svg>
 
-    <div id="openClick"></div>
-
     <div class="nav noselect">
         <ul>
-            <li data-rel="1" class="left active">Home</li>
-            <li data-rel="2" class="left">PD Games</li>
-            <li data-rel="3" class="left lang en">Radio Stations</li>
-            <li data-rel="3" class="left lang de">Radio Stationen</li>
-            <li data-rel="4" class="left lang en">Games</li>
-            <li data-rel="4" class="left lang de">Spiele</li>
-            <li data-rel="5" class="left lang en">Contact</li>
-            <li data-rel="5" class="left lang de">Kontakt</li>
-            <li data-rel="6" class="left">Test</li>
-            <li data-rel="7" class="right lang en">Settings</li>
-            <li data-rel="7" class="right lang de">Einstellungen</li>
+            <li tabindex="2" data-rel="1" class="left active">Home</li>
+            <li tabindex="3" data-rel="2" class="left">PD Games</li>
+            <li tabindex="4" data-rel="3" class="left lang en">Radio Stations</li>
+            <li tabindex="4" data-rel="3" class="left lang de">Radio Stationen</li>
+            <li tabindex="5" data-rel="4" class="left lang en">Games</li>
+            <li tabindex="5" data-rel="4" class="left lang de">Spiele</li>
+            <li tabindex="6" data-rel="5" class="left lang en">Contact</li>
+            <li tabindex="6" data-rel="5" class="left lang de">Kontakt</li>
+            <li tabindex="7" data-rel="6" class="left">Test</li>
+            <li tabindex="8" data-rel="7" class="right lang en">Settings</li>
+            <li tabindex="8" data-rel="7" class="right lang de">Einstellungen</li>
         </ul>
     </div>
 
@@ -49,74 +49,114 @@
         </article>
     </section>
 
-    <section class="section">
+    <section class="section hideSection">
         <article>
             <h>PD Games</h><br/><br/>
 
-            <div class="d-flex flex-row flex-wrap justify-content-around">
+            <div class="d-flex flex-row flex-wrap justify-content-center">
                 <div class="p-2 box">
                     <h2 id="heading">Super Code</h2>
-                    <img class="appimg" src="images/SC.png">
+                    <img src="images/SC.png">
                     <p class="lang en">Can you guess a hidden color code in 7 attempts?</p>
                     <p class="lang de">Schaffen Sie es, einen versteckten Farbcode in 7 Versuchen zu erraten?</p>
-                    <a href="https://github.com/Temder/Homepage/releases/download/SC/SuperCode.apk" download><button name="Android"></button></a>
-                    <button name="gibtsnich"></button>
+                    <div class="download">
+                        <h4>Downloads</h4>
+                        <nobr>
+                            <a href="https://github.com/Temder/Homepage/releases/download/SC/SuperCode.apk" onmouseover="scaleImageUp('appImg1')" onmouseout="scaleImageDown('appImg1')" onfocus="scaleImageUp('appImg1')" onfocusout="scaleImageDown('appImg1')"><img id="appImg1" src="images/android.png" /></a>
+                            <a><img src="images/cross.png" /></a>
+                        </nobr>
+                    </div>
                 </div>
                 <div class="p-2 box">
                     <h2 id="heading">Jump Jump 1</h2>
-                    <img class="appimg" src="images/JJ1.png">
+                    <img src="images/JJ1.png">
                     <p class="lang en">Do you reach the black hole?</p>
                     <p class="lang de">Erreichen Sie das schwarze Loch?</p>
-                    <a href="https://github.com/Temder/Homepage/releases/download/JJ/JumpJump.apk"><button name="Android"></button></a>
-                    <button name="gibtsnich"></button>
+                    <div class="download">
+                        <h4>Downloads</h4>
+                        <nobr>
+                            <a href="https://github.com/Temder/Homepage/releases/download/JJ/JumpJump.apk" onmouseover="scaleImageUp('appImg2')" onmouseout="scaleImageDown('appImg2')" onfocus="scaleImageUp('appImg2')" onfocusout="scaleImageDown('appImg2')"><img id="appImg2" src="images/android.png" /></a>
+                            <a><img src="images/cross.png" /></a>
+                        </nobr>
+                    </div>
                 </div>
                 <div class="p-2 box">
                     <h2 id="heading">Jump Jump 2</h2>
-                    <img class="appimg" src="images/JJ2.png">
+                    <img src="images/JJ2.png">
                     <p class="lang en">Can you manage to collect all the music notes in the game?</p>
                     <p class="lang de">Schaffen Sie es alle Musik Noten einzusammeln?</p>
-                    <a href="https://github.com/Temder/Homepage/releases/download/JJ2/JumpJump2.apk"><button name="Android"></button></a>
-                    <a href="https://github.com/Temder/Homepage/releases/download/JJ2/JumpJump2.zip"><button name="Windows"></button></a>
+                    <div class="download">
+                        <h4>Downloads</h4>
+                        <nobr>
+                            <a href="https://github.com/Temder/Homepage/releases/download/JJ2/JumpJump2.apk" onmouseover="scaleImageUp('appImg3')" onmouseout="scaleImageDown('appImg3')" onfocus="scaleImageUp('appImg3')" onfocusout="scaleImageDown('appImg3')"><img id="appImg3" src="images/android.png" /></a>
+                            <a href="https://github.com/Temder/Homepage/releases/download/JJ2/JumpJump2.zip" onmouseover="scaleImageUp('appImg4')" onmouseout="scaleImageDown('appImg4')" onfocus="scaleImageUp('appImg4')" onfocusout="scaleImageDown('appImg4')"><img id="appImg4" src="images/windows.png" /></a>
+                        </nobr>
+                    </div>
                 </div>
                 <div class="p-2 box">
                     <h2 id="heading">Jump Jump 3D</h2>
-                    <img class="appimg" src="images/JJ3D.png">
+                    <img src="images/JJ3D.png">
                     <p class="lang en">There isn't a goal. Have fun.</p>
-                    <p class="lang de">Es gibt noch kein Ziel. Haben Sie Spa&szlig;.</p>
-                    <a href="https://github.com/Temder/Homepage/releases/download/JJ3D/JumpJump3D.apk"><button name="Android"></button></a>
-                    <button name="gibtsnich"></button>
+                    <p class="lang de">Es gibt noch kein Ziel. Haben Sie Spaß.</p>
+                    <div class="download">
+                        <h4>Downloads</h4>
+                        <nobr>
+                            <a href="https://github.com/Temder/Homepage/releases/download/JJ3D/JumpJump3D.apk" onmouseover="scaleImageUp('appImg5')" onmouseout="scaleImageDown('appImg5')" onfocus="scaleImageUp('appImg5')" onfocusout="scaleImageDown('appImg5')"><img id="appImg5" src="images/android.png" /></a>
+                            <a><img src="images/cross.png" /></a>
+                        </nobr>
+                    </div>
                 </div>
                 <div class="p-2 box">
                     <h2 id="heading">Mehrspieler</h2>
-                    <img class="appimg" src="images/Me.png">
+                    <img src="images/Me.png">
                     <p class="lang en">A hiding game for many players.</p>
-                    <p class="lang de">Ein Versteckspiel f&uuml;r viele Spieler.</p>
-                    <a href="https://github.com/Temder/Homepage/releases/download/MP3D/Multiplayer3D.apk"><button name="Android"></button></a>
-                    <a href="https://github.com/Temder/Homepage/releases/download/MP3D/Multiplayer3D.zip"><button name="Windows"></button></a>
+                    <p class="lang de">Ein Versteckspiel für viele Spieler.</p>
+                    <div class="download">
+                        <h4>Downloads</h4>
+                        <nobr>
+                            <a href="https://github.com/Temder/Homepage/releases/download/MP3D/Multiplayer3D.apk" onmouseover="scaleImageUp('appImg6')" onmouseout="scaleImageDown('appImg6')" onfocus="scaleImageUp('appImg6')" onfocusout="scaleImageDown('appImg6')"><img id="appImg6" src="images/android.png" /></a>
+                            <a href="https://github.com/Temder/Homepage/releases/download/MP3D/Multiplayer3D.zip" onmouseover="scaleImageUp('appImg7')" onmouseout="scaleImageDown('appImg7')" onfocus="scaleImageUp('appImg7')" onfocusout="scaleImageDown('appImg7')"><img id="appImg7" src="images/windows.png" /></a>
+                        </nobr>
+                    </div>
                 </div>
                 <div class="p-2 box">
                     <h2 id="heading">Malen</h2>
-                    <img class="appimg" src="images/Ma.png">
+                    <img src="images/Ma.png">
                     <p class="lang en">Draw pictures or create cities.</p>
-                    <p class="lang de">Malen Sie Bilder oder erschaffen Sie St&auml;dte.</p>
-                    <a href="https://github.com/Temder/Homepage/releases/download/DaC/Draw.apk"><button name="Android"></button></a>
-                    <a href="https://github.com/Temder/Homepage/releases/download/DaC/Draw.zip"><button name="Windows"></button></a>
+                    <p class="lang de">Malen Sie Bilder oder erschaffen Sie Städte.</p>
+                    <div class="download">
+                        <h4>Downloads</h4>
+                        <nobr>
+                            <a href="https://github.com/Temder/Homepage/releases/download/DaC/Draw.apk" onmouseover="scaleImageUp('appImg8')" onmouseout="scaleImageDown('appImg8')" onfocus="scaleImageUp('appImg8')" onfocusout="scaleImageDown('appImg8')"><img id="appImg8" src="images/android.png" /></a>
+                            <a href="https://github.com/Temder/Homepage/releases/download/DaC/Draw.zip" onmouseover="scaleImageUp('appImg9')" onmouseout="scaleImageDown('appImg9')" onfocus="scaleImageUp('appImg9')" onfocusout="scaleImageDown('appImg9')"><img id="appImg9" src="images/windows.png" /></a>
+                        </nobr>
+                    </div>
                 </div>
                 <div class="p-2 box">
                     <h2 id="heading">Fallen</h2>
-                    <img class="appimg" src="images/F.png">
+                    <img src="images/F.png">
                     <p class="lang en">Collect the falling items quickly.</p>
-                    <p class="lang de">Sammeln Sie die herunterfallenden Gegenst&auml;nde schnell ein.</p>
-                    <a href="https://github.com/Temder/Homepage/releases/download/FT/Fall.apk"><button name="Android"></button></a>
-                    <a href="https://github.com/Temder/Homepage/releases/download/FT/Fall.zip"><button name="Windows"></button></a>
+                    <p class="lang de">Sammeln Sie die herunterfallenden Gegenstände schnell ein.</p>
+                    <div class="download">
+                        <h4>Downloads</h4>
+                        <nobr>
+                            <a href="https://github.com/Temder/Homepage/releases/download/FT/Fall.apk" onmouseover="scaleImageUp('appImg10')" onmouseout="scaleImageDown('appImg10')" onfocus="scaleImageUp('appImg10')" onfocusout="scaleImageDown('appImg10')"><img id="appImg10" src="images/android.png" /></a>
+                            <a href="https://github.com/Temder/Homepage/releases/download/FT/Fall.zip" onmouseover="scaleImageUp('appImg11')" onmouseout="scaleImageDown('appImg11')" onfocus="scaleImageUp('appImg11')" onfocusout="scaleImageDown('appImg11')"><img id="appImg11" src="images/windows.png" /></a>
+                        </nobr>
+                    </div>
                 </div>
                 <div class="p-2 box">
                     <h2 id="heading">Speed Slidder</h2>
-                    <img class="appimg" src="images/Ss.png">
+                    <img src="images/Ss.png">
                     <p class="lang en">How far can you get?</p>
                     <p class="lang de">Wie weit kommen Sie?</p>
-                    <a href="https://play.google.com/store/apps/details?id=com.PdGames.Leon.SpeedSlidder" target="_blank"><button name="Android"></button></a>
-                    <button name="gibtsnich"></button>
+                    <div class="download">
+                        <h4>Downloads</h4>
+                        <nobr>
+                            <a href="https://play.google.com/store/apps/details?id=com.PdGames.Leon.SpeedSlidder" onmouseover="scaleImageUp('appImg12')" onmouseout="scaleImageDown('appImg12')" target="_blank" onfocus="scaleImageUp('appImg12')" onfocusout="scaleImageDown('appImg12')"><img id="appImg12" src="images/android.png" /></a>
+                            <a><img src="images/cross.png" /></a>
+                        </nobr>
+                    </div>
                 </div>
             </div>
         </article>
@@ -132,66 +172,66 @@
                     <div style="position: relative;">
                         <div id="r1" class="playingOverlay">
                             <svg class="logo" width="50" height="50" viewBox="0 0 245 238" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M101.837 53.1138L218.836 120.135C230.548 126.844 230.577 143.727 218.887 150.476L101.431 218.289C89.742 225.038 75.1358 216.572 75.1816 203.074L75.6386 68.2394C75.6841 54.8207 90.1933 46.4438 101.837 53.1138Z" stroke="white" stroke-width="15"/>
-                                </svg>
+                                <path d="M101.837 53.1138L218.836 120.135C230.548 126.844 230.577 143.727 218.887 150.476L101.431 218.289C89.742 225.038 75.1358 216.572 75.1816 203.074L75.6386 68.2394C75.6841 54.8207 90.1933 46.4438 101.837 53.1138Z" stroke="white" stroke-width="15"/>
+                            </svg>
                         </div>
                     </div>
 
                     <input class="radio round" onclick="play(1, 'r1')" type="image" src="https://www.phonostar.de/images/auto_created/Radio_Dresden_2184x184.png" alt="Stream: Radio Dresden">
                     <h3>Radio Dresden</h3>
-                    <audio style="display:none" id="1" src="https://streams.bcs-systems.de/slp/live/dresden/mp3/radioplayer/web" preload="none"></audio>
+                    <audio tabindex="-1" style="display:none" id="1" src="https://streams.bcs-systems.de/slp/live/dresden/mp3/radioplayer/web" preload="none"></audio>
                 </div>
                 <div class="p-2">
                     <div style="position: relative;">
                         <div id="r2" class="playingOverlay">
                             <svg class="logo" width="50" height="50" viewBox="0 0 245 238" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M101.837 53.1138L218.836 120.135C230.548 126.844 230.577 143.727 218.887 150.476L101.431 218.289C89.742 225.038 75.1358 216.572 75.1816 203.074L75.6386 68.2394C75.6841 54.8207 90.1933 46.4438 101.837 53.1138Z" stroke="white" stroke-width="15"/>
-                                </svg>
+                                <path d="M101.837 53.1138L218.836 120.135C230.548 126.844 230.577 143.727 218.887 150.476L101.431 218.289C89.742 225.038 75.1358 216.572 75.1816 203.074L75.6386 68.2394C75.6841 54.8207 90.1933 46.4438 101.837 53.1138Z" stroke="white" stroke-width="15"/>
+                            </svg>
                         </div>
                     </div>
 
                     <input class="radio" onclick="play(2, 'r2')" type="image" src="images/RadiowellePirna.png" alt="Stream: Radiowelle Pirna">
                     <h3>Radiowelle Pirna</h3>
-                    <audio style="display:none" id="2" src="http://server29817.streamplus.de:10838/listen1" preload="none"></audio>
+                    <audio tabindex="-1" style="display:none" id="2" src="http://server29817.streamplus.de:10838/listen1" preload="none"></audio>
                 </div>
                 <div class="p-2">
                     <div style="position: relative;">
                         <div id="r3" class="playingOverlay">
                             <svg class="logo" width="50" height="50" viewBox="0 0 245 238" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M101.837 53.1138L218.836 120.135C230.548 126.844 230.577 143.727 218.887 150.476L101.431 218.289C89.742 225.038 75.1358 216.572 75.1816 203.074L75.6386 68.2394C75.6841 54.8207 90.1933 46.4438 101.837 53.1138Z" stroke="white" stroke-width="15"/>
-                                </svg>
+                                <path d="M101.837 53.1138L218.836 120.135C230.548 126.844 230.577 143.727 218.887 150.476L101.431 218.289C89.742 225.038 75.1358 216.572 75.1816 203.074L75.6386 68.2394C75.6841 54.8207 90.1933 46.4438 101.837 53.1138Z" stroke="white" stroke-width="15"/>
+                            </svg>
                         </div>
                     </div>
 
                     <input class="radio round" onclick="play(3, 'r3')" type="image" src="https://static.radio.de/images/broadcasts/b9/79/107096/2/c175.png" alt="Stream: HITMIX FM">
                     <h3>HITMIX FM</h3>
-                    <audio style="display:none" id="3" src="https://hitmixfm.stream.laut.fm/hitmix_fm" preload="none"></audio>
+                    <audio tabindex="-1" style="display:none" id="3" src="https://hitmixfm.stream.laut.fm/hitmix_fm" preload="none"></audio>
                 </div>
                 <div class="p-2">
                     <div style="position: relative;">
                         <div id="r4" class="playingOverlay">
                             <svg class="logo" width="50" height="50" viewBox="0 0 245 238" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M101.837 53.1138L218.836 120.135C230.548 126.844 230.577 143.727 218.887 150.476L101.431 218.289C89.742 225.038 75.1358 216.572 75.1816 203.074L75.6386 68.2394C75.6841 54.8207 90.1933 46.4438 101.837 53.1138Z" stroke="white" stroke-width="15"/>
-                                </svg>
+                                <path d="M101.837 53.1138L218.836 120.135C230.548 126.844 230.577 143.727 218.887 150.476L101.431 218.289C89.742 225.038 75.1358 216.572 75.1816 203.074L75.6386 68.2394C75.6841 54.8207 90.1933 46.4438 101.837 53.1138Z" stroke="white" stroke-width="15"/>
+                            </svg>
                         </div>
                     </div>
 
                     <input class="radio" onclick="play(4, 'r4')" type="image" src="images/djcryexx.png" alt="Stream: DJ CryexX">
                     <h3>DJ CryexX</h3>
-                    <audio style="display:none" id="4" src="https://stream.laut.fm/djcryexx" preload="none"></audio>
+                    <audio tabindex="-1" style="display:none" id="4" src="https://stream.laut.fm/djcryexx" preload="none"></audio>
                 </div>
                 <div class="p-2">
                     <div style="position: relative;">
                         <div id="r5" class="playingOverlay">
                             <svg class="logo" width="50" height="50" viewBox="0 0 245 238" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M101.837 53.1138L218.836 120.135C230.548 126.844 230.577 143.727 218.887 150.476L101.431 218.289C89.742 225.038 75.1358 216.572 75.1816 203.074L75.6386 68.2394C75.6841 54.8207 90.1933 46.4438 101.837 53.1138Z" stroke="white" stroke-width="15"/>
-                                </svg>
+                                <path d="M101.837 53.1138L218.836 120.135C230.548 126.844 230.577 143.727 218.887 150.476L101.431 218.289C89.742 225.038 75.1358 216.572 75.1816 203.074L75.6386 68.2394C75.6841 54.8207 90.1933 46.4438 101.837 53.1138Z" stroke="white" stroke-width="15"/>
+                            </svg>
                         </div>
                     </div>
 
                     <input class="radio round" onclick="play(5, 'r5')" type="image" src="https://static.radio.de/images/broadcasts/19/3a/123134/1/c175.png" alt="Stream: HRP An Der Elbe">
                     <h3>HRP An Der Elbe</h3>
-                    <audio style="display:none" id="5" src="https://stream.laut.fm/hrp-an-der-elbe?ref=radiode" preload="none"></audio>
+                    <audio tabindex="-1" style="display:none" id="5" src="https://stream.laut.fm/hrp-an-der-elbe?ref=radiode" preload="none"></audio>
                 </div>
             </div>
         </article>
@@ -205,7 +245,7 @@
             <div class="d-flex flex-wrap justify-content-center">
                 <div class="p-4">
                     <!--MINECRAFT-->
-                    <a id="picLinkMc" href="https://www.minecraft.net/" target="_blank" style="cursor: pointer;"><img id="mc" src="images/Minecraft.png"></a>
+                    <a id="picLinkMc" href="https://www.minecraft.net/" target="_blank" style="cursor: pointer;" onmouseover="scaleImageUp('mc')" onmouseout="scaleImageDown('mc')" onfocus="scaleImageUp('mc')" onfocusout="scaleImageDown('mc')"><img id="mc" src="images/Minecraft.png"></a>
 
                     <div>
                         <h3>Datapacks</h3>
@@ -236,12 +276,12 @@
                 </div>
                 <div class="p-4">
                     <!--TERRARIA-->
-                    <a id="picLinkTe" href="https://terraria.org/" target="_blank"><img id="te" src="images/Terraria.png"></a>
+                    <a id="picLinkTe" href="https://terraria.org/" target="_blank" onmouseover="scaleImageUp('te')" onmouseout="scaleImageDown('te')" onfocus="scaleImageUp('te')" onfocusout="scaleImageDown('te')"><img id="te" src="images/Terraria.png"></a>
 
                     <h4 class="lang en">install TModLoader 64bit</h4>
                     <h4 class="lang de">TModLoader 64bit installieren</h4>
-                    <p class="lang en">The installation steps are also <a href="https://forums.terraria.org/index.php?threads/1-3-tmodloader-fna-32bit-64bit-branch-of-tml.75644/" style="text-decoration: none;">here</a></p>
-                    <p class="lang de">Die Installationsschritte gibt es auch <a href="https://forums.terraria.org/index.php?threads/1-3-tmodloader-fna-32bit-64bit-branch-of-tml.75644/" style="text-decoration: none;">hier</a></p>
+                    <p class="lang en">The installation steps are also <a href="https://forums.terraria.org/index.php?threads/1-3-tmodloader-fna-32bit-64bit-branch-of-tml.75644/" target="_blank" style="text-decoration: none;">here</a></p>
+                    <p class="lang de">Die Installationsschritte gibt es auch <a href="https://forums.terraria.org/index.php?threads/1-3-tmodloader-fna-32bit-64bit-branch-of-tml.75644/" target="_blank" style="text-decoration: none;">hier</a></p>
 
                     <div class="lang en">
                         1. Download <a href="https://www.dropbox.com/s/uvvrv52nbtebsd7/TML64bit0.11.7.5.zip?dl=1" style="text-decoration: none;">this</a> ZIP-archive (<a href="https://www.dropbox.com/sh/2ryrz6ilt7w3onf/AAAmitTzUktW2rdHIsLzjN1Ca?dl=0"
@@ -250,16 +290,16 @@
                         <br/>3. Open the file "tModLoader.exe" in the extracted archive
                     </div>
                     <div class="lang de">
-                        1. Lade <a href="https://www.dropbox.com/s/uvvrv52nbtebsd7/TML64bit0.11.7.5.zip?dl=1" style="text-decoration: none;">dieses</a> ZIP-Archiv herunter (<a href="https://www.dropbox.com/sh/2ryrz6ilt7w3onf/AAAmitTzUktW2rdHIsLzjN1Ca?dl=0"
-                            style="text-decoration: none;">ältere Versionen</a>)
-                        <br/>2. Entpacke das Archiv (zum Beispiel mit <a href="https://www.winrar.de/downld.php" style="text-decoration: none;">WinRAR</a>)
+                        1. Lade <a href="https://www.dropbox.com/s/uvvrv52nbtebsd7/TML64bit0.11.7.5.zip?dl=1" target="_blank" style="text-decoration: none;">dieses</a> ZIP-Archiv herunter (<a href="https://www.dropbox.com/sh/2ryrz6ilt7w3onf/AAAmitTzUktW2rdHIsLzjN1Ca?dl=0"
+                            target="_blank" style="text-decoration: none;">ältere Versionen</a>)
+                        <br/>2. Entpacke das Archiv (zum Beispiel mit <a href="https://www.winrar.de/downld.php" target="_blank" style="text-decoration: none;">WinRAR</a>)
                         <br/>3. Öffne die Datei "tModLoader.exe" im extrahierten Archiv
                     </div>
                 </div>
 
                 <div class="p-4">
                     <!--MINDUSTRY-->
-                    <a id="picLinkMi" href="https://mindustrygame.github.io/" target="_blank"><img id="mi" src="images/Mindustry.png"></a>
+                    <a id="picLinkMi" href="https://mindustrygame.github.io/" target="_blank" onmouseover="scaleImageUp('mi')" onmouseout="scaleImageDown('mi')" onfocus="scaleImageUp('mi')" onfocusout="scaleImageDown('mi')"><img id="mi" src="images/Mindustry.png"></a>
 
                     <div id="MindustryList">
                         <p>
@@ -501,10 +541,8 @@
             </div>
         </article>
     </section>
-    
-    <div style="height: 100px; width: 100px;">
-      
-    </div>
+
+    <div style="height: 100px; width: 100px;"></div>
 
 
 
