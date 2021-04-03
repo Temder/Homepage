@@ -7,7 +7,10 @@
         </div>
     </div>
 
-    <input class="radio <?php if ($radio_names[$i] != 'Radiowelle Pirna') {echo 'round';}?>" onclick="play(1, 'r<?=$radio_count[$i]?>')" type="image" src="<?=$radio_picture_paths[$i]?>" alt="Stream: Radio Dresden">
+    <input class="radio <?php if ($radio_names[$i] != 'Radiowelle Pirna') {echo 'round';}?>" 
+           onclick="play(1, 'r<?=$radio_count[$i]?>')" 
+           type="image" src="<?=$radio_picture_paths[$i]?>" 
+           alt="Stream: Radio Dresden">
     <h3><?=$radio_names[$i]?></h3>
     <audio tabindex="-1" style="display:none" id="<?=$radio_count[$i]?>" src="<?=$radio_stream_paths[$i]?>" preload="none"></audio>
 </div>

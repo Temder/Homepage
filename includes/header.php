@@ -10,17 +10,17 @@
 
 <div class="nav noselect">
     <ul>
-        <li tabindex="2" data-rel="1" class="left active">Home</li>
-        <li tabindex="3" data-rel="2" class="left">PD Games</li>
-        <li tabindex="4" data-rel="3" class="left lang en">Radio Stations</li>
-        <li tabindex="4" data-rel="3" class="left lang de">Radio Stationen</li>
-        <li tabindex="5" data-rel="4" class="left lang en">Games</li>
-        <li tabindex="5" data-rel="4" class="left lang de">Spiele</li>
-        <li tabindex="6" data-rel="5" class="left lang en">Contact</li>
-        <li tabindex="6" data-rel="5" class="left lang de">Kontakt</li>
-        <li tabindex="7" data-rel="6" class="left">Test</li>
-        <li tabindex="8" data-rel="7" class="right lang en">Settings</li>
-        <li tabindex="8" data-rel="7" class="right lang de">Einstellungen</li>
+        <li tabindex="1" data-rel="1" class="left active">Home</li>
+        <li tabindex="2" data-rel="2" class="left">PD Games</li>
+        <li tabindex="3" data-rel="3" class="left lang en">Radio Stations</li>
+        <li tabindex="3" data-rel="3" class="left lang de">Radio Stationen</li>
+        <li tabindex="4" data-rel="4" class="left lang en">Games</li>
+        <li tabindex="4" data-rel="4" class="left lang de">Spiele</li>
+        <li tabindex="5" data-rel="5" class="left lang en">Contact</li>
+        <li tabindex="5" data-rel="5" class="left lang de">Kontakt</li>
+        <li tabindex="6" data-rel="6" class="left">Test</li>
+        <li tabindex="7" data-rel="7" class="right lang en">Settings</li>
+        <li tabindex="7" data-rel="7" class="right lang de">Einstellungen</li>
     </ul>
 </div>
 

@@ -17,6 +17,9 @@
             $section_name = "Home";
 
             $home_count = ["1"];
+
+            $hide_section = false;
+
             include("./includes/section.php");
 
 
@@ -25,9 +28,10 @@
 
             $section_name = "PD Games";
 
-            $app_count = ["1", "2", "3", "4", "5", "6", "7", "8"];
-            $app_names = ["Super Code", "Jump Jump 1", "Jump Jump 2", "Jump Jump 3D", "Mehrspieler", "Malen", "Fallen", "Speed Slidder"];
-            $app_picture_paths = ["SC.png", "JJ1.png", "JJ2.png", "JJ3D.png", "Me.png", "Ma.png", "F.png", "Ss.png"];
+            $app_count =           ["1",            "2",            "3",            "4",            "5",            "6",            "7",            "8"];
+            $app_names =           ["Super Code",   "Jump Jump 1",  "Jump Jump 2",  "Jump Jump 3D", "Mehrspieler",  "Malen",        "Fallen",       "Speed Slidder"];
+            $app_picture_paths =   ["SC.png",       "JJ1.png",      "JJ2.png",      "JJ3D.png",     "Me.png",       "Ma.png",       "F.png",        "Ss.png"];
+
             $app_descriptions_en = ["Can you guess a hidden color code in 7 attempts?", 
                                     "Do you reach the black hole?", 
                                     "Can you manage to collect all the music notes in the game?",
@@ -60,6 +64,9 @@
                                             "https://github.com/Temder/Homepage/releases/download/DaC/Draw.zip",
                                             "https://github.com/Temder/Homepage/releases/download/FT/Fall.zip",
                                             ""];
+
+            $hide_section = true;
+
             include("./includes/section.php");
 
 
@@ -68,8 +75,9 @@
             
             $section_name = "Radio Stations";
 
-            $radio_count = ["1", "2", "3", "4", "5"];
-            $radio_names = ["Radio Dresden", "Radiowelle Pirna", "HITMIX FM", "DJ CryexX", "HRP An Der Elbe"];
+            $radio_count = ["1",                "2",                    "3",            "4",            "5"];
+            $radio_names = ["Radio Dresden",    "Radiowelle Pirna",     "HITMIX FM",    "DJ CryexX",    "HRP An Der Elbe"];
+
             $radio_picture_paths = ["https://www.phonostar.de/images/auto_created/Radio_Dresden_2184x184.png",
                                     "images/RadiowellePirna.png",
                                     "https://static.radio.de/images/broadcasts/b9/79/107096/2/c175.png",
@@ -80,6 +88,9 @@
                                     "https://hitmixfm.stream.laut.fm/hitmix_fm",
                                     "https://stream.laut.fm/djcryexx",
                                     "https://stream.laut.fm/hrp-an-der-elbe?ref=radiode"];
+
+            $hide_section = false;
+
             include("./includes/section.php");
 
 
@@ -89,6 +100,7 @@
             $section_name = "Games";
             
             $game_count = ["1", "2", "3"];
+
             $game_picture_paths =  ["Minecraft.png",
                                     "Terraria.png",
                                     "Mindustry.png"];
@@ -98,6 +110,9 @@
             $game_urls =   ["https://www.minecraft.net/",
                             "https://terraria.org/",
                             "https://mindustrygame.github.io/"];
+
+            $hide_section = false;
+
             include("./includes/section.php");
 
 
@@ -107,6 +122,9 @@
             $section_name = "Contact";
 
             $contact_count = ["1"];
+
+            $hide_section = false;
+            
             include("./includes/section.php");
             
             
@@ -116,6 +134,9 @@
             $section_name = "Test";
             
             $test_count = ["1"];
+
+            $hide_section = false;
+
             include("./includes/section.php");
             
             
@@ -125,6 +146,9 @@
             $section_name = "Settings";
             
             $settings_count = ["1"];
+
+            $hide_section = false;
+
             include("./includes/section.php");
 
 

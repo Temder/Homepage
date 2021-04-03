@@ -1,4 +1,4 @@
-<section class="section <?php if ($section_name == 'PD Games') {echo 'hideSection';}?>">
+<section class="section <?php if ($hide_section == 'true') {echo 'hideSection';}?>">
     <article>
         <h><?=$section_name?></h><br/><br/>
         <div class="d-flex flex-row flex-wrap justify-content-center">

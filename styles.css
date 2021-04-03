@@ -4,6 +4,10 @@
         outline: none;
     }
     
+    html {
+        scroll-behavior: smooth;
+    }
+    
     body {
         text-align: center;
     }
@@ -65,7 +69,7 @@
     
     #open {
         display: none;
-        position: absolute;
+        position: fixed;
         top: clamp(0%, 5vh, 100%);
         left: clamp(0%, 5vw, 100%);
         width: 75px;
@@ -74,7 +78,7 @@
     }
     
     #openClick {
-        position: absolute;
+        position: fixed;
         top: clamp(5%, 5vh, 100%);
         left: clamp(5%, 5vw, 100%);
         width: 55px;

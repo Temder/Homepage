@@ -343,3 +343,12 @@
  function scaleImageDown(object) {
      document.getElementById(object).style.transform = "scale(1)";
  }
+
+
+
+
+ // Scroll To Object
+
+ function scrollToObject(object) {
+     document.getElementById(object).scrollIntoView({ behavior: "auto", block: "center" });
+ }
