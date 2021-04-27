@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php include("./includes/head.php"); ?>
-    </head>
+    </head> 
 
     <body>
         <?php
@@ -154,7 +154,7 @@
 
 
             // Footer
-
+            
             include("./includes/footer.php");
         ?>
     </body>

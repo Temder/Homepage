@@ -214,49 +214,26 @@
 
 
 
- // Cookies
-
- function createCookie(key, value, date) {
-     let expiration = new Date(date).toUTCString();
-     let cookie = escape(key) + "_" + escape(inputBgConf.value) + "=" + escape(value) + ";expires=" + expiration + ";";
-     document.cookie = cookie;
-     console.log(volume + ", " + bgIntensity + ", " + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + dpBlendmode);
- }
-
- function getCookie(cname) {
-     var name = cname + "_" + escape(inputBgConf.value) + "=";
-     var decodedCookie = decodeURIComponent(document.cookie);
-     var ca = decodedCookie.split(';');
-     for (var i = 0; i < ca.length; i++) {
-         var c = ca[i];
-         while (c.charAt(0) == ' ') {
-             c = c.substring(1);
-         }
-         if (c.indexOf(name) == 0) {
-             return c.substring(name.length, c.length);
-         }
-     }
-     return "";
- }
+ // Web Storage
 
  save.onclick = function() {
-     createCookie("volume", volume);
-     createCookie("bgIntensity", bgIntensity);
-     createCookie("bgRed", bgColorR);
-     createCookie("bgGreen", bgColorG);
-     createCookie("bgBlue", bgColorB);
-     createCookie("bgBlendmode", dpBlendmode.value);
+     localStorage.setItem("volume" + "_" + escape(inputBgConf.value), volume);
+     localStorage.setItem("bgIntensity" + "_" + escape(inputBgConf.value), bgIntensity);
+     localStorage.setItem("bgRed" + "_" + escape(inputBgConf.value), bgColorR);
+     localStorage.setItem("bgGreen" + "_" + escape(inputBgConf.value), bgColorG);
+     localStorage.setItem("bgBlue" + "_" + escape(inputBgConf.value), bgColorB);
+     localStorage.setItem("bgBlendmode" + "_" + escape(inputBgConf.value), dpBlendmode.value);
  }
 
  load.onclick = function() {
-     volume = getCookie("volume");
-     bgIntensity = getCookie("bgIntensity");
-     bgColorR = getCookie("bgRed");
-     bgColorG = getCookie("bgGreen");
-     bgColorB = getCookie("bgBlue");
-     bgBlendMode = getCookie("bgBlendmode");
+     volume = localStorage.getItem("volume" + "_" + escape(inputBgConf.value));
+     bgIntensity = localStorage.getItem("bgIntensity" + "_" + escape(inputBgConf.value));
+     bgColorR = localStorage.getItem("bgRed" + "_" + escape(inputBgConf.value));
+     bgColorG = localStorage.getItem("bgGreen" + "_" + escape(inputBgConf.value));
+     bgColorB = localStorage.getItem("bgBlue" + "_" + escape(inputBgConf.value));
+     bgBlendMode = localStorage.getItem("bgBlendmode" + "_" + escape(inputBgConf.value));
 
-     if (volume != "" && bgIntensity != "" && bgColorR != "" && bgColorG != "" && bgColorB != "" && bgBlendMode != "") {
+     if (localStorage.getItem("volume" + "_" + escape(inputBgConf.value)) != null && localStorage.getItem("bgIntensity" + "_" + escape(inputBgConf.value)) != null && localStorage.getItem("bgRed" + "_" + escape(inputBgConf.value)) != null && localStorage.getItem("bgGreen" + "_" + escape(inputBgConf.value)) != null && localStorage.getItem("bgBlue" + "_" + escape(inputBgConf.value)) != null && localStorage.getItem("bgBlendmode" + "_" + escape(inputBgConf.value)) != null) {
          sliderV.value = outputV.innerHTML = volume;
          for (var i = 1; i <= document.getElementsByClassName('playingOverlay').length; i++) {
              var audio = document.getElementById(i);
