@@ -14,7 +14,7 @@
 
             // Home
 
-            $section_name = "Home";
+            $section_names = ["Home", "Home"];
 
             $home_count = ["1"];
 
@@ -26,7 +26,7 @@
 
             // PD Games
 
-            $section_name = "PD Games";
+            $section_names = ["PD Games", "PD Games"];
 
             $app_count =           ["1",            "2",            "3",            "4",            "5",            "6",            "7",            "8"];
             $app_names =           ["Super Code",   "Jump Jump 1",  "Jump Jump 2",  "Jump Jump 3D", "Mehrspieler",  "Malen",        "Fallen",       "Speed Slidder"];
@@ -73,7 +73,7 @@
 
             // Radio Stations
             
-            $section_name = "Radio Stations";
+            $section_names = ["Radio Stations", "Radio Stationen"];
 
             $radio_count = ["1",                "2",                    "3",            "4",            "5"];
             $radio_names = ["Radio Dresden",    "Radiowelle Pirna",     "HITMIX FM",    "DJ CryexX",    "HRP An Der Elbe"];
@@ -97,7 +97,7 @@
 
             // Games
 
-            $section_name = "Games";
+            $section_names = ["Games", "Spiele"];
             
             $game_count = ["1", "2", "3"];
 
@@ -119,7 +119,7 @@
 
             // Contact
 
-            $section_name = "Contact";
+            $section_names = ["Contact", "Kontakt"];
 
             $contact_count = ["1"];
 
@@ -131,7 +131,7 @@
             
             // Test
             
-            $section_name = "Test";
+            $section_names = ["Test", "Test"];
             
             $test_count = ["1"];
 
@@ -143,7 +143,7 @@
             
             // Settings
             
-            $section_name = "Settings";
+            $section_names = ["Settings", "Einstellungen"];
             
             $settings_count = ["1"];
 
