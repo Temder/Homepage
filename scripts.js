@@ -34,7 +34,7 @@
 
 
 
- // Navbar fading effect
+ // Navbar Fading Effect
 
  (function($) {
      $('div li').click(function() {
@@ -100,7 +100,7 @@
 
 
 
- // Language changer
+ // Language Changer
 
  var language = window.navigator.userLanguage || window.navigator.language;
 
@@ -120,7 +120,7 @@
 
 
 
- // Search in list
+ // Search In List
 
  $(document).ready(function() {
      $("#searchEN").on("keyup", function() {
@@ -202,7 +202,7 @@
 
 
 
- // Background blend mode
+ // Background Blend Mode
 
  dpBlendmode.value = bgBlendMode;
  bg.style.backgroundBlendMode = bgBlendMode;
@@ -276,7 +276,7 @@
 
 
 
- // Nav open and close
+ // Nav Open And Close
 
  openNav.onclick = function() {
      if (document.getElementsByClassName("nav")[0].style.display == "block") {
