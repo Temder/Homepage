@@ -62,5 +62,7 @@
     <button id="save" style="background-color: greenyellow; border: 0px; border-radius: 5px;"><div class="lang de">speichern</div><div class="lang en">save</div></button>
     <button id="load" style="background-color: aqua; border: 0px; border-radius: 5px;"><div class="lang de">laden</div><div class="lang en">load</div></button>
     <button id="reset" style="background-color: red; border: 0px; border-radius: 5px;"><div class="lang de">reset</div><div class="lang en">reset</div></button>
-    <input id="inputBgConf" type="text" name="bgConf" style="color: white;">
+    <input id="inputBgConf" list="layouts" type="text" name="bgConf" style="color: white;">
+    <datalist id="layouts">
+    </datalist>
 </div>

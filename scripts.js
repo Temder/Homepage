@@ -7,6 +7,11 @@
  var bgIntensity = 0; // (0 - 100)
  var volume = 50; // (0 - 100)
 
+ var savedLayouts = new Array();
+ savedLayouts[0] = "hi";
+ savedLayouts[1] = "hello";
+ console.log(typeof savedLayouts);
+
 
  var bg = document.getElementById('bg');
 
@@ -17,20 +22,23 @@
  var sliderCG = document.getElementById("colorSliderG");
  var sliderCB = document.getElementById("colorSliderB");
 
- var dpBlendmode = document.getElementById('blendmode');
+ var dpBlendmode = document.getElementById("blendmode");
 
  var sliderV = document.getElementById("volumeSlider");
  var outputV = document.getElementById("volume");
 
- var save = document.getElementById('save');
- var load = document.getElementById('load');
- var reset = document.getElementById('reset');
- var inputBgConf = document.getElementById('inputBgConf');
+ var save = document.getElementById("save");
+ var load = document.getElementById("load");
+ var reset = document.getElementById("reset");
+ var inputBgConf = document.getElementById("inputBgConf");
 
- var openSVG = document.getElementById('open');
- var openNav = document.getElementById('openClick');
+ var openSVG = document.getElementById("open");
+ var openNav = document.getElementById("openClick");
 
- var dpSPA = document.getElementsByClassName('choose');
+ var dpSPA = document.getElementsByClassName("choose");
+
+ var dlLayouts = document.getElementById("layouts");
+
 
 
 
@@ -223,6 +231,12 @@
      localStorage.setItem("bgGreen" + "_" + escape(inputBgConf.value), bgColorG);
      localStorage.setItem("bgBlue" + "_" + escape(inputBgConf.value), bgColorB);
      localStorage.setItem("bgBlendmode" + "_" + escape(inputBgConf.value), dpBlendmode.value);
+
+     var x = 0;
+     savedLayouts[x] = "purple";
+     console.log(savedLayouts);
+     updateLayoutDatalist();
+     localStorage.setItem("savedLayouts", savedLayouts);
  }
 
  load.onclick = function() {
@@ -232,6 +246,9 @@
      bgColorG = localStorage.getItem("bgGreen" + "_" + escape(inputBgConf.value));
      bgColorB = localStorage.getItem("bgBlue" + "_" + escape(inputBgConf.value));
      bgBlendMode = localStorage.getItem("bgBlendmode" + "_" + escape(inputBgConf.value));
+     savedLayouts = localStorage.getItem("savedLayouts");
+
+     updateLayoutDatalist();
 
      if (localStorage.getItem("volume" + "_" + escape(inputBgConf.value)) != null && localStorage.getItem("bgIntensity" + "_" + escape(inputBgConf.value)) != null && localStorage.getItem("bgRed" + "_" + escape(inputBgConf.value)) != null && localStorage.getItem("bgGreen" + "_" + escape(inputBgConf.value)) != null && localStorage.getItem("bgBlue" + "_" + escape(inputBgConf.value)) != null && localStorage.getItem("bgBlendmode" + "_" + escape(inputBgConf.value)) != null) {
          sliderV.value = outputV.innerHTML = volume;
@@ -329,3 +346,19 @@
  function scrollToObject(object) {
      document.getElementById(object).scrollIntoView({ behavior: "auto", block: "center" });
  }
+
+
+
+
+ // Saved Layouts
+
+ function updateLayoutDatalist() {
+     var str = '';
+     for (var i = 0; i < savedLayouts.length; i++) {
+         str += '<option value="' + savedLayouts[i] + '" />';
+     }
+
+     dlLayouts.innerHTML = str;
+ }
+
+ updateLayoutDatalist();
