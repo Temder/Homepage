@@ -1,0 +1,34 @@
+{
+    "remotePath": "/var/www/html/",
+    "host": "4.tcp.ngrok.io",
+    "username": "ubuntu",
+    "password": "13792846",
+    "port": 12805,
+    "secure": false,
+    "protocol": "sftp",
+    "uploadOnSave": true,
+    "passive": false,
+    "debug": false,
+    "privateKeyPath": null,
+    "passphrase": null,
+    "agent": null,
+    "allow": [],
+    "ignore": [
+        "\\.vscode",
+        "\\.git",
+        "\\.DS_Store",
+        "index.html",
+        "workspace.code-workspace",
+        "phpmyadmin"
+    ],
+    "generatedFiles": {
+        "uploadOnSave": true,
+        "extensionsToInclude": [
+            ".php",
+            ".css",
+            ".js",
+            ".png"
+        ],
+        "path": ""
+    }
+}

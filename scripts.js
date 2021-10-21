@@ -8,9 +8,6 @@
  var volume = 50; // (0 - 100)
 
  var savedLayouts = new Array();
- savedLayouts[0] = "hi";
- savedLayouts[1] = "hello";
- console.log(typeof savedLayouts);
 
 
  var bg = document.getElementById('bg');
@@ -224,6 +221,10 @@
 
  // Web Storage
 
+ if (localStorage.getItem("savedLayouts") != null) {
+     savedLayouts = JSON.parse(localStorage.getItem("savedLayouts"));
+ }
+
  save.onclick = function() {
      localStorage.setItem("volume" + "_" + escape(inputBgConf.value), volume);
      localStorage.setItem("bgIntensity" + "_" + escape(inputBgConf.value), bgIntensity);
@@ -232,11 +233,9 @@
      localStorage.setItem("bgBlue" + "_" + escape(inputBgConf.value), bgColorB);
      localStorage.setItem("bgBlendmode" + "_" + escape(inputBgConf.value), dpBlendmode.value);
 
-     var x = 0;
-     savedLayouts[x] = "purple";
-     console.log(savedLayouts);
+     savedLayouts[savedLayouts.length] = inputBgConf.value;
      updateLayoutDatalist();
-     localStorage.setItem("savedLayouts", savedLayouts);
+     localStorage.setItem("savedLayouts", JSON.stringify(savedLayouts));
  }
 
  load.onclick = function() {
@@ -246,7 +245,6 @@
      bgColorG = localStorage.getItem("bgGreen" + "_" + escape(inputBgConf.value));
      bgColorB = localStorage.getItem("bgBlue" + "_" + escape(inputBgConf.value));
      bgBlendMode = localStorage.getItem("bgBlendmode" + "_" + escape(inputBgConf.value));
-     savedLayouts = localStorage.getItem("savedLayouts");
 
      updateLayoutDatalist();
 
@@ -355,7 +353,7 @@
  function updateLayoutDatalist() {
      var str = '';
      for (var i = 0; i < savedLayouts.length; i++) {
-         str += '<option value="' + savedLayouts[i] + '" />';
+         str += '<option value="' + savedLayouts[i] + '"></option>\n';
      }
 
      dlLayouts.innerHTML = str;
