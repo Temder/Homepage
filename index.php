@@ -48,6 +48,7 @@
                                     "Malen Sie Bilder oder erschaffen Sie Städte.",
                                     "Sammeln Sie die herunterfallenden Gegenstände schnell ein.",
                                     "Wie weit kommen Sie?"];
+
             $app_download_urls_android =   ["https://github.com/Temder/Homepage/releases/download/SC/SuperCode.apk",
                                             "https://github.com/Temder/Homepage/releases/download/JJ/JumpJump.apk",
                                             "https://github.com/Temder/Homepage/releases/download/JJ2/JumpJump2.apk",
@@ -107,6 +108,7 @@
             $game_picture_scales = ["mc",
                                     "te",
                                     "mi"];
+
             $game_urls =   ["https://www.minecraft.net/",
                             "https://terraria.org/",
                             "https://mindustrygame.github.io/"];
@@ -153,10 +155,54 @@
 
 
 
+            // Free Stuff
+
+            $section_names = ["Free Things", "Kostenlose Dinge"];
+
+            $free_count =    ["1",                      "2",                            "3",                                                "4"];
+            $free_names_en = ["Rokkr - Streaming App",  "Minecraft Windows 10 Edition", "Steam Unlocked - Free Steam Singleplayer",         "Steam Fix - Free Steam Multiplayer"];
+            $free_names_de = ["Rokkr - Streaming App",  "Minecraft Windows 10 Edition", "Steam Unlocked - Kostenloser Steam Einzelspieler", "Steam Fix - Kostenloser Steam Mehrspieler"];
+
+            $free_picture_paths = ["images/rokkr.png", "", "", ""];
+
+            $free_descriptions_en = ["", 
+                                     "", 
+                                     "", 
+                                     ""];
+            $free_descriptions_de = ["Mit Rokkr haben Sie das Angebot<br />von vielen bekannten Streaming Diensten<br />wie Netflix in einer App im Überblick", 
+                                     "", 
+                                     "", 
+                                     ""];
+            $free_instructions_en = ["", 
+                                     "", 
+                                     "", 
+                                     ""];
+            $free_instructions_de = ["<ul style='list-style-type: decimal;'><li>Laden Sie sich die modifizierte App herunter. (Sie wurde modifiziert<br /> um die Begrenzung von einer Stunde streamen am Tag aufzuheben.)</li>
+                                      <li>Öffnen Sie die App und geben Sie eine sogenannte Bundle-URL ein: huhu.to, oha.to</li>
+                                      <li>Nun steht ihnen eine große Auswahl an Filmen, Serien und Fernsehsendern zur Verfügung.</li></ul>",
+                                     "", 
+                                     "", 
+                                     ""];
+
+            $free_download_urls = ["https://www.dropbox.com/s/srp37et256ua7yz/Rokkr_Mod.apk?dl=1", 
+                                   "", 
+                                   "", 
+                                   ""];
+
+            $hide_section = true;
+
+            include("./includes/section.php");
+
+
+
             // Footer
             
             include("./includes/footer.php");
         ?>
+
+    <script id="__bs_script__">//<![CDATA[
+    document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.27.5'><\/script>".replace("HOST", location.hostname));
+    //]]></script>
     </body>
     
     <?php include("./includes/foot.php"); ?>
