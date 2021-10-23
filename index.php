@@ -153,7 +153,6 @@
 
 
 
-<<<<<<< HEAD
             // Free Stuff
 
             $section_names = ["Free Things", "Kostenlose Dinge"];
@@ -194,8 +193,6 @@
 
 
 
-=======
->>>>>>> parent of 7df0850 (free stuff)
             // Footer
             
             include("./includes/footer.php");
