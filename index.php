@@ -202,7 +202,7 @@
             $free_download_urls = ["https://www.dropbox.com/s/srp37et256ua7yz/Rokkr_Mod.apk?dl=1", 
                                    "", 
                                    "https://steamunlocked.net/", 
-                                   ""];
+                                   "https://mega.nz/file/Wv4yXaJa#8E02MP8DxZzHm6J3VvIAROhZbVMfUzxx0lQYBPN4enw"];
 
             $hide_section = true;
 
