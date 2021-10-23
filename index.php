@@ -177,9 +177,9 @@
                                      "", 
                                      "", 
                                      ""];
-            $free_instructions_de = ["1. Laden Sie sich die modifizierte App herunter. (Sie wurde modifiziert<br /> um die Begrenzung von einer Stunde streamen am Tag aufzuheben.)<br />
-                                      2. Öffnen Sie die App und geben Sie eine sogenannte Bundle-URL ein: huhu.to, oha.to<br />
-                                      3. Nun steht ihnen eine große Auswahl an Filmen, Serien und Fernsehsendern zur Verfügung.",
+            $free_instructions_de = ["<ul style='list-style-type: decimal;'><li>Laden Sie sich die modifizierte App herunter. (Sie wurde modifiziert<br /> um die Begrenzung von einer Stunde streamen am Tag aufzuheben.)</li>
+                                      <li>Öffnen Sie die App und geben Sie eine sogenannte Bundle-URL ein: huhu.to, oha.to</li>
+                                      <li>Nun steht ihnen eine große Auswahl an Filmen, Serien und Fernsehsendern zur Verfügung.</li></ul>",
                                      "", 
                                      "", 
                                      ""];

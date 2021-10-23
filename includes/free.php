@@ -7,7 +7,7 @@
         <h4>Beschreibung</h4>
         <div><?=$free_descriptions_de[$i]?></div><br />
         <h4>Anleitung</h4>
-        <div><?=$free_instructions_de[$i]?></div><br />
+        <?=$free_instructions_de[$i]?><br />
         <h4>Download</h4>
         <a <?php if ($free_download_urls[$i] != "") {echo("href='$free_download_urls[$i]'");} ?> 
             onmouseover="scaleImageUp('freeImg<?=$free_count[$i]?>')" 
