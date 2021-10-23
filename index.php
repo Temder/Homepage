@@ -158,33 +158,49 @@
             $section_names = ["Free Things", "Kostenlose Dinge"];
 
             $free_count =    ["1",                      "2",                            "3",                                                "4"];
-            $free_names_en = ["Rokkr - Streaming App",  "Minecraft Windows 10 Edition", "Steam Unlocked - Free Steam Singleplayer",         "Steam Fix - Free Steam Multiplayer"];
-            $free_names_de = ["Rokkr - Streaming App",  "Minecraft Windows 10 Edition", "Steam Unlocked - Kostenloser Steam Einzelspieler", "Steam Fix - Kostenloser Steam Mehrspieler"];
+            $free_names_en = ["Rokkr - Streaming App",  "Minecraft Windows 10 Edition", " - Free Steam Singleplayer",         "Online Fix - Free Multiplayer Games"];
+            $free_names_de = ["Rokkr - Streaming App",  "Minecraft Windows 10 Edition", " - Kostenloser Steam Einzelspieler", "Online Fix - Kostenlose Mehrspieler Spiele"];
 
-            $free_picture_paths = ["images/rokkr.png", "images/McWin10.png", "", ""];
+            $free_picture_paths = ["images/rokkr.png", "images/McWin10.png", "images/SteamUnlocked.png", "images/SteamOnlineFix.png"];
 
-            $free_descriptions_en = ["", 
+            $free_descriptions_en = ["With Rokkr you have an overview of many popular streaming services in one app", 
                                      "", 
                                      "", 
                                      ""];
-            $free_descriptions_de = ["Mit Rokkr haben Sie das Angebot von vielen bekannten Streaming<br /> Diensten wie Netflix in einer App im Überblick", 
+            $free_descriptions_de = ["Mit Rokkr haben Sie das Angebot von vielen bekannten Streaming<br /> Diensten in einer App im Überblick", 
                                      "", 
                                      "", 
                                      ""];
-            $free_instructions_en = ["", 
-                                     "", 
-                                     "", 
-                                     ""];
-            $free_instructions_de = ["<ul style='list-style-type: decimal;'><li>Laden Sie sich die modifizierte App herunter. (Sie wurde modifiziert<br /> um die Begrenzung von einer Stunde streamen am Tag aufzuheben.)</li>
-                                      <li>Öffnen Sie die App und geben Sie eine sogenannte Bundle-URL ein: huhu.to, oha.to</li>
-                                      <li>Nun steht ihnen eine große Auswahl an Filmen, Serien und Fernsehsendern zur Verfügung.</li></ul>",
-                                     "", 
-                                     "", 
-                                     ""];
+            $free_instructions_en = ["&bull; Download the modified app. (It was modified to remove the limit of one hour of streaming per day.)<br />
+                                      &bull; Open the app and type in a so-called bundle URL: huhu.to, oha.to<br />
+                                      &bull; Now you have a large selection of films, series and TV channels at your disposal.", 
+                                     "&bull; <br />
+                                      &bull; <br />
+                                      &bull; ", 
+                                     "&bull; <br />
+                                      &bull; <br />
+                                      &bull; ", 
+                                     "&bull; <br />
+                                      &bull; <br />
+                                      &bull; "];
+            $free_instructions_de = ["&bull; Laden Sie sich die modifizierte App herunter. (Sie wurde modifiziert<br /> um die Begrenzung von einer Stunde streamen am Tag aufzuheben.)<br />
+                                      &bull; Öffnen Sie die App und geben Sie eine sogenannte Bundle-URL ein: huhu.to, oha.to<br />
+                                      &bull; Nun steht ihnen eine große Auswahl an Filmen, Serien und Fernsehsendern zur Verfügung.",
+                                     "&bull; <br />
+                                      &bull; <br />
+                                      &bull; ", 
+                                     "&bull; <br />
+                                      &bull; <br />
+                                      &bull; ", 
+                                     "&bull; Rufen Sie die Webseite <a target='_blank' href='https://online-fix.me/'>https://online-fix.me/</a> auf.<br />
+                                      &bull; Sie müssen ein kostenloses Konto erstellen um ein Spiel runterzuladen.<br />
+                                      &bull; Suchen Sie nach dem Spiel welches Sie im Mehrspieler spielen möchten.<br />
+                                      &bull; Laden Sie sich gegebenenfalls den entsprechenden Launcher herunter. (<a target='_blank' href='https://store.steampowered.com/about/'>Steam</a>, <a target='_blank' href='https://www.epicgames.com/shadowcomplex/download'>Epic Games</a>)<br />
+                                      &bull; Folgen Sie der Anleitung unter den Downloads um das Spiel einzurichten."];
 
             $free_download_urls = ["https://www.dropbox.com/s/srp37et256ua7yz/Rokkr_Mod.apk?dl=1", 
                                    "", 
-                                   "", 
+                                   "https://steamunlocked.net/", 
                                    ""];
 
             $hide_section = true;
