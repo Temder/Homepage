@@ -163,13 +163,13 @@
             $free_names_en = ["Rokkr - Streaming App",  "Minecraft Windows 10 Edition", "Steam Unlocked - Free Steam Singleplayer",         "Steam Fix - Free Steam Multiplayer"];
             $free_names_de = ["Rokkr - Streaming App",  "Minecraft Windows 10 Edition", "Steam Unlocked - Kostenloser Steam Einzelspieler", "Steam Fix - Kostenloser Steam Mehrspieler"];
 
-            $free_picture_paths = ["images/rokkr.png", "", "", ""];
+            $free_picture_paths = ["images/rokkr.png", "images/McWin10.png", "", ""];
 
             $free_descriptions_en = ["", 
                                      "", 
                                      "", 
                                      ""];
-            $free_descriptions_de = ["Mit Rokkr haben Sie das Angebot<br />von vielen bekannten Streaming Diensten<br />wie Netflix in einer App im Überblick", 
+            $free_descriptions_de = ["Mit Rokkr haben Sie das Angebot von vielen bekannten Streaming<br /> Diensten wie Netflix in einer App im Überblick", 
                                      "", 
                                      "", 
                                      ""];

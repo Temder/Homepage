@@ -15,6 +15,12 @@
              onmouseout="scaleImageDown('freeImg<?=$free_count[$i]?>')" 
              onfocusout="scaleImageDown('freeImg<?=$free_count[$i]?>')">
             <img id="freeImg<?=$free_count[$i]?>" src="images/android.png" />
+        </a>
+        <ul style="list-style-type: decimal;">
+            <li>apple</li>
+            <li>banana</li>
+            <li>pear</li>
+        </ul>
     </div>
     <div class="lang en">
         <h2><?=$free_names_en[$i]?></h2>
