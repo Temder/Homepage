@@ -198,6 +198,7 @@
                                       &bull; Laden Sie sich gegebenenfalls den entsprechenden Launcher herunter. (<a target='_blank' href='https://store.steampowered.com/about/'>Steam</a>, <a target='_blank' href='https://www.epicgames.com/shadowcomplex/download'>Epic Games</a>)<br />
                                       &bull; Folgen Sie der Anleitung unter den Downloads um das Spiel einzurichten."];
 
+            $free_download_count = ["1", "1", "1", "2"];
             $free_download_urls = ["https://www.dropbox.com/s/srp37et256ua7yz/Rokkr_Mod.apk?dl=1", 
                                    "", 
                                    "https://steamunlocked.net/", 
