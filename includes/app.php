@@ -1,4 +1,4 @@
-<div class="p-4 box">
+<div class="p-2 box">
     <h2 id="heading"><?=$app_names[$i]?></h2>
     <img src="images/<?=$app_picture_paths[$i]?>">
     <p class="lang de"><?=$app_descriptions_de[$i]?></p>

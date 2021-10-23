@@ -48,7 +48,6 @@
                                     "Malen Sie Bilder oder erschaffen Sie Städte.",
                                     "Sammeln Sie die herunterfallenden Gegenstände schnell ein.",
                                     "Wie weit kommen Sie?"];
-
             $app_download_urls_android =   ["https://github.com/Temder/Homepage/releases/download/SC/SuperCode.apk",
                                             "https://github.com/Temder/Homepage/releases/download/JJ/JumpJump.apk",
                                             "https://github.com/Temder/Homepage/releases/download/JJ2/JumpJump2.apk",
@@ -108,7 +107,6 @@
             $game_picture_scales = ["mc",
                                     "te",
                                     "mi"];
-
             $game_urls =   ["https://www.minecraft.net/",
                             "https://terraria.org/",
                             "https://mindustrygame.github.io/"];
@@ -155,6 +153,7 @@
 
 
 
+<<<<<<< HEAD
             // Free Stuff
 
             $section_names = ["Free Things", "Kostenlose Dinge"];
@@ -195,14 +194,12 @@
 
 
 
+=======
+>>>>>>> parent of 7df0850 (free stuff)
             // Footer
             
             include("./includes/footer.php");
         ?>
-
-    <script id="__bs_script__">//<![CDATA[
-    document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.27.5'><\/script>".replace("HOST", location.hostname));
-    //]]></script>
     </body>
     
     <?php include("./includes/foot.php"); ?>

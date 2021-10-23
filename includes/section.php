@@ -30,11 +30,6 @@
                         include("./includes/contact.php");
                     }
                 }
-                if ($section_names[0] == "Free Things") {
-                    for ($i=0; $i < count($free_count); $i++) {
-                        include("./includes/free.php");
-                    }
-                }
                 if ($section_names[0] == "Test") {
                     for ($i=0; $i < count($test_count); $i++) {
                         include("./includes/test.php");
