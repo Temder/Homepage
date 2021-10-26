@@ -166,11 +166,11 @@
             $free_descriptions_en = ["With Rokkr you have an overview of many popular streaming services in one app", 
                                      "", 
                                      "", 
-                                     ""];
+                                     "Play popular games with multiplayer support for free with Online Fix."];
             $free_descriptions_de = ["Mit Rokkr haben Sie das Angebot von vielen bekannten Streaming<br /> Diensten in einer App im Überblick", 
                                      "", 
                                      "", 
-                                     ""];
+                                     "Spielen Sie kostenlos bekannte Spiele im Mehrspieler mit Online Fix."];
             $free_instructions_en = ["&bull; Download the modified app. (It was modified to remove the limit of one hour of streaming per day.)<br />
                                       &bull; Open the app and type in a so-called bundle URL: huhu.to, oha.to<br />
                                       &bull; Now you have a large selection of films, series and TV channels at your disposal.", 
