@@ -180,9 +180,11 @@
                                      "&bull; <br />
                                       &bull; <br />
                                       &bull; ", 
-                                     "&bull; <br />
-                                      &bull; <br />
-                                      &bull; "];
+                                     "&bull; Go to the website <a target='_blank' href='https://online-fix.me/'>https://online-fix.me/</a><br />
+                                      &bull; You need to create a free account to download a game.<br />
+                                      &bull; Find the game you want to play with multiplayer support.<br />
+                                      &bull; If necessary, download the appropriate launcher. (<a target='_blank' href='https://store.steampowered.com/about/'>Steam</a>, <a target='_blank' href='https://www.epicgames.com/shadowcomplex/download'>Epic Games</a>)<br />
+                                      &bull; Follow the instructions underneath the downloads to set up the game."];
             $free_instructions_de = ["&bull; Laden Sie sich die modifizierte App herunter. (Sie wurde modifiziert<br /> um die Begrenzung von einer Stunde streamen am Tag aufzuheben.)<br />
                                       &bull; Öffnen Sie die App und geben Sie eine sogenannte Bundle-URL ein: huhu.to, oha.to<br />
                                       &bull; Nun steht ihnen eine große Auswahl an Filmen, Serien und Fernsehsendern zur Verfügung.",
@@ -193,10 +195,10 @@
                                       &bull; <br />
                                       &bull; ", 
                                      "&bull; Rufen Sie die Webseite <a target='_blank' href='https://online-fix.me/'>https://online-fix.me/</a> auf.<br />
-                                      &bull; Sie müssen ein kostenloses Konto erstellen um ein Spiel runterzuladen.<br />
-                                      &bull; Suchen Sie nach dem Spiel welches Sie im Mehrspieler spielen möchten.<br />
-                                      &bull; Laden Sie sich gegebenenfalls den entsprechenden Launcher herunter. (<a target='_blank' href='https://store.steampowered.com/about/'>Steam</a>, <a target='_blank' href='https://www.epicgames.com/shadowcomplex/download'>Epic Games</a>)<br />
-                                      &bull; Folgen Sie der Anleitung unter den Downloads um das Spiel einzurichten."];
+                                      &bull; Sie müssen ein kostenloses Konto erstellen, um ein Spiel herunterzuladen.<br />
+                                      &bull; Finden Sie das Spiel, das Sie mit Mehrspieler Unterstützung spielen möchten.<br />
+                                      &bull; Laden Sie gegebenenfalls den entsprechenden Launcher herunter. (<a target='_blank' href='https://store.steampowered.com/about/'>Steam</a>, <a target='_blank' href='https://www.epicgames.com/shadowcomplex/download'>Epic Games</a>)<br />
+                                      &bull; Folgen Sie den Anweisungen unterhalb der Downloads, um das Spiel einzurichten."];
 
             $free_download_count = ["1", "1", "1", "2"];
             $free_download_urls = ["https://www.dropbox.com/s/srp37et256ua7yz/Rokkr_Mod.apk?dl=1", 
