@@ -164,19 +164,21 @@
             $free_picture_paths = ["images/rokkr.png", "images/McWin10.png", "images/SteamUnlocked.png", "images/SteamOnlineFix.png"];
 
             $free_descriptions_en = ["With Rokkr you have an overview of many popular streaming services in one app", 
-                                     "", 
+                                     "Get Minecraft Windows 10 Edition for free and with working multiplayer.", 
                                      "", 
                                      "Play popular games with multiplayer support for free with Online Fix."];
             $free_descriptions_de = ["Mit Rokkr haben Sie das Angebot von vielen bekannten Streaming<br /> Diensten in einer App im Überblick", 
-                                     "", 
+                                     "Spielen Sie kostenlos bekannte Spiele im Mehrspieler mit Online Fix.", 
                                      "", 
                                      "Spielen Sie kostenlos bekannte Spiele im Mehrspieler mit Online Fix."];
             $free_instructions_en = ["&bull; Download the modified app. (It was modified to remove the limit of one hour of streaming per day.)<br />
                                       &bull; Open the app and type in a so-called bundle URL: huhu.to, oha.to<br />
                                       &bull; Now you have a large selection of films, series and TV channels at your disposal.", 
-                                     "&bull; <br />
-                                      &bull; <br />
-                                      &bull; ", 
+                                     "&bull; Download one of the launchers (BlueSky, BLauncher) from the Discord server in the sub-server #launcher-release<br />
+                                      &bull; Unpack the archive.<br />
+                                      &bull; Download the minecraft demo version from the microsoft store.<br />
+                                      &bull; If you now open the file (.exe) in the unzipped folder and click on play in the launcher, the installed demo version of Minecraft becomes the full version.<br />
+                                      &bull; If you have any questions or problems, you can ask them on the Discord server in the appropriate sub-server (#support, # error-report).", 
                                      "&bull; <br />
                                       &bull; <br />
                                       &bull; ", 
@@ -188,9 +190,11 @@
             $free_instructions_de = ["&bull; Laden Sie sich die modifizierte App herunter. (Sie wurde modifiziert<br /> um die Begrenzung von einer Stunde streamen am Tag aufzuheben.)<br />
                                       &bull; Öffnen Sie die App und geben Sie eine sogenannte Bundle-URL ein: huhu.to, oha.to<br />
                                       &bull; Nun steht ihnen eine große Auswahl an Filmen, Serien und Fernsehsendern zur Verfügung.",
-                                     "&bull; <br />
-                                      &bull; <br />
-                                      &bull; ", 
+                                     "&bull; Laden Sie sich einen der Launcher (BlueSky, BLauncher) von dem Discord Server im Unterserver #launcher-release herunter.<br />
+                                      &bull; Entpacken Sie das Archiv.<br />
+                                      &bull; Laden Sie sich im Microsoft Store die Minecraft Demo Version herunter.<br />
+                                      &bull; Wenn Sie nun die Datei (.exe) im entpackten Ordner öffnen und im Launcher auf spielen klicken wird die installierte Demo Version von Minecraft zur Vollversion.<br />
+                                      &bull; Bei Fragen können Sie diese auf dem Discord Server im passenden Unterserver (#support, #error-report) stellen.", 
                                      "&bull; <br />
                                       &bull; <br />
                                       &bull; ", 
