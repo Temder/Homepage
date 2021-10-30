@@ -4,9 +4,6 @@
     </svg>
     
     <a-scene>
-        <a-assets>
-            <img id="img360" src="background3.png" />
-        </a-assets>
-        <a-sky id="img-360" radius="10" src="#img360"> </a-sky>
+        <a-sky src="https://aframe.io/aframe/examples/boilerplate/panorama/puydesancy.jpg"></a-sky>
     </a-scene>
 </div>
