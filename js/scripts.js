@@ -360,22 +360,3 @@
  }
 
  updateLayoutDatalist();
-
-
-
-
- // 360° Panoramas
-
- function pano() {
-
-     var container = document.querySelector("#container");
-
-     var panorama = new PANOLENS.ImagePanorama("/images/a360.jpg");
-
-     var viewer = new PANOLENS.Viewer({ container: container, autoRotate: true, autoRotateSpeed: 1, autoRotateActivationDuration: 0 });
-     viewer.add(panorama);
-
-     viewer.addUpdateCallback(function() {
-
-     });
- }

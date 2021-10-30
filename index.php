@@ -129,30 +129,6 @@
             
             
             
-            // Test
-            
-            $section_names = ["Test", "Test"];
-            
-            $test_count = ["1"];
-
-            $hide_section = false;
-
-            include("./includes/section.php");
-            
-            
-            
-            // Settings
-            
-            $section_names = ["Settings", "Einstellungen"];
-            
-            $settings_count = ["1"];
-
-            $hide_section = false;
-
-            include("./includes/section.php");
-
-
-
             // Free Stuff
 
             $section_names = ["Free Things", "Kostenlose Dinge"];
@@ -216,6 +192,30 @@
 
 
 
+            // Test
+            
+            $section_names = ["Test", "Test"];
+            
+            $test_count = ["1"];
+
+            $hide_section = false;
+
+            include("./includes/section.php");
+            
+            
+            
+            // Settings
+            
+            $section_names = ["Settings", "Einstellungen"];
+            
+            $settings_count = ["1"];
+
+            $hide_section = false;
+
+            include("./includes/section.php");
+
+
+            
             // Footer
             
             include("./includes/footer.php");
