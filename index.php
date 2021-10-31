@@ -129,30 +129,6 @@
             
             
             
-            // Test
-            
-            $section_names = ["Test", "Test"];
-            
-            $test_count = ["1"];
-
-            $hide_section = false;
-
-            include("./includes/section.php");
-            
-            
-            
-            // Settings
-            
-            $section_names = ["Settings", "Einstellungen"];
-            
-            $settings_count = ["1"];
-
-            $hide_section = false;
-
-            include("./includes/section.php");
-
-
-
             // Free Stuff
 
             $section_names = ["Free Things", "Kostenlose Dinge"];
@@ -204,7 +180,6 @@
                                       &bull; Laden Sie gegebenenfalls den entsprechenden Launcher herunter. (<a target='_blank' href='https://store.steampowered.com/about/'>Steam</a>, <a target='_blank' href='https://www.epicgames.com/shadowcomplex/download'>Epic Games</a>)<br />
                                       &bull; Folgen Sie den Anweisungen unterhalb der Downloads, um das Spiel einzurichten."];
 
-            $free_download_count = ["1", "1", "1", "2"];
             $free_download_urls = ["https://www.dropbox.com/s/srp37et256ua7yz/Rokkr_Mod.apk?dl=1", 
                                    "", 
                                    "https://steamunlocked.net/", 
@@ -216,6 +191,32 @@
 
 
 
+            // Test
+            
+            $section_names = ["Test", "Test"];
+            
+            $test_count = ["1"];
+
+            $test_panorama_paths = ["/images/a360.jpg", "/images/a360.jpg", "/images/a360.jpg"];
+
+            $hide_section = false;
+
+            include("./includes/section.php");
+            
+            
+            
+            // Settings
+            
+            $section_names = ["Settings", "Einstellungen"];
+            
+            $settings_count = ["1"];
+
+            $hide_section = false;
+
+            include("./includes/section.php");
+
+
+            
             // Footer
             
             include("./includes/footer.php");

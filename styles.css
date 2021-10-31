@@ -142,7 +142,7 @@
         cursor: pointer;
     }
     
-    section:nth-of-type(8) {
+    section:nth-of-type(7) {
         display: block;
     }
     
@@ -496,6 +496,11 @@
         height: 70px;
         width: 70px;
         color: rgba(0, 0, 0, 0);
+    }
+    /*Panoramas*/
+    
+    .panoPreview {
+        padding: 10px;
     }
     /*Made By Text*/
     
