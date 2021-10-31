@@ -8,9 +8,9 @@
     </a-scene>
     <iframe allowfullscreen src="../panorama.html"></iframe>-->
     
-    <div id="container" style="width: 45vw; height: 45vh;">
+    <div id="pano360" style="width: 45vw; height: 45vh;">
         <script>
-            var container = document.querySelector("#container");
+            var container = document.querySelector("#pano360");
 
             var panorama = new PANOLENS.ImagePanorama("/images/a360.jpg");
 
@@ -21,5 +21,12 @@
 
             });
         </script>
+    </div>
+    <div>
+        <?php
+            for ($i=0; $i < count($test_panorama_paths); $i++) {
+                echo("<img class='panoPreview' src='".$test_panorama_paths[$i]."' />");
+            }
+        ?>
     </div>
 </div>
