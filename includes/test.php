@@ -8,7 +8,7 @@
     </a-scene>
     <iframe allowfullscreen src="../panorama.html"></iframe>-->
     
-    <div id="pano360" style="width: 45vw; height: 45vh;">
+    <div id="pano360" style="width: 100%; height: 45vh; left: 10px; right: 10px;">
         <script>
             var container = document.querySelector("#pano360");
 
