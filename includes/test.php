@@ -7,25 +7,36 @@
         <a-sky src="images/a360.jpg"></a-sky>
     </a-scene>
     <iframe allowfullscreen src="../panorama.html"></iframe>-->
+
+    <script>
+        function setPanoPath(number){
+            viewer.destroy(panoramas[a]);
+            a = number;
+            var panorama = new PANOLENS.ImagePanorama("images/pano/pano"+number+".jpg");
+            viewer.add(panorama);
+        }
+    </script>
     
-    <div id="pano360" style="width: 100%; height: 45vh; left: 10px; right: 10px;">
+    <div id="pano360" style="width: 45vw; height: 45vh;">
         <script>
             var container = document.querySelector("#pano360");
-
-            var panorama = new PANOLENS.ImagePanorama("/images/a360.jpg");
-
+            const panoramas = new Array();
+            for (let index = 0; index < 2; index++) {
+                var panorama = new PANOLENS.ImagePanorama("images/pano/pano"+index+".jpg");
+                panoramas.push(panorama);
+            }
+            console.log(panoramas);
             var viewer = new PANOLENS.Viewer({ container: container, autoRotate: true, autoRotateSpeed: 1, autoRotateActivationDuration: 0 });
-            viewer.add(panorama);
-
+            var a = 0;
+            viewer.add(panorama[a]);
             viewer.addUpdateCallback(function() {
-
             });
         </script>
     </div>
     <div>
         <?php
             for ($i=0; $i < count($test_panorama_paths); $i++) {
-                echo("<img class='panoPreview' src='".$test_panorama_paths[$i]."' />");
+                echo("<img class='panoPreview' src='".$test_panorama_paths[$i]."' onclick='"."setPanoPath(`".$i."`)' />");
             }
         ?>
     </div>
