@@ -197,7 +197,7 @@
             
             $test_count = ["1"];
 
-            $test_panorama_paths = ["/images/a360.jpg", "/images/a360.jpg", "/images/a360.jpg"];
+            $test_panorama_paths = ["images/pano/pano0.jpg", "images/pano/pano1.jpg", "images/pano/pano2.jpg"];
 
             $hide_section = false;
 
