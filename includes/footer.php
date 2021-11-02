@@ -1,4 +1,6 @@
 <div class="d-flex flex-row flex-wrap justify-content-end align-items-end from noselect">
+    <a href="https://www.hitwebcounter.com" target="_blank">
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7890995&style=0024&nbdigits=5&type=page&initCount=0" title="Free Counter" Alt="web counter"   border="0" /></a>
     <div class="lang deFlex">
         <div class="p-2">
             <svg class="fromSize" viewbox="0 0 90 150">
