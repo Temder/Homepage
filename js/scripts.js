@@ -360,3 +360,4 @@
  }
 
  updateLayoutDatalist();
+ scaleImageUp("freeImg1");
