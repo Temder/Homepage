@@ -8,7 +8,7 @@
     </a-scene>
     <iframe allowfullscreen src="../panorama.html"></iframe>-->
 
-    <script>
+    <!--<script>
         function setPanoPath(number){
             viewer.destroy(panoramas[a]);
             a = number;
@@ -39,5 +39,5 @@
                 echo("<img class='panoPreview' src='".$test_panorama_paths[$i]."' onclick='"."setPanoPath(`".$i."`)' />");
             }
         ?>
-    </div>
+    </div>-->
 </div>
