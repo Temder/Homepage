@@ -10,20 +10,20 @@ else
 echo("views = ".$_SESSION['views']);*/
 ?>
 
-<!--<div>
+<div>
   <?php
-    $total_website_views = total_views($conn); // Returns total website views
-    echo "<strong>Total Website Views:</strong> " . $total_website_views;
+    //$total_website_views = total_views($conn); // Returns total website views
+    //echo "<strong>Total Website Views:</strong> " . $total_website_views;
   ?>
 </div>
 
 <div style="color: red;">
-  Note: This page only displays the total views of website.
+  //Note: This page only displays the total views of website.
 </div>
 
 <div>
   <?php
-    $total_page_views = total_views($conn, $page_id); // Returns total views of this page
-    echo "<strong>Total Views of this Page:</strong> " . $total_page_views;
+    //$total_page_views = total_views($conn, $page_id); // Returns total views of this page
+    //echo "<strong>Total Views of this Page:</strong> " . $total_page_views;
   ?>
-</div>-->
+</div>
