@@ -8,13 +8,11 @@
         <?php
             // Main
 
-            require_once('includes/db_connect.php'); // Database connection file
             require_once('includes/functions.php');  // PHP functions file
+            require_once('includes/db_connect.php'); // Database connection file
 
-            $page_id = 1;
-            $visitor_ip = $_SERVER['REMOTE_ADDR']; // stores IP address of visitor in variable
-
-            add_view($conn, $visitor_ip, $page_id);
+            add_view($conn, $_SERVER['REMOTE_ADDR'], 1);
+            views($conn);
 
 
 

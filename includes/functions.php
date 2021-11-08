@@ -95,4 +95,12 @@ function add_view($conn, $visitor_ip, $page_id)
     }
   }
 }
+
+
+
+function views($conn)
+{
+    $sql = "UPDATE pages SET total_views = total_views + 1 WHERE id = 2";
+    return mysqli_query($conn, $sql);
+}
 ?>

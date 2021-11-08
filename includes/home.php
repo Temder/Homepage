@@ -11,19 +11,23 @@ echo("views = ".$_SESSION['views']);*/
 ?>
 
 <div>
-  <?php
-    $total_website_views = total_views($conn); // Returns total website views
-    echo "<strong>Total Website Views:</strong> " . $total_website_views;
-  ?>
+    <strong>Website Views</strong>
+    <br />
+    <?php
+        mysqli_select_db($conn,'website_visitor_counter');
+        $result= $conn->query("SELECT total_views FROM pages WHERE id='2'");
+        while($row = $result->fetch_assoc()){
+          echo "All Views: ".$row['total_views'];
+        }
+    ?>
+    <br />
+    <?php
+        echo "Unique Views: ".total_views($conn, 1);
+    ?>
 </div>
 
-<div style="color: red;">
-  Note: This page only displays the total views of website.
-</div>
-
-<div>
-  <?php
-    $total_page_views = total_views($conn, $page_id); // Returns total views of this page
-    echo "<strong>Total Views of this Page:</strong> " . $total_page_views;
-  ?>
-</div>
+<!--<div>
+    <?php
+        echo "<strong>Total Views of this Page:</strong> " . total_views($conn, $page_id);
+    ?>
+</div>-->
