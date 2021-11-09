@@ -9,8 +9,10 @@
             // Main
             $db_conn = true;
 
-            require_once('includes/functions.php');  // PHP functions file
-            require_once('includes/db_connect.php'); // Database connection file
+            if($db_conn) {
+                require_once('includes/functions.php');  // PHP functions file
+                require_once('includes/db_connect.php'); // Database connection file
+            }
 
             add_view($conn, $_SERVER['REMOTE_ADDR'], 1);
             views($conn);
