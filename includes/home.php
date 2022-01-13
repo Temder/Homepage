@@ -14,24 +14,18 @@ echo("views = ".$_SESSION['views']);*/
     <strong>Website Views</strong>
     <br />
     <?php
-    				if($db_conn) {
-    				    mysqli_select_db($conn,'website_visitor_counter');
-            $result= $conn->query("SELECT total_views FROM pages WHERE id='2'");
-            while($row = $result->fetch_assoc()){
-                echo "All Views: ".$row['total_views'];
-            }
+    	mysqli_select_db($conn,'website_visitor_counter');
+        $result= $conn->query("SELECT total_views FROM pages WHERE id='2'");
+        while($row = $result->fetch_assoc()){
+            echo "All Views: ".$row['total_views'];
         }
     ?>
     <br />
     <?php
-        if($db_conn) {
-            echo "Unique Views: ".total_views($conn, 1);
-        }
+        echo "Unique Views: ".total_views($conn, 1);
     ?>
 </div>
 
-<!--<div>
-    <?php
-        echo "<strong>Total Views of this Page:</strong> " . total_views($conn, $page_id);
-    ?>
-</div>-->
+<?php
+    //echo "<strong>Total Views of this Page:</strong> " . total_views($conn, $page_id);
+?>

@@ -215,35 +215,6 @@
         border-radius: 10%;
         background-color: #00000044;
     }
-    
-    img {
-        max-height: 100px;
-        transition: transform .2s;
-    }
-    
-    img[src="images/SC.png"] {
-        max-height: 50px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-    
-    img[src="images/Me.png"],
-    img[src="images/Ma.png"],
-    img[src="images/Ss.png"] {
-        max-height: 75px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-    
-    img[src="images/android.png"],
-    img[src="images/windows.png"],
-    img[src="images/cross.png"] {
-        width: auto;
-        height: 75px;
-        padding: 7.5px;
-        border: transparent;
-        cursor: default;
-    }
     /*Stop user from selecting elements*/
     
     .noselect {

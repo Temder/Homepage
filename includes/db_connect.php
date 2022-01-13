@@ -8,7 +8,6 @@ $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name); // Connect to Da
 
 if(!$conn) // Check connection
 {
-  //die("Connection failed: " . mysqli_connect_error()); // Display error if not connected
-		$db_conn = false;
+    die("Connection failed: " . mysqli_connect_error()); // Display error if not connected
 }
 ?>

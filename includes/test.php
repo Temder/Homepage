@@ -40,4 +40,5 @@
             }
         ?>
     </div>-->
+    <img style="height: 200px;" src="/images/SC.png"
 </div>
