@@ -40,7 +40,8 @@
 
             $app_count =           ["1",            "2",            "3",            "4",            "5",            "6",            "7",            "8"];
             $app_names =           ["Super Code",   "Jump Jump 1",  "Jump Jump 2",  "Jump Jump 3D", "Mehrspieler",  "Malen",        "Fallen",       "Speed Slidder"];
-            $app_picture_paths =   ["SC.png",       "JJ1.png",      "JJ2.png",      "JJ3D.png",     "Me.png",       "Ma.png",       "F.png",        "Ss.png"];
+            $app_picture_paths =   ["SC.png",       "JJ1.png",      "JJ2.png",      "JJ3D.png",     "Me.png",       "Ma.png",       "F.png",        "Ss.png"];  
+            $app_imgsize = 125;
 
             $app_descriptions_en = ["Can you guess a hidden color code in 7 attempts?", 
                                     "Do you reach the black hole?", 
@@ -143,23 +144,28 @@
 
             $section_names = ["Free Things", "Kostenlose Dinge"];
 
-            $free_count =    ["1",                      "2",                            "3",                                                "4"];
-            $free_names_en = ["Rokkr - Streaming App",  "Minecraft Windows 10 Edition", " - Free Steam Singleplayer",         "Online Fix - Free Multiplayer Games"];
-            $free_names_de = ["Rokkr - Streaming App",  "Minecraft Windows 10 Edition", " - Kostenloser Steam Einzelspieler", "Online Fix - Kostenlose Mehrspieler Spiele"];
+            $free_count =    ["1",                      "2",                  "3",                            "4",                                  "5"];
+            $free_names_en = ["Rokkr - Streaming App",  "xStream Kodi Addon", "Minecraft Windows 10 Edition", " - Free Steam Singleplayer",         "Online Fix - Free Multiplayer Games"];
+            $free_names_de = ["Rokkr - Streaming App",  "xStream Kodi Addon", "Minecraft Windows 10 Edition", " - Kostenloser Steam Einzelspieler", "Online Fix - Kostenlose Mehrspieler Spiele"];
 
-            $free_picture_paths = ["images/rokkr.png", "images/McWin10.png", "images/SteamUnlocked.png", "images/SteamOnlineFix.png"];
+            $free_picture_paths = ["images/rokkr.png","" ,"images/McWin10.png", "images/SteamUnlocked.png", "images/SteamOnlineFix.png"];
 
             $free_descriptions_en = ["With Rokkr you have an overview of many popular streaming services in one app (Android)", 
+                                     "",
                                      "Get Minecraft Windows 10 Edition for free and with working multiplayer.", 
                                      "", 
                                      "Play popular games with multiplayer support for free with Online Fix."];
             $free_descriptions_de = ["Mit Rokkr haben Sie das Angebot von vielen bekannten Streaming<br /> Diensten in einer App (Android) im Überblick", 
+                                     "",
                                      "Holen Sie sich Minecraft 10 Edition kostenlos und mit Mehrspieler Unterstützung.", 
                                      "", 
                                      "Spielen Sie kostenlos bekannte Spiele im Mehrspieler mit Online Fix."];
             $free_instructions_en = ["&bull; Download the modified app. (It was modified to remove the limit of one hour of streaming per day.)<br />
                                       &bull; Open the app and type in a so-called bundle URL: huhu.to, oha.to<br />
                                       &bull; Now you have a large selection of films, series and TV channels at your disposal.", 
+                                     "&bull; 
+                                      &bull; 
+                                      &bull; ",
                                      "&bull; Download one of the launchers (BlueSky, BLauncher) from the <a target='_blank' href='https://discord.gg/45CcZbRnGB'>discord server</a> in the sub-server #launcher-release<br />
                                       &bull; Unpack the archive.<br />
                                       &bull; Download the minecraft demo version from the microsoft store.<br />
@@ -177,6 +183,9 @@
             $free_instructions_de = ["&bull; Laden Sie sich die modifizierte App herunter. (Sie wurde modifiziert<br /> um die Begrenzung von einer Stunde streamen am Tag aufzuheben.)<br />
                                       &bull; Öffnen Sie die App und geben Sie eine sogenannte Bundle-URL ein: huhu.to, oha.to<br />
                                       &bull; Nun steht ihnen eine große Auswahl an Filmen, Serien und Fernsehsendern zur Verfügung.",
+                                     "&bull; 
+                                      &bull; 
+                                      &bull; ",
                                      "&bull; Laden Sie sich einen der Launcher (BlueSky, BLauncher) von dem <a target='_blank' href='https://discord.gg/45CcZbRnGB'>Discord Server</a> im Unterserver #launcher-release herunter.<br />
                                       &bull; Entpacken Sie das Archiv.<br />
                                       &bull; Laden Sie sich im Microsoft Store die Minecraft Demo Version herunter.<br />
@@ -193,6 +202,7 @@
                                       &bull; Folgen Sie den Anweisungen unterhalb der Downloads, um das Spiel einzurichten."];
 
             $free_download_urls = ["https://download2270.mediafire.com/a936kgu605yg/p423b5d971z8y8j/Rokkr-1.7.2-Mod.apk", 
+                                   "",
                                    "", 
                                    "", 
                                    "https://download1346.mediafire.com/u0d0dk7vh9fg/5ij4n6cytap6c9b/Raft.zip"];

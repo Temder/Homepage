@@ -1,6 +1,6 @@
 <div class="p-2 box">
     <h2 id="heading"><?=$app_names[$i]?></h2>
-    <img src="images/<?=$app_picture_paths[$i]?>">
+    <img src="images/<?=$app_picture_paths[$i]?>" style="height: <?=$app_imgsize?>px;">
     <p class="lang de"><?=$app_descriptions_de[$i]?></p>
     <p class="lang en"><?=$app_descriptions_en[$i]?></p>
     <div class="download">
@@ -11,14 +11,14 @@
                     onfocus="scaleImageUp('appImg<?=$app_count[$i]?>'), scrollToObject('appImg<?=$app_count[$i]?>')" 
                  onmouseout="scaleImageDown('appImg<?=$app_count[$i]?>')" 
                  onfocusout="scaleImageDown('appImg<?=$app_count[$i]?>')">
-                <img id="appImg<?=$app_count[$i]?>" src="images/android.png" />
+                <img id="appImg<?=$app_count[$i]?>" src="images/android.png" style="height: <?=$app_imgsize - 50?>px;" />
             </a>
             <a <?php if ($app_download_urls_windows[$i] != "") {echo("href='$app_download_urls_windows[$i]'");} ?> 
                 onmouseover="scaleImageUp('appImg<?=$app_count[$i] + count($app_count)?>')" 
                     onfocus="scaleImageUp('appImg<?=$app_count[$i] + count($app_count)?>'), scrollToObject('appImg<?=$app_count[$i] + count($app_count)?>')" 
                  onmouseout="scaleImageDown('appImg<?=$app_count[$i] + count($app_count)?>')" 
                  onfocusout="scaleImageDown('appImg<?=$app_count[$i] + count($app_count)?>')">
-                <img id="appImg<?=$app_count[$i] + count($app_count)?>" src="<?php if ($app_download_urls_windows[$i] == "") {echo ("images/cross.png");}else{echo ("images/windows.png");} ?>" />
+                <img id="appImg<?=$app_count[$i] + count($app_count)?>" src="<?php if ($app_download_urls_windows[$i] == "") {echo ("images/cross.png");}else{echo ("images/windows.png");} ?>" style="height: <?=$app_imgsize - 50?>px;" />
             </a>
         </nobr>
     </div>
