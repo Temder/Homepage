@@ -152,29 +152,34 @@
             $free_names_en = ["Rokkr - Streaming App",  "xStream Kodi Addon", "Minecraft Windows 10 Edition", " - Free Steam Singleplayer",         "Online Fix - Free Multiplayer Games"];
             $free_names_de = ["Rokkr - Streaming App",  "xStream Kodi Addon", "Minecraft Windows 10 Edition", " - Kostenloser Steam Einzelspieler", "Online Fix - Kostenlose Mehrspieler Spiele"];
 
-            $free_picture_paths = ["images/rokkr.png","" ,"images/McWin10.png", "images/SteamUnlocked.png", "images/SteamOnlineFix.png"];
+            $free_picture_paths = ["images/rokkr.png", "images/xstream.png", "images/McWin10.png", "images/SteamUnlocked.png", "images/SteamOnlineFix.png"];
+            $free_img_height =      ["clamp(7.5rem, 10vw, 10rem)", "clamp(7.5rem, 10vw, 10rem)", "clamp(7.5rem, 10vw, 10rem)", "", "clamp(7.5rem, 10vw, 10rem)"];
 
             $free_descriptions_en = ["With Rokkr you have an overview of many popular streaming services in one app (Android)", 
-                                     "",
+                                     "The xStream addon for Kodi offers a large selection of movies, series, TV and radio channels for free. It can be used on many platforms.",
                                      "Get Minecraft Windows 10 Edition for free and with working multiplayer.", 
-                                     "", 
+                                     "SteamUnlocked lets you download a selection of Steam games for free.", 
                                      "Play popular games with multiplayer support for free with Online Fix."];
-            $free_descriptions_de = ["Mit Rokkr haben Sie das Angebot von vielen bekannten Streaming<br /> Diensten in einer App (Android) im Überblick", 
-                                     "",
+            $free_descriptions_de = ["Mit Rokkr haben Sie das Angebot von vielen bekannten Streaming Diensten in einer App (Android) im Überblick", 
+                                     "Das xStream Addon für Kodi stellt eine große Auswahl an Filmen, Serien, Fernseh- und Radiosendern kostenlos zur Verfügung. Es kann auf vielen Platformen benutzt werden.",
                                      "Holen Sie sich Minecraft 10 Edition kostenlos und mit Mehrspieler Unterstützung.", 
-                                     "", 
+                                     "SteamUnlocked lässt Sie eine Auswahl an Steam Spielen kostenlos herunterladen.", 
                                      "Spielen Sie kostenlos bekannte Spiele im Mehrspieler mit Online Fix."];
             $free_instructions_en = ["&bull; Download the modified app. (It was modified to remove the limit of one hour of streaming per day.)<br />
                                       &bull; Open the app and type in a so-called bundle URL: huhu.to, oha.to<br />
                                       &bull; Now you have a large selection of films, series and TV channels at your disposal.", 
-                                     "&bull; 
-                                      &bull; 
-                                      &bull; ",
-                                     "&bull; Download one of the launchers (BlueSky, BLauncher) from the <a target='_blank' href='https://discord.gg/45CcZbRnGB'>discord server</a> in the sub-server #launcher-release<br />
+                                     "&bull; Download Kodi for the desired platform: <a target='_blank' href='https://kodi.tv/download/'>https://kodi.tv/download/</a>.<br />
+                                      &bull; Download the <a href='http://repo.openkd.tv/------%20%20Wizard%20%20%20------/plugin.program.multiwizard-6.3.1.zip'>OpenKD addon</a> for Kodi. It includes xStream.<br />
+                                      &bull; Open Kodi and enable the 'Unknown sources' option in the settings under 'System' - 'Add-ons'.  <br />
+                                      &bull; In the settings go to 'Addons', click on 'Install from zip file' and select the downloaded file 'plugin.program.multiwizard-x.x.x.zip'.<br />
+                                      &bull; The OpenKD Wizard will now open. In this one you have to choose a build and install it. After installation, Kodi will close.<br />
+                                      &bull; Open Kodi again and wait for the additional required addons to be installed.<br />
+                                      &bull; Now if you go to 'xStream' in the 'Filme-Serien' tab, you can use the global search to search for movies or series.",
+                                     "&bull; Download one of the launchers (BlueSky, BLauncher) from the <a target='_blank' href='https://discord.gg/HEbWRhtHYX'>discord server</a> in the sub-server #releases<br />
                                       &bull; Unpack the archive.<br />
                                       &bull; Download the minecraft demo version from the microsoft store.<br />
                                       &bull; If you now open the file (.exe) in the unzipped folder and click on play in the launcher, the installed demo version of Minecraft becomes the full version.<br />
-                                      &bull; If you have any questions or problems, you can ask them on the Discord server in the appropriate sub-server (#support, # error-report).", 
+                                      &bull; If you have any questions or problems, you can ask them on the Discord server in the sub-server #support.", 
                                      "&bull; Go to the website <a target='_blank' href='https://steamunlocked.net'>https://steamunlocked.net</a>.<br />
                                       &bull; Find the game you want to play and click on the download button.<br />
                                       &bull; Wait until the time has expired and click on Free Download (you will have to click on it several times when a new browser window opens).<br />
@@ -187,14 +192,18 @@
             $free_instructions_de = ["&bull; Laden Sie sich die modifizierte App herunter. (Sie wurde modifiziert<br /> um die Begrenzung von einer Stunde streamen am Tag aufzuheben.)<br />
                                       &bull; Öffnen Sie die App und geben Sie eine sogenannte Bundle-URL ein: huhu.to, oha.to<br />
                                       &bull; Nun steht ihnen eine große Auswahl an Filmen, Serien und Fernsehsendern zur Verfügung.",
-                                     "&bull; 
-                                      &bull; 
-                                      &bull; ",
-                                     "&bull; Laden Sie sich einen der Launcher (BlueSky, BLauncher) von dem <a target='_blank' href='https://discord.gg/45CcZbRnGB'>Discord Server</a> im Unterserver #launcher-release herunter.<br />
+                                     "&bull; Laden Sie sich Kodi für die gewünschte Platform herunter: <a target='_blank' href='https://kodi.tv/download/'>https://kodi.tv/download/</a>.<br />
+                                      &bull; Laden Sie sich das <a href='http://repo.openkd.tv/------%20%20Wizard%20%20%20------/plugin.program.multiwizard-6.3.1.zip'>OpenKD Addon</a> für Kodi herunter. Es beinhaltet xStream.<br />
+                                      &bull; Öffnen Sie Kodi und aktivieren Sie in den Einstellungen unter 'System' - 'Add-ons' die Option 'Unknown sources'.<br />
+                                      &bull; Gehen Sie in den Einstellungen zu 'Addons', drücken Sie auf 'Install from zip file' und wählen Sie die heruntergeladene Datei 'plugin.program.multiwizard-x.x.x.zip' aus.<br />
+                                      &bull; Nun öffnet sich der OpenKD Wizard. In diesem müssen Sie ein Build auswählen und installieren. Nach der Installation schließt sich Kodi.<br />
+                                      &bull; Öffnen Sie Kodi erneut warten Sie bis die zusätzlich benötigten Addons sich installiert haben.<br />
+                                      &bull; Wenn Sie nun im Tab 'Filme-Serien' auf 'xStream' gehen können Sie mithilfe der globalen Suche nach Filmen oder Serien suchen.",
+                                     "&bull; Laden Sie sich einen der Launcher (BlueSky, BLauncher) von dem <a target='_blank' href='https://discord.gg/HEbWRhtHYX'>Discord Server</a> im Unterserver #releases herunter.<br />
                                       &bull; Entpacken Sie das Archiv.<br />
                                       &bull; Laden Sie sich im Microsoft Store die Minecraft Demo Version herunter.<br />
                                       &bull; Wenn Sie nun die Datei (.exe) im entpackten Ordner öffnen und im Launcher auf spielen klicken wird die installierte Demo Version von Minecraft zur Vollversion.<br />
-                                      &bull; Bei Fragen können Sie diese auf dem Discord Server im passenden Unterserver (#support, #error-report) stellen.", 
+                                      &bull; Bei Fragen können Sie diese auf dem Discord Server im Unterserver #support stellen.", 
                                      "&bull; Rufen Sie die Webseite <a target='_blank' href='https://steamunlocked.net'>https://steamunlocked.net</a> auf.<br />
                                       &bull; Finden Sie das Spiel, das Sie spielen möchten und klicken Sie auf den Download Knopf.<br />
                                       &bull; Warten Sie bis die Zeit abgelaufen ist und klicken Sie auf Free Download (Sie müssem mehrmals darauf klicken wenn sich ein neues Browser Fenster öffnet).<br />

@@ -1,7 +1,7 @@
 <div class="p-5 box">
     <div class="lang de" style="text-align: left;">
         <h2>
-            <img style="<?php if ($free_names_en[$i] == " - Free Steam Singleplayer") {echo("float: left; transform: translateY(-20px);");} else {echo("float: right;");}?>padding-left: 20px;" src="<?=$free_picture_paths[$i]?>" />
+            <img style="height: <?=$free_img_height[$i]?>; <?php if ($free_names_en[$i] == " - Free Steam Singleplayer") {echo("float: left; transform: translateY(-20px);");} else {echo("float: right;");}?>padding-left: 20px;" src="<?=$free_picture_paths[$i]?>" />
             <?=$free_names_de[$i]?>
         </h2><br />
         <h4>Beschreibung</h4>
@@ -26,7 +26,7 @@
     </div>
     <div class="lang en" style="text-align: left;">
         <h2>
-            <img style="<?php if ($free_names_en[$i] == " - Free Steam Singleplayer") {echo("float: left; transform: translateY(-20px);");} else {echo("float: right;");}?>padding-left: 20px;" src="<?=$free_picture_paths[$i]?>" />
+            <img style="height: <?=$free_img_height[$i]?>; <?php if ($free_names_en[$i] == " - Free Steam Singleplayer") {echo("float: left; transform: translateY(-20px);");} else {echo("float: right;");}?>padding-left: 20px;" src="<?=$free_picture_paths[$i]?>" />
             <?=$free_names_en[$i]?>
         </h2><br />
         <h4>Description</h4>
