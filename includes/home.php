@@ -15,7 +15,7 @@ echo("views = ".$_SESSION['views']);*/
     <br />
     <?php
     	mysqli_select_db($conn,'website_visitor_counter');
-        $result= $conn->query("SELECT total_views FROM pages WHERE id='2'");
+        $result= $conn->query("SELECT total_views FROM pages WHERE id='1'");
         while($row = $result->fetch_assoc()){
             echo "All Views: ".$row['total_views'];
         }
