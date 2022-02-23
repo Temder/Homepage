@@ -138,6 +138,9 @@
 
             $contact_count = ["1"];
 
+            $contact_text_en = "If you have any questions or encounter any problems, you can contact me through this.";
+            $contact_text_de = "Wenn Sie Fragen haben oder Probleme auftreten, können Sie mich hierüber kontaktieren.";
+
             $hide_section = false;
             
             include("./includes/section.php");
@@ -218,7 +221,7 @@
                                    "",
                                    "", 
                                    "", 
-                                   "https://download1346.mediafire.com/u0d0dk7vh9fg/5ij4n6cytap6c9b/Raft.zip"];
+                                   "https://download1346.mediafire.com/u0d0dk7vh9fg/5ij4n6cytap6c9b/Raft.zip", "https://www.mediafire.com/file/26aqfo4fcibhlzy/Terraria%252BTModLoader.zip/file"];
 
             $hide_section = true;
 
