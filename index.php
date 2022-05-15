@@ -158,20 +158,15 @@
             $free_picture_paths = ["images/rokkr.png", "images/xstream.png", "images/McWin10.png", "images/SteamUnlocked.png", "images/SteamOnlineFix.png"];
             $free_img_height =      ["clamp(7.5rem, 10vw, 10rem)", "clamp(7.5rem, 10vw, 10rem)", "clamp(7.5rem, 10vw, 10rem)", "", "clamp(7.5rem, 10vw, 10rem)"];
 
-            $free_descriptions_en = ["With Rokkr you have an overview of many popular streaming services in one app (Android)", 
-                                     "The xStream addon for Kodi offers a large selection of movies, series, TV and radio channels for free. It can be used on many platforms.",
+            $free_descriptions_en = ["The xStream addon for Kodi offers a large selection of movies, series, TV and radio channels for free. It can be used on many platforms.",
                                      "Get Minecraft Windows 10 Edition for free and with working multiplayer.", 
                                      "SteamUnlocked lets you download a selection of Steam games for free.", 
                                      "Play popular games with multiplayer support for free with Online Fix."];
-            $free_descriptions_de = ["Mit Rokkr haben Sie das Angebot von vielen bekannten Streaming Diensten in einer App (Android) im Überblick", 
-                                     "Das xStream Addon für Kodi stellt eine große Auswahl an Filmen, Serien, Fernseh- und Radiosendern kostenlos zur Verfügung. Es kann auf vielen Platformen benutzt werden.",
+            $free_descriptions_de = ["Das xStream Addon für Kodi stellt eine große Auswahl an Filmen, Serien, Fernseh- und Radiosendern kostenlos zur Verfügung. Es kann auf vielen Platformen benutzt werden.",
                                      "Holen Sie sich Minecraft 10 Edition kostenlos und mit Mehrspieler Unterstützung.", 
                                      "SteamUnlocked lässt Sie eine Auswahl an Steam Spielen kostenlos herunterladen.", 
                                      "Spielen Sie kostenlos bekannte Spiele im Mehrspieler mit Online Fix."];
-            $free_instructions_en = ["&bull; Download the modified app. (It was modified to remove the limit of one hour of streaming per day.)<br />
-                                      &bull; Open the app and type in a so-called bundle URL: huhu.to, oha.to<br />
-                                      &bull; Now you have a large selection of films, series and TV channels at your disposal.", 
-                                     "&bull; Download Kodi for the desired platform: <a target='_blank' href='https://kodi.tv/download/'>https://kodi.tv/download/</a>.<br />
+            $free_instructions_en = ["&bull; Download Kodi for the desired platform: <a target='_blank' href='https://kodi.tv/download/'>https://kodi.tv/download/</a>.<br />
                                       &bull; Download the <a href='http://repo.openkd.tv/------%20%20Wizard%20%20%20------/plugin.program.multiwizard-6.3.1.zip'>OpenKD addon</a> for Kodi. It includes xStream.<br />
                                       &bull; Open Kodi and enable the 'Unknown sources' option in the settings under 'System' - 'Add-ons'.  <br />
                                       &bull; In the settings go to 'Addons', click on 'Install from zip file' and select the downloaded file 'plugin.program.multiwizard-x.x.x.zip'.<br />
@@ -192,10 +187,7 @@
                                       &bull; Find the game you want to play with multiplayer support.<br />
                                       &bull; If necessary, download the appropriate launcher. (<a target='_blank' href='https://store.steampowered.com/about/'>Steam</a>, <a target='_blank' href='https://www.epicgames.com/shadowcomplex/download'>Epic Games</a>)<br />
                                       &bull; Follow the instructions underneath the downloads to set up the game."];
-            $free_instructions_de = ["&bull; Laden Sie sich die modifizierte App herunter. (Sie wurde modifiziert<br /> um die Begrenzung von einer Stunde streamen am Tag aufzuheben.)<br />
-                                      &bull; Öffnen Sie die App und geben Sie eine sogenannte Bundle-URL ein: huhu.to, oha.to<br />
-                                      &bull; Nun steht ihnen eine große Auswahl an Filmen, Serien und Fernsehsendern zur Verfügung.",
-                                     "&bull; Laden Sie sich Kodi für die gewünschte Platform herunter: <a target='_blank' href='https://kodi.tv/download/'>https://kodi.tv/download/</a>.<br />
+            $free_instructions_de = ["&bull; Laden Sie sich Kodi für die gewünschte Platform herunter: <a target='_blank' href='https://kodi.tv/download/'>https://kodi.tv/download/</a>.<br />
                                       &bull; Laden Sie sich das <a href='http://repo.openkd.tv/------%20%20Wizard%20%20%20------/plugin.program.multiwizard-6.3.1.zip'>OpenKD Addon</a> für Kodi herunter. Es beinhaltet xStream.<br />
                                       &bull; Öffnen Sie Kodi und aktivieren Sie in den Einstellungen unter 'System' - 'Add-ons' die Option 'Unknown sources'.<br />
                                       &bull; Gehen Sie in den Einstellungen zu 'Addons', drücken Sie auf 'Install from zip file' und wählen Sie die heruntergeladene Datei 'plugin.program.multiwizard-x.x.x.zip' aus.<br />
@@ -217,8 +209,7 @@
                                       &bull; Laden Sie gegebenenfalls den entsprechenden Launcher herunter. (<a target='_blank' href='https://store.steampowered.com/about/'>Steam</a>, <a target='_blank' href='https://www.epicgames.com/shadowcomplex/download'>Epic Games</a>)<br />
                                       &bull; Folgen Sie den Anweisungen unterhalb der Downloads, um das Spiel einzurichten."];
 
-            $free_download_urls = ["https://download2270.mediafire.com/a936kgu605yg/p423b5d971z8y8j/Rokkr-1.7.2-Mod.apk", 
-                                   "",
+            $free_download_urls = ["",
                                    "", 
                                    "", 
                                    "https://download1346.mediafire.com/u0d0dk7vh9fg/5ij4n6cytap6c9b/Raft.zip", "https://www.mediafire.com/file/26aqfo4fcibhlzy/Terraria%252BTModLoader.zip/file"];
