@@ -11,8 +11,6 @@
             //error_reporting(E_ALL);
             
             // Main
-
-            phpinfo();
             
             require_once('includes/db_connect.php'); // Database connection file
             require_once('includes/functions.php');  // PHP functions file
@@ -153,12 +151,12 @@
 
             $section_names = ["Free Things", "Kostenlose Dinge"];
 
-            $free_count =    ["1",                      "2",                  "3",                            "4",                                  "5"];
-            $free_names_en = ["Rokkr - Streaming App",  "xStream Kodi Addon", "Minecraft Windows 10 Edition", " - Free Steam Singleplayer",         "Online Fix - Free Multiplayer Games"];
-            $free_names_de = ["Rokkr - Streaming App",  "xStream Kodi Addon", "Minecraft Windows 10 Edition", " - Kostenloser Steam Einzelspieler", "Online Fix - Kostenlose Mehrspieler Spiele"];
+            $free_count =    ["1",                      "2",                  "3",                            "4"];
+            $free_names_en = ["xStream Kodi Addon", "Minecraft Windows 10 Edition", " - Free Steam Singleplayer",         "Online Fix - Free Multiplayer Games"];
+            $free_names_de = ["xStream Kodi Addon", "Minecraft Windows 10 Edition", " - Kostenloser Steam Einzelspieler", "Online Fix - Kostenlose Mehrspieler Spiele"];
 
-            $free_picture_paths = ["images/rokkr.png", "images/xstream.png", "images/McWin10.png", "images/SteamUnlocked.png", "images/SteamOnlineFix.png"];
-            $free_img_height =      ["clamp(7.5rem, 10vw, 10rem)", "clamp(7.5rem, 10vw, 10rem)", "clamp(7.5rem, 10vw, 10rem)", "", "clamp(7.5rem, 10vw, 10rem)"];
+            $free_picture_paths = ["images/xstream.png", "images/McWin10.png", "images/SteamUnlocked.png", "images/SteamOnlineFix.png"];
+            $free_img_height =      ["clamp(7.5rem, 10vw, 10rem)", "clamp(7.5rem, 10vw, 10rem)", "", "clamp(7.5rem, 10vw, 10rem)"];
 
             $free_descriptions_en = ["The xStream addon for Kodi offers a large selection of movies, series, TV and radio channels for free. It can be used on many platforms.",
                                      "Get Minecraft Windows 10 Edition for free and with working multiplayer.", 
