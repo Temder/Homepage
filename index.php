@@ -11,6 +11,8 @@
             //error_reporting(E_ALL);
             
             // Main
+
+            phpinfo();
             
             require_once('includes/db_connect.php'); // Database connection file
             require_once('includes/functions.php');  // PHP functions file
