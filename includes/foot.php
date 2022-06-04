@@ -1,3 +1,4 @@
+<script src="js/scripts.js" type="module"></script>
 <script src="js/scripts.js"></script>
     
 <svg>

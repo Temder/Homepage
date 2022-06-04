@@ -23,6 +23,7 @@
     <div class="slidecontainer">
         red
         <input autocomplete="off" type="range" min="41" max="255" id="colorSliderR" class="slider">
+        <HexColorPicker />
     </div>
     <div class="slidecontainer">
         green

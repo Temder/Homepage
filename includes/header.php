@@ -8,7 +8,11 @@
     <polygon points="20,22 23,20 77,20 80,22 80,27 77,30 22,30 20,27 20,42 22,40 77,40 80,42 80,47 77,50 22,50 20,47 20,62 22,60 77,60 80,62 80,67 77,70 22,70 20,67" />
 </svg>
 
-<div class="nav noselect">
+<div id="navOver" class="nav" style="background-color: red; height: 52px; z-index: 2;">
+
+</div>
+
+<div class="nav hide noselect">
     <ul id=navList>
         <li tabindex="1" data-rel="1" class="left active">Home</li>
         <li tabindex="2" data-rel="2" class="left">PD Games</li>

@@ -173,7 +173,7 @@
                                       &bull; The OpenKD Wizard will now open. In this one you have to choose a build and install it. After installation, Kodi will close.<br />
                                       &bull; Open Kodi again and wait for the additional required addons to be installed.<br />
                                       &bull; Now if you go to 'xStream' in the 'Filme-Serien' tab, you can use the global search to search for movies or series.",
-                                     "&bull; Download one of the launchers (BlueSky, BLauncher) from the <a target='_blank' href='https://discord.gg/HEbWRhtHYX'>discord server</a> in the sub-server #releases<br />
+                                     "&bull; Download one of the launchers (BlueSky, BLauncher) from the <a target='_blank' href='https://discord.gg/cSvj4YFUSn'>discord server</a> in the sub-server #releases<br />
                                       &bull; Unpack the archive.<br />
                                       &bull; Download the minecraft demo version from the microsoft store.<br />
                                       &bull; If you now open the file (.exe) in the unzipped folder and click on play in the launcher, the installed demo version of Minecraft becomes the full version.<br />
@@ -194,7 +194,7 @@
                                       &bull; Nun öffnet sich der OpenKD Wizard. In diesem müssen Sie ein Build auswählen und installieren. Nach der Installation schließt sich Kodi.<br />
                                       &bull; Öffnen Sie Kodi erneut warten Sie bis die zusätzlich benötigten Addons sich installiert haben.<br />
                                       &bull; Wenn Sie nun im Tab 'Filme-Serien' auf 'xStream' gehen können Sie mithilfe der globalen Suche nach Filmen oder Serien suchen.",
-                                     "&bull; Laden Sie sich einen der Launcher (BlueSky, BLauncher) von dem <a target='_blank' href='https://discord.gg/HEbWRhtHYX'>Discord Server</a> im Unterserver #releases herunter.<br />
+                                     "&bull; Laden Sie sich einen der Launcher (BlueSky, BLauncher) von dem <a target='_blank' href='https://discord.gg/cSvj4YFUSn'>Discord Server</a> im Unterserver #releases herunter.<br />
                                       &bull; Entpacken Sie das Archiv.<br />
                                       &bull; Laden Sie sich im Microsoft Store die Minecraft Demo Version herunter.<br />
                                       &bull; Wenn Sie nun die Datei (.exe) im entpackten Ordner öffnen und im Launcher auf spielen klicken wird die installierte Demo Version von Minecraft zur Vollversion.<br />

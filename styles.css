@@ -491,3 +491,23 @@
     .fromSize {
         width: clamp(30px, 5vw, 45px);
     }
+    /*Color Picker*/
+    
+    .colorPicker .react-colorful {
+        height: 240px;
+    }
+    
+    .colorPicker .react-colorful__saturation {
+        border-radius: 4px 4px 0 0;
+    }
+    
+    .colorPicker .react-colorful__hue {
+        height: 40px;
+        border-radius: 0 0 4px 4px;
+    }
+    
+    .colorPicker .react-colorful__hue-pointer {
+        width: 12px;
+        height: inherit;
+        border-radius: 0;
+    }
