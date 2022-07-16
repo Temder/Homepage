@@ -185,9 +185,9 @@ sliderI.oninput = function() {
 
 // Background Color
 
-sliderCR.value = bgColorR;
+/*sliderCR.value = bgColorR;
 sliderCB.value = bgColorB;
-sliderCG.value = bgColorG;
+sliderCG.value = bgColorG;*/
 
 bg.style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + bgIntensity / 100 + ")";
 
@@ -365,3 +365,36 @@ function updateLayoutDatalist() {
 
 updateLayoutDatalist();
 scaleImageUp("freeImg1");
+
+
+
+
+// Color Picker
+
+var colorWheel = new iro.ColorPicker("#colorWheelDemo", {
+    layout: [{
+            component: iro.ui.Wheel,
+            options: {
+                wheelLightness: true,
+                wheelAngle: 0,
+                wheelDirection: "anticlockwise"
+            }
+        },
+        {
+            component: iro.ui.Slider,
+            options: {
+                sliderType: 'value', // can also be 'saturation', 'value', 'alpha' or 'kelvin',
+                sliderShape: 'box',
+                activeIndex: 2
+            }
+        }
+    ]
+});
+
+colorWheel.on('input:move', function(color) {
+    // when the user moves their pointer/mouse after beginning interaction
+    bgColorR = colorWheel.color.red;
+    bgColorB = colorWheel.color.blue;
+    bgColorG = colorWheel.color.green;
+    bg.style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + bgIntensity / 100 + ")";
+})

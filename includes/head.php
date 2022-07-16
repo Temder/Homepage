@@ -10,4 +10,4 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.0.min.js"></script>
 <script src="https://pchen66.github.io/js/three/three.min.js"></script>
-<script src="https://rawgit.com/pchen66/panolens.js/dev/build/panolens.min.js"></script>
+<!--<script src="https://rawgit.com/pchen66/panolens.js/dev/build/panolens.min.js"></script>-->

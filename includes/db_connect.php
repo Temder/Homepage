@@ -11,4 +11,3 @@ if(!$conn) // Check connection
     die("Connection failed: " . mysqli_connect_error()); // Display error if not connected
 }
 ?>
-
