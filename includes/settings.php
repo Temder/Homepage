@@ -8,17 +8,10 @@
     <span id="volume"></span> %
 </div>
 <div class="p-4">
-    <h3 class="lang en">Background Intensity</h3>
-    <h3 class="lang de">Hintergrundintensität</h3>
-
-    <div class="slidecontinaer">
-        <input autocomplete="off" type="range" min="0" max="100" id="intensitySlider" class="slider">
-    </div>
-    <span id="intensity"></span> %
-</div>
-<div class="p-4">
     <h3 class="lang en">Background Color</h3>
     <h3 class="lang de">Hintergrundfarbe</h3>
+
+    <div class="wheel" id="colorWheelDemo"></div>
 
     <div class="slidecontainer">
         red

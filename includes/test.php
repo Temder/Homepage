@@ -40,6 +40,4 @@
             }
         ?>
     </div>-->
-
-    <div class="wheel" id="colorWheelDemo"></div>
 </div>

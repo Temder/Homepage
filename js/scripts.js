@@ -168,26 +168,11 @@ sliderV.oninput = function() {
 
 
 
-// Background Intensity
-
-outputI.innerHTML = sliderI.value = bgIntensity;
-
-bg.style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + bgIntensity / 100 + ")";
-
-sliderI.oninput = function() {
-    outputI.innerHTML = bgIntensity = this.value;
-
-    bg.style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + bgIntensity / 100 + ")";
-}
-
-
-
-
 // Background Color
 
-/*sliderCR.value = bgColorR;
+sliderCR.value = bgColorR;
 sliderCB.value = bgColorB;
-sliderCG.value = bgColorG;*/
+sliderCG.value = bgColorG;
 
 bg.style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + bgIntensity / 100 + ")";
 
@@ -254,7 +239,7 @@ load.onclick = function() {
             var audio = document.getElementById(i);
             audio.volume = volume / 100;
         }
-        sliderI.value = outputI.innerHTML = bgIntensity;
+        colorWheel.color.alpha = bgIntensity;
         sliderCR.value = bgColorR;
         sliderCG.value = bgColorG;
         sliderCB.value = bgColorB;
@@ -278,7 +263,7 @@ reset.onclick = function() {
         var audio = document.getElementById(i);
         audio.volume = volume / 100;
     }
-    sliderI.value = outputI.innerHTML = bgIntensity;
+    colorWheel.color.alpha = bgIntensity;
     sliderCR.value = bgColorR;
     sliderCG.value = bgColorG;
     sliderCB.value = bgColorB;
@@ -364,7 +349,6 @@ function updateLayoutDatalist() {
 }
 
 updateLayoutDatalist();
-scaleImageUp("freeImg1");
 
 
 
@@ -375,6 +359,8 @@ var colorWheel = new iro.ColorPicker("#colorWheelDemo", {
     layout: [{
             component: iro.ui.Wheel,
             options: {
+                width: 200,
+                layoutDirection: "horizontal",
                 wheelLightness: true,
                 wheelAngle: 0,
                 wheelDirection: "anticlockwise"
@@ -383,6 +369,18 @@ var colorWheel = new iro.ColorPicker("#colorWheelDemo", {
         {
             component: iro.ui.Slider,
             options: {
+                width: 200,
+                layoutDirection: "horizontal",
+                sliderType: 'alpha', // can also be 'saturation', 'value', 'alpha' or 'kelvin',
+                sliderShape: 'box',
+                activeIndex: 2
+            }
+        },
+        {
+            component: iro.ui.Slider,
+            options: {
+                width: 200,
+                layoutDirection: "horizontal",
                 sliderType: 'value', // can also be 'saturation', 'value', 'alpha' or 'kelvin',
                 sliderShape: 'box',
                 activeIndex: 2
@@ -391,10 +389,13 @@ var colorWheel = new iro.ColorPicker("#colorWheelDemo", {
     ]
 });
 
-colorWheel.on('input:move', function(color) {
-    // when the user moves their pointer/mouse after beginning interaction
+colorWheel.color.alpha = bgIntensity * 0.01;
+
+colorWheel.on('color:change', function(color, changes) {
+    // when the color has changed, the callback gets passed the color object and an object providing which color channels (out of H, S, V) have changed.
     bgColorR = colorWheel.color.red;
     bgColorB = colorWheel.color.blue;
     bgColorG = colorWheel.color.green;
+    bgIntensity = colorWheel.color.alpha * 100;
     bg.style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + bgIntensity / 100 + ")";
 })
