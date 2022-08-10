@@ -12,20 +12,6 @@
     <h3 class="lang de">Hintergrundfarbe</h3>
 
     <div class="wheel" id="colorWheelDemo"></div>
-
-    <div class="slidecontainer">
-        red
-        <input autocomplete="off" type="range" min="41" max="255" id="colorSliderR" class="slider">
-        <HexColorPicker />
-    </div>
-    <div class="slidecontainer">
-        green
-        <input autocomplete="off" type="range" min="45" max="255" id="colorSliderG" class="slider">
-    </div>
-    <div class="slidecontainer">
-        blue
-        <input autocomplete="off" type="range" min="62" max="255" id="colorSliderB" class="slider">
-    </div>
 </div>
 <div class="p-4">
     <h3 class="lang en">Background Blend Mode</h3>

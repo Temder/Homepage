@@ -15,10 +15,6 @@ var bg = document.getElementById('bg');
 var sliderI = document.getElementById("intensitySlider");
 var outputI = document.getElementById("intensity");
 
-var sliderCR = document.getElementById("colorSliderR");
-var sliderCG = document.getElementById("colorSliderG");
-var sliderCB = document.getElementById("colorSliderB");
-
 var dpBlendmode = document.getElementById("blendmode");
 
 var sliderV = document.getElementById("volumeSlider");
@@ -168,7 +164,7 @@ sliderV.oninput = function() {
 
 
 
-// Background Color
+/*// Background Color
 
 sliderCR.value = bgColorR;
 sliderCB.value = bgColorB;
@@ -187,7 +183,7 @@ sliderCB.oninput = function() {
 sliderCG.oninput = function() {
     bgColorG = this.value;
     bg.style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + bgIntensity / 100 + ")";
-}
+}*/
 
 
 
@@ -240,9 +236,6 @@ load.onclick = function() {
             audio.volume = volume / 100;
         }
         colorWheel.color.alpha = bgIntensity;
-        sliderCR.value = bgColorR;
-        sliderCG.value = bgColorG;
-        sliderCB.value = bgColorB;
         dpBlendmode.value = bgBlendMode;
 
         bg.style.backgroundColor = "rgba(" + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + bgIntensity / 100 + ")";
@@ -264,9 +257,6 @@ reset.onclick = function() {
         audio.volume = volume / 100;
     }
     colorWheel.color.alpha = bgIntensity;
-    sliderCR.value = bgColorR;
-    sliderCG.value = bgColorG;
-    sliderCB.value = bgColorB;
     dpBlendmode.value = bgBlendMode;
 
     bg.style.backgroundColor = "rgba(" + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + bgIntensity / 100 + ")";
