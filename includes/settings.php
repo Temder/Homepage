@@ -46,3 +46,8 @@
     <datalist id="layouts">
     </datalist>
 </div>
+<div class="p-4">
+    <h3 class="lang en">Hidden Sections</h3>
+    <h3 class="lang de">Versteckte Bereiche</h3>
+    <input type="button" value="XXX" onclick="toggle()">
+</div>
