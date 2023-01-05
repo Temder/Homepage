@@ -25,8 +25,9 @@
         <li tabindex="6" data-rel="6" class="left lang en">Free Things</li>
         <li tabindex="6" data-rel="6" class="left lang de">Kostenlose Dinge</li>
         <li tabindex="7" data-rel="7" class="left">Test</li>
-        <li tabindex="8" data-rel="8" class="right lang en">Settings</li>
-        <li tabindex="8" data-rel="8" class="right lang de">Einstellungen</li>
+        <li tabindex="8" data-rel="8" class="left">XXX</li>
+        <li tabindex="9" data-rel="9" class="right lang en">Settings</li>
+        <li tabindex="9" data-rel="9" class="right lang de">Einstellungen</li>
     </ul>
 </div>
 

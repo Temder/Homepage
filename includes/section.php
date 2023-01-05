@@ -40,6 +40,11 @@
                         include("./includes/test.php");
                     }
                 }
+                if ($section_names[0] == "XXX") {
+                    for ($i=0; $i < count($xxx_count); $i++) {
+                        include("./includes/xxx.php");
+                    }
+                }
                 if ($section_names[0] == "Settings") {
                     for ($i=0; $i < count($settings_count); $i++) {
                         include("./includes/settings.php");

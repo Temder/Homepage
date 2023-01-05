@@ -12,11 +12,11 @@
             
             // Main
             
-            require_once('includes/db_connect.php'); // Database connection file
-            require_once('includes/functions.php');  // PHP functions file
+            //require_once('includes/db_connect.php'); // Database connection file
+            //require_once('includes/functions.php');  // PHP functions file
 
-            add_view($conn, $_SERVER['REMOTE_ADDR'], 1);
-            views($conn);
+            //add_view($conn, $_SERVER['REMOTE_ADDR'], 1);
+            //views($conn);
 
 
 
@@ -227,6 +227,18 @@
             $test_count = ["1"];
 
             $test_panorama_paths = ["images/pano/pano0.jpg", "images/pano/pano1.jpg", "images/pano/pano2.jpg"];
+
+            $hide_section = false;
+
+            include("./includes/section.php");
+
+
+
+            // XXX
+            
+            $section_names = ["XXX", "XXX"];
+            
+            $xxx_count = ["1"];
 
             $hide_section = false;
 
