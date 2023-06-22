@@ -389,19 +389,3 @@ colorWheel.on('color:change', function(color, changes) {
     bgIntensity = colorWheel.color.alpha * 100;
     bg.style.backgroundColor = "rgb(" + bgColorR + ", " + bgColorG + ", " + bgColorB + ", " + bgIntensity / 100 + ")";
 })
-
-
-
-
-// Toggle Element
-
-document.getElementById("xxx").style.display = "none";
-
-function toggle() {
-    var x = document.getElementById("xxx");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
-}
