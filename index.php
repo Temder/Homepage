@@ -144,6 +144,79 @@
             $hide_section = false;
             
             include("./includes/section.php");
+            
+            
+            
+            // Free Stuff
+
+            $section_names = ["Free Things", "Kostenlose Dinge"];
+
+            $free_count =    ["1",                      "2",                  "3",                            "4"];
+            $free_names_en = ["xStream Kodi Addon", "Minecraft Windows 10 Edition", " - Free Steam Singleplayer",         "Online Fix - Free Multiplayer Games"];
+            $free_names_de = ["xStream Kodi Addon", "Minecraft Windows 10 Edition", " - Kostenloser Steam Einzelspieler", "Online Fix - Kostenlose Mehrspieler Spiele"];
+
+            $free_picture_paths = ["images/xstream.png", "images/McWin10.png", "images/SteamUnlocked.png", "images/SteamOnlineFix.png"];
+            $free_img_height =      ["clamp(7.5rem, 10vw, 10rem)", "clamp(7.5rem, 10vw, 10rem)", "", "clamp(7.5rem, 10vw, 10rem)"];
+
+            $free_descriptions_en = ["The xStream addon for Kodi offers a large selection of movies, series, TV and radio channels for free. It can be used on many platforms.",
+                                     "Get Minecraft Windows 10 Edition for free and with working multiplayer.", 
+                                     "SteamUnlocked lets you download a selection of Steam games for free.", 
+                                     "Play popular games with multiplayer support for free with Online Fix."];
+            $free_descriptions_de = ["Das xStream Addon für Kodi stellt eine große Auswahl an Filmen, Serien, Fernseh- und Radiosendern kostenlos zur Verfügung. Es kann auf vielen Platformen benutzt werden.",
+                                     "Holen Sie sich Minecraft 10 Edition kostenlos und mit Mehrspieler Unterstützung.", 
+                                     "SteamUnlocked lässt Sie eine Auswahl an Steam Spielen kostenlos herunterladen.", 
+                                     "Spielen Sie kostenlos bekannte Spiele im Mehrspieler mit Online Fix."];
+            $free_instructions_en = ["&bull; Download Kodi for the desired platform: <a target='_blank' href='https://kodi.tv/download/'>https://kodi.tv/download/</a>.<br />
+                                      &bull; Download the <a href='http://repo.openkd.tv/------%20%20Wizard%20%20%20------/plugin.program.multiwizard-6.3.1.zip'>OpenKD addon</a> for Kodi. It includes xStream.<br />
+                                      &bull; Open Kodi and enable the 'Unknown sources' option in the settings under 'System' - 'Add-ons'.  <br />
+                                      &bull; In the settings go to 'Addons', click on 'Install from zip file' and select the downloaded file 'plugin.program.multiwizard-x.x.x.zip'.<br />
+                                      &bull; The OpenKD Wizard will now open. In this one you have to choose a build and install it. After installation, Kodi will close.<br />
+                                      &bull; Open Kodi again and wait for the additional required addons to be installed.<br />
+                                      &bull; Now if you go to 'xStream' in the 'Filme-Serien' tab, you can use the global search to search for movies or series.",
+                                     "&bull; Download one of the launchers (BlueSky, BLauncher) from the <a target='_blank' href='https://discord.gg/cSvj4YFUSn'>discord server</a> in the sub-server #releases<br />
+                                      &bull; Unpack the archive.<br />
+                                      &bull; Download the minecraft demo version from the microsoft store.<br />
+                                      &bull; If you now open the file (.exe) in the unzipped folder and click on play in the launcher, the installed demo version of Minecraft becomes the full version.<br />
+                                      &bull; If you have any questions or problems, you can ask them on the Discord server in the sub-server #support.", 
+                                     "&bull; Go to the website <a target='_blank' href='https://steamunlocked.net'>https://steamunlocked.net</a>.<br />
+                                      &bull; Find the game you want to play and click on the download button.<br />
+                                      &bull; Wait until the time has expired and click on Free Download (you will have to click on it several times when a new browser window opens).<br />
+                                      &bull; Extract the downloaded file to play the game.", 
+                                     "&bull; Go to the website <a target='_blank' href='https://online-fix.me/'>https://online-fix.me/</a>.<br />
+                                      &bull; You need to create a free account to download a game.<br />
+                                      &bull; Find the game you want to play with multiplayer support.<br />
+                                      &bull; If necessary, download the appropriate launcher. (<a target='_blank' href='https://store.steampowered.com/about/'>Steam</a>, <a target='_blank' href='https://www.epicgames.com/shadowcomplex/download'>Epic Games</a>)<br />
+                                      &bull; Follow the instructions underneath the downloads to set up the game."];
+            $free_instructions_de = ["&bull; Laden Sie sich Kodi für die gewünschte Platform herunter: <a target='_blank' href='https://kodi.tv/download/'>https://kodi.tv/download/</a>.<br />
+                                      &bull; Laden Sie sich das <a href='http://repo.openkd.tv/------%20%20Wizard%20%20%20------/plugin.program.multiwizard-6.3.1.zip'>OpenKD Addon</a> für Kodi herunter. Es beinhaltet xStream.<br />
+                                      &bull; Öffnen Sie Kodi und aktivieren Sie in den Einstellungen unter 'System' - 'Add-ons' die Option 'Unknown sources'.<br />
+                                      &bull; Gehen Sie in den Einstellungen zu 'Addons', drücken Sie auf 'Install from zip file' und wählen Sie die heruntergeladene Datei 'plugin.program.multiwizard-x.x.x.zip' aus.<br />
+                                      &bull; Nun öffnet sich der OpenKD Wizard. In diesem müssen Sie ein Build auswählen und installieren. Nach der Installation schließt sich Kodi.<br />
+                                      &bull; Öffnen Sie Kodi erneut warten Sie bis die zusätzlich benötigten Addons sich installiert haben.<br />
+                                      &bull; Wenn Sie nun im Tab 'Filme-Serien' auf 'xStream' gehen können Sie mithilfe der globalen Suche nach Filmen oder Serien suchen.",
+                                     "&bull; Laden Sie sich einen der Launcher (BlueSky, BLauncher) von dem <a target='_blank' href='https://discord.gg/cSvj4YFUSn'>Discord Server</a> im Unterserver #releases herunter.<br />
+                                      &bull; Entpacken Sie das Archiv.<br />
+                                      &bull; Laden Sie sich im Microsoft Store die Minecraft Demo Version herunter.<br />
+                                      &bull; Wenn Sie nun die Datei (.exe) im entpackten Ordner öffnen und im Launcher auf spielen klicken wird die installierte Demo Version von Minecraft zur Vollversion.<br />
+                                      &bull; Bei Fragen können Sie diese auf dem Discord Server im Unterserver #support stellen.", 
+                                     "&bull; Rufen Sie die Webseite <a target='_blank' href='https://steamunlocked.net'>https://steamunlocked.net</a> auf.<br />
+                                      &bull; Finden Sie das Spiel, das Sie spielen möchten und klicken Sie auf den Download Knopf.<br />
+                                      &bull; Warten Sie bis die Zeit abgelaufen ist und klicken Sie auf Free Download (Sie müssem mehrmals darauf klicken wenn sich ein neues Browser Fenster öffnet).<br />
+                                      &bull; Entpacken Sie die heruntergeladene Datei um das Spiel zu spielen.",
+                                     "&bull; Rufen Sie die Webseite <a target='_blank' href='https://online-fix.me/'>https://online-fix.me/</a> auf.<br />
+                                      &bull; Sie müssen ein kostenloses Konto erstellen, um ein Spiel herunterzuladen.<br />
+                                      &bull; Finden Sie das Spiel, das Sie mit Mehrspieler Unterstützung spielen möchten.<br />
+                                      &bull; Laden Sie gegebenenfalls den entsprechenden Launcher herunter. (<a target='_blank' href='https://store.steampowered.com/about/'>Steam</a>, <a target='_blank' href='https://www.epicgames.com/shadowcomplex/download'>Epic Games</a>)<br />
+                                      &bull; Folgen Sie den Anweisungen unterhalb der Downloads, um das Spiel einzurichten."];
+
+            $free_download_urls = ["",
+                                   "", 
+                                   "", 
+                                   "https://download1346.mediafire.com/u0d0dk7vh9fg/5ij4n6cytap6c9b/Raft.zip", "https://www.mediafire.com/file/26aqfo4fcibhlzy/Terraria%252BTModLoader.zip/file"];
+
+            $hide_section = true;
+
+            include("./includes/section.php");
 
 
 
@@ -154,6 +227,18 @@
             $test_count = ["1"];
 
             $test_panorama_paths = ["images/pano/pano0.jpg", "images/pano/pano1.jpg", "images/pano/pano2.jpg"];
+
+            $hide_section = false;
+
+            include("./includes/section.php");
+
+
+
+            // XXX
+            
+            $section_names = ["XXX", "XXX"];
+            
+            $xxx_count = ["1"];
 
             $hide_section = false;
 

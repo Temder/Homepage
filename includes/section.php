@@ -30,9 +30,19 @@
                         include("./includes/contact.php");
                     }
                 }
+                if ($section_names[0] == "Free Things") {
+                    for ($i=0; $i < count($free_count); $i++) {
+                        include("./includes/free.php");
+                    }
+                }
                 if ($section_names[0] == "Test") {
                     for ($i=0; $i < count($test_count); $i++) {
                         include("./includes/test.php");
+                    }
+                }
+                if ($section_names[0] == "XXX") {
+                    for ($i=0; $i < count($xxx_count); $i++) {
+                        include("./includes/xxx.php");
                     }
                 }
                 if ($section_names[0] == "Settings") {
