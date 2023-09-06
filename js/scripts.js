@@ -150,7 +150,9 @@ outputV.innerHTML = sliderV.value = volume;
 
 for (var i = 1; i <= document.getElementsByClassName('playingOverlay').length; i++) {
     var audio = document.getElementById(i);
-    audio.volume = volume / 100;
+    if (audio != null) {
+        audio.volume = volume / 100;
+    }
 }
 
 sliderV.oninput = function() {
@@ -395,13 +397,15 @@ colorWheel.on('color:change', function(color, changes) {
 
 // Toggle Element
 
-document.getElementById("xxx").style.display = "none";
+for (const element of document.getElementsByClassName("toggle")) {
+    element.style.display = "none"
+}
 
-function toggle() {
-    var x = document.getElementById("xxx");
-    if (x.style.display === "none") {
-        x.style.display = "block";
+function toggle(id) {
+    object = document.getElementById(id)
+    if (object.style.display === "none") {
+        object.style.display = "block";
     } else {
-        x.style.display = "none";
+        object.style.display = "none";
     }
 }

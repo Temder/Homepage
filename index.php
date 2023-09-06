@@ -28,9 +28,8 @@
 
             // Home
 
-            $section_names = ["Home", "Home"];
-
-            $home_count = ["1"];
+            $section_names = ["Home", "Home", "home.php"];
+            $section_count = 1;
 
             $hide_section = false;
 
@@ -40,10 +39,11 @@
 
             // PD Games
 
-            $section_names = ["PD Games", "PD Games"];
+            $section_names = ["PD Games", "PD Games", "app.php"];
+            $section_count = 8;
 
-            $app_count =           ["1",            "2",            "3",            "4",            "5",            "6",            "7",            "8"];
             $app_names =           ["Super Code",   "Jump Jump 1",  "Jump Jump 2",  "Jump Jump 3D", "Mehrspieler",  "Malen",        "Fallen",       "Speed Slidder"];
+
             $app_picture_paths =   ["SC.png",       "JJ1.png",      "JJ2.png",      "JJ3D.png",     "Me.png",       "Ma.png",       "F.png",        "Ss.png"];  
             $app_imgsize = 125;
 
@@ -88,9 +88,9 @@
 
             // Radio Stations
             
-            $section_names = ["Radio Stations", "Radio Stationen"];
+            $section_names = ["Radio Stations", "Radio Stationen", "radioStation.php"];
+            $section_count = 5;
 
-            $radio_count = ["1",                "2",                    "3",            "4",            "5"];
             $radio_names = ["Radio Dresden",    "Radiowelle Pirna",     "HITMIX FM",    "DJ CryexX",    "HRP An Der Elbe"];
 
             $radio_picture_paths = ["https://www.phonostar.de/images/auto_created/Radio_Dresden_2184x184.png",
@@ -112,9 +112,8 @@
 
             // Games
 
-            $section_names = ["Games", "Spiele"];
-            
-            $game_count = ["1", "2", "3"];
+            $section_names = ["Games", "Spiele", "game.php"];
+            $section_count = 3;
 
             $game_picture_paths =  ["Minecraft.png",
                                     "Terraria.png",
@@ -134,9 +133,8 @@
 
             // Contact
 
-            $section_names = ["Contact", "Kontakt"];
-
-            $contact_count = ["1"];
+            $section_names = ["Contact", "Kontakt", "contact.php"];
+            $section_count = 1;
 
             $contact_text_en = "If you have any questions or encounter any problems, you can contact me through this.";
             $contact_text_de = "Wenn Sie Fragen haben oder Probleme auftreten, können Sie mich hierüber kontaktieren.";
@@ -149,22 +147,18 @@
             
             // Free Stuff
 
-            $section_names = ["Free Things", "Kostenlose Dinge"];
+            $section_names = ["Free Things", "Kostenlose Dinge", "free.php"];
+            $section_count = 2;
 
-            $free_count =    ["1",                      "2",                  "3",                            "4"];
-            $free_names_en = ["xStream Kodi Addon", "Minecraft Windows 10 Edition", " - Free Steam Singleplayer",         "Online Fix - Free Multiplayer Games"];
-            $free_names_de = ["xStream Kodi Addon", "Minecraft Windows 10 Edition", " - Kostenloser Steam Einzelspieler", "Online Fix - Kostenlose Mehrspieler Spiele"];
+            $free_names_en = ["xStream Kodi Addon", "Online Fix - Free Multiplayer Games"];
+            $free_names_de = ["xStream Kodi Addon", "Online Fix - Kostenlose Mehrspieler Spiele"];
 
-            $free_picture_paths = ["images/xstream.png", "images/McWin10.png", "images/SteamUnlocked.png", "images/SteamOnlineFix.png"];
-            $free_img_height =      ["clamp(7.5rem, 10vw, 10rem)", "clamp(7.5rem, 10vw, 10rem)", "", "clamp(7.5rem, 10vw, 10rem)"];
+            $free_picture_paths = ["images/xstream.png", "images/SteamOnlineFix.png"];
+            $free_img_height =      ["clamp(7.5rem, 10vw, 10rem)", "", "clamp(7.5rem, 10vw, 10rem)"];
 
             $free_descriptions_en = ["The xStream addon for Kodi offers a large selection of movies, series, TV and radio channels for free. It can be used on many platforms.",
-                                     "Get Minecraft Windows 10 Edition for free and with working multiplayer.", 
-                                     "SteamUnlocked lets you download a selection of Steam games for free.", 
                                      "Play popular games with multiplayer support for free with Online Fix."];
             $free_descriptions_de = ["Das xStream Addon für Kodi stellt eine große Auswahl an Filmen, Serien, Fernseh- und Radiosendern kostenlos zur Verfügung. Es kann auf vielen Platformen benutzt werden.",
-                                     "Holen Sie sich Minecraft 10 Edition kostenlos und mit Mehrspieler Unterstützung.", 
-                                     "SteamUnlocked lässt Sie eine Auswahl an Steam Spielen kostenlos herunterladen.", 
                                      "Spielen Sie kostenlos bekannte Spiele im Mehrspieler mit Online Fix."];
             $free_instructions_en = ["&bull; Download Kodi for the desired platform: <a target='_blank' href='https://kodi.tv/download/'>https://kodi.tv/download/</a>.<br />
                                       &bull; Download the <a href='http://repo.openkd.tv/------%20%20Wizard%20%20%20------/plugin.program.multiwizard-6.3.1.zip'>OpenKD addon</a> for Kodi. It includes xStream.<br />
@@ -173,15 +167,6 @@
                                       &bull; The OpenKD Wizard will now open. In this one you have to choose a build and install it. After installation, Kodi will close.<br />
                                       &bull; Open Kodi again and wait for the additional required addons to be installed.<br />
                                       &bull; Now if you go to 'xStream' in the 'Filme-Serien' tab, you can use the global search to search for movies or series.",
-                                     "&bull; Download one of the launchers (BlueSky, BLauncher) from the <a target='_blank' href='https://discord.gg/cSvj4YFUSn'>discord server</a> in the sub-server #releases<br />
-                                      &bull; Unpack the archive.<br />
-                                      &bull; Download the minecraft demo version from the microsoft store.<br />
-                                      &bull; If you now open the file (.exe) in the unzipped folder and click on play in the launcher, the installed demo version of Minecraft becomes the full version.<br />
-                                      &bull; If you have any questions or problems, you can ask them on the Discord server in the sub-server #support.", 
-                                     "&bull; Go to the website <a target='_blank' href='https://steamunlocked.net'>https://steamunlocked.net</a>.<br />
-                                      &bull; Find the game you want to play and click on the download button.<br />
-                                      &bull; Wait until the time has expired and click on Free Download (you will have to click on it several times when a new browser window opens).<br />
-                                      &bull; Extract the downloaded file to play the game.", 
                                      "&bull; Go to the website <a target='_blank' href='https://online-fix.me/'>https://online-fix.me/</a>.<br />
                                       &bull; You need to create a free account to download a game.<br />
                                       &bull; Find the game you want to play with multiplayer support.<br />
@@ -194,15 +179,6 @@
                                       &bull; Nun öffnet sich der OpenKD Wizard. In diesem müssen Sie ein Build auswählen und installieren. Nach der Installation schließt sich Kodi.<br />
                                       &bull; Öffnen Sie Kodi erneut warten Sie bis die zusätzlich benötigten Addons sich installiert haben.<br />
                                       &bull; Wenn Sie nun im Tab 'Filme-Serien' auf 'xStream' gehen können Sie mithilfe der globalen Suche nach Filmen oder Serien suchen.",
-                                     "&bull; Laden Sie sich einen der Launcher (BlueSky, BLauncher) von dem <a target='_blank' href='https://discord.gg/cSvj4YFUSn'>Discord Server</a> im Unterserver #releases herunter.<br />
-                                      &bull; Entpacken Sie das Archiv.<br />
-                                      &bull; Laden Sie sich im Microsoft Store die Minecraft Demo Version herunter.<br />
-                                      &bull; Wenn Sie nun die Datei (.exe) im entpackten Ordner öffnen und im Launcher auf spielen klicken wird die installierte Demo Version von Minecraft zur Vollversion.<br />
-                                      &bull; Bei Fragen können Sie diese auf dem Discord Server im Unterserver #support stellen.", 
-                                     "&bull; Rufen Sie die Webseite <a target='_blank' href='https://steamunlocked.net'>https://steamunlocked.net</a> auf.<br />
-                                      &bull; Finden Sie das Spiel, das Sie spielen möchten und klicken Sie auf den Download Knopf.<br />
-                                      &bull; Warten Sie bis die Zeit abgelaufen ist und klicken Sie auf Free Download (Sie müssem mehrmals darauf klicken wenn sich ein neues Browser Fenster öffnet).<br />
-                                      &bull; Entpacken Sie die heruntergeladene Datei um das Spiel zu spielen.",
                                      "&bull; Rufen Sie die Webseite <a target='_blank' href='https://online-fix.me/'>https://online-fix.me/</a> auf.<br />
                                       &bull; Sie müssen ein kostenloses Konto erstellen, um ein Spiel herunterzuladen.<br />
                                       &bull; Finden Sie das Spiel, das Sie mit Mehrspieler Unterstützung spielen möchten.<br />
@@ -210,9 +186,7 @@
                                       &bull; Folgen Sie den Anweisungen unterhalb der Downloads, um das Spiel einzurichten."];
 
             $free_download_urls = ["",
-                                   "", 
-                                   "", 
-                                   "https://download1346.mediafire.com/u0d0dk7vh9fg/5ij4n6cytap6c9b/Raft.zip", "https://www.mediafire.com/file/26aqfo4fcibhlzy/Terraria%252BTModLoader.zip/file"];
+                                   "https://www.mediafire.com/file/26aqfo4fcibhlzy/Terraria%252BTModLoader.zip/file"];
 
             $hide_section = true;
 
@@ -222,13 +196,12 @@
 
             // Test
             
-            $section_names = ["Test", "Test"];
-            
-            $test_count = ["1"];
+            $section_names = ["Test", "Test", "test.php"];
+            $section_count = 3;
 
-            $test_panorama_paths = ["images/pano/pano0.jpg", "images/pano/pano1.jpg", "images/pano/pano2.jpg"];
+            $test_panorama_paths = ["https://cdn.pannellum.org/2.5/pannellum.htm#panorama=https%3A//i.imgur.com/8uCoV6j.jpeg", "https://cdn.pannellum.org/2.5/pannellum.htm#panorama=https%3A//i.imgur.com/oK38FW1.jpg", "https://cdn.pannellum.org/2.5/pannellum.htm#panorama=https%3A//i.imgur.com/sVkLhRn.jpg"];
 
-            $hide_section = false;
+            $hide_section = true;
 
             include("./includes/section.php");
 
@@ -236,9 +209,8 @@
 
             // XXX
             
-            $section_names = ["XXX", "XXX"];
-            
-            $xxx_count = ["1"];
+            $section_names = ["XXX", "XXX", "xxx.php"];
+            $section_count = 1;
 
             $hide_section = false;
 
@@ -248,9 +220,8 @@
             
             // Settings
             
-            $section_names = ["Settings", "Einstellungen"];
-            
-            $settings_count = ["1"];
+            $section_names = ["Settings", "Einstellungen", "settings.php"];
+            $section_count = 1;
 
             $hide_section = false;
 

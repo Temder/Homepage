@@ -8,6 +8,7 @@ else
     $_SESSION['views']=1;
       
 echo("views = ".$_SESSION['views']);*/
+
 ?>
 
 <div>

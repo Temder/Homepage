@@ -275,15 +275,15 @@
     }
     
     .logo path:nth-child(1) {
-        stroke-dasharray: 515px;
-        stroke-dashoffset: 515px;
-        animation: playingSymbolAnim 1s ease forwards;
+        stroke-dasharray: 1030px;
+        stroke-dashoffset: 1030px;
+        animation: playingSymbolAnim 1.5s forwards;
         animation-iteration-count: infinite;
     }
     
     @keyframes playingSymbolAnim {
         to {
-            stroke-dashoffset: 0px;
+            stroke-dashoffset: -515px;
         }
     }
     /*Game Tab*/
