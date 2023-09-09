@@ -30,21 +30,20 @@
 
             $section_names = ["Home", "Home", "home.php"];
             $section_count = 1;
-
-            $hide_section = false;
+            $section_hide = false;
 
             include("./includes/section.php");
 
 
 
             // PD Games
-
+            
             $section_names = ["PD Games", "PD Games", "app.php"];
             $section_count = 8;
+            $section_hide = true;
 
-            $app_names =           ["Super Code",   "Jump Jump 1",  "Jump Jump 2",  "Jump Jump 3D", "Mehrspieler",  "Malen",        "Fallen",       "Speed Slidder"];
-
-            $app_picture_paths =   ["SC.png",       "JJ1.png",      "JJ2.png",      "JJ3D.png",     "Me.png",       "Ma.png",       "F.png",        "Ss.png"];  
+            $app_names =           ["Super Code", "Jump Jump 1", "Jump Jump 2", "Jump Jump 3D", "Mehrspieler", "Malen",  "Fallen", "Speed Slidder"];
+            $app_picture_paths =   ["SC.png",     "JJ1.png",     "JJ2.png",     "JJ3D.png",     "Me.png",      "Ma.png", "F.png",  "Ss.png"];
             $app_imgsize = 125;
 
             $app_descriptions_en = ["Can you guess a hidden color code in 7 attempts?", 
@@ -80,7 +79,17 @@
                                             "https://github.com/Temder/Homepage/releases/download/FT/Fall.zip",
                                             ""];
 
-            $hide_section = true;
+            include("./includes/section.php");
+
+
+
+            // 360° Panoramas
+
+            $section_names = ["360° Panoramas", "360° Panoramas", "panorama.php"];
+            $section_count = count(glob('./images/pano/*')) + 1;
+            $section_hide = false;
+            
+            $pano_images = glob('./images/pano/*');
 
             include("./includes/section.php");
 
@@ -90,9 +99,9 @@
             
             $section_names = ["Radio Stations", "Radio Stationen", "radioStation.php"];
             $section_count = 5;
+            $section_hide = false;
 
-            $radio_names = ["Radio Dresden",    "Radiowelle Pirna",     "HITMIX FM",    "DJ CryexX",    "HRP An Der Elbe"];
-
+            $radio_names = ["Radio Dresden", "Radiowelle Pirna", "HITMIX FM", "DJ CryexX", "HRP An Der Elbe"];
             $radio_picture_paths = ["https://www.phonostar.de/images/auto_created/Radio_Dresden_2184x184.png",
                                     "images/RadiowellePirna.png",
                                     "https://static.radio.de/images/broadcasts/b9/79/107096/2/c175.png",
@@ -104,16 +113,15 @@
                                     "https://stream.laut.fm/djcryexx",
                                     "https://stream.laut.fm/hrp-an-der-elbe?ref=radiode"];
 
-            $hide_section = false;
-
             include("./includes/section.php");
 
 
-
+            
             // Games
-
+            
             $section_names = ["Games", "Spiele", "game.php"];
             $section_count = 3;
+            $section_hide = false;
 
             $game_picture_paths =  ["Minecraft.png",
                                     "Terraria.png",
@@ -125,8 +133,6 @@
                             "https://terraria.org/",
                             "https://mindustrygame.github.io/"];
 
-            $hide_section = false;
-
             include("./includes/section.php");
 
 
@@ -135,11 +141,10 @@
 
             $section_names = ["Contact", "Kontakt", "contact.php"];
             $section_count = 1;
+            $section_hide = false;
 
             $contact_text_en = "If you have any questions or encounter any problems, you can contact me through this.";
             $contact_text_de = "Wenn Sie Fragen haben oder Probleme auftreten, können Sie mich hierüber kontaktieren.";
-
-            $hide_section = false;
             
             include("./includes/section.php");
             
@@ -149,13 +154,13 @@
 
             $section_names = ["Free Things", "Kostenlose Dinge", "free.php"];
             $section_count = 2;
+            $section_hide = true;
 
             $free_names_en = ["xStream Kodi Addon", "Online Fix - Free Multiplayer Games"];
             $free_names_de = ["xStream Kodi Addon", "Online Fix - Kostenlose Mehrspieler Spiele"];
 
             $free_picture_paths = ["images/xstream.png", "images/SteamOnlineFix.png"];
             $free_img_height =      ["clamp(7.5rem, 10vw, 10rem)", "", "clamp(7.5rem, 10vw, 10rem)"];
-
             $free_descriptions_en = ["The xStream addon for Kodi offers a large selection of movies, series, TV and radio channels for free. It can be used on many platforms.",
                                      "Play popular games with multiplayer support for free with Online Fix."];
             $free_descriptions_de = ["Das xStream Addon für Kodi stellt eine große Auswahl an Filmen, Serien, Fernseh- und Radiosendern kostenlos zur Verfügung. Es kann auf vielen Platformen benutzt werden.",
@@ -187,9 +192,7 @@
 
             $free_download_urls = ["",
                                    "https://www.mediafire.com/file/26aqfo4fcibhlzy/Terraria%252BTModLoader.zip/file"];
-
-            $hide_section = true;
-
+                                   
             include("./includes/section.php");
 
 
@@ -198,10 +201,9 @@
             
             $section_names = ["Test", "Test", "test.php"];
             $section_count = 3;
+            $section_hide = true;
 
             $test_panorama_paths = ["https://cdn.pannellum.org/2.5/pannellum.htm#panorama=https%3A//i.imgur.com/8uCoV6j.jpeg", "https://cdn.pannellum.org/2.5/pannellum.htm#panorama=https%3A//i.imgur.com/oK38FW1.jpg", "https://cdn.pannellum.org/2.5/pannellum.htm#panorama=https%3A//i.imgur.com/sVkLhRn.jpg"];
-
-            $hide_section = true;
 
             include("./includes/section.php");
 
@@ -211,8 +213,7 @@
             
             $section_names = ["XXX", "XXX", "xxx.php"];
             $section_count = 1;
-
-            $hide_section = false;
+            $section_hide = false;
 
             include("./includes/section.php");
             
@@ -222,8 +223,7 @@
             
             $section_names = ["Settings", "Einstellungen", "settings.php"];
             $section_count = 1;
-
-            $hide_section = false;
+            $section_hide = false;
 
             include("./includes/section.php");
 

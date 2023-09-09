@@ -409,3 +409,28 @@ function toggle(id) {
         object.style.display = "none";
     }
 }
+
+
+
+
+// Panorama Viewer
+
+pannellum.viewer("panoViewer", {
+    "type": "equirectangular",
+    "showZoomCtrl": false,
+    "autoLoad": true
+});
+
+function loadPanorama(src, panoNum) {
+    for (const element of document.getElementsByClassName("panoPreview")) {
+        element.style.border = "none"
+    }
+    document.getElementById("pano" + panoNum).style.border = "2px solid white";
+    document.getElementById("panoViewer").innerHTML = ""
+    pannellum.viewer("panoViewer", {
+        "type": "equirectangular",
+        "panorama": src,
+        "showZoomCtrl": false,
+        "autoLoad": true
+    });
+}

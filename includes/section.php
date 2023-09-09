@@ -1,4 +1,4 @@
-<section class="section <?php if ($hide_section == 'true') {echo 'hideSection';}?>">
+<section class="section<?php if ($section_hide == 'true') {echo ' hideSection';}?>">
     <article>
         <h class="lang en"><?=$section_names[0]?></h>
         <h class="lang de"><?=$section_names[1]?></h>

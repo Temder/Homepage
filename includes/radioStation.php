@@ -9,8 +9,8 @@
 
     <input class="radio <?php if ($radio_names[$i] != 'Radiowelle Pirna') {echo 'round';}?>" 
            onclick="play(1, 'r<?=$i?>')" 
-           type="image" src="<?=$radio_picture_paths[$i]?>" 
-           alt="Stream: Radio Dresden">
+           type="image" 
+           src="<?=$radio_picture_paths[$i]?>">
     <h3><?=$radio_names[$i]?></h3>
-    <audio tabindex="-1" style="display:none" id="<?=$i?>" src="<?=$radio_stream_paths[$i]?>" preload="none"></audio>
+    <audio tabindex="-1" style="display:none" id="<?=$i?>" src="<?=$radio_stream_paths[$i]?>"></audio>
 </div>

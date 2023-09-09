@@ -15,6 +15,8 @@ echo("views = ".$_SESSION['views']);*/
     <strong>Website Views</strong>
     <br />
     Not working at the moment
+
+    <!--<div id="panorama" style="width: 200px; height: 200px; border-radius: 20px;"></div>-->
     <?php
     	/*mysqli_select_db($conn,'website_visitor_counter');
         $result= $conn->query("SELECT total_views FROM pages WHERE id='2'");
