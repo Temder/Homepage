@@ -1,6 +1,6 @@
 <?php if ($i == 0) {
     echo("
-        <div id='panoViewer' style='width: 45vw; height: 45vh; margin-bottom: 2.5vh'></div>
+        <div id='panoViewer'></div>
     ");
 } else {
     $j = $i - 1;

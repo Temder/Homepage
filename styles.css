@@ -470,6 +470,12 @@
     }
     /*Panoramas*/
     
+    #panoViewer {
+        width: 90%;
+        height: 45vh;
+        margin-bottom: 2.5vh;
+    }
+    
     .panoPreview {
         padding: 10px;
     }

@@ -86,10 +86,20 @@
             // 360° Panoramas
 
             $section_names = ["360° Panoramas", "360° Panoramas", "panorama.php"];
-            $section_count = count(glob('./images/pano/*')) + 1;
             $section_hide = false;
             
-            $pano_images = glob('./images/pano/*');
+            $pano_local_path = "C:/Users/tomen/Downloads/360";
+            $pano_github_urls = ["https://github.com/Temder/Homepage/blob/main/images/pano/pano0.jpg?raw=true",
+                                 "https://github.com/Temder/Homepage/blob/main/images/pano/pano1.jpg?raw=true",
+                                 "https://github.com/Temder/Homepage/blob/main/images/pano/pano2.jpg?raw=true"];
+
+            /*if (count(glob("$pano_local_path/*")) === 0) {
+                $pano_images = glob("./images/pano/*");
+            } else {
+                $pano_images = glob("$pano_local_path/*");
+            }*/
+            $pano_images = glob("./images/pano/*");
+            $section_count = count($pano_images) + 1;
 
             include("./includes/section.php");
 
