@@ -1,0 +1,182 @@
+:root {
+    --color-header-bg-1: #ccc;
+    --color-header-bg-2: #111;
+    --color-header-bg-hover-1: #777;
+    --color-header-bg-hover-2: #333;
+    --color-main-bg: #eee;
+    --color-main-fg: #222;
+    --display-sun: block;
+    --display-moon: none;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-header-bg-1: #111;
+        --color-header-bg-2: #ccc;
+        --color-header-bg-hover-1: #333;
+        --color-header-bg-hover-2: #777;
+        --color-main-bg: #222;
+        --color-main-fg: #eee;
+        --display-sun: none;
+        --display-moon: block;
+    }
+}
+*:not(nav a):focus-visible {
+    outline: solid var(--color-main-fg);
+}
+#main {
+    padding: 20px;
+}
+#moon {
+    display: var(--display-moon);
+}
+#sun {
+    display: var(--display-sun);
+}
+#moon, #sun {
+    border-radius: 50%;
+    padding: 0.5em;
+    transition: transform 0.5s;
+    background-color: var(--color-main-bg);
+    color: var(--color-main-fg);
+}
+#moon:hover,
+#sun:hover {
+    background-color: var(--color-main-fg);
+    color: var(--color-main-bg);
+}
+/*#moon:hover {
+    transform: rotate(360deg);
+}
+#sun:hover {
+    transform: rotate(180deg);
+}*/
+#wave {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 50%;
+    width: 100%;
+}
+.active {
+    background-color: var(--color-main-bg);
+    color: var(--color-main-fg);
+}
+.changeTheme {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    width: 5em;
+    height: 5em;
+    padding: 0;
+    border-width: 0;
+    border-radius: 50%;
+}
+.changeTheme:hover #moon,
+.changeTheme:hover #sun {
+    transform: rotate(360deg);
+}
+.prevent-select {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: var(--color-main-bg);
+    color: var(--color-main-fg);
+}
+nav {
+    text-align: center;
+    list-style-type: none;
+    padding-top: 0.75em;
+    height: 3.5em;
+    background-color: var(--color-header-bg-1);
+    border-bottom-width: 2px;
+}
+nav a {
+    display: inline-block;
+    position: relative;
+    height: 100%;
+    line-height: 3.5em;
+    padding: 0 1em 0 1em;
+    margin: 0 0.5em 0 0.5em;
+    text-decoration: none;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    transition: background-color 0.3s;
+    color: var(--color-header-bg-2);
+}
+nav a:focus-visible {
+    outline: none;
+    box-shadow: 0 -2px 0px 2px var(--color-main-fg);
+    z-index: 100;
+}
+nav a:before,
+nav a:after {
+    display: none;
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 50%;
+    pointer-events: none;
+    transition: all 0.3s;
+    color: var(--color-main-bg);
+}
+nav a:before {
+    left: -100%;
+    border-bottom: 5px solid;
+    border-right: 5px solid;
+    border-bottom-right-radius: 1em;
+}
+nav a:after {
+    right: -100%;
+    border-bottom: 5px solid;
+    border-left: 5px solid;
+    border-bottom-left-radius: 1em;
+}
+nav a:hover {
+    border-color: initial;
+    border-width: 0;
+    transition: background-color 0s;
+    background-color: var(--color-main-bg);
+}
+nav a:hover:before,
+nav a:hover:after,
+.active:before,
+.active:after {
+    display: block;
+}
+.radio-player {
+    width: 7em;
+    height: 7em;
+    border-radius: 50%;
+}
+.radio-player:hover:before {
+    background-color: #ffffff80;
+    background-blend-mode: saturation;
+}
+.radio-player:after {
+    display: none;
+}
+.radio-player:before {
+    position: absolute;
+    content: "";
+    background: url("https://static.radiodresden.de/cms/data/slp/Webradio/Radio_Dresden/radio-dresden.svg") no-repeat center;
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+}
+.radio-player:after {
+    position: absolute;
+    content: "";
+    background: url('data:image/svg+xml; utf8, <svg width="7em" height="7em" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg"><rect rx="50" width="50" height="50" stroke="none" fill="black" style="opacity: 0.5;" /><path d="m11.4904,36.85294l13.25319,-23.19306l13.25319,23.19306l-26.50636,0l13.25319,-23.19306" transform="translate(4) rotate(90, 24.7436, 25.2564)" stroke="white" stroke-width="0.2em" stroke-linejoin="round"/></svg>') no-repeat center;
+    width: inherit;
+    height: inherit;
+}
+.radio-active:after {
+    display: block;
+}
