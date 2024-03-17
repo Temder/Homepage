@@ -68,6 +68,7 @@ for (let i = 0; i < 5; i++) {
 }
 
 
+// Radio
 
 function play(e) {
     var de = document.getElementById(e);
@@ -92,3 +93,15 @@ function play(e) {
         de.pause();
     }
 }
+
+/*document.querySelector('html > body > div#main > div > div.radio-player').forEach(radio => {
+    radio.addEventListener("keypress", function(event) {
+        // If the user presses the "Enter" key on the keyboard
+        if (event.key === "Enter") {
+          // Cancel the default action, if needed
+          event.preventDefault();
+          // Trigger the button element with a click
+          radio.click();
+        }
+      }); 
+}); */
