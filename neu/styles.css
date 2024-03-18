@@ -5,6 +5,8 @@
     --color-header-bg-hover-2: #333;
     --color-main-bg: #eee;
     --color-main-fg: #222;
+    --color-radio-hover-1: #77777780;
+    --color-radio-hover-2: #33333380;
     --display-sun: block;
     --display-moon: none;
 }
@@ -16,6 +18,8 @@
         --color-header-bg-hover-2: #777;
         --color-main-bg: #222;
         --color-main-fg: #eee;
+        --color-radio-hover-1: #22222280;
+        --color-radio-hover-2: #dddddd80;
         --display-sun: none;
         --display-moon: block;
     }
@@ -153,10 +157,11 @@ nav a:hover:after,
 .radio-player {
     width: 7em;
     height: 7em;
+    margin-right: 1em;
     border-radius: 50%;
 }
 .radio-player:hover:before {
-    background-color: #ffffff80;
+    background-color: var(--color-radio-hover-1);
     background-blend-mode: saturation;
 }
 .radio-player:after {
@@ -165,7 +170,6 @@ nav a:hover:after,
 .radio-player:before {
     position: absolute;
     content: "";
-    background: url("https://static.radiodresden.de/cms/data/slp/Webradio/Radio_Dresden/radio-dresden.svg") no-repeat center;
     width: inherit;
     height: inherit;
     border-radius: inherit;

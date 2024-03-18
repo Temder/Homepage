@@ -4,14 +4,28 @@ function loadPage(page) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("main").innerHTML = this.responseText;
+            document.getElementById('main').innerHTML = this.responseText;
+            if(document.getElementById('radio-container') != null) {
+                var i = 0;
+                Object.entries(radios).forEach(([img, src]) => {
+                    let clone = radio_template.content.cloneNode(true);
+                    var a = clone.querySelector('a');
+                    var audio = clone.querySelector('a > audio')
+                    a.id = `radio${i}`
+                    a.setAttribute("onclick", `play(audio${i})`);
+                    audio.id = `audio${i}`;
+                    audio.src = src;
+                    document.styleSheets[0].insertRule(`#radio${i}:before{background: url(${img}) no-repeat center;background-size: contain;}`, document.styleSheets[0].cssRules.length - 5)
+                    document.styleSheets[0].insertRule(`#radio${i}:hover:before{background-color: var(--color-radio-hover-1);background-blend-mode: saturation;}`, document.styleSheets[0].cssRules.length - 5)
+                    document.getElementById('radio-container').appendChild(clone);
+                    i++;
+                })
+            }
         }
     };
-    xhttp.open("GET", page, true);
+    xhttp.open('GET', `subsites/${page}`, true);
     xhttp.send();
 }
-loadPage('radio.html');
-document.location.hash = 'radio';
 window.addEventListener('popstate', function(event) {
     loadPage(document.location.hash.replace('#', '') + '.html');
     document.querySelectorAll('nav > a').forEach(el => {
@@ -21,6 +35,8 @@ window.addEventListener('popstate', function(event) {
         }
     })
 })
+loadPage('home.html');
+document.location.hash = 'home';
 
 
 // Theme switcher
@@ -29,6 +45,7 @@ const cssVariables = {
     '--color-header-bg-1': '--color-header-bg-2',
     '--color-header-bg-hover-1': '--color-header-bg-hover-2',
     '--color-main-bg': '--color-main-fg',
+    '--color-radio-hover-1': '--color-radio-hover-2',
     '--display-sun': '--display-moon'
 }
 document.querySelectorAll('.changeTheme').forEach(el => {
@@ -70,38 +87,23 @@ for (let i = 0; i < 5; i++) {
 
 // Radio
 
+const radios = {
+    'https://static.radiodresden.de/cms/data/slp/Webradio/Radio_Dresden/radio-dresden.svg': 'https://edge12.radio.radiodresden.de/radiodresden-live/stream/mp3?aggregator=radioplayer&=&&___cb=148297866039774',
+    'https://tse1.mm.bing.net/th?id=OIP.KVje53CP4WaY-QYELtFG6wHaHa&pid=Api': 'https://mdr-284320-0.sslcast.mdr.de/mdr/284320/0/mp3/high/stream.mp3'
+}
+const radio_template = document.getElementById('radio-template');
+
 function play(e) {
-    var de = document.getElementById(e);
+    if (e.paused) {
+        url = e.src.split('?')[0];
+        var e1 = url + '?' + new Date().getTime();
+        e.src = e1;
 
-    if (de.paused) {
-        url = de.src.split('?')[0];
-        var de1 = url + '?' + new Date().getTime();
-        document.getElementById(e).src = de1;
+        e.play();
 
-        de.play();
-
-        de.parentNode.classList.add('radio-active');
-        de.onended = function() {
-            if (document.getElementById(e + 1)) {
-                play(e + 1);
-            } else {
-                play(1);
-            }
-        }
+        e.parentNode.classList.add('radio-active');
     } else {
-        de.parentNode.classList.remove('radio-active');
-        de.pause();
+        e.parentNode.classList.remove('radio-active');
+        e.pause();
     }
 }
-
-/*document.querySelector('html > body > div#main > div > div.radio-player').forEach(radio => {
-    radio.addEventListener("keypress", function(event) {
-        // If the user presses the "Enter" key on the keyboard
-        if (event.key === "Enter") {
-          // Cancel the default action, if needed
-          event.preventDefault();
-          // Trigger the button element with a click
-          radio.click();
-        }
-      }); 
-}); */
