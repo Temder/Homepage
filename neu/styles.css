@@ -1,31 +1,31 @@
 :root {
     --color-header-bg-1: #ccc;
-    --color-header-bg-2: #111;
+    --color-header-bg-2: #000;
     --color-header-bg-hover-1: #777;
     --color-header-bg-hover-2: #333;
     --color-main-bg: #eee;
-    --color-main-fg: #222;
-    --color-radio-hover-1: #77777780;
-    --color-radio-hover-2: #33333380;
+    --color-main-fg: #333;
+    --color-radio-hover-1: #33333380;
+    --color-radio-hover-2: #cccccc80;
     --display-sun: block;
     --display-moon: none;
 }
 @media (prefers-color-scheme: dark) {
     :root {
-        --color-header-bg-1: #111;
+        --color-header-bg-1: #000;
         --color-header-bg-2: #ccc;
         --color-header-bg-hover-1: #333;
         --color-header-bg-hover-2: #777;
-        --color-main-bg: #222;
+        --color-main-bg: #333;
         --color-main-fg: #eee;
-        --color-radio-hover-1: #22222280;
-        --color-radio-hover-2: #dddddd80;
+        --color-radio-hover-1: #cccccc80;
+        --color-radio-hover-2: #33333380;
         --display-sun: none;
         --display-moon: block;
     }
 }
 *:not(nav a):focus-visible {
-    outline: solid var(--color-main-fg);
+    outline: solid var(--color-main-fg) 0.3em;
     z-index: 100;
 }
 #main {
@@ -80,6 +80,18 @@
 .changeTheme:hover #sun {
     transform: rotate(360deg);
 }
+.form {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    padding: 1em;
+}
+.form input {
+    margin: 0.5em;
+}
+.form input {
+    color: var(--color-main-fg);
+}
 .prevent-select {
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
@@ -92,6 +104,12 @@ body {
     transition: background-color 0.3s, color 0.3s;
     background-color: var(--color-main-bg);
     color: var(--color-main-fg);
+}
+input {
+    border-style: solid;
+    border-radius: 2%;
+    background-color: var(--color-header-bg-1);
+    border-color: var(--color-header-bg-2);
 }
 nav {
     text-align: center;

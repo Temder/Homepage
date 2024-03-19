@@ -1,3 +1,19 @@
+// Local Storage
+
+if (localStorage.getItem('radios')) {
+    var radios = JSON.parse(localStorage.getItem('radios'));
+    console.log(radios);
+    /*{
+        'https://static.radiodresden.de/cms/data/slp/Webradio/Radio_Dresden/radio-dresden.svg': 'https://edge12.radio.radiodresden.de/radiodresden-live/stream/mp3?aggregator=radioplayer&=&&___cb=148297866039774',
+        'https://tse1.mm.bing.net/th?id=OIP.KVje53CP4WaY-QYELtFG6wHaHa&pid=Api': 'https://mdr-284320-0.sslcast.mdr.de/mdr/284320/0/mp3/high/stream.mp3',
+        'https://i1.sndcdn.com/artworks-ym6rnHoPcSVPPyMA-Gkyisg-t500x500.jpg': 'http://streams.radiopsr.de/psr-live/mp3-192/mediaplayer'  //https://upload.radiopsr.de/production/static/1710348534675/36ac373e59412227091fb612f51fed11.svg
+    }*/
+} else {
+    localStorage.setItem('radios', JSON.stringify({}))
+    var radios = {};
+}
+
+
 // Ajax content changing
 
 function loadPage(page) {
@@ -6,20 +22,7 @@ function loadPage(page) {
         if (this.readyState == 4 && this.status == 200) {
             document.getElementById('main').innerHTML = this.responseText;
             if(document.getElementById('radio-container') != null) {
-                var i = 0;
-                Object.entries(radios).forEach(([img, src]) => {
-                    let clone = radio_template.content.cloneNode(true);
-                    var a = clone.querySelector('a');
-                    var audio = clone.querySelector('a > audio')
-                    a.id = `radio${i}`
-                    a.setAttribute("onclick", `play(audio${i})`);
-                    audio.id = `audio${i}`;
-                    audio.src = src;
-                    document.styleSheets[0].insertRule(`#radio${i}:before{background: url(${img}) no-repeat center;background-size: contain;}`, document.styleSheets[0].cssRules.length - 5)
-                    document.styleSheets[0].insertRule(`#radio${i}:hover:before{background-color: var(--color-radio-hover-1);background-blend-mode: saturation;}`, document.styleSheets[0].cssRules.length - 5)
-                    document.getElementById('radio-container').appendChild(clone);
-                    i++;
-                })
+                radio(radios);
             }
         }
     };
@@ -41,13 +44,12 @@ document.location.hash = 'home';
 
 // Theme switcher
 
-const cssVariables = {
-    '--color-header-bg-1': '--color-header-bg-2',
-    '--color-header-bg-hover-1': '--color-header-bg-hover-2',
-    '--color-main-bg': '--color-main-fg',
-    '--color-radio-hover-1': '--color-radio-hover-2',
-    '--display-sun': '--display-moon'
+style = document.styleSheets[0].cssRules[0].style;
+const cssVariables = {};
+for (let i = 1; i < style.length; i=i+2) {
+  cssVariables[style[i-1]] = style[i];
 }
+
 document.querySelectorAll('.changeTheme').forEach(el => {
     el.addEventListener('click', function() {
         Object.entries(cssVariables).forEach(([key, val]) => {
@@ -65,10 +67,12 @@ document.querySelectorAll('.changeTheme').forEach(el => {
 function getRandom(min, max) {
     return Math.random() * (max - min) + min;
 }
+
 var randDir = getRandom(200, 300);
 var rand = getRandom(-1, 0.5);
 var randColorChange = getRandom(9, 15);
 var randHeightChange = getRandom(20, 45);
+
 for (let i = 0; i < 5; i++) {
     var curve = `M0 400
                  v${-100 - i * randHeightChange}
@@ -87,11 +91,8 @@ for (let i = 0; i < 5; i++) {
 
 // Radio
 
-const radios = {
-    'https://static.radiodresden.de/cms/data/slp/Webradio/Radio_Dresden/radio-dresden.svg': 'https://edge12.radio.radiodresden.de/radiodresden-live/stream/mp3?aggregator=radioplayer&=&&___cb=148297866039774',
-    'https://tse1.mm.bing.net/th?id=OIP.KVje53CP4WaY-QYELtFG6wHaHa&pid=Api': 'https://mdr-284320-0.sslcast.mdr.de/mdr/284320/0/mp3/high/stream.mp3'
-}
 const radio_template = document.getElementById('radio-template');
+var i = 0;
 
 function play(e) {
     if (e.paused) {
@@ -106,4 +107,30 @@ function play(e) {
         e.parentNode.classList.remove('radio-active');
         e.pause();
     }
+}
+
+function addRadio() {
+    let img = document.querySelector('#radio-img').value;
+    let src = document.querySelector('#radio-src').value;
+    document.querySelector('#radio-img').value = document.querySelector('#radio-src').value = '';
+    let rad = {[img]: src};
+    console.log(rad);
+    radio(rad);
+    localStorage.setItem('radios', JSON.stringify(Object.assign(JSON.parse(localStorage.getItem('radios')), rad)));
+}
+
+function radio(r) {
+    Object.entries(r).forEach(([img, src]) => {
+        let clone = radio_template.content.cloneNode(true);
+        var a = clone.querySelector('a');
+        var audio = clone.querySelector('a > audio');
+        a.id = `radio${i}`;
+        a.setAttribute("onclick", `play(audio${i})`);
+        audio.id = `audio${i}`;
+        audio.src = src;
+        document.styleSheets[0].insertRule(`#radio${i}:before{background: url(${img}) no-repeat center;background-size: contain;}`, document.styleSheets[0].cssRules.length - 5);
+        document.styleSheets[0].insertRule(`#radio${i}:hover:before{background-color: var(--color-radio-hover-1);background-blend-mode: saturation;}`, document.styleSheets[0].cssRules.length - 5);
+        document.getElementById('radio-container').appendChild(clone);
+        i++;
+    })
 }
