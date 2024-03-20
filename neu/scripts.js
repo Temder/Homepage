@@ -6,8 +6,8 @@ if (localStorage.getItem('radios')) {
     /*{
         'https://static.radiodresden.de/cms/data/slp/Webradio/Radio_Dresden/radio-dresden.svg': 'https://edge12.radio.radiodresden.de/radiodresden-live/stream/mp3?aggregator=radioplayer&=&&___cb=148297866039774',
         'https://tse1.mm.bing.net/th?id=OIP.KVje53CP4WaY-QYELtFG6wHaHa&pid=Api': 'https://mdr-284320-0.sslcast.mdr.de/mdr/284320/0/mp3/high/stream.mp3',
-        'https://i1.sndcdn.com/artworks-ym6rnHoPcSVPPyMA-Gkyisg-t500x500.jpg': 'http://streams.radiopsr.de/psr-live/mp3-192/mediaplayer'  //https://upload.radiopsr.de/production/static/1710348534675/36ac373e59412227091fb612f51fed11.svg
-    }*/
+        'https://i1.sndcdn.com/artworks-ym6rnHoPcSVPPyMA-Gkyisg-t500x500.jpg': 'http://streams.radiopsr.de/psr-live/mp3-192/mediaplayer'
+    }*/// https://tse3.mm.bing.net/th?id=OIP.Sy64rn8wA7AMk6KvmTm-sQHaHa&pid=Api
 } else {
     localStorage.setItem('radios', JSON.stringify({}))
     var radios = {};
@@ -103,7 +103,7 @@ function play(e) {
 
         e.play();
 
-        document.querySelector('#radio-container').querySelectorAll('div > a').forEach(a => {
+        document.querySelector('#radio-container').querySelectorAll('div > a:nth-child(1)').forEach(a => {
             if (a != e.parentNode) {
                 a.classList.remove('radio-active');
                 a.querySelector('audio').pause();
@@ -138,9 +138,9 @@ function addRadio() {
 function radio(r) {
     Object.entries(r).forEach(([img, src]) => {
         let clone = radio_template.content.cloneNode(true);
-        var link = clone.querySelector('div > a');
+        var link = clone.querySelector('div > a:nth-child(1)');
         var audio = clone.querySelector('div > a > audio');
-        var del = clone.querySelector('div > svg');
+        var del = clone.querySelector('div > a:nth-child(2)');
         link.id = `radio${radio_id}`;
         link.classList.add('radio-link');
         link.setAttribute("onclick", `play(audio${radio_id})`);

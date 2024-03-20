@@ -196,24 +196,30 @@ nav a:hover:after,
     height: 7em;
     margin: 0 0.5em 4em;
 }
-.radio-player a {
+.radio-link {
     display: inline-block;
     width: inherit;
     height: inherit;
     border-radius: 50%;
 }
-.radio-player svg {
-    display: none;
+.radio-del {
+    display: inline-block;
     width: 3em;
     height: 3em;
     margin: 0 1.5em;
     padding: 0.5em;
-    transform: translateY(-1em);
     border-radius: 25%;
     cursor: pointer;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-4em);
+    transition: 0.3s;
 }
-.radio-player a:hover,
-.radio-player svg:hover {
+.radio-del svg {
+
+}
+.radio-link:hover,
+.radio-del:hover {
     background-color: var(--color-radio-hover-1);
     background-blend-mode: saturation;
 }
@@ -230,7 +236,7 @@ nav a:hover:after,
     pointer-events: none;
     margin: 7.5em 25% 0px;
 }*/
-.radio-player a:before {
+.radio-link:before {
     display: none;
     position: absolute;
     content: "";
@@ -238,11 +244,15 @@ nav a:hover:after,
     width: inherit;
     height: inherit;
 }
-a.radio-active:before {
+.radio-link.radio-active:before {
     display: block;
 }
 
 .radio-link:hover + .radio-del,
-.radio-del:hover {
-    display: block;
+.radio-del:hover,
+.radio-link:focus-visible + .radio-del,
+.radio-del:focus-visible {
+    pointer-events: all;
+    opacity: 1;
+    transform: translateY(-1em);
 }
