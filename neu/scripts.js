@@ -30,6 +30,7 @@ function loadPage(page) {
     xhttp.send();
 }
 window.addEventListener('popstate', function(event) {
+    radio_id = 0;
     loadPage(document.location.hash.replace('#', '') + '.html');
     document.querySelectorAll('nav > a').forEach(el => {
         el.classList.remove('active');
@@ -92,7 +93,7 @@ for (let i = 0; i < 5; i++) {
 // Radio
 
 const radio_template = document.getElementById('radio-template');
-var i = 0;
+var radio_id = 0;
 
 function play(e) {
     if (e.paused) {
@@ -102,6 +103,12 @@ function play(e) {
 
         e.play();
 
+        document.querySelector('#radio-container').querySelectorAll('div > a').forEach(a => {
+            if (a != e.parentNode) {
+                a.classList.remove('radio-active');
+                a.querySelector('audio').pause();
+            }
+        })
         e.parentNode.classList.add('radio-active');
     } else {
         e.parentNode.classList.remove('radio-active');
@@ -109,28 +116,41 @@ function play(e) {
     }
 }
 
+function remove(radio) {
+    let img_url = window.getComputedStyle(radio, false).backgroundImage.slice(4, -1).replace(/"/g, "");
+    delete radios[img_url]
+    localStorage.setItem('radios', JSON.stringify(radios));
+    radio.parentNode.parentNode.removeChild(radio.parentNode);
+}
+
 function addRadio() {
     let img = document.querySelector('#radio-img').value;
     let src = document.querySelector('#radio-src').value;
-    document.querySelector('#radio-img').value = document.querySelector('#radio-src').value = '';
-    let rad = {[img]: src};
-    console.log(rad);
-    radio(rad);
-    localStorage.setItem('radios', JSON.stringify(Object.assign(JSON.parse(localStorage.getItem('radios')), rad)));
+    if (img != '' && src != '') {
+        document.querySelector('#radio-img').value = document.querySelector('#radio-src').value = '';
+        let rad = {[img]: src};
+        radio(rad);
+        console.log(`Added ${rad} to local storage`);
+        localStorage.setItem('radios', JSON.stringify(Object.assign(JSON.parse(localStorage.getItem('radios')), rad)));
+    }
 }
 
 function radio(r) {
     Object.entries(r).forEach(([img, src]) => {
         let clone = radio_template.content.cloneNode(true);
-        var a = clone.querySelector('a');
-        var audio = clone.querySelector('a > audio');
-        a.id = `radio${i}`;
-        a.setAttribute("onclick", `play(audio${i})`);
-        audio.id = `audio${i}`;
+        var link = clone.querySelector('div > a');
+        var audio = clone.querySelector('div > a > audio');
+        var del = clone.querySelector('div > svg');
+        link.id = `radio${radio_id}`;
+        link.classList.add('radio-link');
+        link.setAttribute("onclick", `play(audio${radio_id})`);
+        audio.id = `audio${radio_id}`;
         audio.src = src;
-        document.styleSheets[0].insertRule(`#radio${i}:before{background: url(${img}) no-repeat center;background-size: contain;}`, document.styleSheets[0].cssRules.length - 5);
-        document.styleSheets[0].insertRule(`#radio${i}:hover:before{background-color: var(--color-radio-hover-1);background-blend-mode: saturation;}`, document.styleSheets[0].cssRules.length - 5);
+        del.classList.add('radio-del');
+        del.setAttribute("onclick", `remove(radio${radio_id})`);
+        document.styleSheets[0].insertRule(`#radio${radio_id}{background-image: url(${img});background-size: contain;}`, document.styleSheets[0].cssRules.length - 5);
+        /*document.styleSheets[0].insertRule(`#radio${radio_id}:hover{background-color: var(--color-radio-hover-1);background-blend-mode: saturation;}`, document.styleSheets[0].cssRules.length - 5);*/
         document.getElementById('radio-container').appendChild(clone);
-        i++;
+        radio_id++;
     })
 }
