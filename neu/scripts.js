@@ -93,26 +93,28 @@ for (let i = 0; i < 5; i++) {
 // Radio
 
 const radio_template = document.getElementById('radio-template');
+const audio = document.querySelector('#audio-player');
 var radio_id = 0;
 
-function play(e) {
-    if (e.paused) {
-        url = e.src.split('?')[0];
-        var e1 = url + '?' + new Date().getTime();
-        e.src = e1;
-
-        e.play();
-
-        document.querySelector('#radio-container').querySelectorAll('div > a:nth-child(1)').forEach(a => {
-            if (a != e.parentNode) {
-                a.classList.remove('radio-active');
-                a.querySelector('audio').pause();
-            }
-        })
-        e.parentNode.classList.add('radio-active');
+function play(radio, src) {
+    if (!audio.paused && radio.id.replace('radio', '') == audio.getAttribute('data-playing-station')) {
+        radio.classList.remove('radio-active');
+        audio.pause();
+        console.log(`pausing audio with station ${radio.id} and URL ${audio.src}`);
     } else {
-        e.parentNode.classList.remove('radio-active');
-        e.pause();
+        audio.src = src;
+        audio.setAttribute('data-playing-station', radio.id.replace('radio', ''));
+        document.querySelector('#radio-container').querySelectorAll('div > a:nth-child(1)').forEach(a => {
+            a.classList.remove('radio-active');
+        })
+        radio.classList.add('radio-active');
+
+        url = audio.src.split('?')[0];
+        var e1 = url + '?' + new Date().getTime();
+        audio.src = e1;
+
+        audio.play();
+        console.log(`playing audio with station ${radio.id} and URL ${audio.src}`);
     }
 }
 
@@ -139,13 +141,10 @@ function radio(r) {
     Object.entries(r).forEach(([img, src]) => {
         let clone = radio_template.content.cloneNode(true);
         var link = clone.querySelector('div > a:nth-child(1)');
-        var audio = clone.querySelector('div > a > audio');
         var del = clone.querySelector('div > a:nth-child(2)');
         link.id = `radio${radio_id}`;
         link.classList.add('radio-link');
-        link.setAttribute("onclick", `play(audio${radio_id})`);
-        audio.id = `audio${radio_id}`;
-        audio.src = src;
+        link.setAttribute("onclick", `play(${link.id}, "${src}")`);
         del.classList.add('radio-del');
         del.setAttribute("onclick", `remove(radio${radio_id})`);
         document.styleSheets[0].insertRule(`#radio${radio_id}{background-image: url(${img});background-size: contain;}`, document.styleSheets[0].cssRules.length - 5);
