@@ -2,7 +2,6 @@
 
 if (localStorage.getItem('radios')) {
     var radios = JSON.parse(localStorage.getItem('radios'));
-    console.log(radios);
     /*{
         'https://static.radiodresden.de/cms/data/slp/Webradio/Radio_Dresden/radio-dresden.svg': 'https://edge12.radio.radiodresden.de/radiodresden-live/stream/mp3?aggregator=radioplayer&=&&___cb=148297866039774',
         'https://tse1.mm.bing.net/th?id=OIP.KVje53CP4WaY-QYELtFG6wHaHa&pid=Api': 'https://mdr-284320-0.sslcast.mdr.de/mdr/284320/0/mp3/high/stream.mp3',
@@ -99,6 +98,7 @@ var radio_id = 0;
 function play(radio, src) {
     if (!audio.paused && radio.id.replace('radio', '') == audio.getAttribute('data-playing-station')) {
         radio.classList.remove('radio-active');
+        audio.removeAttribute('data-playing-station');
         audio.pause();
         console.log(`pausing audio with station ${radio.id} and URL ${audio.src}`);
     } else {
@@ -142,11 +142,16 @@ function radio(r) {
         let clone = radio_template.content.cloneNode(true);
         var link = clone.querySelector('div > a:nth-child(1)');
         var del = clone.querySelector('div > a:nth-child(2)');
+
         link.id = `radio${radio_id}`;
         link.classList.add('radio-link');
         link.setAttribute("onclick", `play(${link.id}, "${src}")`);
         del.classList.add('radio-del');
         del.setAttribute("onclick", `remove(radio${radio_id})`);
+        if (audio.getAttribute('data-playing-station') == radio_id) {
+            link.classList.add('radio-active');
+        }
+
         document.styleSheets[0].insertRule(`#radio${radio_id}{background-image: url(${img});background-size: contain;}`, document.styleSheets[0].cssRules.length - 5);
         /*document.styleSheets[0].insertRule(`#radio${radio_id}:hover{background-color: var(--color-radio-hover-1);background-blend-mode: saturation;}`, document.styleSheets[0].cssRules.length - 5);*/
         document.getElementById('radio-container').appendChild(clone);

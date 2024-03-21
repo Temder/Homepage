@@ -24,6 +24,9 @@
         --display-moon: block;
     }
 }
+* {
+    box-sizing: border-box;
+}
 *:not(nav a):focus-visible {
     outline: solid var(--color-main-fg) 0.3em;
     z-index: 100;
@@ -38,11 +41,13 @@
     display: var(--display-sun);
 }
 #moon, #sun {
+    width: inherit;
+    height: inherit;
     border-radius: 50%;
     padding: 0.5em;
     transition: transform 0.5s;
-    background-color: var(--color-main-bg);
-    color: var(--color-main-fg);
+    background-color: var(--color-header-bg-1);
+    color: var(--color-header-bg-2);
 }
 #moon:hover,
 #sun:hover {
@@ -79,16 +84,19 @@
     transform: rotate(180deg);
 }
 .form {
-    display: inline-grid;
-    grid-template-columns: auto auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(7em, 100%), 1fr));
     gap: 1em;
     align-items: center;
+    width: 80%;
+    max-width: 20em;
     height: min-content;
     padding: 1em;
+    margin: 0 auto;
 }
 .form button {
-    border: solid 0.15em var(--color-main-fg);
-    border-radius: 5%;
+    border: solid 0.1em var(--color-main-fg);
+    border-radius: 2%;
     font-size: 1em;
     background-color: var(--color-main-bg);
     color: var(--color-main-fg);
@@ -125,7 +133,7 @@ nav {
     list-style-type: none;
     padding-top: 0.75em;
     width: 100%;
-    height: 3.5em;
+    height: 4em;
     background-color: var(--color-header-bg-1);
     border-bottom-width: 2px;
 }
@@ -186,13 +194,14 @@ nav a:hover:after,
 #radio-container {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     padding: 1em;
-    margin-bottom: 5em;
+    margin: 0 auto 5em;
+    gap: 1em;
 }
 .radio-player {
     width: 7em;
     height: 7em;
-    margin: 0 0.5em 4em;
 }
 .radio-link {
     display: block;
@@ -204,15 +213,15 @@ nav a:hover:after,
 .radio-del {
     display: block;
     position: relative;
-    width: 3em;
-    height: 3em;
-    margin: 0 1.5em;
-    padding: 0.5em;
+    width: 50%;
+    height: 50%;
+    margin: 0 25%;
+    padding: 0.3em;
     border-radius: 25%;
     cursor: pointer;
     transform: translateY(-4em);
     transition: 0.3s;
-    z-index: -10;
+    z-index: -15;
 }
 .radio-link:hover,
 .radio-del:hover {
@@ -247,6 +256,6 @@ nav a:hover:after,
 .radio-del:hover,
 .radio-link:focus-visible + .radio-del,
 .radio-del:focus-visible {
-    transform: translateY(-1em);
+    transform: translateY(-0.5em);
     z-index: 1;
 }
