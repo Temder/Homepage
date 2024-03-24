@@ -10,6 +10,9 @@
     --display-sun: block;
     --display-moon: none;
 }
+:root {
+    --nav-border-radius: 1.25rem;
+}
 @media (prefers-color-scheme: dark) {
     :root {
         --color-header-bg-1: #000;
@@ -28,11 +31,11 @@
     box-sizing: border-box;
 }
 *:not(nav a):focus-visible {
-    outline: solid var(--color-main-fg) 0.3em;
+    outline: solid var(--color-main-fg) 0.2rem;
     z-index: 100;
 }
 #main {
-    padding: 4.5em 1em;
+    padding: 4.5em 2em;
 }
 #moon {
     display: var(--display-moon);
@@ -53,6 +56,14 @@
 #sun:hover {
     background-color: var(--color-main-fg);
     color: var(--color-main-bg);
+}
+#radio-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 1em;
+    margin: 0 0 5em;
+    gap: 1em;
 }
 #wave {
     position: fixed;
@@ -92,13 +103,12 @@
     max-width: 20em;
     height: min-content;
     padding: 1em;
-    margin: 0 auto;
 }
 .form button {
     border: solid 0.1em var(--color-main-fg);
     border-radius: 2%;
-    font-size: 1em;
-    background-color: var(--color-main-bg);
+    font-size: 1rem;
+    background-color: var(--color-header-bg-1);
     color: var(--color-main-fg);
 }
 .form button:hover {
@@ -112,92 +122,6 @@
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
-}
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    transition: background-color 0.3s, color 0.3s;
-    background-color: var(--color-main-bg);
-    color: var(--color-main-fg);
-}
-input {
-    border-style: solid;
-    border-radius: 2%;
-    background-color: var(--color-header-bg-1);
-    border-color: var(--color-header-bg-2);
-}
-nav {
-    position: fixed;
-    text-align: center;
-    list-style-type: none;
-    padding-top: 0.75em;
-    width: 100%;
-    height: 4em;
-    background-color: var(--color-header-bg-1);
-    border-bottom-width: 2px;
-}
-nav a {
-    display: inline-block;
-    position: relative;
-    height: 100%;
-    line-height: 3.5em;
-    padding: 0 1em 0 1em;
-    margin: 0 0.5em 0 0.5em;
-    text-decoration: none;
-    border-top-left-radius: 1em;
-    border-top-right-radius: 1em;
-    transition: background-color 0.3s;
-    color: var(--color-header-bg-2);
-}
-nav a:focus-visible {
-    outline: none;
-    box-shadow: 0 -2px 0px 2px var(--color-main-fg);
-    z-index: 100;
-}
-nav a:before,
-nav a:after {
-    display: none;
-    content: "";
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    height: 50%;
-    border-bottom: 0.5em solid;
-    pointer-events: none;
-    transition: all 0.3s;
-    color: var(--color-main-bg);
-}
-nav a:before {
-    left: -100%;
-    border-right: 0.5em solid;
-    border-bottom-right-radius: 1em;
-}
-nav a:after {
-    right: -100%;
-    border-left: 0.5em solid;
-    border-bottom-left-radius: 1em;
-}
-nav a:hover {
-    border-color: initial;
-    border-width: 0;
-    transition: background-color 0s;
-    background-color: var(--color-main-bg);
-}
-nav a:hover:before,
-nav a:hover:after,
-.active:before,
-.active:after {
-    display: block;
-}
-
-#radio-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 1em;
-    margin: 0 auto 5em;
-    gap: 1em;
 }
 .radio-player {
     width: 7em;
@@ -228,19 +152,6 @@ nav a:hover:after,
     background-color: var(--color-radio-hover-1);
     background-blend-mode: saturation;
 }
-/*.radio-player:before {
-    display: inline-block;
-    content: "";
-    width: inherit;
-    height: inherit;
-    border-radius: inherit;
-    border-radius: inherit;
-    background-color: var(--color-main-fg);
-    width: 50%;
-    height: 50%;
-    pointer-events: none;
-    margin: 7.5em 25% 0px;
-}*/
 .radio-link:before {
     display: none;
     position: absolute;
@@ -258,4 +169,79 @@ nav a:hover:after,
 .radio-del:focus-visible {
     transform: translateY(-0.5em);
     z-index: 1;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: var(--color-main-bg);
+    color: var(--color-main-fg);
+}
+input {
+    border-style: solid;
+    border-radius: 2%;
+    background-color: var(--color-header-bg-1);
+    border-color: var(--color-header-bg-2);
+}
+nav {
+    position: fixed;
+    text-align: center;
+    list-style-type: none;
+    padding-top: 0.75em;
+    width: 100%;
+    height: 4em;
+    background-color: var(--color-header-bg-1);
+}
+nav a {
+    display: inline-block;
+    position: relative;
+    height: 100%;
+    line-height: 3.5em;
+    padding: 0 1em 0 1em;
+    margin: 0 calc(var(--nav-border-radius) * 0.9) 0 calc(var(--nav-border-radius) * 0.9);
+    text-decoration: none;
+    border-radius: var(--nav-border-radius) var(--nav-border-radius) 0 0;
+    transition: background-color 0.3s;
+    color: var(--color-header-bg-2);
+}
+nav a:focus-visible {
+    outline: none;
+    box-shadow: 0 -2px 0px 2px var(--color-main-fg);
+    z-index: 100;
+}
+nav a:hover:before,
+nav a:hover:after,
+.active:before,
+.active:after {
+    position: absolute;
+    content: "";
+    width: var(--nav-border-radius);
+    height: var(--nav-border-radius);
+    bottom: 0;
+    transition: box-shadow 0.3s;
+}
+nav a:before {
+    left: calc(var(--nav-border-radius) * -1);
+    border-radius: 0 0 100vw 0;
+    box-shadow: calc(var(--nav-border-radius) * 0.175) calc(var(--nav-border-radius) * 0.175) 0 calc(var(--nav-border-radius) * 0.175) var(--color-main-bg);
+}
+nav a:after {
+    right: calc(var(--nav-border-radius) * -1);
+    border-radius: 0 0 0 100vw;
+    box-shadow: calc(var(--nav-border-radius) * -0.175) calc(var(--nav-border-radius) * 0.175) 0 calc(var(--nav-border-radius) * 0.175) var(--color-main-bg);
+}
+nav a:hover {
+    border-color: initial;
+    border-width: 0;
+    transition: background-color 0s;
+    background-color: var(--color-main-bg);
+}
+@media only screen and (max-width: 783px) {
+    .form {
+        margin: 0 auto;
+    }
+    #radio-container {
+        margin: 0 auto 5em;
+    }
 }

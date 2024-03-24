@@ -8,8 +8,14 @@ if (localStorage.getItem('radios')) {
         'https://i1.sndcdn.com/artworks-ym6rnHoPcSVPPyMA-Gkyisg-t500x500.jpg': 'http://streams.radiopsr.de/psr-live/mp3-192/mediaplayer'
     }*/// https://tse3.mm.bing.net/th?id=OIP.Sy64rn8wA7AMk6KvmTm-sQHaHa&pid=Api
 } else {
-    localStorage.setItem('radios', JSON.stringify({}))
     var radios = {};
+    localStorage.setItem('radios', JSON.stringify(radios))
+}
+if (localStorage.getItem('current_page')) {
+    var current_page = localStorage.getItem('current_page');
+} else {
+    var current_page = 'home';
+    localStorage.setItem('current_page', current_page)
 }
 
 
@@ -30,7 +36,9 @@ function loadPage(page) {
 }
 window.addEventListener('popstate', function(event) {
     radio_id = 0;
-    loadPage(document.location.hash.replace('#', '') + '.html');
+    current_page = document.location.hash.replace('#', '');
+    loadPage(current_page + '.html');
+    localStorage.setItem('current_page', current_page)
     document.querySelectorAll('nav > a').forEach(el => {
         el.classList.remove('active');
         if (document.location.hash == el.getAttribute('href')) {
@@ -38,8 +46,15 @@ window.addEventListener('popstate', function(event) {
         }
     })
 })
-loadPage('home.html');
-document.location.hash = 'home';
+
+loadPage(`${current_page}.html`);
+document.location.hash = current_page;
+document.querySelectorAll('nav > a').forEach(el => {
+    el.classList.remove('active');
+    if (document.location.hash == el.getAttribute('href')) {
+        el.classList.add('active');
+    }
+})
 
 
 // Theme switcher
