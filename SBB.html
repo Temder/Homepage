@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+/*CSS für die Materialbestand Seite*/
+
+/* Hier passiert der Spaß mit den Verschiedennen Blöcken,
+        welche in einem Gitter angeordnet werden*/
+.grid {
+    display: grid;
+	  padding: 0 10px;
+    grid-template-columns: repeat(auto-fill, minmax(17em, 1fr));
+    grid-gap: 10px;
+}
+
+.grid img {
+	  height: 100px !important;
+}
+
+/* Das Design der Blöcke */
+.item {
+    height: 220px;
+    padding: 1em;
+    /*border-radius: 5px;
+    outline: 2px solid black;*/
+    color: white;
+    background-color: rgba(87, 170, 39, 0.8);
+}
+
+/* Das Design der Infoabschnitte */
+.info {
+    display: none;
+    position: relative;
+    padding: 0 auto;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.info div {
+    width: min-content;
+    margin: 0 auto;
+}
+
+/* Elemente dieser Klasse kann man nicht markieren */
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Info anzeigen bei Interaktion */
+
+/*Desktop Geräte*/
+@media (pointer:fine) {
+		.item:hover .picText {
+    		display: none;
+		}
+		.item:hover .info {
+    		display: block;
+		}
+		.item:hover {
+				background: linear-gradient(#68E566, #084d06);
+		}
+}
+
+/*Mobile Geräte*/
+@media (pointer:coarse) {
+		.active .picText {
+    		display: none;
+		}
+	    .active .info {
+    		display: block;
+		}
+		.active {
+			background: linear-gradient(#68E566, #084d06);
+		}
+}
+    </style>
+</head>
+<body>
+    <div class="grid"></div>
+    <script>
+/* Alle Elemente der Materialliste */
+/* Syntax pro Element: <Name>: [<Bild URL>, <Preis>] */
+const material = {
+    /* Material 1-5 */
+    'Kletterführer - aktuelle Ausgaben': ['', '1,0'],
+    'Kletterführer - ältere Ausgaben': ['', '0,0'],
+    'Sonstige Literatur': ['', '0,0'],
+    'Friends Rock Empire "Comet" 11 Stück': ['https://sbb-pirna.de/wp-content/uploads/2023/10/Friends.png', '5,0'],
+    'Friends Black Diamond (Camelots) 5 Stück': ['https://sbb-pirna.de/wp-content/uploads/2022/02/friends.png', '3,0'],
+    /* Material 6-10 */
+    'Friends Salewa - 5 Stück': ['https://sbb-pirna.de/wp-content/uploads/2022/02/friends.png', '3,0'],
+    'Klemmkeile - salewa / no name - 8 Stück': ['', '2,0'],
+    'Camp Tricam Dyneema - Klemmgerät': ['https://sbb-pirna.de/wp-content/uploads/2023/09/Tricam_Camp_1_-removebg-preview.png', '3,0'],
+    'Friends DMM Gr. 00, 0, 1 (3 Stück)': ['https://sbb-pirna.de/wp-content/uploads/2022/02/friends.png', '2,0'],
+    'Klemmkeile - DMM Wallnut - 11 Stück': ['', '3,0'],
+    /* Material 11-15 */
+    'Klemmkeile - DMM - Torque Nut - 4 Stück': ['https://sbb-pirna.de/wp-content/uploads/2023/10/Klemmkeile.png', '2,0'],
+    'Klettersteigset Edelrid': ['https://sbb-pirna.de/wp-content/uploads/2023/10/Klettersteigset.png', '3,0'],
+    'AV-Schlüssel (Winterraum)': ['', '0,0'],
+    'Slackline': ['https://sbb-pirna.de/wp-content/uploads/2023/10/Slackline.png', '3,0'],
+    'Biwaksack 1-/2-Personen': ['https://sbb-pirna.de/wp-content/uploads/2023/10/Biwak-Schlafsack.png', '1,00/1,5'],
+    /* Material 16-20 */
+    'LVS-Gerät': ['https://sbb-pirna.de/wp-content/uploads/2022/02/lvs_geraet_ortovox.png', '5,0'],
+    'GPS-Gerät SATMAP Active 10 mit AV-Karten': ['', '3,0'],
+    'Eispickel': ['https://sbb-pirna.de/wp-content/uploads/2023/10/Eispicke-e1697441973941.png', '2,0'],
+    'Eisschraube Stubai / vaude': ['https://sbb-pirna.de/wp-content/uploads/2023/10/Eisschrauben.png', '1,0'],
+    'Teleskopwanderstöcke': ['', '1,0'],
+    /* Material 21-25 */
+    'Schneeschuhe': ['https://sbb-pirna.de/wp-content/uploads/2023/10/Schneeschuhe.png', '4,0'],
+    'Schneeschaufel': ['', '3,0'],
+    'Lawinensonde': ['https://sbb-pirna.de/wp-content/uploads/2023/10/Lavinensonde.png', '2,0'],
+    'Kletterhelm': ['https://sbb-pirna.de/wp-content/uploads/2023/10/Kletterhelm.png', '2,0'],
+    'Steigeisen': ['https://sbb-pirna.de/wp-content/uploads/2023/10/Steigeisen.png', '4,0'],
+    /* Material 26-30 */
+    'Steileisgerät (2 Stück) Charlet Moser': ['https://sbb-pirna.de/wp-content/uploads/2022/02/steileisgeraet_charlet_moser.png', '3,0'],
+    'Steigklemmen Petzl': ['', '2,0'],
+    'Vollseil (50m)': ['https://sbb-pirna.de/wp-content/uploads/2023/10/Kletterseil.png', '2,0'],
+    'Klettergurt': ['https://sbb-pirna.de/wp-content/uploads/2023/10/Klettergurt.png', '2,0'],
+    'Abseilacht / Tube': ['', '0,0'],
+    /* Material 31-35 */
+    'GriGri +, Grigri 2, Fish (Austria Alpin), MegaJul': ['', '3,0'],
+    'HMS-Karabiner': ['https://sbb-pirna.de/wp-content/uploads/2023/10/Karabiner-e1697442155364.png', '4,0'],
+    'Bandschlinge': ['https://sbb-pirna.de/wp-content/uploads/2023/10/Bandschlinge-e1697435536274.png', '2,0'],
+    'Kletterschuhe': ['', '5,0'],
+    'Bouldermatten (LACD, Ocun)': ['https://sbb-pirna.de/wp-content/uploads/2022/02/crashpads_lacd_and_ocun.png', '2,0'],
+    /* Material 36-40 */
+    'Zelt Akto Grönt': ['https://sbb-pirna.de/wp-content/uploads/2024/03/1710861180854.png', '8,0'],
+    'Zelt VauDe - Division Dom (4-5 Pers.)': ['https://sbb-pirna.de/wp-content/uploads/2022/01/zelt_vaude_division.png', '5,0'],
+    'Zelt VauDe - Mark 3 (2-3 Personen)': ['https://sbb-pirna.de/wp-content/uploads/2022/01/zelt_vaude_mark_3.png', '4,0'],
+    'Zelt Salewa Midway IV (2-3 Personen)': ['https://sbb-pirna.de/wp-content/uploads/2022/01/zelt_salewa_midway_4.png', '5,0'],
+    'Zelt VAUDE Campo Grande (3-4 Personen)': ['https://sbb-pirna.de/wp-content/uploads/2022/01/VAUDE-Campo-Grande-3-4P-Zelt_Bild-zugeschnitten-2.jpg', '3,0'],
+    /* Material 41-45 */
+    'Zelt xtend Advantage Malaga (3 - 4 Pers.)': ['https://sbb-pirna.de/wp-content/uploads/2022/01/zelt_xtend_advantage_malaga.png', '4,0'],
+    'Zelt VAUDE Arco 3 Season (2 Personen)': ['https://sbb-pirna.de/wp-content/uploads/2022/01/zelt_vaude_arco_3.png', '3,0'],
+    'Gaskocher "Campinggaz" - zweiflammig': ['', 'noch nicht sicher'],
+    'Beamer Canon LV 7295 S': ['', 'noch nicht sicher'],
+    'Leinwand': ['', 'noch nicht sicher'],
+    /* Material 46-50 */
+    'Tourenski / Bindung Silvretta mit Steigfellen': ['https://sbb-pirna.de/wp-content/uploads/2022/02/tourenski_bindung_silvretta.png', '3,0'],
+    'Tourenskischuh Garmont G-Lite, Touring-Skischuh mit Innenschuh Größe 40/43 (?)': ['https://sbb-pirna.de/wp-content/uploads/2022/02/tourenskischuhe.png', '5,0'],
+    'Langlauf Schuhe Größe 40': ['https://sbb-pirna.de/wp-content/uploads/2022/12/Langlauf_Schuhe_40.png', '2,0'],
+    'Langlauf Schuhe Größe 42': ['https://sbb-pirna.de/wp-content/uploads/2022/12/Langlauf_Schuhe_42.png', '2,0'],
+    'Schuh Spikes Blau': ['https://sbb-pirna.de/wp-content/uploads/2022/12/Schuh_Spikes_2-rotated.jpg', 'noch nicht sicher'],
+    /* Material 51-55 */
+    'Schuh Spikes Schwarz': ['https://sbb-pirna.de/wp-content/uploads/2022/12/Schuh_Spikes_1-rotated.jpg', 'noch nicht sicher'],
+    'Summer Lounge XL': ['https://sbb-pirna.de/wp-content/uploads/2022/12/Summer_Lounge_XL.jpg', '3,0'],
+    'Portaledge': ['https://sbb-pirna.de/wp-content/uploads/2023/03/Portaledge-scaled.jpg', '4,0'],
+    'Wachsbank mit Zubehör': ['https://sbb-pirna.de/wp-content/uploads/2023/03/Waxbank.jpg', '2,0'],
+    'Mini Gasherd': ['https://sbb-pirna.de/wp-content/uploads/2023/06/OmniFuel.jpg', '5,0'],
+    /* Material 56-57 */
+    'Topfset': ['https://sbb-pirna.de/wp-content/uploads/2023/06/Kochset.jpg', '2,0'],
+    'Zelt Oppland 2 PU': ['https://sbb-pirna.de/wp-content/uploads/2023/06/oppland_2_pu.png', '8,0'],
+    'Matte': ['https://sbb-pirna.de/wp-content/uploads/2023/07/Matte.jpg', '5,0']
+}
+
+/* Materialliste wird alphabetisch sortiert */
+const sortedMaterial = Object.fromEntries(Object.entries(material).sort());
+
+/* Materialien werden dem Grid hinzugefügt */
+Object.entries(sortedMaterial).forEach(([name, infos], count) => {
+    const item = `
+        <div class="item noselect" onclick="changeActive(${count})">
+            <div class="picText">
+                <div style="text-align: center; overflow: clip; height: 100px;">
+                    ${infos[0] ? `<img style="max-width: 200px !important; height: 100px; margin: 0 auto;" src="${infos[0]}" alt="${name}">` : '<div style="height: 100px; line-height: 100px; font-size: 0.9rem;">Kein Bild verfügbar</div>'}
+                </div>
+                <p style="font-size: 1.25rem; text-align: center;">${name}</p>
+            </div>
+            <div class="info noselect">
+                <div style="font-size: 1.5rem; padding-bottom: 10px;">pro Woche</div>
+                <div style="font-size: 1.1rem;">${infos[1] === "noch nicht sicher" ? "noch nicht sicher" : `${infos[1]} €`}</div>
+            </div>
+        </div>`;
+    document.getElementsByClassName('grid')[0].insertAdjacentHTML('beforeend', item);
+});
+        
+        var items = document.getElementsByClassName("item");
+        function changeActive(i) {
+            if (items[i].classList.contains("active")) {
+                items[i].classList.remove("active");
+            } else {
+                for (let j = 0; j < items.length; j++) {
+                    items[j].classList.remove("active");
+                }
+                items[i].classList.add("active");
+            }
+        }
+        </script>
+</body>
+</html>
