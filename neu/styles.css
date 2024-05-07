@@ -144,7 +144,7 @@
     border-radius: 25%;
     cursor: pointer;
     transform: translateY(-4em);
-    transition: 0.3s;
+    transition: transform 0.3s,z-index 0.3s;
     z-index: -15;
 }
 .radio-link:hover,
@@ -179,10 +179,9 @@ body {
     color: var(--color-main-fg);
 }
 input {
-    border-style: solid;
+    border: solid 0.1em var(--color-main-fg);
     border-radius: 2%;
     background-color: var(--color-header-bg-1);
-    border-color: var(--color-header-bg-2);
 }
 nav {
     position: fixed;
