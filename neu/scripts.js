@@ -1,5 +1,4 @@
-// Local Storage
-
+// #region Local Storage
 if (localStorage.getItem('radios')) {
     var radios = JSON.parse(localStorage.getItem('radios'));
     /*{
@@ -17,17 +16,19 @@ if (localStorage.getItem('current_page')) {
     var current_page = 'home';
     localStorage.setItem('current_page', current_page)
 }
+//#endregion
 
-
-// Ajax content changing
-
+//#region Ajax content changing
 function loadPage(page) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             document.getElementById('main').innerHTML = this.responseText;
-            if(document.getElementById('radio-container') != null) {
+            if(document.getElementById('radios') != null) {
                 radio(radios);
+            }
+            if(document.getElementById('languageSelect') != null) {
+                document.getElementById('languageSelect').value = shortLang;
             }
         }
     };
@@ -55,57 +56,25 @@ document.querySelectorAll('nav > a').forEach(el => {
         el.classList.add('active');
     }
 })
+//#endregion
 
-
-// Theme switcher
-
-style = document.styleSheets[0].cssRules[0].style;
-const cssVariables = {};
-for (let i = 1; i < style.length; i=i+2) {
-  cssVariables[style[i-1]] = style[i];
+//#region Language switcher
+var userLang = "";
+if (localStorage.getItem('language')) {
+    userLang = localStorage.getItem('language')
+} else {
+    userLang = window.navigator.userLanguage || window.navigator.language;
 }
+shortLang = userLang.split('-')[0];
+document.body.setAttribute('id', 'lang-' + shortLang);
 
-document.querySelectorAll('.changeTheme').forEach(el => {
-    el.addEventListener('click', function() {
-        Object.entries(cssVariables).forEach(([key, val]) => {
-            var var1 = getComputedStyle(document.documentElement).getPropertyValue(key)
-            var var2 = getComputedStyle(document.documentElement).getPropertyValue(val)
-            document.documentElement.style.setProperty(key, var2);
-            document.documentElement.style.setProperty(val, var1);
-        })
-    })
-})
-
-
-// SVG wave
-
-function getRandom(min, max) {
-    return Math.random() * (max - min) + min;
+function setLanguage(lang) {
+    document.body.setAttribute('id', 'lang-' + lang);
+    localStorage.setItem('language', lang);
 }
+//#endregion
 
-var randDir = getRandom(200, 300);
-var rand = getRandom(-1, 0.5);
-var randColorChange = getRandom(9, 15);
-var randHeightChange = getRandom(20, 45);
-
-for (let i = 0; i < 5; i++) {
-    var curve = `M0 400
-                 v${-100 - i * randHeightChange}
-                 c50 ${randDir}, 350 ${(100 - i * randHeightChange * 0.75) + randDir * rand}, 400 ${100 - i * randHeightChange * 0.75}
-                 L400 400`;
-    var svg = `<path d="${curve}" stroke-width="0" fill="hsl(204, 100%, ${30 + i * randColorChange}%)">
-               <animate attributeName="d" values="${curve};
-               M0 400
-               v${-105 - i * randHeightChange}
-               c250 ${randDir + 100}, 150 ${100 - i * randHeightChange * 0.75 + (randDir - 100) * rand}, 400 ${100 - i * randHeightChange * 0.75}
-               L400 400;
-               ${curve}" dur="5s" repeatCount="indefinite"/></path>`;
-    document.getElementById('wave').insertAdjacentHTML('afterbegin', svg);
-}
-
-
-// Radio
-
+//#region Radio
 const radio_template = document.getElementById('radio-template');
 const audio = document.querySelector('#audio-player');
 var radio_id = 0;
@@ -119,7 +88,7 @@ function play(radio, src) {
     } else {
         audio.src = src;
         audio.setAttribute('data-playing-station', radio.id.replace('radio', ''));
-        document.querySelector('#radio-container').querySelectorAll('div > a:nth-child(1)').forEach(a => {
+        document.querySelector('#radios').querySelectorAll('div > a:nth-child(1)').forEach(a => {
             a.classList.remove('radio-active');
         })
         radio.classList.add('radio-active');
@@ -169,7 +138,59 @@ function radio(r) {
 
         document.styleSheets[0].insertRule(`#radio${radio_id}{background-image: url(${img});background-size: contain;}`, document.styleSheets[0].cssRules.length - 5);
         /*document.styleSheets[0].insertRule(`#radio${radio_id}:hover{background-color: var(--color-radio-hover-1);background-blend-mode: saturation;}`, document.styleSheets[0].cssRules.length - 5);*/
-        document.getElementById('radio-container').appendChild(clone);
+        document.getElementById('radios').appendChild(clone);
         radio_id++;
     })
 }
+//#endregion
+
+//#region Theme switcher
+style = document.styleSheets[0].cssRules[0].style;
+const cssVariables = {};
+for (let i = 1; i < style.length; i=i+2) {
+  cssVariables[style[i-1]] = style[i];
+}
+
+document.querySelectorAll('.changeTheme').forEach(el => {
+    el.addEventListener('click', function() {
+        Object.entries(cssVariables).forEach(([key, val]) => {
+            var var1 = getComputedStyle(document.documentElement).getPropertyValue(key)
+            var var2 = getComputedStyle(document.documentElement).getPropertyValue(val)
+            document.documentElement.style.setProperty(key, var2);
+            document.documentElement.style.setProperty(val, var1);
+        })
+    })
+})
+//#endregion
+
+//#region Wave
+function getRandom(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+var randDir = getRandom(200, 300);
+var rand = getRandom(-1, 0.5);
+var randColorChange = getRandom(9, 15);
+var randHeightChange = getRandom(20, 45);
+
+for (let i = 0; i < 5; i++) {
+    var curve = `M0 400
+                 v${-100 - i * randHeightChange}
+                 c50 ${randDir}, 350 ${(100 - i * randHeightChange * 0.75) + randDir * rand}, 400 ${100 - i * randHeightChange * 0.75}
+                 L400 400`;
+    var svg = `<path d="${curve}" stroke-width="0" fill="hsl(204, 100%, ${30 + i * randColorChange}%)">
+               <animate attributeName="d" values="${curve};
+               M0 400
+               v${-105 - i * randHeightChange}
+               c250 ${randDir + 100}, 150 ${100 - i * randHeightChange * 0.75 + (randDir - 100) * rand}, 400 ${100 - i * randHeightChange * 0.75}
+               L400 400;
+               ${curve}" dur="5s" repeatCount="indefinite"/></path>`;
+    document.getElementById('wave').insertAdjacentHTML('afterbegin', svg);
+}
+//#endregion
+
+//#region Volume
+function setVolume(self, value) {
+    self.nextElementSibling.textContent = `${value} %`;
+}
+//#endregion

@@ -1,3 +1,4 @@
+/* Variables *//*#region */
 :root {
     --color-header-bg-1: #ccc;
     --color-header-bg-2: #000;
@@ -27,6 +28,23 @@
         --display-moon: block;
     }
 }
+/*#endregion*/
+
+/* General *//*#region */
+@media only screen and (max-width: 783px) {
+    .form-wrapper {
+        width: 100% !important;
+        margin: 0 auto !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    .flex-container {
+        margin: 0 auto 5em !important;
+    }
+    .form {
+        width: 80%;
+    }
+}
 * {
     box-sizing: border-box;
 }
@@ -37,27 +55,12 @@
 #main {
     padding: 4.5em 2em;
 }
-#moon {
-    display: var(--display-moon);
+.center {
+    width: min-content;
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
-#sun {
-    display: var(--display-sun);
-}
-#moon, #sun {
-    width: inherit;
-    height: inherit;
-    border-radius: 50%;
-    padding: 0.5em;
-    transition: transform 0.5s;
-    background-color: var(--color-header-bg-1);
-    color: var(--color-header-bg-2);
-}
-#moon:hover,
-#sun:hover {
-    background-color: var(--color-main-fg);
-    color: var(--color-main-bg);
-}
-#radio-container {
+.flex-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -65,110 +68,21 @@
     margin: 0 0 5em;
     gap: 1em;
 }
-#wave {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    height: 30vw;
-    width: 100%;
-    max-height: 50%;
-    pointer-events: none;
-}
-.active {
-    background-color: var(--color-main-bg);
-    color: var(--color-main-fg);
-}
-.changeTheme {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    width: 5em;
-    height: 5em;
-    padding: 0;
-    border-width: 0;
-    border-radius: 50%;
-}
-.changeTheme:hover #moon {
-    transform: rotate(360deg);
-}
-.changeTheme:hover #sun {
-    transform: rotate(180deg);
-}
-.form {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(7em, 100%), 1fr));
-    gap: 1em;
-    align-items: center;
-    width: 80%;
-    max-width: 20em;
-    height: min-content;
+.form-wrapper {
+    width: min-content;
     padding: 1em;
 }
-.form button {
-    border: solid 0.1em var(--color-main-fg);
-    border-radius: 2%;
-    font-size: 1rem;
-    background-color: var(--color-header-bg-1);
-    color: var(--color-main-fg);
+.form-wrapper > * {
+    width: min-content;
+    margin: 0 auto;
 }
-.form button:hover {
-    background-color: var(--color-radio-hover-1);
-    background-blend-mode: saturation;
-}
-.form input {
-    color: var(--color-main-fg);
+.nowrap {
+    white-space: nowrap;
 }
 .prevent-select {
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
-}
-.radio-player {
-    width: 7em;
-    height: 7em;
-}
-.radio-link {
-    display: block;
-    position: relative;
-    width: inherit;
-    height: inherit;
-    border-radius: 50%;
-}
-.radio-del {
-    display: block;
-    position: relative;
-    width: 50%;
-    height: 50%;
-    margin: 0 25%;
-    padding: 0.3em;
-    border-radius: 25%;
-    cursor: pointer;
-    transform: translateY(-4em);
-    transition: transform 0.3s,z-index 0.3s;
-    z-index: -15;
-}
-.radio-link:hover,
-.radio-del:hover {
-    background-color: var(--color-radio-hover-1);
-    background-blend-mode: saturation;
-}
-.radio-link:before {
-    display: none;
-    position: absolute;
-    content: "";
-    background: url('data:image/svg+xml; utf8, <svg width="7em" height="7em" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg"><rect rx="50" width="50" height="50" stroke="none" fill="black" style="opacity: 0.5;" /><path d="m11.4904,36.85294l13.25319,-23.19306l13.25319,23.19306l-26.50636,0l13.25319,-23.19306" transform="translate(4) rotate(90, 24.7436, 25.2564)" stroke="white" stroke-width="0.2em" stroke-linejoin="round"/></svg>') no-repeat center;
-    width: inherit;
-    height: inherit;
-}
-.radio-link.radio-active:before {
-    display: block;
-}
-.radio-link:hover + .radio-del,
-.radio-del:hover,
-.radio-link:focus-visible + .radio-del,
-.radio-del:focus-visible {
-    transform: translateY(-0.5em);
-    z-index: 1;
 }
 body {
     font-family: Arial, sans-serif;
@@ -178,10 +92,35 @@ body {
     background-color: var(--color-main-bg);
     color: var(--color-main-fg);
 }
-input {
+h3 {
+    width: min-content;
+    white-space: nowrap;
+    margin-bottom: 1em !important;
+}
+/*#endregion*/
+
+/* Language switcher *//*#region */
+#languageSelect {
     border: solid 0.1em var(--color-main-fg);
     border-radius: 2%;
+    padding: 0.4em;
     background-color: var(--color-header-bg-1);
+    color: var(--color-main-fg);
+}
+#lang-de .de,
+#lang-en .en {
+    display: block;
+}
+.de,
+.en {
+    display: none;
+}
+/*#endregion*/
+
+/* Navbar *//*#region */
+.active {
+    background-color: var(--color-main-bg);
+    color: var(--color-main-fg);
 }
 nav {
     position: fixed;
@@ -236,11 +175,134 @@ nav a:hover {
     transition: background-color 0s;
     background-color: var(--color-main-bg);
 }
-@media only screen and (max-width: 783px) {
-    .form {
-        margin: 0 auto;
-    }
-    #radio-container {
-        margin: 0 auto 5em;
-    }
+/*#endregion*/
+
+/* Radio *//*#region */
+.form {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(7em, 100%), 1fr));
+    gap: 1em;
+    align-items: center;
+    max-width: 20em;
+    height: min-content;
+    /*padding: 0.5em 1em 1em 1em;*/
 }
+.form button {
+    border: solid 0.1em var(--color-main-fg);
+    border-radius: 2%;
+    font-size: 1rem;
+    background-color: var(--color-header-bg-1);
+    color: var(--color-main-fg);
+}
+.form button:hover {
+    background-color: var(--color-radio-hover-1);
+    background-blend-mode: saturation;
+}
+.form input {
+    border: solid 0.1em var(--color-main-fg);
+    border-radius: 2%;
+    background-color: var(--color-header-bg-1);
+    color: var(--color-main-fg);
+}
+.radio-player {
+    width: 7em;
+    height: 7em;
+    z-index: 0;
+}
+.radio-link {
+    display: block;
+    position: relative;
+    width: inherit;
+    height: inherit;
+    border-radius: 50%;
+}
+.radio-del {
+    display: block;
+    position: relative;
+    width: 50%;
+    height: 50%;
+    margin: 0 25%;
+    padding: 0.3em;
+    border-radius: 25%;
+    cursor: pointer;
+    transform: translateY(-4em);
+    transition: transform 0.3s,z-index 0.3s;
+    z-index: -15;
+}
+.radio-link:hover,
+.radio-del:hover {
+    background-color: var(--color-radio-hover-1);
+    background-blend-mode: saturation;
+}
+.radio-link:before {
+    display: none;
+    position: absolute;
+    content: "";
+    background: url('data:image/svg+xml; utf8, <svg width="7em" height="7em" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg"><rect rx="50" width="50" height="50" stroke="none" fill="black" style="opacity: 0.5;" /><path d="m11.4904,36.85294l13.25319,-23.19306l13.25319,23.19306l-26.50636,0l13.25319,-23.19306" transform="translate(4) rotate(90, 24.7436, 25.2564)" stroke="white" stroke-width="0.2em" stroke-linejoin="round"/></svg>') no-repeat center;
+    width: inherit;
+    height: inherit;
+}
+.radio-link.radio-active:before {
+    display: block;
+}
+.radio-link:hover + .radio-del,
+.radio-del:hover,
+.radio-link:focus-visible + .radio-del,
+.radio-del:focus-visible {
+    transform: translateY(-0.5em);
+    z-index: 1;
+}
+/*#endregion*/
+
+/* Theme switcher *//*#region */
+#moon {
+    display: var(--display-moon);
+}
+#sun {
+    display: var(--display-sun);
+}
+#moon, #sun {
+    width: inherit;
+    height: inherit;
+    border-radius: 50%;
+    padding: 0.5em;
+    transition: transform 0.5s;
+    background-color: var(--color-header-bg-1);
+    color: var(--color-header-bg-2);
+}
+#moon:hover,
+#sun:hover {
+    background-color: var(--color-main-fg);
+    color: var(--color-main-bg);
+}
+.changeTheme {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 5em;
+    height: 5em;
+    padding: 0;
+    border-width: 0;
+    border-radius: 50%;
+    z-index: 100;
+}
+.changeTheme:hover #moon {
+    transform: rotate(360deg);
+}
+.changeTheme:hover #sun {
+    transform: rotate(180deg);
+}
+/*#endregion*/
+
+/* Wave *//*#region */
+#wave {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 30vw;
+    width: 100%;
+    max-height: 50%;
+    pointer-events: none;
+    z-index: 1;
+}
+/*#endregion*/
