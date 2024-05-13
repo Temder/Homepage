@@ -1,4 +1,4 @@
-/* Variables *//*#region */
+/*#region Variables*/
 :root {
     --color-header-bg-1: #ccc;
     --color-header-bg-2: #000;
@@ -30,7 +30,7 @@
 }
 /*#endregion*/
 
-/* General *//*#region */
+/*#region General*/
 @media only screen and (max-width: 783px) {
     .form-wrapper {
         width: 100% !important;
@@ -99,7 +99,7 @@ h3 {
 }
 /*#endregion*/
 
-/* Language switcher *//*#region */
+/*#region Language switcher*/
 #languageSelect {
     border: solid 0.1em var(--color-main-fg);
     border-radius: 2%;
@@ -117,7 +117,7 @@ h3 {
 }
 /*#endregion*/
 
-/* Navbar *//*#region */
+/*#region Navbar*/
 .active {
     background-color: var(--color-main-bg);
     color: var(--color-main-fg);
@@ -177,7 +177,7 @@ nav a:hover {
 }
 /*#endregion*/
 
-/* Radio *//*#region */
+/*#region Radio*/
 .form {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(7em, 100%), 1fr));
@@ -254,7 +254,7 @@ nav a:hover {
 }
 /*#endregion*/
 
-/* Theme switcher *//*#region */
+/*#region Theme switcher*/
 #moon {
     display: var(--display-moon);
 }
@@ -294,7 +294,7 @@ nav a:hover {
 }
 /*#endregion*/
 
-/* Wave *//*#region */
+/*#region Wave*/
 #wave {
     position: fixed;
     left: 0;

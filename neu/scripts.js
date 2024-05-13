@@ -1,4 +1,15 @@
 // #region Local Storage
+if (localStorage.getItem('current_page')) {
+    var current_page = localStorage.getItem('current_page');
+} else {
+    var current_page = 'home';
+    localStorage.setItem('current_page', current_page)
+}
+if (localStorage.getItem('language')) {
+    var userLang = localStorage.getItem('language')
+} else {
+    var userLang = window.navigator.userLanguage || window.navigator.language;
+}
 if (localStorage.getItem('radios')) {
     var radios = JSON.parse(localStorage.getItem('radios'));
     /*{
@@ -10,13 +21,15 @@ if (localStorage.getItem('radios')) {
     var radios = {};
     localStorage.setItem('radios', JSON.stringify(radios))
 }
-if (localStorage.getItem('current_page')) {
-    var current_page = localStorage.getItem('current_page');
+if (localStorage.getItem('volume')) {
+    var volume = localStorage.getItem('volume');
 } else {
-    var current_page = 'home';
-    localStorage.setItem('current_page', current_page)
+    var volume = 100;
 }
 //#endregion
+
+
+
 
 //#region Ajax content changing
 function loadPage(page) {
@@ -29,6 +42,10 @@ function loadPage(page) {
             }
             if(document.getElementById('languageSelect') != null) {
                 document.getElementById('languageSelect').value = shortLang;
+            }
+            if(document.getElementById('volumeSlider') != null) {
+                document.getElementById('volumeSlider').value = volume;
+                document.getElementById('volumeSlider').nextElementSibling.textContent = `${volume} %`;
             }
         }
     };
@@ -58,13 +75,10 @@ document.querySelectorAll('nav > a').forEach(el => {
 })
 //#endregion
 
+
+
+
 //#region Language switcher
-var userLang = "";
-if (localStorage.getItem('language')) {
-    userLang = localStorage.getItem('language')
-} else {
-    userLang = window.navigator.userLanguage || window.navigator.language;
-}
 shortLang = userLang.split('-')[0];
 document.body.setAttribute('id', 'lang-' + shortLang);
 
@@ -73,6 +87,9 @@ function setLanguage(lang) {
     localStorage.setItem('language', lang);
 }
 //#endregion
+
+
+
 
 //#region Radio
 const radio_template = document.getElementById('radio-template');
@@ -144,6 +161,9 @@ function radio(r) {
 }
 //#endregion
 
+
+
+
 //#region Theme switcher
 style = document.styleSheets[0].cssRules[0].style;
 const cssVariables = {};
@@ -162,6 +182,9 @@ document.querySelectorAll('.changeTheme').forEach(el => {
     })
 })
 //#endregion
+
+
+
 
 //#region Wave
 function getRandom(min, max) {
@@ -189,8 +212,13 @@ for (let i = 0; i < 5; i++) {
 }
 //#endregion
 
+
+
+
 //#region Volume
 function setVolume(self, value) {
-    self.nextElementSibling.textContent = `${value} %`;
+    volume = value;
+    self.nextElementSibling.textContent = `${volume} %`;
+    localStorage.setItem('volume', volume);
 }
 //#endregion
