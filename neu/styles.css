@@ -31,20 +31,6 @@
 /*#endregion*/
 
 /*#region General*/
-@media only screen and (max-width: 783px) {
-    .form-wrapper {
-        width: 100% !important;
-        margin: 0 auto !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-    }
-    .flex-container {
-        margin: 0 auto 5em !important;
-    }
-    .form {
-        width: 80%;
-    }
-}
 * {
     box-sizing: border-box;
 }
@@ -117,6 +103,29 @@ h3 {
 }
 /*#endregion*/
 
+/*#region Narrower devices*/
+@media only screen and (max-width: 783px) {
+    #main {
+        padding-top: 0em;
+    }
+    .form-wrapper {
+        width: 100% !important;
+        margin: 0 auto !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    .flex-container {
+        margin: 0 auto 5em !important;
+    }
+    .form {
+        width: 80%;
+    }
+    nav {
+        display: none;
+    }
+}
+/*#endregion*/
+
 /*#region Navbar*/
 .active {
     background-color: var(--color-main-bg);
@@ -140,7 +149,7 @@ nav a {
     margin: 0 calc(var(--nav-border-radius) * 0.9) 0 calc(var(--nav-border-radius) * 0.9);
     text-decoration: none;
     border-radius: var(--nav-border-radius) var(--nav-border-radius) 0 0;
-    transition: background-color 0.3s;
+    /*transition: background-color 0.3s;*/
     color: var(--color-header-bg-2);
 }
 nav a:focus-visible {
@@ -157,7 +166,7 @@ nav a:hover:after,
     width: var(--nav-border-radius);
     height: var(--nav-border-radius);
     bottom: 0;
-    transition: box-shadow 0.3s;
+    /*transition: box-shadow 0.3s;*/
 }
 nav a:before {
     left: calc(var(--nav-border-radius) * -1);
@@ -180,12 +189,11 @@ nav a:hover {
 /*#region Radio*/
 .form {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(7em, 100%), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(9.5em, 100%), 1fr));
     gap: 1em;
     align-items: center;
     max-width: 20em;
     height: min-content;
-    /*padding: 0.5em 1em 1em 1em;*/
 }
 .form button {
     border: solid 0.1em var(--color-main-fg);
@@ -207,7 +215,7 @@ nav a:hover {
 .radio-player {
     width: 7em;
     height: 7em;
-    z-index: 0;
+    /*z-index: 0;*/
 }
 .radio-link {
     display: block;
@@ -250,7 +258,7 @@ nav a:hover {
 .radio-link:focus-visible + .radio-del,
 .radio-del:focus-visible {
     transform: translateY(-0.5em);
-    z-index: 1;
+    z-index: 2;
 }
 /*#endregion*/
 

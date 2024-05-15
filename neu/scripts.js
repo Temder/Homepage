@@ -1,4 +1,4 @@
-// #region Local Storage
+// #region Local storage
 if (localStorage.getItem('current_page')) {
     var current_page = localStorage.getItem('current_page');
 } else {
@@ -153,12 +153,28 @@ function radio(r) {
             link.classList.add('radio-active');
         }
 
-        document.styleSheets[0].insertRule(`#radio${radio_id}{background-image: url(${img});background-size: contain;}`, document.styleSheets[0].cssRules.length - 5);
-        /*document.styleSheets[0].insertRule(`#radio${radio_id}:hover{background-color: var(--color-radio-hover-1);background-blend-mode: saturation;}`, document.styleSheets[0].cssRules.length - 5);*/
+        document.styleSheets[0].insertRule(`#radio${radio_id}{background-image: url(${img});background-position: center center;background-size: cover;}`, document.styleSheets[0].cssRules.length - 5);
         document.getElementById('radios').appendChild(clone);
         radio_id++;
+      
     })
 }
+//#endregion
+
+
+
+
+//#region Scroll to active element
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Tab') {
+        setTimeout(function() {
+            var activeElement = document.activeElement;
+            if (activeElement) {
+                activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }, 0);
+    }
+});
 //#endregion
 
 
