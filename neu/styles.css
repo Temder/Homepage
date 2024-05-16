@@ -10,6 +10,7 @@
     --color-radio-hover-2: #cccccc80;
     --display-sun: block;
     --display-moon: none;
+    --radios: calc(2-1);
 }
 :root {
     --nav-border-radius: 1.25rem;
@@ -74,7 +75,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    transition: background-color 0.3s, color 0.3s;
+    /*transition: background-color 0.3s, color 0.3s;*/
     background-color: var(--color-main-bg);
     color: var(--color-main-fg);
 }
@@ -104,7 +105,7 @@ h3 {
 /*#endregion*/
 
 /*#region Narrower devices*/
-@media only screen and (max-width: 783px) {
+@media only screen and (max-width: 50em) {
     #main {
         padding-top: 0em;
     }
@@ -166,7 +167,6 @@ nav a:hover:after,
     width: var(--nav-border-radius);
     height: var(--nav-border-radius);
     bottom: 0;
-    /*transition: box-shadow 0.3s;*/
 }
 nav a:before {
     left: calc(var(--nav-border-radius) * -1);
