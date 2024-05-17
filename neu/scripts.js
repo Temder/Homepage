@@ -47,6 +47,12 @@ function loadPage(page) {
                 document.getElementById('volumeSlider').value = volume;
                 document.getElementById('volumeSlider').nextElementSibling.textContent = `${volume} %`;
             }
+            if (document.querySelector('#cssImageGallery')) {
+                const imgGallery = document.querySelector('#cssImageGallery');
+                for (let i = 0; i < 10; i++) {
+                    imgGallery.insertAdjacentHTML('beforeend', '<img src="https://picsum.photos/200/200" />');
+                }
+            }
         }
     };
     xhttp.open('GET', `subsites/${page}`, true);

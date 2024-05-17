@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <style>
+        body {
+            background-color: #111;
+            color: white;
+        }
+        body > div {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1em;
+        }
+        body > div div {
+            width: 7em;
+            height: 7em;
+            background-color: green;
+            border-radius: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div>
+    </div>
+    <script>
+        const div = document.querySelector('html body div');
+        const eleWidth = 7;
+        const gapWidth = 1;
+        var windowWidthInEm = 0;
+        var currEleCountRow = 0;
+        var eleCount = 0;
+        var eleCountRow = 0;
+        var gapCount = 0;
+
+        for (let i = 0; i < 20; i++) {
+            div.insertAdjacentHTML('beforeend', '<div></div>');
+        }
+        function convertPxToEm(px) {
+            // Get the base font size in pixels
+            const baseFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+            // Convert pixels to em
+            return px / baseFontSize;
+        }
+        window.addEventListener('resize', function() {
+            //console.log(window.innerWidth, window.innerHeight);
+            eleCount = div.childElementCount;
+            windowWidthInEm = convertPxToEm(window.innerWidth);
+            gapCount = 1;
+            while (true) {
+                if (eleWidth * gapCount + gapWidth * gapCount < windowWidthInEm) {
+                    gapCount++;
+                } else {
+                    break
+                }
+            }
+            gapCount -= 2;
+            if (currEleCountRow != gapCount + 1) {
+                eleCountRow = currEleCountRow = gapCount + 1;
+                for (let i = 0; i < Array.from(div.children).length; i++) {
+                    const child = Array.from(div.children)[i];
+                    child.style.transform = 'translateX(0)';
+                    console.log(i % eleCountRow);
+                    if (i % eleCountRow == 0 && i != 0) {
+                        child.style.transform = 'translateX(4em)';
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
