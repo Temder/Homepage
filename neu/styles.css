@@ -40,7 +40,7 @@
     z-index: 100;
 }
 #main {
-    padding: 4.5em 2em;
+    padding: 4.5em 2em 30vw;
 }
 .center {
     width: min-content;
@@ -52,24 +52,23 @@
     flex-wrap: wrap;
     justify-content: center;
     padding: 1em;
-    margin: 0 0 5em;
     gap: 1em;
 }
-.form-wrapper {
+.wrapper {
     width: min-content;
     padding: 1em;
 }
-.form-wrapper > * {
+.wrapper > * {
     width: min-content;
     margin: 0 auto;
 }
-.nowrap {
-    white-space: nowrap;
-}
-.prevent-select {
+.noselect {
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
+}
+.nowrap {
+    white-space: nowrap;
 }
 body {
     font-family: Arial, sans-serif;
@@ -83,6 +82,69 @@ h3 {
     width: min-content;
     white-space: nowrap;
     margin-bottom: 1em !important;
+}
+h3:has( ~ .flex-container) {
+    margin-bottom: 0.5em !important;
+}
+/*#endregion*/
+
+/*#region CSS image gallery*/
+#closeGallery {
+    display: none;
+    position: fixed;
+    right: 1em;
+    top: 1em;
+    width: 7em;
+    height: 7em;
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path stroke="red" stroke-width="10" d="M10 10 L90 90 M10 90 L90 10" /></svg>');
+    cursor: pointer;
+    z-index: 100;
+}
+#cssImageGallery img {
+    width: 7em;
+    height: 7em;
+    background-color: orange;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+#cssImageGallery img:not(:focus):hover {
+    transform: scale(1.2);
+}
+#cssImageGallery img:focus-visible {
+    outline: none;
+}
+#cssImageGallery img:focus {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: black;
+    object-fit: contain;
+    cursor: default;
+    transform: scale(1);
+    transition: transform 0s;
+    z-index: 50;
+}
+#cssImageGallery img:focus + img {
+    position: fixed;
+    width: 7em;
+    height: 7em;
+    right: 0;
+    top: calc(50vh - 10vw);
+    z-index: 102;
+}
+#cssImageGallery img:has( + img:focus) {
+    position: fixed;
+    width: 7em;
+    height: 7em;
+    left: 0;
+    top: calc(50vh - 10vw);
+    z-index: 102;
+}
+#cssImageGallery img:focus ~ #closeGallery {
+    display: block;
 }
 /*#endregion*/
 
@@ -105,9 +167,20 @@ h3 {
 /*#endregion*/
 
 /*#region Narrower devices*/
+#menu {
+    display: none;;
+    position: fixed;
+    top: 1em;
+    right: 1em;
+    width: 5em;
+    height: 5em;
+}
 @media only screen and (max-width: 50em) {
     #main {
         padding-top: 0em;
+    }
+    #menu {
+        display: block
     }
     .form-wrapper {
         width: 100% !important;
@@ -122,7 +195,18 @@ h3 {
         width: 80%;
     }
     nav {
-        display: none;
+        /*display: none;*/
+    }
+    nav {
+        top: 0;
+        right: 0;
+        width: min-content !important;
+        height: 100% !important;
+    }
+    nav a {
+        height: auto !important;
+        width: 100% !important;
+        border-radius: 0 var(--nav-border-radius) var(--nav-border-radius) 0 !important;
     }
 }
 /*#endregion*/
@@ -140,6 +224,17 @@ nav {
     width: 100%;
     height: 4em;
     background-color: var(--color-header-bg-1);
+    z-index: 1;
+}
+nav:before {
+    position: absolute;
+    content: "";
+    width: 100vw;
+    height: 0.5em;
+    top: 4em;
+    left: 0px;
+    background-color: var(--color-main-bg);
+    z-index: 2;
 }
 nav a {
     display: inline-block;

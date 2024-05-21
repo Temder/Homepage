@@ -50,7 +50,10 @@ function loadPage(page) {
             if (document.querySelector('#cssImageGallery')) {
                 const imgGallery = document.querySelector('#cssImageGallery');
                 for (let i = 0; i < 10; i++) {
-                    imgGallery.insertAdjacentHTML('beforeend', '<img src="https://picsum.photos/200/200" />');
+                    var randID = Math.floor(Math.random() * 86);
+                    var randWidth = Math.floor(Math.random() * 200) + 100;
+                    var randHeight = Math.floor(Math.random() * 200) + 100;
+                    imgGallery.insertAdjacentHTML('afterbegin', `<img class="noselect" draggable="false" src="https://picsum.photos/id/${randID}/${randWidth}/${randHeight}" tabindex="0"/>`);
                 }
             }
         }
