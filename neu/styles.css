@@ -175,12 +175,19 @@ h3:has( ~ .flex-container) {
     width: 5em;
     height: 5em;
 }
+#menu path {
+    stroke: var(--color-main-fg);
+}
 @media only screen and (max-width: 50em) {
     #main {
         padding-top: 0em;
     }
     #menu {
         display: block
+    }
+    #menu:focus + nav,
+    nav:hover {
+        display: block;
     }
     .form-wrapper {
         width: 100% !important;
@@ -195,18 +202,40 @@ h3:has( ~ .flex-container) {
         width: 80%;
     }
     nav {
-        /*display: none;*/
-    }
-    nav {
+        display: none;
         top: 0;
         right: 0;
         width: min-content !important;
         height: 100% !important;
+        padding-right: 0.75em;
+    }
+    nav:before {
+        width: 0.5em !important;
+        height: 100vw !important;
+        left: -0.5em !important;
     }
     nav a {
         height: auto !important;
         width: 100% !important;
         border-radius: 0 var(--nav-border-radius) var(--nav-border-radius) 0 !important;
+        padding: 0 2em !important;
+        margin: 0 !important;
+    }
+    nav a:hover:before,
+    nav a:hover:after,
+    .active:before,
+    .active:after {
+        left: 0;
+    }
+    nav a:before {
+        top: calc(var(--nav-border-radius) * -1) !important;
+        border-radius: 0 0 0 100vw !important;
+        box-shadow: calc(var(--nav-border-radius) * -0.175) calc(var(--nav-border-radius) * 0.175) 0 calc(var(--nav-border-radius) * 0.175) var(--color-main-bg) !important;
+    }
+    nav a:after {
+        bottom: calc(var(--nav-border-radius) * -1) !important;
+        border-radius: 100vw 0 0 0 !important;
+        box-shadow: calc(var(--nav-border-radius) * -0.175) calc(var(--nav-border-radius) * -0.175) 0 calc(var(--nav-border-radius) * 0.175) var(--color-main-bg) !important;
     }
 }
 /*#endregion*/
@@ -232,7 +261,7 @@ nav:before {
     width: 100vw;
     height: 0.5em;
     top: 4em;
-    left: 0px;
+    left: 0;
     background-color: var(--color-main-bg);
     z-index: 2;
 }
@@ -380,7 +409,7 @@ nav a:hover {
 }
 .changeTheme {
     position: fixed;
-    right: 20px;
+    left: 20px;
     bottom: 20px;
     width: 5em;
     height: 5em;
