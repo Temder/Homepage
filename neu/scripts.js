@@ -53,7 +53,7 @@ function loadPage(page) {
                     var randID = Math.floor(Math.random() * 86);
                     var randWidth = Math.floor(Math.random() * 200) + 100;
                     var randHeight = Math.floor(Math.random() * 200) + 100;
-                    imgGallery.insertAdjacentHTML('afterbegin', `<img class="noselect" draggable="false" src="https://picsum.photos/id/${randID}/${randWidth}/${randHeight}" tabindex="0"/>`);
+                    imgGallery.insertAdjacentHTML('afterbegin', `<div class="noselect" style="background-image: url('https://picsum.photos/id/${randID}/${randWidth}/${randHeight}');" tabindex="0"></div>`);
                 }
             }
         }
