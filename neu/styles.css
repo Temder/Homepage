@@ -164,10 +164,12 @@ h3:has( ~ .flex-container) {
 /*#region Calendar*/
 #calendar {
     width: initial;
-    max-width: 20em;
     gap: 0;
+    flex-direction: column;
 }
 #calendar-nav {
+    width: min-content;
+    margin: 0 auto;
     line-height: var(--calendar-header-height);
     white-space: nowrap;
 }
@@ -189,40 +191,28 @@ h3:has( ~ .flex-container) {
 }
 #calendar-view-day,
 #calendar-view-week,
-#calendar-view-month,
-#calendar-view-year {
+#calendar-view-month {
     display: none;
     gap: 0;
 }
-#calendar-view-day *,
-#calendar-view-week *,
-#calendar-view-month *,
-#calendar-view-year * {
-    /*border: dotted white 2px;*/
-}
 #calendar-view-day div,
 #calendar-view-week div,
-#calendar-view-month div,
-#calendar-view-year div{
-    width: calc(var(--calendar-header-height) - 1em);
-    height: calc(var(--calendar-header-height) - 1em);
-    /*border-top: solid 2px white;
-    border-left: solid 2px white;*/
-    border: solid 2px white;
+#calendar-view-month div {
+    width: calc(var(--calendar-header-height) - 0.5em);
+    height: calc(var(--calendar-header-height) - 0.5em);
+    padding: 2px;
     margin-top: -2px;
     margin-left: -2px;
+    border: solid 2px white;
+    max-width: 20em;
 }
 #calendar-view-day {
-
 }
 #calendar-view-week {
-
 }
 #calendar-view-month {
     display: inherit;
-}
-#calendar-view-year {
-
+    max-width: 17em;
 }
 /*#endregion*/
 

@@ -92,6 +92,9 @@ document.querySelectorAll('nav > a').forEach(el => {
 
 //#region Calendar
 const current_date = new Date();
+var current_day = current_date.getDate();
+var current_week = 0;
+var current_month = 0;
 // Month in JavaScript is 0-indexed (January is 0, February is 1, etc), 
 // but by using 0 as the day it will give us the last day of the prior
 // month. So passing in 1 as the month number will return the last day
@@ -103,7 +106,14 @@ function initCalendar() {
     var calendar = document.querySelector('#calendar');
     calendar.querySelector('#calendar-nav').textContent = `${current_date.toLocaleString(userLang, { month: 'long' })}, ${current_date.getFullYear()}`;
     for (let i = 1; i <= daysInMonth(current_date.getMonth() + 1, current_date.getFullYear()); i++) {
-        calendar.querySelector('#calendar-view-month').insertAdjacentHTML('beforeend', `<div>${i}</div>`);
+        if ((i % 5 === 0) || (i % 6 === 0)) {
+            calendar.querySelector('#calendar-view-month').insertAdjacentHTML('beforeend', `<div class="noselect" style="background-color: gray;">${i}</div>`);
+        } else {
+            calendar.querySelector('#calendar-view-month').insertAdjacentHTML('beforeend', `<div class="noselect">${i}</div>`);
+        }
+    }
+    for (let i = 0; i < 7; i++) {
+        calendar.querySelector('#calendar-view-week').insertAdjacentHTML('beforeend', `<div class="noselect">${current_day + i}</div>`);
     }
 }
 //#endregion
