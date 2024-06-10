@@ -15,6 +15,7 @@
     --calendar-header-height: 3em;
     --nav-border-radius: 1.25rem;
     --radios: calc(2-1);
+    --gallery-size: 7em;
 }
 @media (prefers-color-scheme: dark) {
     :root {
@@ -98,15 +99,16 @@ h3:has( ~ .flex-container) {
     position: fixed;
     right: 1em;
     top: 1em;
-    width: 7em;
-    height: 7em;
+    width: var(--gallery-size);
+    height: var(--gallery-size);
+    border-radius: 10% !important;
     background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path stroke="red" stroke-width="10" d="M10 10 L90 90 M10 90 L90 10" /></svg>');
     cursor: pointer;
     z-index: 100;
 }
 #cssImageGallery div {
-    width: 7em;
-    height: 7em;
+    width: var(--gallery-size);
+    height: var(--gallery-size);
     border-radius: 100%;
     background-repeat: no-repeat;
     background-size: cover;
@@ -114,8 +116,10 @@ h3:has( ~ .flex-container) {
     cursor: pointer;
     transition: transform 0.3s;
 }
-#cssImageGallery div:not(:focus):hover {
+#cssImageGallery div:not(:focus):not(#closeGallery):hover {
     transform: scale(1.2);
+}
+#cssImageGallery div:not(:focus):hover {
     background-color: var(--color-radio-hover-1);
     background-blend-mode: saturation;
 }
@@ -141,7 +145,7 @@ h3:has( ~ .flex-container) {
     width: 7em;
     height: 7em;
     right: 0;
-    top: calc(50vh - 10vw);
+    top: calc(50vh - var(--gallery-size) / 2);
     z-index: 102;
 }
 #cssImageGallery div:has( + div:focus) {
@@ -149,7 +153,7 @@ h3:has( ~ .flex-container) {
     width: 7em;
     height: 7em;
     left: 0;
-    top: calc(50vh - 10vw);
+    top: calc(50vh - var(--gallery-size) / 2);
     z-index: 102;
 }
 #cssImageGallery div:focus ~ #closeGallery {
@@ -158,27 +162,67 @@ h3:has( ~ .flex-container) {
 /*#endregion*/
 
 /*#region Calendar*/
-/*#calendar * {
-    outline: dotted white;
-}*/
-.calendar-nav {
-    line-height: var(--calendar-header-height);
+#calendar {
+    width: initial;
+    max-width: 20em;
+    gap: 0;
 }
-.calendar-nav:before,
-.calendar-nav:after {
+#calendar-nav {
+    line-height: var(--calendar-header-height);
+    white-space: nowrap;
+}
+#calendar-nav:before,
+#calendar-nav:after {
     position: absolute;
     content: "";
     width: var(--calendar-header-height);
     height: var(--calendar-header-height);
     cursor: pointer;
 }
-.calendar-nav:before {
+#calendar-nav:before {
     transform: translateX(calc(var(--calendar-header-height) * -1.25));
     background: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><path stroke="white" stroke-width="0.45em" d="M10 25 L90 25 M30 5 L10 25 L30 45" style="fill: none;" /></svg>') no-repeat center;
 }
-.calendar-nav:after {
+#calendar-nav:after {
     transform: translateX(calc(var(--calendar-header-height) * 0.25));
     background: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><path stroke="white" stroke-width="0.45em" d="M10 25 L90 25 M70 5 L90 25 L70 45" style="fill: none;" /></svg>') no-repeat center;
+}
+#calendar-view-day,
+#calendar-view-week,
+#calendar-view-month,
+#calendar-view-year {
+    display: none;
+    gap: 0;
+}
+#calendar-view-day *,
+#calendar-view-week *,
+#calendar-view-month *,
+#calendar-view-year * {
+    /*border: dotted white 2px;*/
+}
+#calendar-view-day div,
+#calendar-view-week div,
+#calendar-view-month div,
+#calendar-view-year div{
+    width: calc(var(--calendar-header-height) - 1em);
+    height: calc(var(--calendar-header-height) - 1em);
+    /*border-top: solid 2px white;
+    border-left: solid 2px white;*/
+    border: solid 2px white;
+    margin-top: -2px;
+    margin-left: -2px;
+}
+#calendar-view-day {
+
+}
+#calendar-view-week {
+
+}
+#calendar-view-month {
+    display: inherit;
+}
+#calendar-view-year {
+
 }
 /*#endregion*/
 
