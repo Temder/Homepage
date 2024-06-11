@@ -163,7 +163,7 @@ h3:has( ~ .flex-container) {
 
 /*#region Calendar*/
 #calendar {
-    width: initial;
+    width: max-content;
     gap: 0;
     flex-direction: column;
 }
@@ -209,9 +209,9 @@ h3:has( ~ .flex-container) {
 #calendar-view-day {
 }
 #calendar-view-week {
+    display: inherit;
 }
 #calendar-view-month {
-    display: inherit;
     max-width: 17em;
 }
 /*#endregion*/

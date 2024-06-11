@@ -91,16 +91,18 @@ document.querySelectorAll('nav > a').forEach(el => {
 
 
 //#region Calendar
-const current_date = new Date();
-var current_day = current_date.getDate();
-var current_week = 0;
-var current_month = 0;
 // Month in JavaScript is 0-indexed (January is 0, February is 1, etc), 
 // but by using 0 as the day it will give us the last day of the prior
 // month. So passing in 1 as the month number will return the last day
 // of January, not February
 function daysInMonth (month, year) {
     return new Date(year, month, 0).getDate();
+}
+Date.prototype.GetFirstDayOfWeek = function() {
+    return (new Date(this.setDate(this.getDate() - this.getDay()+ (this.getDay() == 0 ? -6:1) )));
+}
+Date.prototype.GetLastDayOfWeek = function() {
+    return (new Date(this.setDate(this.getDate() - this.getDay() +7)));
 }
 function initCalendar() {
     var calendar = document.querySelector('#calendar');
@@ -112,10 +114,17 @@ function initCalendar() {
             calendar.querySelector('#calendar-view-month').insertAdjacentHTML('beforeend', `<div class="noselect">${i}</div>`);
         }
     }
-    for (let i = 0; i < 7; i++) {
-        calendar.querySelector('#calendar-view-week').insertAdjacentHTML('beforeend', `<div class="noselect">${current_day + i}</div>`);
+    for (let i = first_day_week.getDate(); i <= last_day_week.getDate(); i++) {
+        calendar.querySelector('#calendar-view-week').insertAdjacentHTML('beforeend', `<div class="noselect">${i}</div>`);
     }
 }
+const current_date = new Date();
+var current_day = current_date.getDate();
+var current_week = 0;
+var current_month = 0;
+var first_day_week = current_date.GetFirstDayOfWeek();
+var last_day_week = current_date.GetLastDayOfWeek();
+console.log(first_day_week, last_day_week);
 //#endregion
 
 
