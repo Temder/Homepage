@@ -18,9 +18,49 @@ connection.connect(function(error) {
 
 // Middleware to get client IP
 app.use((req, res, next) => {
-  const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+  // Handle IPv4-mapped IPv6 addresses
+  if (ip.includes('::ffff:')) {
+    ip = ip.split('::ffff:')[1];
+  }
+
   req.clientIp = ip;
   next();
+});
+
+// Middleware to log and update views count
+app.use((req, res, next) => {
+  const clientIp = req.clientIp;
+
+  connection.query('SELECT * FROM website_views WHERE ip_addr = INET_ATON(?)', [clientIp], (err, result) => {
+    if (err) {
+      console.error('Database query failed', err);
+      return res.status(500).send('Database query failed');
+    }
+
+    if (result.length > 0) {
+      // IP exists, update views
+      connection.query('UPDATE website_views SET views = views + 1 WHERE ip_addr = INET_ATON(?)', [clientIp], (err, updateResult) => {
+        if (err) {
+          console.error('Database update failed', err);
+          return res.status(500).send('Database update failed');
+        }
+        console.log('View count updated');
+        next();
+      });
+    } else {
+      // IP does not exist, insert new row
+      connection.query('INSERT INTO website_views (ip_addr, views) VALUES (INET_ATON(?), 1)', [clientIp], (err, insertResult) => {
+        if (err) {
+          console.error('Database insert failed', err);
+          return res.status(500).send('Database insert failed');
+        }
+        console.log('New IP recorded');
+        next();
+      });
+    }
+  });
 });
 
 // Create an API endpoint to fetch the number of website views
@@ -34,36 +74,5 @@ app.get('/api/views', function(req, res) {
   });
 });
 
-app.get('/', (req, res) => {
-    const clientIp = req.clientIp;
-  
-    con.query('SELECT * FROM website_views WHERE ip_addr = INET_ATON(?)', [clientIp], (err, result) => {
-        if (err) {
-            res.status(500).send('Database query failed');
-            return;
-        }
-    
-        if (result.length > 0) {
-            // IP exists, update views
-            con.query('UPDATE website_views SET views = views + 1 WHERE ip_addr = INET_ATON(?)', [clientIp], (err, updateResult) => {
-                if (err) {
-                    res.status(500).send('Database update failed');
-                    return;
-                }
-                res.send('View count updated');
-            });
-        } else {
-            // IP does not exist, insert new row
-            con.query('INSERT INTO website_views (ip_addr, views) VALUES (INET_ATON(?), 1)', [clientIp], (err, insertResult) => {
-                if (err) {
-                    res.status(500).send('Database insert failed');
-                    return;
-                }
-                res.send('New IP recorded');
-            });
-        }
-    });
-});
-
 app.listen(8080);
-console.log('Running at Port 8080');
+console.log('Running at http://127.0.0.1:8080');

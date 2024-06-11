@@ -1,7 +1,7 @@
 /*#region Variables*/
 :root {
     --color-header-bg-1: #ccc;
-    --color-header-bg-2: #000;
+    --color-header-bg-2: #1a1a1a;
     --color-header-bg-hover-1: #777;
     --color-header-bg-hover-2: #333;
     --color-main-bg: #eee;
@@ -19,7 +19,7 @@
 }
 @media (prefers-color-scheme: dark) {
     :root {
-        --color-header-bg-1: #000;
+        --color-header-bg-1: #1a1a1a;
         --color-header-bg-2: #ccc;
         --color-header-bg-hover-1: #333;
         --color-header-bg-hover-2: #777;
@@ -408,7 +408,6 @@ nav a:hover {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(9.5em, 100%), 1fr));
     gap: 1em;
-    align-items: center;
     max-width: 20em;
     height: min-content;
 }

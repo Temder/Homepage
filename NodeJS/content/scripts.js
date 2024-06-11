@@ -310,5 +310,4 @@ function fetchViews() {
             document.getElementById('views-all').textContent = document.getElementById('views-unique').textContent = 'Error';
         });
 }
-document.addEventListener('DOMContentLoaded', fetchViews());
 //#endregion
