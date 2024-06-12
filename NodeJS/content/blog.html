@@ -4,10 +4,16 @@
         <h3 class="de">Kalender</h3>
         <h3 class="en">Calendar</h3>
         <div id="calendar" class="flex-container">
+            <select oninput="calendarChangeView(this.value)">
+                <option class="de" value="month">Monat</option>
+                <option class="en" value="month">Month</option>
+                <option class="de" value="week">Woche</option>
+                <option class="en" value="week">Week</option>
+            </select>
             <div id="calendar-nav">Datum, Tag</div>
-            <div id="calendar-view-day"></div>
-            <div id="calendar-view-week"></div>
-            <div id="calendar-view-month"></div>
+            <div id="calendar-view"></div>
+            <div id="calendar-event"></div>
+            <div><input id="new-event"/><button onclick="document.getElementById('calendar-event').insertAdjacentHTML('beforeend', `<div onclick='this.remove()'>${document.getElementById('new-event').value}</div>`)"><div class="de">Hinzufügen</div><div class="en">Add</div></button></div>
         </div>
         <h3 class="de">CSS Bilder Galerie</h3>
         <h3 class="en">CSS Image Gallery</h3>

@@ -60,7 +60,23 @@ function loadPage(page) {
                 }
             }
             if (document.getElementById('calendar')) {
-                initCalendar();
+                nav = document.getElementById('calendar-nav');
+                nav.addEventListener('click', function (e) {
+                    if (e.offsetX > nav.offsetWidth) {
+                        if (current_view == 'week') {
+                            changeWeek(1);
+                        } else if (current_view == 'month') {
+                            changeMonth(1);
+                        }
+                    } else if (e.offsetX < 0) {
+                        if (current_view == 'week') {
+                            changeWeek(-1);
+                        } else if (current_view == 'month') {
+                            changeMonth(-1);
+                        }
+                    }
+                });
+                initCalendar(true);
             }
         }
     };
@@ -94,10 +110,12 @@ document.querySelectorAll('nav > a').forEach(el => {
 
 
 //#region Calendar
-// Month in JavaScript is 0-indexed (January is 0, February is 1, etc), 
-// but by using 0 as the day it will give us the last day of the prior
-// month. So passing in 1 as the month number will return the last day
-// of January, not February
+var current_date;
+var current_view;
+var nav;
+var view;
+var events;
+
 function daysInMonth (month, year) {
     return new Date(year, month, 0).getDate();
 }
@@ -105,28 +123,74 @@ Date.prototype.GetFirstDayOfWeek = function() {
     return (new Date(this.setDate(this.getDate() - this.getDay()+ (this.getDay() == 0 ? -6:1) )));
 }
 Date.prototype.GetLastDayOfWeek = function() {
-    return (new Date(this.setDate(this.getDate() - this.getDay() +7)));
+    return (new Date(this.setDate(this.getDate() - this.getDay() + 7)));
 }
-function initCalendar() {
-    var calendar = document.getElementById('calendar');
-    document.getElementById('calendar-nav').textContent = `${current_date.toLocaleString(userLang, { month: 'long' })}, ${current_date.getFullYear()}`;
-    for (let i = 1; i <= daysInMonth(current_date.getMonth() + 1, current_date.getFullYear()); i++) {
-        if ((i % 5 === 0) || (i % 6 === 0)) {
-            document.getElementById('calendar-view-month').insertAdjacentHTML('beforeend', `<div class="noselect" style="background-color: gray;">${i}</div>`);
+function changeMonth(offset) {
+    current_date.setDate(1)
+    current_date.setMonth(current_date.getMonth() + offset);
+    initCalendar(false);
+}
+function changeWeek(offset) {
+    current_date.setDate(current_date.getDate() + (offset * 7));
+    initCalendar(false);
+}
+function calendarChangeView(view) {
+    current_view = view;
+    initCalendar(false);
+}
+function calendarShowEvents(day) {
+    events.innerHTML = `<div>${new Date(current_date.getFullYear(), current_date.getMonth(), day).toLocaleString(userLang, { weekday: 'long' })}, ${day}. ${current_date.toLocaleString(userLang, { month: 'long' })} ${current_date.getFullYear()}</div>`;
+}
+function initCalendar(standard) {
+    if (standard) {
+        current_date = new Date();
+        current_view = 'month';
+    }
+    var first_day_week = current_date.GetFirstDayOfWeek();
+    var last_day_week = current_date.GetLastDayOfWeek();
+    view = document.getElementById('calendar-view');
+    events = document.getElementById('calendar-event');
+    function addDay(day, monthOffset) {
+        var weekday = new Date(current_date.getFullYear(), current_date.getMonth() + monthOffset, day);
+        var weekdayShort = weekday.toLocaleString(userLang, { weekday: 'short' });
+        if (weekday.getDay() === 0 || weekday.getDay() === 6) {
+            view.insertAdjacentHTML('beforeend', `<div class="noselect weekend" onclick="calendarShowEvents(${day})"><div>${day}</div><div>${weekdayShort}</div></div>`);
         } else {
-            document.getElementById('calendar-view-month').insertAdjacentHTML('beforeend', `<div class="noselect">${i}</div>`);
+            view.insertAdjacentHTML('beforeend', `<div class="noselect" onclick="calendarShowEvents(${day})"><div>${day}</div><div>${weekdayShort}</div></div>`);
         }
     }
-    for (let i = first_day_week.getDate(); i <= last_day_week.getDate(); i++) {
-        document.getElementById('calendar-view-week').insertAdjacentHTML('beforeend', `<div class="noselect">${i}</div>`);
+    nav.textContent = `${current_date.toLocaleString(userLang, { month: 'long' })}, ${current_date.getFullYear()}`;
+    view.innerHTML = '';
+    if (current_view == 'week') {
+        if (first_day_week.getDate() < last_day_week.getDate()) {
+            for (let i = first_day_week.getDate(); i <= last_day_week.getDate(); i++) {
+                addDay(i, 0);
+            }
+        } else {
+            for (let i = first_day_week.getDate(); i <= daysInMonth(current_date.getMonth(), current_date.getFullYear()); i++) {
+                addDay(i, -1);
+            }
+            for (let i = 1; i <= last_day_week.getDate(); i++) {
+                addDay(i, 0);
+            }
+        }
+    } else if (current_view == 'month') {
+        var dim = daysInMonth(current_date.getMonth() + 1, current_date.getFullYear());
+        var emptyDaysBefore = new Date(current_date.getFullYear(), current_date.getMonth(), 1).getDay() - 1;
+        var emptyDaysAfter = 7 - ((dim + emptyDaysBefore) % 7);
+        if (emptyDaysBefore == -1) { emptyDaysBefore = 6; }
+        if (emptyDaysAfter == 7) { emptyDaysAfter = 0; }
+        for (let i = 0; i < emptyDaysBefore; i++) {
+            view.insertAdjacentHTML('beforeend', '<div class="noselect"></div>');
+        }
+        for (let i = 1; i <= dim; i++) {
+            addDay(i, 0);
+        }
+        for (let i = 0; i < emptyDaysAfter; i++) {
+            view.insertAdjacentHTML('beforeend', '<div class="noselect"></div>');
+        }
     }
 }
-const current_date = new Date();
-var current_day = current_date.getDate();
-var current_week = 0;
-var current_month = 0;
-var first_day_week = current_date.GetFirstDayOfWeek();
-var last_day_week = current_date.GetLastDayOfWeek();
 //#endregion
 
 
