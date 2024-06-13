@@ -4,45 +4,42 @@
         <h3 class="de">Kalender</h3>
         <h3 class="en">Calendar</h3>
         <div id="calendar" class="flex-container">
-            <select oninput="calendarChangeView(this.value)">
-                <option class="de" value="month">Monat</option>
-                <option class="en" value="month">Month</option>
-                <option class="de" value="week">Woche</option>
-                <option class="en" value="week">Week</option>
-            </select>
-            <div id="calendar-nav">Datum, Tag</div>
-            <div id="calendar-view"></div>
-            <div id="calendar-event"></div>
-            <div id="calendar-entry">
-                <div class="de">Neuer Eintrag</div>
-                <div class="en">New entry</div>
-                <input id="entry-title"/>
-                <button onclick="calendarAddEntry()"><div class="de">Hinzufügen</div><div class="en">Add</div></button>
-                <div>
-                    <input type="checkbox" id="cal-check-fullDay"/><div><div class="de">ganzer Tag</div><div class="en">full day</div></div>
-                </div>
+            <div>
+                <select oninput="calendarChangeView(this.value)">
+                    <option class="de" value="month">Monat</option>
+                    <option class="en" value="month">Month</option>
+                    <option class="de" value="week">Woche</option>
+                    <option class="en" value="week">Week</option>
+                </select>
+                <div id="calendar-nav">Datum, Tag</div>
+                <div id="calendar-view"></div>
             </div>
-            <form action="/create_event" method="post">
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title" required><br>
-        
-                <label for="description">Description:</label>
-                <textarea id="description" name="description"></textarea><br>
-        
-                <label for="start_time">Start Time:</label>
-                <input type="datetime-local" id="start_time" name="start_time" required><br>
-        
-                <label for="end_time">End Time:</label>
-                <input type="datetime-local" id="end_time" name="end_time"><br>
-        
-                <label for="location">Location:</label>
-                <input type="text" id="location" name="location"><br>
-        
-                <label for="is_all_day">All Day:</label>
-                <input type="checkbox" id="is_all_day" name="is_all_day" value="1"><br>
-        
-                <input type="submit" value="Create Event">
-            </form>
+            <div id="calendar-event"></div>
+            <div class="form-wrapper">
+                <div class="de smallHeading">Neuer Eintrag</div>
+                <div class="en smallHeading">New entry</div>
+                <form action="/create_event" method="post" id="event-form" class="form">
+                    <label for="title">Title</label>
+                    <input type="text" id="entry-title" name="title" required>
+    
+                    <label for="description">Description</label>
+                    <textarea id="entry-description" name="description"></textarea>
+            
+                    <label for="start_time">Start Time</label>
+                    <input type="datetime-local" id="entry-start_time" name="start_time" required>
+            
+                    <label for="end_time">End Time</label>
+                    <input type="datetime-local" id="entry-end_time" name="end_time">
+            
+                    <label for="location">Location</label>
+                    <input type="text" id="entry-location" name="location">
+            
+                    <label for="is_all_day">All Day</label>
+                    <input type="checkbox" id="entry-is_all_day" name="is_all_day" value="1">
+            
+                    <button type="submit" onclick="calendarAddEntry()"><div class="de">Hinzufügen</div><div class="en">Add</div></button>
+                </form>
+            </div>
         </div>
         <h3 class="de">CSS Bilder Galerie</h3>
         <h3 class="en">CSS Image Gallery</h3>

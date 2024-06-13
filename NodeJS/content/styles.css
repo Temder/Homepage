@@ -75,6 +75,10 @@
 .overlay {
     border-image: linear-gradient(hsla(0, 0%, 100%, 0.5)) fill 1;
 }
+.smallHeading {
+    margin-bottom: 1em !important;
+    text-align: center;
+}
 .wrapper {
     width: min-content;
     padding: 1em;
@@ -178,8 +182,12 @@ select {
 
 /*#region Calendar*/
 #calendar {
-    width: max-content;
-    gap: 0;
+    width: 100%;
+    gap: 1em;
+    /*flex-direction: column;*/
+}
+#calendar > div:nth-child(1) {
+    display: inherit;
     flex-direction: column;
 }
 #calendar button {
@@ -194,15 +202,6 @@ select {
     border-radius: 2%;
     background-color: var(--color-header-bg-1);
     color: var(--color-main-fg);
-}
-#calendar-entry > * {
-    margin-top: 1em;
-}
-#calendar-entry > div > * {
-    display: inline-block;
-}
-#calendar-entry input {
-    margin-right: 1em;
 }
 #calendar-event {
     width: 20em;
@@ -245,7 +244,6 @@ select {
 #calendar-view {
     display: inherit;
     width: 20em;
-    margin-bottom: 1em;
     gap: 0;
     flex-wrap: wrap;
     justify-content: center;
@@ -330,6 +328,9 @@ select {
         margin: 0 auto !important;
         padding-left: 0 !important;
         padding-right: 0 !important;
+    }
+    .form-wrapper > * {
+        margin: 0 auto;
     }
     .flex-container {
         margin: 0 auto 5em !important;

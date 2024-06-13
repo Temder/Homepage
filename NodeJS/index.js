@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var app = express();
 
 app.use(express.static(__dirname + '/content'));
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 var connection = mysql.createConnection({
@@ -86,7 +87,7 @@ app.post('/create_event', (req, res) => {
 
   connection.query(sql, values, (err, result) => {
       if (err) throw err;
-      console.log('New event created successfully');
+      res.send('New event created successfully');
   });
 });
 
