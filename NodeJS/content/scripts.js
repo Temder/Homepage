@@ -110,6 +110,7 @@ document.querySelectorAll('nav > a').forEach(el => {
 
 
 //#region Calendar
+const current_day = new Date();
 var current_date;
 var current_view;
 var nav;
@@ -141,6 +142,16 @@ function calendarChangeView(view) {
 function calendarShowEvents(day) {
     events.innerHTML = `<div>${new Date(current_date.getFullYear(), current_date.getMonth(), day).toLocaleString(userLang, { weekday: 'long' })}, ${day}. ${current_date.toLocaleString(userLang, { month: 'long' })} ${current_date.getFullYear()}</div>`;
 }
+function calendarAddEntry() {
+    if (document.getElementById('entry-title').value.trim() != '') {
+        document.getElementById('calendar-event').insertAdjacentHTML('beforeend', `<div class='center' onclick='this.remove()'>${document.getElementById('entry-title').value}</div>`)
+    }
+}
+function isSameDay(date1, date2) {
+    return date1.getFullYear() === date2.getFullYear() &&
+           date1.getMonth() === date2.getMonth() &&
+           date1.getDate() === date2.getDate();
+}
 function initCalendar(standard) {
     if (standard) {
         current_date = new Date();
@@ -155,6 +166,8 @@ function initCalendar(standard) {
         var weekdayShort = weekday.toLocaleString(userLang, { weekday: 'short' });
         if (weekday.getDay() === 0 || weekday.getDay() === 6) {
             view.insertAdjacentHTML('beforeend', `<div class="noselect weekend" onclick="calendarShowEvents(${day})"><div>${day}</div><div>${weekdayShort}</div></div>`);
+        } else if (isSameDay(weekday, current_day)) {
+            view.insertAdjacentHTML('beforeend', `<div class="noselect today" onclick="calendarShowEvents(${day})"><div>${day}</div><div>${weekdayShort}</div></div>`);
         } else {
             view.insertAdjacentHTML('beforeend', `<div class="noselect" onclick="calendarShowEvents(${day})"><div>${day}</div><div>${weekdayShort}</div></div>`);
         }

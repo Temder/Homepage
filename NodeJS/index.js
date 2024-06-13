@@ -1,8 +1,10 @@
 var express = require('express');
 var mysql = require('mysql2');
+var bodyParser = require('body-parser');
 var app = express();
 
 app.use(express.static(__dirname + '/content'));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 var connection = mysql.createConnection({
   host: '127.0.0.1',
@@ -71,6 +73,20 @@ app.get('/api/views', function(req, res) {
       return;
     }
     res.json({ count: result });
+  });
+});
+
+// Handle form submission
+app.post('/create_event', (req, res) => {
+  const { title, description, start_time, end_time, location, is_all_day } = req.body;
+  const isAllDay = is_all_day ? 1 : 0;
+
+  const sql = 'INSERT INTO calendar (title, description, start_time, end_time, location, created_at, is_all_day) VALUES (?, ?, ?, ?, ?, NOW(), ?)';
+  const values = [title, description, start_time, end_time, location, isAllDay];
+
+  connection.query(sql, values, (err, result) => {
+      if (err) throw err;
+      console.log('New event created successfully');
   });
 });
 
