@@ -162,11 +162,41 @@ function calendarChangeView(view) {
     initCalendar(false);
 }
 function calendarShowEvents(day) {
-    events.innerHTML = `<div>${new Date(current_date.getFullYear(), current_date.getMonth(), day).toLocaleString(userLang, { weekday: 'long' })}, ${day}. ${current_date.toLocaleString(userLang, { month: 'long' })} ${current_date.getFullYear()}</div>`;
+    events.innerHTML = `<div><b><u>${new Date(current_date.getFullYear(), current_date.getMonth(), day).toLocaleString(userLang, { weekday: 'long' })}, ${day}. ${current_date.toLocaleString(userLang, { month: 'long' })} ${current_date.getFullYear()}</u></b></div>`;
+    var year = current_date.getFullYear();
+    var month = current_date.getMonth() + 1;
+    if (month.toString().length == 1) {
+        month = `0${month}`;
+    }
+    if (day.toString().length == 1) {
+        day = `0${day}`;
+    }
+    fetch(`/api/calendar/${year}-${month}-${day}`)
+        .then(response => response.json())
+        .then(day_events => {
+            for (let i = 0; i < day_events.length; i++) {
+                var html = `
+                <div style="text-align: center;" onclick='this.remove(); calendarRemoveEvent(${day_events[i]['event_id']})'>
+                    <div><b>${day_events[i]['title']}</b></div>
+                    <div>${day_events[i]['description']}</div>
+                    <div><div class="de">Zeit: </div><div class="en">Time: </div>${day_events[i]['start_time']} - ${day_events[i]['end_time']}</div>
+                </div>`;
+                events.insertAdjacentHTML('beforeend', html);
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching day events:', error);
+        });
+}
+function calendarRemoveEvent(event_id) {
+    fetch(`/api/calendar/remove/${event_id}`)
+        .catch(error => {
+            console.error('Error sending remove event:', error);
+        })
 }
 function calendarAddEntry() {
     if (document.getElementById('entry-title').value.trim() != '') {
-        document.getElementById('calendar-event').insertAdjacentHTML('beforeend', `<div class='center' onclick='this.remove()'>${document.getElementById('entry-title').value}</div>`)
+        events.insertAdjacentHTML('beforeend', `<div class='center' onclick='this.remove()'>${document.getElementById('entry-title').value}</div>`)
     }
 }
 function isSameDay(date1, date2) {

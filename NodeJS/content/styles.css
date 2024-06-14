@@ -204,7 +204,7 @@ select {
     color: var(--color-main-fg);
 }
 #calendar-event {
-    width: 20em;
+    min-width: 20em;
     min-height: 10em;
     margin-top: -2px;
     margin-left: -2px;
@@ -213,7 +213,7 @@ select {
     border: solid 2px var(--color-main-fg);
     text-align: center;
 }
-#calendar-event > div:nth-child(1) {
+#calendar-event > div:not(:last-child) {
     margin-bottom: 1em;
 }
 #calendar-event > div:not(:nth-child(1)) {

@@ -19,25 +19,25 @@
                 <div class="de smallHeading">Neuer Eintrag</div>
                 <div class="en smallHeading">New entry</div>
                 <form action="/create_event" method="post" id="event-form" class="form">
-                    <label for="title">Title</label>
+                    <label for="title"><div class="de">Titel</div><div class="en">Title</div></label>
                     <input type="text" id="entry-title" name="title" required>
     
-                    <label for="description">Description</label>
+                    <label for="description"><div class="de">Beschreibung</div><div class="en">Description</div></label>
                     <textarea id="entry-description" name="description"></textarea>
             
-                    <label for="start_time">Start Time</label>
+                    <label for="start_time"><div class="de">Startzeit</div><div class="en">Start Time</div></label>
                     <input type="datetime-local" id="entry-start_time" name="start_time" required>
+                    
+                    <label for="end_time"><div class="de">Endzeit</div><div class="en">End Time</div></label>
+                    <input type="datetime-local" id="entry-end_time" name="end_time" required>
             
-                    <label for="end_time">End Time</label>
-                    <input type="datetime-local" id="entry-end_time" name="end_time">
-            
-                    <label for="location">Location</label>
+                    <label for="location"><div class="de">Ort</div><div class="en">Location</div></label>
                     <input type="text" id="entry-location" name="location">
             
-                    <label for="is_all_day">All Day</label>
+                    <label for="is_all_day"><div class="de">Ganztägig</div><div class="en">All Day</div></label>
                     <input type="checkbox" id="entry-is_all_day" name="is_all_day" value="1">
             
-                    <button type="submit" onclick="calendarAddEntry()"><div class="de">Hinzufügen</div><div class="en">Add</div></button>
+                    <button type="submit"><div class="de">Hinzufügen</div><div class="en">Add</div></button>
                 </form>
             </div>
         </div>
