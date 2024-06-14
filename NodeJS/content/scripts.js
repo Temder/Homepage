@@ -97,8 +97,13 @@ function loadPage(page) {
                     .catch(error => {
                         console.error('Error:', error);
                     });
+                    calendarShowEvents(this[2].value.substring(8, 10));
                 });
                 initCalendar(true);
+                initSnake();
+            }
+            if (document.getElementById('threejs')) {
+                initThree();
             }
         }
     };
@@ -261,8 +266,110 @@ function initCalendar(standard) {
 
 
 
+//#region ChatGPT Snake
+var canvas;
+var ctx;
+var canvasSize;
+function initSnake() {
+    canvas = document.getElementById('gameCanvas');
+    ctx = canvas.getContext('2d');
+    canvasSize = canvas.width / gridSize;
+    resetGame();
+    setInterval(update, 100);
+}
+const gridSize = 20;
+
+let snake = [{ x: 10, y: 10 }];
+let direction = { x: 0, y: 0 };
+let food = { x: 15, y: 15 };
+let score = 0;
+
+function drawSquare(x, y, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(x * gridSize, y * gridSize, gridSize, gridSize);
+}
+function drawSnake() {
+    snake.forEach(segment => drawSquare(segment.x, segment.y, 'lime'));
+}
+function drawFood() {
+    drawSquare(food.x, food.y, 'red');
+}
+function moveSnake() {
+    const head = { x: (snake[0].x + direction.x + canvasSize) % canvasSize, y: (snake[0].y + direction.y + canvasSize) % canvasSize };
+    snake.unshift(head);
+
+    if (head.x === food.x && head.y === food.y) {
+        score++;
+        generateFood();
+    } else {
+        snake.pop();
+    }
+
+    if (isCollision(head)) {
+        resetGame();
+    }
+}
+function generateFood() {
+    food = {
+        x: Math.floor(Math.random() * canvasSize),
+        y: Math.floor(Math.random() * canvasSize)
+    };
+
+    if (snake.some(segment => segment.x === food.x && segment.y === food.y)) {
+        generateFood();
+    }
+}
+function isCollision(head) {
+    for (let i = 1; i < snake.length; i++) {
+        if (head.x === snake[i].x && head.y === snake[i].y) {
+            return true;
+        }
+    }
+    return false;
+}
+function resetGame() {
+    snake = [{ x: 10, y: 10 }];
+    direction = { x: 0, y: 0 };
+    score = 0;
+    generateFood();
+}
+function update() {
+    if (ctx) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    drawSnake();
+    drawFood();
+    moveSnake();
+}
+function changeDirection(event) {
+    const keyPressed = event.keyCode;
+    const goingUp = direction.y === -1;
+    const goingDown = direction.y === 1;
+    const goingRight = direction.x === 1;
+    const goingLeft = direction.x === -1;
+
+    if ((keyPressed === 37 || keyPressed === 65) && !goingRight) { // Left arrow or 'A'
+        direction = { x: -1, y: 0 };
+    }
+    if ((keyPressed === 38 || keyPressed === 87) && !goingDown) { // Up arrow or 'W'
+        direction = { x: 0, y: -1 };
+    }
+    if ((keyPressed === 39 || keyPressed === 68) && !goingLeft) { // Right arrow or 'D'
+        direction = { x: 1, y: 0 };
+    }
+    if ((keyPressed === 40 || keyPressed === 83) && !goingUp) { // Down arrow or 'S'
+        direction = { x: 0, y: 1 };
+    }
+}
+
+document.addEventListener('keydown', changeDirection);
+//#endregion
+
+
+
+
 //#region Language switcher
-shortLang = userLang.split('-')[0];
+var shortLang = userLang.split('-')[0];
 document.body.setAttribute('id', 'lang-' + shortLang);
 
 function setLanguage(lang) {
@@ -365,7 +472,7 @@ document.addEventListener('keydown', function(event) {
 
 
 //#region Theme switcher
-style = document.styleSheets[0].cssRules[0].style;
+var style = document.styleSheets[0].cssRules[0].style;
 const cssVariables = {};
 for (let i = 1; i < style.length; i=i+2) {
   cssVariables[style[i-1]] = style[i];
@@ -381,6 +488,140 @@ document.querySelectorAll('.changeTheme').forEach(el => {
         })
     })
 })
+//#endregion
+
+
+
+
+//#region Three.js
+function initThree() {
+    let camera, scene, renderer, controls;
+    let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
+    let prevTime = performance.now();
+    const velocity = new THREE.Vector3();
+    const direction = new THREE.Vector3();
+
+    init();
+    animate();
+
+    function init() {
+        // Scene
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xeeeeee);
+
+        // Camera
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+        camera.position.y = 10; // Start at a height of 10
+
+        // Renderer
+        renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('threejs').appendChild(renderer.domElement);
+
+        // Controls
+        controls = new THREE.PointerLockControls(camera, document.body);
+        
+        document.getElementById('instructions').addEventListener('click', () => {
+            controls.lock();
+        });
+
+        controls.addEventListener('lock', () => {
+            document.getElementById('instructions').style.display = 'none';
+        });
+
+        controls.addEventListener('unlock', () => {
+            document.getElementById('instructions').style.display = 'flex';
+        });
+
+        scene.add(controls.getObject());
+
+        // Floor
+        const floorGeometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
+        const floorMaterial = new THREE.MeshBasicMaterial({ color: 0x007700, wireframe: true });
+        const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+        floor.rotation.x = -Math.PI / 2;
+        scene.add(floor);
+
+        // Keyboard controls
+        const onKeyDown = (event) => {
+            switch (event.code) {
+                case 'ArrowUp':
+                case 'KeyW':
+                    moveForward = true;
+                    break;
+                case 'ArrowLeft':
+                case 'KeyA':
+                    moveLeft = true;
+                    break;
+                case 'ArrowDown':
+                case 'KeyS':
+                    moveBackward = true;
+                    break;
+                case 'ArrowRight':
+                case 'KeyD':
+                    moveRight = true;
+                    break;
+            }
+        };
+
+        const onKeyUp = (event) => {
+            switch (event.code) {
+                case 'ArrowUp':
+                case 'KeyW':
+                    moveForward = false;
+                    break;
+                case 'ArrowLeft':
+                case 'KeyA':
+                    moveLeft = false;
+                    break;
+                case 'ArrowDown':
+                case 'KeyS':
+                    moveBackward = false;
+                    break;
+                case 'ArrowRight':
+                case 'KeyD':
+                    moveRight = false;
+                    break;
+            }
+        };
+
+        document.addEventListener('keydown', onKeyDown);
+        document.addEventListener('keyup', onKeyUp);
+
+        // Resize handling
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+
+        if (controls.isLocked) {
+            const time = performance.now();
+            const delta = (time - prevTime) / 1000;
+
+            velocity.x -= velocity.x * 10.0 * delta;
+            velocity.z -= velocity.z * 10.0 * delta;
+
+            direction.z = Number(moveForward) - Number(moveBackward);
+            direction.x = Number(moveLeft) - Number(moveRight);
+            direction.normalize();
+
+            if (moveForward || moveBackward) velocity.z -= direction.z * 400.0 * delta;
+            if (moveLeft || moveRight) velocity.x += direction.x * 400.0 * delta;
+
+            controls.moveRight(-velocity.x * delta);
+            controls.moveForward(-velocity.z * delta);
+
+            prevTime = time;
+        }
+
+        renderer.render(scene, camera);
+    }
+}
 //#endregion
 
 

@@ -112,74 +112,6 @@ select {
 }
 /*#endregion*/
 
-/*#region CSS image gallery*/
-#closeGallery {
-    display: none;
-    position: fixed;
-    right: 1em;
-    top: 1em;
-    width: var(--gallery-size);
-    height: var(--gallery-size);
-    border-radius: 10% !important;
-    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path stroke="red" stroke-width="10" d="M10 10 L90 90 M10 90 L90 10" /></svg>');
-    cursor: pointer;
-    z-index: 100;
-}
-#cssImageGallery div {
-    width: var(--gallery-size);
-    height: var(--gallery-size);
-    border-radius: 100%;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    cursor: pointer;
-    transition: transform 0.3s;
-}
-#cssImageGallery div:not(:focus):not(#closeGallery):hover {
-    transform: scale(1.2);
-}
-#cssImageGallery div:not(:focus):hover {
-    background-color: var(--color-radio-hover-1);
-    background-blend-mode: saturation;
-}
-#cssImageGallery div:focus-visible {
-    outline: none;
-}
-#cssImageGallery div:focus {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    border-radius: 0;
-    background-size: contain;
-    cursor: default;
-    transform: scale(1);
-    transition: transform 0s;
-    z-index: 50;
-    background-color: black;
-}
-#cssImageGallery div:focus + div:not(#closeGallery) {
-    position: fixed;
-    width: 7em;
-    height: 7em;
-    right: 0;
-    top: calc(50vh - var(--gallery-size) / 2);
-    z-index: 102;
-}
-#cssImageGallery div:has( + div:focus) {
-    position: fixed;
-    width: 7em;
-    height: 7em;
-    left: 0;
-    top: calc(50vh - var(--gallery-size) / 2);
-    z-index: 102;
-}
-#cssImageGallery div:focus ~ #closeGallery {
-    display: block;
-}
-/*#endregion*/
-
 /*#region Calendar*/
 #calendar {
     width: 100%;
@@ -270,6 +202,80 @@ select {
 }
 .weekend {
     background-color: var(--color-radio-hover-1);
+}
+/*#endregion*/
+
+/*#region ChatGPT Snake*/
+#gameCanvas {
+    border: 1px solid #fff;
+}
+/*#endregion*/
+
+/*#region CSS image gallery*/
+#closeGallery {
+    display: none;
+    position: fixed;
+    right: 1em;
+    top: 1em;
+    width: var(--gallery-size);
+    height: var(--gallery-size);
+    border-radius: 10% !important;
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path stroke="red" stroke-width="10" d="M10 10 L90 90 M10 90 L90 10" /></svg>');
+    cursor: pointer;
+    z-index: 100;
+}
+#cssImageGallery div {
+    width: var(--gallery-size);
+    height: var(--gallery-size);
+    border-radius: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+#cssImageGallery div:not(:focus):not(#closeGallery):hover {
+    transform: scale(1.2);
+}
+#cssImageGallery div:not(:focus):hover {
+    background-color: var(--color-radio-hover-1);
+    background-blend-mode: saturation;
+}
+#cssImageGallery div:focus-visible {
+    outline: none;
+}
+#cssImageGallery div:focus {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    border-radius: 0;
+    background-size: contain;
+    cursor: default;
+    transform: scale(1);
+    transition: transform 0s;
+    z-index: 50;
+    background-color: black;
+}
+#cssImageGallery div:focus + div:not(#closeGallery) {
+    position: fixed;
+    width: 7em;
+    height: 7em;
+    right: 0;
+    top: calc(50vh - var(--gallery-size) / 2);
+    z-index: 102;
+}
+#cssImageGallery div:has( + div:focus) {
+    position: fixed;
+    width: 7em;
+    height: 7em;
+    left: 0;
+    top: calc(50vh - var(--gallery-size) / 2);
+    z-index: 102;
+}
+#cssImageGallery div:focus ~ #closeGallery {
+    display: block;
 }
 /*#endregion*/
 
