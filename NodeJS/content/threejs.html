@@ -1,10 +1,14 @@
-<h1>3D Cube with Three.js</h1>
 <style>
+    #threejs {
+        position: relative;
+        width: 100%;
+        left: 0;
+    }
     #instructions {
         position: absolute;
+        display: flex;
         width: 100%;
         height: 100%;
-        display: flex;
         justify-content: center;
         align-items: center;
         color: white;
@@ -14,7 +18,13 @@
         text-align: center;
     }
 </style>
-<div id="instructions">
-    Click to play
+<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+    <div class="wrapper">
+        <h3>Three.js</h3>
+        <div id="threejs">
+            <div id="instructions" class="noselect">
+                Click to play
+            </div>
+        </div>
+    </div>
 </div>
-<div id="threejs"></div>

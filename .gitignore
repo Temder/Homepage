@@ -22,3 +22,6 @@ mysqlServer/Data/TOMS-LAPTOP-slow.log
 mysqlServer/Data/Toms-Laptop.pid
 mysqlServer/Data/undo_001
 mysqlServer/Data/undo_002
+mysqlServer/Data/homepage/website_views.ibd
+mysqlServer/Data/homepage/website_views.ibd
+mysqlServer/Data/homepage/website_views.ibd

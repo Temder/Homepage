@@ -221,11 +221,11 @@ function initCalendar(standard) {
     function addDay(day, monthOffset) {
         var weekday = new Date(current_date.getFullYear(), current_date.getMonth() + monthOffset, day);
         var weekdayShort = weekday.toLocaleString(userLang, { weekday: 'short' });
-        if (weekday.getDay() === 0 || weekday.getDay() === 6) {
-            view.insertAdjacentHTML('beforeend', `<div class="noselect weekend" onclick="calendarShowEvents(${day})"><div>${day}</div><div>${weekdayShort}</div></div>`);
-        } else if (isSameDay(weekday, current_day)) {
+        if (isSameDay(weekday, current_day)) {
             view.insertAdjacentHTML('beforeend', `<div class="noselect today" onclick="calendarShowEvents(${day})"><div>${day}</div><div>${weekdayShort}</div></div>`);
-        } else {
+            } else if (weekday.getDay() === 0 || weekday.getDay() === 6) {
+                view.insertAdjacentHTML('beforeend', `<div class="noselect weekend" onclick="calendarShowEvents(${day})"><div>${day}</div><div>${weekdayShort}</div></div>`);
+            } else {
             view.insertAdjacentHTML('beforeend', `<div class="noselect" onclick="calendarShowEvents(${day})"><div>${day}</div><div>${weekdayShort}</div></div>`);
         }
     }
@@ -497,9 +497,15 @@ document.querySelectorAll('.changeTheme').forEach(el => {
 function initThree() {
     let camera, scene, renderer, controls;
     let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
+    let canJump = false;
     let prevTime = performance.now();
+    let cube;
     const velocity = new THREE.Vector3();
     const direction = new THREE.Vector3();
+    const objects = [];
+    const playerHeight = 10;
+    const playerSize = new THREE.Vector3(1, playerHeight, 1); // Simulating the player's bounding box size
+    const collisionDistance = 5.0; // Distance for collision detection
 
     init();
     animate();
@@ -511,11 +517,11 @@ function initThree() {
 
         // Camera
         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
-        camera.position.y = 10; // Start at a height of 10
+        camera.position.y = playerHeight; // Start at a height of playerHeight
 
         // Renderer
         renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(window.innerWidth / 2, window.innerHeight / 2);
         document.getElementById('threejs').appendChild(renderer.domElement);
 
         // Controls
@@ -526,11 +532,19 @@ function initThree() {
         });
 
         controls.addEventListener('lock', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
             document.getElementById('instructions').style.display = 'none';
+            document.getElementById('threejs').style.position = 'absolute';
+            document.getElementById('threejs').style.top = 0;
+            document.getElementById('threejs').style.zIndex = 101;
         });
 
         controls.addEventListener('unlock', () => {
+            renderer.setSize(window.innerWidth / 2, window.innerHeight / 2);
             document.getElementById('instructions').style.display = 'flex';
+            document.getElementById('threejs').style.position = 'relative';
+            document.getElementById('threejs').style.top = '4.5em';
+            document.getElementById('threejs').style.zIndex = 0;
         });
 
         scene.add(controls.getObject());
@@ -540,7 +554,24 @@ function initThree() {
         const floorMaterial = new THREE.MeshBasicMaterial({ color: 0x007700, wireframe: true });
         const floor = new THREE.Mesh(floorGeometry, floorMaterial);
         floor.rotation.x = -Math.PI / 2;
+        floor.position.y = -0.5;
         scene.add(floor);
+        objects.push(floor);
+
+        // Basic cube obstacle
+        const boxGeometry = new THREE.BoxGeometry(20, 20, 20);
+        const boxMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const box = new THREE.Mesh(boxGeometry, boxMaterial);
+        box.position.set(0, 10, -30);
+        scene.add(box);
+        objects.push(box);
+
+        // raycast cube
+        const cubeGeometry = new THREE.BoxGeometry(5, 5, 5);
+        const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+        cube.position.set(30, 10, 0);
+        scene.add(cube);
 
         // Keyboard controls
         const onKeyDown = (event) => {
@@ -560,6 +591,10 @@ function initThree() {
                 case 'ArrowRight':
                 case 'KeyD':
                     moveRight = true;
+                    break;
+                case 'Space':
+                    if (canJump === true) velocity.y += 350;
+                    canJump = false;
                     break;
             }
         };
@@ -592,29 +627,65 @@ function initThree() {
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setSize(window.innerWidth / 2, window.innerHeight / 2);
         });
     }
 
     function animate() {
         requestAnimationFrame(animate);
-
+    
         if (controls.isLocked) {
             const time = performance.now();
             const delta = (time - prevTime) / 1000;
-
+    
             velocity.x -= velocity.x * 10.0 * delta;
             velocity.z -= velocity.z * 10.0 * delta;
-
+            velocity.y -= 9.8 * 100.0 * delta; // gravity 100.0
+    
             direction.z = Number(moveForward) - Number(moveBackward);
             direction.x = Number(moveLeft) - Number(moveRight);
             direction.normalize();
-
-            if (moveForward || moveBackward) velocity.z -= direction.z * 400.0 * delta;
+    
+            if (moveForward || moveBackward) velocity.z -= direction.z * 400.0 * delta; //400.0
             if (moveLeft || moveRight) velocity.x += direction.x * 400.0 * delta;
 
-            controls.moveRight(-velocity.x * delta);
-            controls.moveForward(-velocity.z * delta);
+            // Get the direction the player is looking
+            const lookDirection = new THREE.Vector3();
+            camera.getWorldDirection(lookDirection);
+            lookDirection.y = 0; // Ignore the y-component to keep movement on the x-z plane
+            lookDirection.normalize();
+
+            // Calculate movement direction
+            const moveDirection = new THREE.Vector3();
+            moveDirection.copy(lookDirection).multiplyScalar(direction.z).add(new THREE.Vector3(lookDirection.z, 0, -lookDirection.x).multiplyScalar(direction.x)).normalize();
+
+            // Collision detection using raycasting
+            const playerPosition = controls.getObject().position;
+            cube.position.set(playerPosition.x + moveDirection.z * 10, playerPosition.y, playerPosition.z + moveDirection.z * 10);
+            const raycaster = new THREE.Raycaster(
+                playerPosition,
+                moveDirection,
+                0,
+                collisionDistance
+            );
+
+            const intersects = raycaster.intersectObjects(objects);
+
+            if (intersects.length === 0) {
+                controls.moveRight(-velocity.x * delta);
+                controls.moveForward(-velocity.z * delta);
+            } else {
+                velocity.x = 0;
+                velocity.z = 0;
+            }
+
+            controls.getObject().position.y += (velocity.y * delta); // new behavior
+
+            if (controls.getObject().position.y < playerHeight) {
+                velocity.y = 0;
+                controls.getObject().position.y = playerHeight;
+                canJump = true;
+            }
 
             prevTime = time;
         }
