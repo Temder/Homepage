@@ -2,6 +2,10 @@
   "dependencies": {
     "body-parser": "^1.20.2",
     "express": "^4.19.2",
-    "mysql2": "^3.10.0"
+    "mysql2": "^3.10.0",
+    "three": "^0.165.0"
+  },
+  "devDependencies": {
+    "@dimforge/rapier3d-compat": "^0.13.1"
   }
 }

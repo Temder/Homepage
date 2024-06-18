@@ -60,11 +60,11 @@ function initThree() {
         const grassTexture = textureLoader.load('./grass.jpg');
         grassTexture.wrapS = THREE.RepeatWrapping;
         grassTexture.wrapT = THREE.RepeatWrapping;
-        grassTexture.repeat.set(100, 100);
-        const floorGeometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
+        grassTexture.repeat.set(20, 20);
+        const floorGeometry = new THREE.BoxGeometry(200, 1, 200);
         const floorMaterial = new THREE.MeshBasicMaterial({ map: grassTexture });
         const floor = new THREE.Mesh(floorGeometry, floorMaterial);
-        floor.rotation.x = -Math.PI / 2;
+        //floor.rotation.x = -Math.PI / 2;
         floor.position.y = -0.5;
         scene.add(floor);
         objects.push(floor);
@@ -130,7 +130,7 @@ function initThree() {
                     break;
                 case 'Space':
                     if (canJump === true) {
-                        velocity.y += 200;
+                        velocity.y += 125;
                     }
                     canJump = false;
                     break;
@@ -178,7 +178,7 @@ function initThree() {
     
             velocity.x -= velocity.x * 10.0 * delta;
             velocity.z -= velocity.z * 10.0 * delta;
-            velocity.y -= 9.8 * 50.0 * delta; // gravity 50.0
+            velocity.y -= 9.8 * 40.0 * delta; // gravity 50.0
     
             direction.z = Number(moveForward) - Number(moveBackward);
             direction.x = Number(moveLeft) - Number(moveRight);
@@ -218,21 +218,21 @@ function initThree() {
                 controls.moveRight(-velocity.x * delta);
                 controls.moveForward(-velocity.z * delta);
 
-                //cursor1.position.set(lookingVector.x, lookingVector.y - playerHeight, lookingVector.z);
-                //cursor2.position.set(lookingVector.x, lookingVector.y, lookingVector.z);
+                //cursor1.position.set(lookingVector.x, playerPosition.y - playerHeight + stepHeight, lookingVector.z);
+                //cursor2.position.set(lookingVector.x, playerPosition.y - playerHeight, lookingVector.z);
                 // Step detection and stepping up
                 const stepRaycaster = new THREE.Raycaster(
                     playerPosition.clone().add(new THREE.Vector3(0,  -playerHeight + stepHeight, 0)),
                     new THREE.Vector3(0, -1, 0),
                     0,
-                    playerHeight
+                    stepHeight
                 );
                 stepIntersects = stepRaycaster.intersectObjects(objects);
-                if (stepIntersects.length > 0) {
+                if (stepIntersects.length > 0 && stepIntersects[0].distance < stepHeight) {
                     controls.getObject().position.y = stepIntersects[0].point.y + playerHeight;
                 }// else if (isMoving) {
-                //    controls.getObject().position.y += (velocity.y * delta);
-                //}
+                /*//    controls.getObject().position.y += (velocity.y * delta);
+                //}*/
             } else {
                 velocity.x = 0;
                 velocity.z = 0;
@@ -244,14 +244,13 @@ function initThree() {
                 playerPosition.clone().add(new THREE.Vector3(0, -playerHeight, 0)),
                 new THREE.Vector3(0, -1, 0),
                 0,
-                1
+                2
             );
     
             const downIntersects = downRaycaster.intersectObjects(objects);
 
             if (downIntersects.length > 0) {
-                const distance = downIntersects[0].distance;
-                if (distance < playerHeight) {
+                if (downIntersects[0].distance < playerHeight) {
                     velocity.y = Math.max(0, velocity.y); // Prevent downward velocity
                     canJump = true;
                 }
@@ -260,7 +259,7 @@ function initThree() {
             }
 
             // Vertical collision detection (jumping)
-            /*const upRaycaster = new THREE.Raycaster(
+            const upRaycaster = new THREE.Raycaster(
                 playerPosition,
                 new THREE.Vector3(0, 1, 0),
                 0,
@@ -274,17 +273,18 @@ function initThree() {
                 if (distance < playerHeight / 2) {
                     velocity.y = Math.min(0, velocity.y); // Prevent upward velocity
                 }
-            }*/
+            }
 
             if ((downIntersects.length === 0 || canJump) && stepIntersects.length === 0) {
                 controls.getObject().position.y += (velocity.y * delta);
             }
 
-            if (controls.getObject().position.y < playerHeight) {
+            /*if (controls.getObject().position.y < playerHeight) {
+                console.log('player on plane');
                 velocity.y = 0;
                 controls.getObject().position.y = playerHeight;
                 canJump = true;
-            }
+            }*/
 
             prevTime = time;
         }
