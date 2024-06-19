@@ -1,4 +1,46 @@
+'use strict';
+
+Physijs.scripts.worker = './addons/physijs_worker.js';
+Physijs.scripts.ammo = './ammoPhysisJS.js';
+
 function initThree() {
+    /*var initScene, render, renderer, scene, camera, box;
+	
+	initScene = function() {
+		renderer = new THREE.WebGLRenderer({ antialias: true });
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.getElementById('threejs').appendChild( renderer.domElement );
+		
+		scene = new Physijs.Scene;
+		
+		camera = new THREE.PerspectiveCamera(
+			35,
+			window.innerWidth / window.innerHeight,
+			1,
+			1000
+		);
+		camera.position.set( 60, 50, 60 );
+		camera.lookAt( scene.position );
+		scene.add( camera );
+		
+		// Box
+		box = new Physijs.BoxMesh(
+			new THREE.CubeGeometry( 5, 5, 5 ),
+			new THREE.MeshBasicMaterial({ color: 0x888888 })
+		);
+		scene.add( box );
+		
+		requestAnimationFrame( render );
+	};
+	
+	render = function() {
+		scene.simulate(); // run physics
+		renderer.render( scene, camera); // render the scene
+		requestAnimationFrame( render );
+	};
+	
+	window.onload = initScene();*/
+
     let camera, scene, renderer, controls;
     let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
     let canJump = false;
@@ -14,19 +56,9 @@ function initThree() {
     init();
     animate();
 
-    Rapier.init().then(() => {
-        // Run the simulation.
-    });
-    
-    // OR using the await syntax:
-    async function run_simulation() {
-        await RAPIER.init();
-        // Run the simulation.
-    }
-
     function init() {
         // Scene
-        scene = new THREE.Scene();
+        scene = new Physijs.Scene();
         scene.background = new THREE.Color(0xeeeeee);
 
         // Camera
@@ -71,11 +103,18 @@ function initThree() {
         grassTexture.repeat.set(20, 20);
         const floorGeometry = new THREE.BoxGeometry(200, 1, 200);
         const floorMaterial = new THREE.MeshBasicMaterial({ map: grassTexture });
-        const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+        const floor = new Physijs.BoxMesh(floorGeometry, floorMaterial, 0);
         //floor.rotation.x = -Math.PI / 2;
         floor.position.y = -0.5;
         scene.add(floor);
         objects.push(floor);
+
+        const phyBoxGeometry = new THREE.BoxGeometry(10, 10, 10);
+        const phyBoxMaterial = new THREE.MeshBasicMaterial({ color: 'green' });
+        const phyBox = new Physijs.BoxMesh(phyBoxGeometry, phyBoxMaterial);
+        //floor.rotation.x = -Math.PI / 2;
+        phyBox.position.set(0, 20, -20);
+        scene.add(phyBox);
 
         // Keyboard controls
         const onKeyDown = (event) => {
@@ -169,6 +208,7 @@ function initThree() {
             prevTime = time;
         }
 
+        scene.simulate();
         renderer.render(scene, camera);
     }
 }
