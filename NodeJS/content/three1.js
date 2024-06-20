@@ -4,46 +4,10 @@ Physijs.scripts.worker = './addons/physijs_worker.js';
 Physijs.scripts.ammo = './ammoPhysisJS.js';
 
 function initThree() {
-    /*var initScene, render, renderer, scene, camera, box;
-	
-	initScene = function() {
-		renderer = new THREE.WebGLRenderer({ antialias: true });
-		renderer.setSize( window.innerWidth, window.innerHeight );
-		document.getElementById('threejs').appendChild( renderer.domElement );
-		
-		scene = new Physijs.Scene;
-		
-		camera = new THREE.PerspectiveCamera(
-			35,
-			window.innerWidth / window.innerHeight,
-			1,
-			1000
-		);
-		camera.position.set( 60, 50, 60 );
-		camera.lookAt( scene.position );
-		scene.add( camera );
-		
-		// Box
-		box = new Physijs.BoxMesh(
-			new THREE.CubeGeometry( 5, 5, 5 ),
-			new THREE.MeshBasicMaterial({ color: 0x888888 })
-		);
-		scene.add( box );
-		
-		requestAnimationFrame( render );
-	};
-	
-	render = function() {
-		scene.simulate(); // run physics
-		renderer.render( scene, camera); // render the scene
-		requestAnimationFrame( render );
-	};
-	
-	window.onload = initScene();*/
-
-    let camera, scene, renderer, controls;
+    let player, camera, scene, renderer, controls;
     let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
     let canJump = false;
+    let jump = false;
     let prevTime = performance.now();
     const velocity = new THREE.Vector3();
     const direction = new THREE.Vector3();
@@ -58,12 +22,16 @@ function initThree() {
 
     function init() {
         // Scene
-        scene = new Physijs.Scene();
+        scene = new Physijs.Scene({ reportsize: 4 });
         scene.background = new THREE.Color(0xeeeeee);
+        scene.setGravity(new THREE.Vector3(0, -40, 0));
+        screen.addEventListener('update', function() {
+            scene.simulate(undefined, 2);
+        });
 
         // Camera
         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
-        camera.position.y = playerHeight; // Start at a height of playerHeight
+        camera.position.y = 30; // Start at a height of playerHeight
 
         // Renderer
         renderer = new THREE.WebGLRenderer({antialias : true, alpha : true});
@@ -96,25 +64,48 @@ function initThree() {
 
         scene.add(controls.getObject());
 
-        // Floor
-        const grassTexture = textureLoader.load('./grass.jpg');
-        grassTexture.wrapS = THREE.RepeatWrapping;
-        grassTexture.wrapT = THREE.RepeatWrapping;
-        grassTexture.repeat.set(20, 20);
-        const floorGeometry = new THREE.BoxGeometry(200, 1, 200);
-        const floorMaterial = new THREE.MeshBasicMaterial({ map: grassTexture });
-        const floor = new Physijs.BoxMesh(floorGeometry, floorMaterial, 0);
-        //floor.rotation.x = -Math.PI / 2;
-        floor.position.y = -0.5;
-        scene.add(floor);
-        objects.push(floor);
-
+        // Ground
+        var ground_material = Physijs.createMaterial(
+			new THREE.MeshBasicMaterial({ map: textureLoader.load( './grass.jpg' ) }),
+			.8, // high friction
+			.4 // low restitution
+		);
+		ground_material.map.wrapS = ground_material.map.wrapT = THREE.RepeatWrapping;
+		ground_material.map.repeat.set( 5, 5 );
+		var NoiseGen = new SimplexNoise;
+		var ground_geometry = new THREE.PlaneGeometry( 300, 300, 100, 100 );
+		for ( var i = 0; i < ground_geometry.vertices.length; i++ ) {
+			var vertex = ground_geometry.vertices[i];
+			//vertex.z = NoiseGen.noise( vertex.x / 30, vertex.y / 30 ) * 2;
+		}
+		ground_geometry.computeFaceNormals();
+		ground_geometry.computeVertexNormals();
+		var ground = new Physijs.HeightfieldMesh(
+				ground_geometry,
+				ground_material,
+				0 // mass
+		);
+        ground.position.set(0, 0, 0);
+		ground.rotation.x = -Math.PI / 2;
+		ground.receiveShadow = true;
+		scene.add(ground);
+        objects.push(ground);
+        
         const phyBoxGeometry = new THREE.BoxGeometry(10, 10, 10);
         const phyBoxMaterial = new THREE.MeshBasicMaterial({ color: 'green' });
         const phyBox = new Physijs.BoxMesh(phyBoxGeometry, phyBoxMaterial);
-        //floor.rotation.x = -Math.PI / 2;
         phyBox.position.set(0, 20, -20);
         scene.add(phyBox);
+        objects.push(phyBox);
+
+        const box = new Physijs.BoxMesh(new THREE.BoxGeometry(20, 50, 20), new THREE.MeshBasicMaterial({ color: 'blue' }));
+        box.position.set(20, 50, 0);
+        scene.add(box);
+        objects.push(box);
+        
+        player = new Physijs.BoxMesh(new THREE.BoxGeometry(5, playerHeight, 5), new THREE.MeshBasicMaterial({ color: 'red' }));
+        player.position.set(0, playerHeight, 0);
+        scene.add(player);
 
         // Keyboard controls
         const onKeyDown = (event) => {
@@ -137,7 +128,10 @@ function initThree() {
                     break;
                 case 'Space':
                     if (canJump === true) {
-                        velocity.y += 125;
+                        //jump = true;
+                        //player.setLinearVelocity(new THREE.Vector3(0, 10000, 0));
+                        //scene.simulate();
+                        velocity.y += 10;
                     }
                     canJump = false;
                     break;
@@ -174,6 +168,12 @@ function initThree() {
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth / 2, window.innerHeight / 2);
         });
+
+        player.addEventListener( 'collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
+            if (contact_normal.x < -0.9) {
+                canJump = true;
+            }
+        });
     }
 
     function animate() {
@@ -185,24 +185,52 @@ function initThree() {
     
             velocity.x -= velocity.x * 10.0 * delta;
             velocity.z -= velocity.z * 10.0 * delta;
-            velocity.y -= 9.8 * 40.0 * delta; // gravity 50.0
     
             direction.z = Number(moveForward) - Number(moveBackward);
             direction.x = Number(moveLeft) - Number(moveRight);
             direction.normalize();
+
+            const moving = moveForward || moveBackward || moveRight || moveLeft;
     
-            if (moveForward || moveBackward) velocity.z -= direction.z * 400.0 * playerSpeed * delta;
-            if (moveLeft || moveRight) velocity.x += direction.x * 400.0 * playerSpeed * delta;
-
-            controls.moveRight(-velocity.x * delta);
-            controls.moveForward(-velocity.z * delta);
+            if (moveForward || moveBackward) velocity.z += direction.z * 10000.0 * playerSpeed * delta;
+            if (moveLeft || moveRight) velocity.x += direction.x * 10000.0 * playerSpeed * delta;
             
-            controls.getObject().position.y += (velocity.y * delta);
+            const lookDirection = new THREE.Vector3();
+            camera.getWorldDirection(lookDirection);
+            lookDirection.y = 0;
+            lookDirection.normalize();
 
-            if (controls.getObject().position.y < playerHeight) {
+            const moveDirection = new THREE.Vector3();
+            moveDirection.copy(lookDirection).multiplyScalar(direction.z).add(new THREE.Vector3(lookDirection.z, 0, -lookDirection.x).multiplyScalar(direction.x)).normalize().multiplyScalar(25);
+            moveDirection.y = player.getLinearVelocity().y;
+            player.setLinearVelocity(moveDirection);
+            if (velocity.y > 0) {
+                player.setLinearVelocity(player.getLinearVelocity().add(new THREE.Vector3(0, velocity.y, 0)));
                 velocity.y = 0;
-                controls.getObject().position.y = playerHeight;
+            }
+
+            /*if (jump) {
+                player.applyCentralImpulse(new THREE.Vector3(0, 5000, 0));
+                jump = false;
+            }*/
+        
+            player.rotation.set(0, 0, 0);
+            player.__dirtyRotation = true;
+            controls.getObject().position.set(player.position.x, player.position.y + 5, player.position.z);
+
+            const downRaycaster = new THREE.Raycaster(
+                player.position,
+                new THREE.Vector3(0, -1, 0),
+                0,
+                11
+            );
+    
+            const downIntersects = downRaycaster.intersectObjects(objects);
+
+            if (downIntersects.length > 0) {
                 canJump = true;
+            } else {
+                canJump = false;
             }
 
             prevTime = time;
