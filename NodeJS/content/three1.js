@@ -4,7 +4,7 @@ Physijs.scripts.worker = './addons/physijs_worker.js';
 Physijs.scripts.ammo = './ammoPhysisJS.js';
 
 function initThree() {
-    let player, camera, scene, renderer, controls;
+    let sphere, player, camera, scene, renderer, controls, gravityDir;
     let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
     let canJump = false;
     let jump = false;
@@ -14,6 +14,7 @@ function initThree() {
     const objects = [];
     const playerHeight = 10;
     const playerSpeed = 1;
+    const gravityPoint = new THREE.Vector3(0, -100, 0);
 
     const textureLoader = new THREE.TextureLoader();
     
@@ -72,7 +73,7 @@ function initThree() {
 		);
 		ground_material.map.wrapS = ground_material.map.wrapT = THREE.RepeatWrapping;
 		ground_material.map.repeat.set( 5, 5 );
-		var NoiseGen = new SimplexNoise;
+		/*var NoiseGen = new SimplexNoise;
 		var ground_geometry = new THREE.PlaneGeometry( 300, 300, 100, 100 );
 		for ( var i = 0; i < ground_geometry.vertices.length; i++ ) {
 			var vertex = ground_geometry.vertices[i];
@@ -89,9 +90,12 @@ function initThree() {
 		ground.rotation.x = -Math.PI / 2;
 		ground.receiveShadow = true;
 		scene.add(ground);
-        objects.push(ground);
+        objects.push(ground);*/
+        sphere = new Physijs.SphereMesh(new THREE.SphereGeometry(100, 100, 100), ground_material, 0);
+        sphere.position.set(0, -100, 0);
+        scene.add(sphere);
         
-        const phyBoxGeometry = new THREE.BoxGeometry(10, 10, 10);
+        /*const phyBoxGeometry = new THREE.BoxGeometry(10, 10, 10);
         const phyBoxMaterial = new THREE.MeshBasicMaterial({ color: 'green' });
         const phyBox = new Physijs.BoxMesh(phyBoxGeometry, phyBoxMaterial);
         phyBox.position.set(0, 20, -20);
@@ -101,9 +105,9 @@ function initThree() {
         const box = new Physijs.BoxMesh(new THREE.BoxGeometry(20, 50, 20), new THREE.MeshBasicMaterial({ color: 'blue' }));
         box.position.set(20, 50, 0);
         scene.add(box);
-        objects.push(box);
+        objects.push(box);*/
         
-        player = new Physijs.BoxMesh(new THREE.BoxGeometry(5, playerHeight, 5), new THREE.MeshBasicMaterial({ color: 'red' }));
+        player = new Physijs.SphereMesh(new THREE.SphereGeometry(5, 5, 5), new THREE.MeshBasicMaterial({ color: 'red' }));
         player.position.set(0, playerHeight, 0);
         scene.add(player);
 
@@ -208,15 +212,15 @@ function initThree() {
                 player.setLinearVelocity(player.getLinearVelocity().add(new THREE.Vector3(0, velocity.y, 0)));
                 velocity.y = 0;
             }
-
-            /*if (jump) {
-                player.applyCentralImpulse(new THREE.Vector3(0, 5000, 0));
-                jump = false;
-            }*/
-        
-            player.rotation.set(0, 0, 0);
-            player.__dirtyRotation = true;
-            controls.getObject().position.set(player.position.x, player.position.y + 5, player.position.z);
+            
+            gravityDir = sphere.position.clone().sub(player.position);
+            scene.setGravity(gravityDir.clone());
+            //player.rotation.set(0, 0, 0);
+            //player.__dirtyRotation = true;
+            controls.getObject().position.set(player.position.x + gravityDir.normalize().x * -15, player.position.y + gravityDir.normalize().y * -15, player.position.z + gravityDir.normalize().z * -15);
+            controls.getObject().rotation.set(player.rotation.x, player.rotation.y, player.rotation.z);
+            //console.log(controls.getObject().rotation);
+            player.lookAt(sphere.position);
 
             const downRaycaster = new THREE.Raycaster(
                 player.position,
