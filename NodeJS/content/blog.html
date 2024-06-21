@@ -2,7 +2,20 @@
 <div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
     <div class="wrapper">
         <h3>ChatGPT Snake</h3>
-        <div><canvas id="gameCanvas" width="400" height="400"></canvas></div>
+        <div class="flex-container">
+            <canvas id="gameCanvas" width="400" height="400"></canvas>
+            <button onclick="showHideEle(this.nextElementSibling)" style="width: 100%; margin: 0 35%;">Gamepad</button>
+            <div class="hidden snake-controls">
+                <div></div>
+                <div class="noselect" onclick="changeDirection(38)">⬆️</div>
+                <div></div>
+                <div class="noselect" onclick="changeDirection(37)">⬅️</div>
+                <div></div>
+                <div class="noselect" onclick="changeDirection(39)">➡️</div>
+                <div></div>
+                <div class="noselect" onclick="changeDirection(40)">⬇️</div>
+            </div>
+        </div>
         <h3 class="de">Kalender</h3>
         <h3 class="en">Calendar</h3>
         <div id="calendar" class="flex-container">

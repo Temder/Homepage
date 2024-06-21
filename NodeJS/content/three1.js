@@ -218,7 +218,6 @@ function initThree() {
             //player.rotation.set(0, 0, 0);
             //player.__dirtyRotation = true;
             controls.getObject().position.set(player.position.x + gravityDir.normalize().x * -15, player.position.y + gravityDir.normalize().y * -15, player.position.z + gravityDir.normalize().z * -15);
-            controls.getObject().rotation.set(player.rotation.x, player.rotation.y, player.rotation.z);
             //console.log(controls.getObject().rotation);
             player.lookAt(sphere.position);
 

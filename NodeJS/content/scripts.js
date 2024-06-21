@@ -342,7 +342,12 @@ function update() {
     moveSnake();
 }
 function changeDirection(event) {
-    const keyPressed = event.keyCode;
+    var keyPressed = null;
+    if (event.keyCode) {
+        keyPressed = event.keyCode;
+    } else {
+        keyPressed = event;
+    }
     const goingUp = direction.y === -1;
     const goingDown = direction.y === 1;
     const goingRight = direction.x === 1;
@@ -466,6 +471,15 @@ document.addEventListener('keydown', function(event) {
         }, 0);
     }
 });
+//#endregion
+
+
+
+
+//#region Show/Hide Element
+function showHideEle(ele) {
+    ele.classList.toggle('hidden')
+}
 //#endregion
 
 

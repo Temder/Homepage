@@ -64,6 +64,9 @@
     padding: 1em;
     gap: 1em;
 }
+.hidden {
+    display: none !important;
+}
 .noselect {
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
@@ -87,6 +90,9 @@
     width: min-content;
     margin: 0 auto;
 }
+.wrapper > h3 + div {
+    padding-bottom: 2em;
+}
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -100,8 +106,8 @@ h3 {
     white-space: nowrap;
     margin-bottom: 1em !important;
 }
-h3:has( ~ .flex-container) {
-    margin-bottom: 0.5em !important;
+h3 + div {
+    padding-top: 0 !important;
 }
 select {
     border: solid 0.1em var(--color-main-fg);
@@ -209,6 +215,25 @@ select {
 #gameCanvas {
     border: 1px solid #fff;
 }
+.snake-controls {
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+.snake-controls * {
+    font-size: 2.5em;
+}
+/*.snake-controls div:nth-child(1) {
+    margin-left: 1.5em;
+}
+.snake-controls div:nth-child(2) {
+    margin-left: 3em;
+}
+.snake-controls div:nth-child(3) {
+    margin-left: 1.5em;
+}
+.snake-controls div:nth-child(4) {
+    transform: translateY(-2.65em);
+}*/
 /*#endregion*/
 
 /*#region CSS image gallery*/
