@@ -199,11 +199,6 @@ function calendarRemoveEvent(event_id) {
             console.error('Error sending remove event:', error);
         })
 }
-function calendarAddEntry() {
-    if (document.getElementById('entry-title').value.trim() != '') {
-        events.insertAdjacentHTML('beforeend', `<div class='center' onclick='this.remove()'>${document.getElementById('entry-title').value}</div>`)
-    }
-}
 function isSameDay(date1, date2) {
     return date1.getFullYear() === date2.getFullYear() &&
            date1.getMonth() === date2.getMonth() &&
@@ -223,9 +218,9 @@ function initCalendar(standard) {
         var weekdayShort = weekday.toLocaleString(userLang, { weekday: 'short' });
         if (isSameDay(weekday, current_day)) {
             view.insertAdjacentHTML('beforeend', `<div class="noselect today" onclick="calendarShowEvents(${day})"><div>${day}</div><div>${weekdayShort}</div></div>`);
-            } else if (weekday.getDay() === 0 || weekday.getDay() === 6) {
-                view.insertAdjacentHTML('beforeend', `<div class="noselect weekend" onclick="calendarShowEvents(${day})"><div>${day}</div><div>${weekdayShort}</div></div>`);
-            } else {
+        } else if (weekday.getDay() === 0 || weekday.getDay() === 6) {
+            view.insertAdjacentHTML('beforeend', `<div class="noselect weekend" onclick="calendarShowEvents(${day})"><div>${day}</div><div>${weekdayShort}</div></div>`);
+        } else {
             view.insertAdjacentHTML('beforeend', `<div class="noselect" onclick="calendarShowEvents(${day})"><div>${day}</div><div>${weekdayShort}</div></div>`);
         }
     }
@@ -502,6 +497,12 @@ document.querySelectorAll('.changeTheme').forEach(el => {
         })
     })
 })
+//#endregion
+
+
+
+
+//#region THREE.js
 //#endregion
 
 

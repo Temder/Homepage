@@ -75,7 +75,7 @@ app.use((req, res, next) => {
 app.get('/api/views', function(req, res, next) {
   connection.query('SELECT views FROM website_views', function (error, result, fields) {
     if (error) {
-      res.status(500).send('Database query (getting website views) failed');
+      res.status(500).send('Database query (get website views) failed');
       return;
     }
     res.json({ count: result });
@@ -85,7 +85,7 @@ app.get('/api/views', function(req, res, next) {
 app.get('/api/calendar/*', function(req, res, next) {
   connection.query(`SELECT * FROM calendar WHERE start_time LIKE '${req.params[0]}%';`, function (error, result, fields) {
     if (error) {
-      res.status(500).send('Database query (getting calendar event) failed');
+      res.status(500).send('Database query (get calendar event) failed');
     }
     res.json(result);
     next();

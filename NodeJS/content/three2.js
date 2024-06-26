@@ -9,6 +9,7 @@ function initThree() {
     let canJump = false;
     let jump = false;
     let prevTime = performance.now();
+    let locked = false;
     const velocity = new THREE.Vector3();
     const direction = new THREE.Vector3();
     const objects = [];
@@ -32,39 +33,39 @@ function initThree() {
 
         // Camera
         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
-        camera.position.y = 30; // Start at a height of playerHeight
-        camera.rotation.z = -45;
+        camera.position.set(0, 0, 0); // Start at a height of playerHeight
+        camera.rotation.set(90, 0, 0);
 
         // Renderer
         renderer = new THREE.WebGLRenderer({antialias : true, alpha : true});
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(window.innerWidth / 2, window.innerHeight / 2);
         document.getElementById('threejs').appendChild(renderer.domElement);
-
-        // Controls
-        controls = new THREE.PointerLockControls(camera, document.body);
         
-        document.getElementById('instructions').addEventListener('click', () => {
-            controls.lock();
+        const container = document.getElementById('instructions');
+        container.addEventListener('click', () => {
+            container.requestPointerLock();
         });
 
-        controls.addEventListener('lock', () => {
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.getElementById('instructions').style.display = 'none';
-            document.getElementById('threejs').style.position = 'absolute';
-            document.getElementById('threejs').style.top = 0;
-            document.getElementById('threejs').style.zIndex = 101;
-        });
+        document.addEventListener('pointerlockchange', () => {
+            if (document.pointerLockElement === container) {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.getElementById('instructions').style.display = 'none';
+                document.getElementById('threejs').style.position = 'absolute';
+                document.getElementById('threejs').style.top = 0;
+                document.getElementById('threejs').style.zIndex = 101;
+                locked = true;
+            } else {
+                renderer.setSize(window.innerWidth / 2, window.innerHeight / 2);
+                document.getElementById('instructions').style.display = 'flex';
+                document.getElementById('threejs').style.position = 'relative';
+                document.getElementById('threejs').style.top = '4.5em';
+                document.getElementById('threejs').style.zIndex = 0;
+                locked = false;
+            }
+        }, false);
 
-        controls.addEventListener('unlock', () => {
-            renderer.setSize(window.innerWidth / 2, window.innerHeight / 2);
-            document.getElementById('instructions').style.display = 'flex';
-            document.getElementById('threejs').style.position = 'relative';
-            document.getElementById('threejs').style.top = '4.5em';
-            document.getElementById('threejs').style.zIndex = 0;
-        });
-
-        //scene.add(controls.getObject());
+        scene.add(camera);
 
         // Ground
         var ground_material = Physijs.createMaterial(
@@ -110,8 +111,8 @@ function initThree() {
         
         player = new Physijs.SphereMesh(new THREE.SphereGeometry(5, 5, 5), new THREE.MeshBasicMaterial({ color: 'red' }));
         player.position.set(0, playerHeight, 0);
-        controls.getObject().rotation.set(player.rotation.x, player.rotation.y, player.rotation.z);
-        player.add(controls.getObject());
+        //controls.getObject().rotation.set(player.rotation.x, player.rotation.y, player.rotation.z);
+        //player.add(camera);
         scene.add(player);
 
         // Keyboard controls
@@ -186,7 +187,7 @@ function initThree() {
     function animate() {
         requestAnimationFrame(animate);
     
-        if (controls.isLocked) {
+        if (locked) {
             const time = performance.now();
             const delta = (time - prevTime) / 1000;
     

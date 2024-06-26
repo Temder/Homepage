@@ -1,6 +1,6 @@
 ( function () {
 
-	const _euler = new THREE.Euler( 0, 0, 0, 'YZX' ); //'YXZ'
+	const _euler = new THREE.Euler( 0, 0, 0, 'YXZ' ); //'YXZ'
 
 	const _vector = new THREE.Vector3();
 
@@ -79,7 +79,7 @@
 
 			this.connect = function () {
 
-				scope.domElement.ownerDocument.addEventListener( 'mousemove', onMouseMove );
+				//scope.domElement.ownerDocument.addEventListener( 'mousemove', onMouseMove );
 				scope.domElement.ownerDocument.addEventListener( 'pointerlockchange', onPointerlockChange );
 				scope.domElement.ownerDocument.addEventListener( 'pointerlockerror', onPointerlockError );
 
@@ -87,7 +87,7 @@
 
 			this.disconnect = function () {
 
-				scope.domElement.ownerDocument.removeEventListener( 'mousemove', onMouseMove );
+				//scope.domElement.ownerDocument.removeEventListener( 'mousemove', onMouseMove );
 				scope.domElement.ownerDocument.removeEventListener( 'pointerlockchange', onPointerlockChange );
 				scope.domElement.ownerDocument.removeEventListener( 'pointerlockerror', onPointerlockError );
 
