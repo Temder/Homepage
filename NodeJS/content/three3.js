@@ -76,9 +76,10 @@ function initThree() {
         player = new Physijs.SphereMesh(new THREE.SphereGeometry(5, 5, 5), new THREE.MeshBasicMaterial({ color: 'red' }));
         player.position.set(0, playerHeight, 0);
         scene.add(player);
+        //camera.rotateOnAxis(new THREE.Vector3(1, 0, 0), -45);
         camera.position.set(player.position.x, player.position.y + 10, player.position.z + 20);
-        camera.rotation.set(-44.5, 0, 0);
-        player.add(camera);
+        player.lookAt(sphere.position);
+        player.attach(camera);
 
         // Keyboard controls
         document.addEventListener('keydown', (event) => {
@@ -133,24 +134,22 @@ function initThree() {
 
     function animate() {
         requestAnimationFrame(animate);
-    
         if (locked) {
-            const time = performance.now();
-            const delta = (time - prevTime) / 1000;
+            //const time = performance.now();
+            //const delta = (time - prevTime) / 1000;
     
-            velocity.x -= velocity.x * 10.0 * delta;
-            velocity.z -= velocity.z * 10.0 * delta;
+            //velocity.x -= velocity.x * 10.0 * delta;
+            //velocity.z -= velocity.z * 10.0 * delta;
     
             direction.z = Number(moveForward) - Number(moveBackward);
             direction.x = Number(moveLeft) - Number(moveRight);
             direction.normalize();
 
-            if (moveForward || moveBackward) velocity.z += direction.z * 10000.0 * playerSpeed * delta;
-            if (moveLeft || moveRight) velocity.x += direction.x * 10000.0 * playerSpeed * delta;
+            //if (moveForward || moveBackward) velocity.z += direction.z * 10000.0 * playerSpeed * delta;
+            //if (moveLeft || moveRight) velocity.x += direction.x * 10000.0 * playerSpeed * delta;
 
             const lookDirection = new THREE.Vector3();
             camera.getWorldDirection(lookDirection);
-            lookDirection.y = 0;
             lookDirection.normalize();
             
             const moveDirection = new THREE.Vector3();
@@ -159,9 +158,12 @@ function initThree() {
             player.setLinearVelocity(moveDirection);
 
             gravityDir = sphere.position.clone().sub(player.position);
-            scene.setGravity(gravityDir.clone());
-        }
+            scene.setGravity(gravityDir.clone().multiplyScalar(100));
 
+            /*if (moveRight) {
+                player.rotateOnAxis(gravityDir.normalize(), 1);
+            }*/
+        }
         scene.simulate();
         renderer.render(scene, camera);
     }
