@@ -8,6 +8,7 @@ function initThree() {
     let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
     let locked = false;
     let prevTime = performance.now();
+    let rot = 0;
     const playerHeight = 10;
     const playerSpeed = 1;
     const velocity = new THREE.Vector3();
@@ -73,11 +74,13 @@ function initThree() {
         sphere.position.set(0, -100, 0);
         scene.add(sphere);
         
+        //BoxMesh BoxGeometry
         player = new Physijs.SphereMesh(new THREE.SphereGeometry(5, 5, 5), new THREE.MeshBasicMaterial({ color: 'red' }));
         player.position.set(0, playerHeight, 0);
         scene.add(player);
         //camera.rotateOnAxis(new THREE.Vector3(1, 0, 0), -45);
-        camera.position.set(player.position.x, player.position.y + 10, player.position.z + 20);
+        camera.position.set(player.position.x, player.position.y + 25, player.position.z + 25);
+        camera.rotation.set(-1, 0, 0);
         player.lookAt(sphere.position);
         player.attach(camera);
 
@@ -142,7 +145,7 @@ function initThree() {
             //velocity.z -= velocity.z * 10.0 * delta;
     
             direction.z = Number(moveForward) - Number(moveBackward);
-            direction.x = Number(moveLeft) - Number(moveRight);
+            //direction.x = Number(moveLeft) - Number(moveRight);
             direction.normalize();
 
             //if (moveForward || moveBackward) velocity.z += direction.z * 10000.0 * playerSpeed * delta;
@@ -154,15 +157,19 @@ function initThree() {
             
             const moveDirection = new THREE.Vector3();
             moveDirection.copy(lookDirection).multiplyScalar(direction.z).add(new THREE.Vector3(lookDirection.z, 0, -lookDirection.x).multiplyScalar(direction.x)).normalize().multiplyScalar(25);
-            player.rotation.set(0, 0, 0);
-            player.setLinearVelocity(moveDirection);
-
+            player.lookAt(sphere.position);
+            player.setLinearVelocity(moveDirection.multiplyScalar(2 * playerSpeed));
+            
             gravityDir = sphere.position.clone().sub(player.position);
             scene.setGravity(gravityDir.clone().multiplyScalar(100));
 
-            /*if (moveRight) {
-                player.rotateOnAxis(gravityDir.normalize(), 1);
-            }*/
+            if (moveRight) {
+                rot -= 0.025;
+            }
+            if (moveLeft) {
+                rot += 0.025;
+            }
+            player.rotateOnWorldAxis(player.position.clone().sub(sphere.position).normalize(), rot);
         }
         scene.simulate();
         renderer.render(scene, camera);
