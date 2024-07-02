@@ -64,7 +64,7 @@ function initThree() {
 
         // Ground
         var ground_material = Physijs.createMaterial(
-			new THREE.MeshBasicMaterial({ map: textureLoader.load( './grass.jpg' ) }),
+			new THREE.MeshBasicMaterial({ map: textureLoader.load( './images/grass.jpg' ) }),
 			.8, // high friction
 			.4 // low restitution
 		);

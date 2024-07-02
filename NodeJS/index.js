@@ -1,7 +1,12 @@
 var express = require('express');
 var mysql = require('mysql2');
 var bodyParser = require('body-parser');
+var axios = require('axios');
+var fs = require('fs');
+var path = require('path');
+
 var app = express();
+var PORT = process.env.PORT || 8080;
 
 app.use(express.static(__dirname + '/content'));
 app.use(bodyParser.json());
@@ -113,5 +118,35 @@ app.post('/create_event', (req, res) => {
   });
 });
 
-app.listen(8080);
-console.log('Running at http://127.0.0.1:8080');
+// Handle image generation
+app.post('/generate-image', async (req, res) => {
+  const { prompt, aspect_ratio, model, ai_image_number } = req.body;
+  const apiKey = '21ce9ad7-e57a-42e4-a163-13c2082a98b7'; //c86d07e2-65be-41c5-9fe7-185950a97f7f(keine credits)
+  
+  try {
+      const response = await axios.post('https://app.imggen.ai/v1/generate-image', {
+          prompt,
+          aspect_ratio,
+          model
+      }, {
+          headers: {
+              'X-IMGGEN-KEY': apiKey,
+              'Content-Type': 'application/json'
+          }
+      });
+      
+      const imageBase64 = response.data.images[0];
+      const imageBuffer = Buffer.from(imageBase64, 'base64');
+      const imagePath = path.join(__dirname, 'content', 'images', `generated_image${ai_image_number}.jpg`);
+      fs.writeFileSync(imagePath, imageBuffer);
+
+      res.json({ imageUrl: `./images/generated_image${ai_image_number}.jpg` });
+  } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: 'Failed to generate image' });
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
