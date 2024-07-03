@@ -101,6 +101,17 @@ body {
     background-color: var(--color-main-bg);
     color: var(--color-main-fg);
 }
+button {
+    border: solid 0.1em var(--color-main-fg);
+    border-radius: 2%;
+    font-size: 1rem;
+    background-color: var(--color-header-bg-1);
+    color: var(--color-main-fg);
+}
+button:hover {
+    background-color: var(--color-radio-hover-1);
+    background-blend-mode: saturation;
+}
 h3 {
     width: min-content;
     white-space: nowrap;
@@ -127,13 +138,6 @@ select {
 #calendar > div:nth-child(1) {
     display: inherit;
     flex-direction: column;
-}
-#calendar button {
-    border: solid 0.1em var(--color-main-fg);
-    border-radius: 2%;
-    font-size: 1rem;
-    background-color: var(--color-header-bg-1);
-    color: var(--color-main-fg);
 }
 #calendar input {
     border: solid 0.1em var(--color-main-fg);
@@ -486,17 +490,6 @@ nav a:hover {
     gap: 1em;
     max-width: 20em;
     height: min-content;
-}
-.form button {
-    border: solid 0.1em var(--color-main-fg);
-    border-radius: 2%;
-    font-size: 1rem;
-    background-color: var(--color-header-bg-1);
-    color: var(--color-main-fg);
-}
-.form button:hover {
-    background-color: var(--color-radio-hover-1);
-    background-blend-mode: saturation;
 }
 .form input {
     border: solid 0.1em var(--color-main-fg);

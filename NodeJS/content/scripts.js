@@ -1,4 +1,4 @@
-// #region Local storage
+// #region 1. Local storage
 if (localStorage.getItem('current_page')) {
     var current_page = localStorage.getItem('current_page');
 } else {
@@ -10,6 +10,7 @@ if (localStorage.getItem('language')) {
 } else {
     var userLang = window.navigator.userLanguage || window.navigator.language;
 }
+var shortLang = userLang.split('-')[0];
 if (localStorage.getItem('radios')) {
     var radios = JSON.parse(localStorage.getItem('radios'));
     /*{
@@ -374,11 +375,11 @@ document.addEventListener('keydown', changeDirection);
 
 
 //#region Language switcher
-var shortLang = userLang.split('-')[0];
 document.body.setAttribute('id', 'lang-' + shortLang);
 
 function setLanguage(lang) {
     userLang = lang;
+    shortLang = userLang.split('-')[0];
     document.body.setAttribute('id', 'lang-' + lang);
     localStorage.setItem('language', lang);
 }
