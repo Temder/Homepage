@@ -113,38 +113,124 @@ app.post('/create_event', (req, res) => {
   const values = [title, description, start_time, end_time, location, isAllDay];
 
   connection.query(sql, values, (err, result) => {
-      if (err) throw err;
-      res.send('New event created successfully');
+    if (err) throw err;
+    res.send('New event created successfully');
   });
 });
 
 // Handle image generation
 app.post('/generate-image', async (req, res) => {
   const { prompt, aspect_ratio, model, ai_image_number } = req.body;
-  const apiKey = '21ce9ad7-e57a-42e4-a163-13c2082a98b7'; //c86d07e2-65be-41c5-9fe7-185950a97f7f(keine credits)
-  
-  try {
-      const response = await axios.post('https://app.imggen.ai/v1/generate-image', {
-          prompt,
-          aspect_ratio,
-          model
-      }, {
-          headers: {
-              'X-IMGGEN-KEY': apiKey,
-              'Content-Type': 'application/json'
-          }
-      });
-      
-      const imageBase64 = response.data.images[0];
-      const imageBuffer = Buffer.from(imageBase64, 'base64');
-      const imagePath = path.join(__dirname, 'content', 'images', `generated_image${ai_image_number}.jpg`);
-      fs.writeFileSync(imagePath, imageBuffer);
+  const apiKey = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6IjdlYzA4NWQwNmM1ZTUxNzFlNjUwMTllMmFkMzA2NDdiIiwiY3JlYXRlZF9hdCI6IjIwMjQtMDctMDNUMDc6Mzk6MzQuNjU0ODU4In0.97IJq6HF-ZBZd6tfOPDLn14bSqRombLL050P0cBouL8'; //21ce9ad7-e57a-42e4-a163-13c2082a98b7 c86d07e2-65be-41c5-9fe7-185950a97f7f(keine credits)
+  var process_id = '';
 
-      res.json({ imageUrl: `./images/generated_image${ai_image_number}.jpg` });
-  } catch (error) {
-      console.log(error);
-      res.status(500).json({ error: 'Failed to generate image' });
+
+  const options = {
+    method: 'POST',
+    url: 'https://api.monsterapi.ai/v1/generate/txt2img',
+    headers: {
+      accept: 'application/json',
+      'content-type': 'application/json',
+      authorization: `Bearer ${apiKey}`
+    },
+    data: {safe_filter: true, prompt: prompt, aspect_ratio: aspect_ratio}
+  };
+  
+  axios
+    .request(options)
+    .then(function (response) {
+      process_id = response.data.process_id;
+
+      const checkStatus = () => {
+        const options2 = {
+          method: 'GET',
+          url: `https://api.monsterapi.ai/v1/status/${process_id}`,
+          headers: {
+            accept: 'application/json',
+            authorization: `Bearer ${apiKey}`
+          }
+        };
+        axios
+          .request(options2)
+          .then(function (response) {
+            const { status, result } = response.data;
+            if (status === 'IN_QUEUE' || status === 'IN_PROGRESS') {
+              console.log('Status:', status, ' - Checking again in 5 seconds...');
+              setTimeout(checkStatus, 5000); // Poll every 5 seconds
+            } else if (status === 'COMPLETED') {
+              console.log('Image generated:', result);
+              const imageUrl = result.output[0];
+              saveImage(imageUrl);
+              res.json({ imageUrl: `./images/generated_image${ai_image_number}.jpg` });
+            } else {
+              console.error('Unexpected status:', status);
+            }
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
+      }
+      checkStatus(); // Initial status check
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+
+  function saveImage(url) {
+    axios({
+      method: 'GET',
+      url: url,
+      responseType: 'arraybuffer'
+    })
+      .then(function (response) {
+        const imageName = path.join(__dirname, 'content', 'images', `generated_image${ai_image_number}.jpg`);
+        fs.writeFile(imageName, response.data, 'binary', function (err) {
+          if (err) {
+            console.error('Error saving the image:', err);
+          } else {
+            console.log('Image saved as', imageName);
+          }
+        });
+      })
+      .catch(function (error) {
+        console.error('Error fetching the image:', error);
+      });
   }
+
+  /*axios
+    .request(options2)
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+  /*try {
+    const response = await axios.post('https://app.imggen.ai/v1/generate-image', {
+      prompt,
+      aspect_ratio,
+      model
+    }, {
+      headers: {
+        'X-IMGGEN-KEY': apiKey,
+        'Content-Type': 'application/json'
+      }
+    });
+      
+    const imageBase64 = response.data.images[0];
+    const imageBuffer = Buffer.from(imageBase64, 'base64');
+    const imagePath = path.join(__dirname, 'content', 'images', `generated_image${ai_image_number}.jpg`);
+    fs.writeFileSync(imagePath, imageBuffer);
+
+    res.json({ imageUrl: `./images/generated_image${ai_image_number}.jpg` });
+  } catch (error) {
+    if (error.data) {
+      console.log(error.data);
+    } else {
+      console.log(error);
+    }
+    res.status(500).json({ error: 'Failed to generate image' });
+  }*/
 });
 
 app.listen(PORT, () => {

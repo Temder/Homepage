@@ -317,8 +317,8 @@ select {
 /*#region Image Generation*/
 #generated-image {
     outline: solid white 1px;
-    min-width: 400px;
-    min-height: 400px;
+    min-width: 300px;
+    min-height: 300px;
     aspect-ratio: 1;
 }
 #image-form {

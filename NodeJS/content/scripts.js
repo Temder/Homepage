@@ -138,6 +138,7 @@ function loadPage(page) {
                     });
 
                     const result = await response.json();
+                    console.log(result);
                     if (response.ok) {
                         generatedImage.src = result.imageUrl;
                     } else {
