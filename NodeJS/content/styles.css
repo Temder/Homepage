@@ -318,6 +318,30 @@ select {
 }
 /*#endregion*/
 
+/*#region Image Generation*/
+#generated-image {
+    outline: solid white 1px;
+    min-width: 300px;
+    min-height: 300px;
+    aspect-ratio: 1;
+}
+#image-form {
+    margin-bottom: 1em;
+}
+#img-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 1em;
+    min-width: 50em;
+    margin: 0;
+}
+#img-container img {
+    width: 20em;
+}
+/*#endregion*/
+
 /*#region Language switcher*/
 #lang-de .de,
 #lang-en .en {

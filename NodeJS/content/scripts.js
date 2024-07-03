@@ -32,6 +32,18 @@ if (localStorage.getItem('volume')) {
 
 
 
+//#region functions
+function fileExists(image_url){
+    var http = new XMLHttpRequest();
+    http.open('HEAD', image_url, false);
+    http.send();
+    return http.status != 404;
+}
+//#endregion
+
+
+
+
 //#region Ajax content changing
 function loadPage(page) {
     var xhttp = new XMLHttpRequest();
@@ -105,6 +117,50 @@ function loadPage(page) {
             }
             if (document.getElementById('threejs')) {
                 initThree();
+            }
+            if (document.getElementById('image-form')) {
+                var generatedImage = document.getElementById('generated-image');
+                var ratio = document.getElementById('aspect_ratio');
+                var ai_image_number = 0;
+
+                document.getElementById('image-form').addEventListener('submit', async (event) => {
+                    event.preventDefault();
+
+                    const prompt = document.getElementById('prompt').value;
+                    const aspect_ratio = document.getElementById('aspect_ratio').value;
+                    const model = document.getElementById('model').value;
+
+                    const response = await fetch('/generate-image', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ prompt, aspect_ratio, model, ai_image_number })
+                    });
+
+                    const result = await response.json();
+                    console.log(result);
+                    if (response.ok) {
+                        generatedImage.src = result.imageUrl;
+                    } else {
+                        alert('Failed to generate image');
+                        console.log(response);
+                    }
+                });
+                for (let i = 0; i < 10; i++) {
+                    ai_image_number = i;
+                    if (!fileExists(`./images/generated_image${i}.jpg`)) {
+                        break;
+                    }
+                    document.getElementById('img-container').insertAdjacentHTML('afterbegin', `<img src="./images/generated_image${i}.jpg" />`);
+                }
+                ratio.addEventListener("change", (event) => {
+                    var selectedRatio = ratio[ratio.selectedIndex].innerHTML;
+                    var selectedRatioSplit = selectedRatio.split(':');
+                    generatedImage.width = selectedRatioSplit[0] * 100;
+                    generatedImage.height = selectedRatioSplit[1] * 100;
+                    generatedImage.style.aspectRatio = `${selectedRatioSplit[0]} / ${selectedRatioSplit[1]}`;
+                });
             }
         }
     };
@@ -200,11 +256,6 @@ function calendarRemoveEvent(event_id) {
             console.error('Error sending remove event:', error);
         })
 }
-function calendarAddEntry() {
-    if (document.getElementById('entry-title').value.trim() != '') {
-        events.insertAdjacentHTML('beforeend', `<div class='center' onclick='this.remove()'>${document.getElementById('entry-title').value}</div>`)
-    }
-}
 function isSameDay(date1, date2) {
     return date1.getFullYear() === date2.getFullYear() &&
            date1.getMonth() === date2.getMonth() &&
@@ -224,9 +275,9 @@ function initCalendar(standard) {
         var weekdayShort = weekday.toLocaleString(userLang, { weekday: 'short' });
         if (isSameDay(weekday, current_day)) {
             view.insertAdjacentHTML('beforeend', `<div class="noselect today" onclick="calendarShowEvents(${day})"><div>${day}</div><div>${weekdayShort}</div></div>`);
-            } else if (weekday.getDay() === 0 || weekday.getDay() === 6) {
-                view.insertAdjacentHTML('beforeend', `<div class="noselect weekend" onclick="calendarShowEvents(${day})"><div>${day}</div><div>${weekdayShort}</div></div>`);
-            } else {
+        } else if (weekday.getDay() === 0 || weekday.getDay() === 6) {
+            view.insertAdjacentHTML('beforeend', `<div class="noselect weekend" onclick="calendarShowEvents(${day})"><div>${day}</div><div>${weekdayShort}</div></div>`);
+        } else {
             view.insertAdjacentHTML('beforeend', `<div class="noselect" onclick="calendarShowEvents(${day})"><div>${day}</div><div>${weekdayShort}</div></div>`);
         }
     }
@@ -503,6 +554,12 @@ document.querySelectorAll('.changeTheme').forEach(el => {
         })
     })
 })
+//#endregion
+
+
+
+
+//#region THREE.js
 //#endregion
 
 

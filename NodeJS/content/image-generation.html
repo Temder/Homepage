@@ -1,0 +1,29 @@
+<h1 class="de">Bilder Generierung</h1>
+<h1 class="en">Image Generation</h1>
+
+<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+    <div class="wrapper">
+        <form id="image-form" class="form">
+            <label for="prompt"><div class="de">Eingabe</div><div class="en">Prompt</div></label>
+            <input type="text" id="prompt" name="prompt" required>
+            <label for="aspect_ratio"><div class="de">Seitenverhältnis</div><div class="en">Aspect Ratio</div></label>
+            <select id="aspect_ratio" name="aspect_ratio">
+                <option value="square">1:1</option> <!---->
+                <option value="portrait">3:4</option> <!--4:7-->
+                <option value="landscape">4:3</option> <!--7:4-->
+            </select>
+            <label for="model"><div class="de">KI-Modell</div><div class="en">AI Model</div></label>
+            <select id="model" name="model">
+                <option value="imggen-base">Imggen Base</option>
+                <option value="imggen-base-fast">Imggen Base Fast</option>
+                <option value="imggen-xl">Imggen XL</option>
+            </select>
+            <button type="submit"><div class="de">Bild generieren</div><div class="en">Generate Image</div></button>
+        </form>
+        <img id="generated-image" src="">
+    </div>
+    <div class="wrapper">
+        <h3>Previously Generated Images</h3>
+        <div id="img-container"></div>
+    </div>
+</div>

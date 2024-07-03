@@ -33,6 +33,7 @@ function initThree() {
         // Camera
         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
         camera.position.y = 30; // Start at a height of playerHeight
+        camera.rotation.z = -45;
 
         // Renderer
         renderer = new THREE.WebGLRenderer({antialias : true, alpha : true});
@@ -63,7 +64,7 @@ function initThree() {
             document.getElementById('threejs').style.zIndex = 0;
         });
 
-        scene.add(controls.getObject());
+        //scene.add(controls.getObject());
 
         // Ground
         var ground_material = Physijs.createMaterial(
@@ -109,6 +110,8 @@ function initThree() {
         
         player = new Physijs.SphereMesh(new THREE.SphereGeometry(5, 5, 5), new THREE.MeshBasicMaterial({ color: 'red' }));
         player.position.set(0, playerHeight, 0);
+        controls.getObject().rotation.set(player.rotation.x, player.rotation.y, player.rotation.z);
+        player.add(controls.getObject());
         scene.add(player);
 
         // Keyboard controls
@@ -217,7 +220,7 @@ function initThree() {
             scene.setGravity(gravityDir.clone());
             //player.rotation.set(0, 0, 0);
             //player.__dirtyRotation = true;
-            controls.getObject().position.set(player.position.x + gravityDir.normalize().x * -15, player.position.y + gravityDir.normalize().y * -15, player.position.z + gravityDir.normalize().z * -15);
+            //controls.getObject().position.set(player.position.x + gravityDir.normalize().x * -15, player.position.y + gravityDir.normalize().y * -15, player.position.z + gravityDir.normalize().z * -15);
             //console.log(controls.getObject().rotation);
             player.lookAt(sphere.position);
 
