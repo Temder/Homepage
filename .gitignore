@@ -15,11 +15,7 @@ mysqlServer/Data/private_key.pem
 mysqlServer/Data/public_key.pem
 mysqlServer/Data/server-cert.pem
 mysqlServer/Data/server-key.pem
-mysqlServer/Data/TOMS-LAPTOP-bin.000001
-mysqlServer/Data/TOMS-LAPTOP-bin.000002
-mysqlServer/Data/TOMS-LAPTOP-bin.index
-mysqlServer/Data/TOMS-LAPTOP-slow.log
-mysqlServer/Data/Toms-Laptop.pid
+mysqlServer/Data/TOMS-LAPTOP*
 mysqlServer/Data/undo_001
 mysqlServer/Data/undo_002
 mysqlServer/Data/homepage/website_views.ibd
