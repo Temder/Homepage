@@ -120,28 +120,32 @@ function loadPage(page) {
             }
             if (document.getElementById('image-form')) {
                 var generatedImage = document.getElementById('generated-image');
-                var ratio = document.getElementById('aspect_ratio');
+                var width = document.getElementById('width');
+                var height = document.getElementById('height');
+                //var ratio = document.getElementById('aspect_ratio');
                 var ai_image_number = 0;
 
                 document.getElementById('image-form').addEventListener('submit', async (event) => {
                     event.preventDefault();
 
                     const prompt = document.getElementById('prompt').value;
-                    const aspect_ratio = document.getElementById('aspect_ratio').value;
-                    const model = document.getElementById('model').value;
+                    const width = document.getElementById('width').value;
+                    const height = document.getElementById('height').value;
+                    //const model = document.getElementById('model').value;
 
+                    ai_image_number++;
                     const response = await fetch('/generate-image', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ prompt, aspect_ratio, model, ai_image_number })
+                        body: JSON.stringify({ prompt, width, height, ai_image_number })
                     });
 
                     const result = await response.json();
-                    console.log(result);
                     if (response.ok) {
                         generatedImage.src = result.imageUrl;
+                        ai_image_number++;
                     } else {
                         alert('Failed to generate image');
                         console.log(response);
@@ -154,13 +158,13 @@ function loadPage(page) {
                     }
                     document.getElementById('img-container').insertAdjacentHTML('afterbegin', `<img src="./images/generated_image${i}.jpg" />`);
                 }
-                ratio.addEventListener("change", (event) => {
+                /*ratio.addEventListener("change", (event) => {
                     var selectedRatio = ratio[ratio.selectedIndex].innerHTML;
                     var selectedRatioSplit = selectedRatio.split(':');
                     generatedImage.width = selectedRatioSplit[0] * 100;
                     generatedImage.height = selectedRatioSplit[1] * 100;
                     generatedImage.style.aspectRatio = `${selectedRatioSplit[0]} / ${selectedRatioSplit[1]}`;
-                });
+                });*/
             }
         }
     };

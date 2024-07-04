@@ -624,7 +624,7 @@ nav a:hover {
     position: fixed;
     left: 0;
     bottom: 0;
-    height: 30vw;
+    height: 20vw;
     width: 100%;
     max-height: 50%;
     pointer-events: none;

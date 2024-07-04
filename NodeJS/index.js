@@ -120,10 +120,9 @@ app.post('/create_event', (req, res) => {
 
 // Handle image generation
 app.post('/generate-image', async (req, res) => {
-  const { prompt, aspect_ratio, model, ai_image_number } = req.body;
-  const apiKey = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6IjdlYzA4NWQwNmM1ZTUxNzFlNjUwMTllMmFkMzA2NDdiIiwiY3JlYXRlZF9hdCI6IjIwMjQtMDctMDNUMDc6Mzk6MzQuNjU0ODU4In0.97IJq6HF-ZBZd6tfOPDLn14bSqRombLL050P0cBouL8'; //21ce9ad7-e57a-42e4-a163-13c2082a98b7 c86d07e2-65be-41c5-9fe7-185950a97f7f(keine credits)
+  const { prompt, width, height, ai_image_number } = req.body;
+  /*const apiKey = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6IjdlYzA4NWQwNmM1ZTUxNzFlNjUwMTllMmFkMzA2NDdiIiwiY3JlYXRlZF9hdCI6IjIwMjQtMDctMDNUMDc6Mzk6MzQuNjU0ODU4In0.97IJq6HF-ZBZd6tfOPDLn14bSqRombLL050P0cBouL8'; //21ce9ad7-e57a-42e4-a163-13c2082a98b7 c86d07e2-65be-41c5-9fe7-185950a97f7f(keine credits)
   var process_id = '';
-
 
   const options = {
     method: 'POST',
@@ -195,7 +194,7 @@ app.post('/generate-image', async (req, res) => {
       .catch(function (error) {
         console.error('Error fetching the image:', error);
       });
-  }
+  }*/
 
   /*axios
     .request(options2)
@@ -204,19 +203,15 @@ app.post('/generate-image', async (req, res) => {
     })
     .catch(function (error) {
       console.error(error);
-    });
-  /*try {
-    const response = await axios.post('https://app.imggen.ai/v1/generate-image', {
+    });*/
+  try {
+    const response = await axios.post('http://localhost:7860/sdapi/v1/txt2img', {
       prompt,
-      aspect_ratio,
-      model
-    }, {
-      headers: {
-        'X-IMGGEN-KEY': apiKey,
-        'Content-Type': 'application/json'
-      }
+      width,
+      height
     });
-      
+    console.log(response.data.info);
+
     const imageBase64 = response.data.images[0];
     const imageBuffer = Buffer.from(imageBase64, 'base64');
     const imagePath = path.join(__dirname, 'content', 'images', `generated_image${ai_image_number}.jpg`);
@@ -230,7 +225,7 @@ app.post('/generate-image', async (req, res) => {
       console.log(error);
     }
     res.status(500).json({ error: 'Failed to generate image' });
-  }*/
+  }
 });
 
 app.listen(PORT, () => {
