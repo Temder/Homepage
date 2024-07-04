@@ -128,26 +128,39 @@ function loadPage(page) {
 
                     const prompt = document.getElementById('prompt').value;
                     const aspect_ratio = document.getElementById('aspect_ratio').value;
-                    const model = document.getElementById('model').value;
+                    const style = document.getElementById('style').value;
 
+                    ai_image_number++;
+                    console.log(ai_image_number);
                     const response = await fetch('/generate-image', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ prompt, aspect_ratio, model, ai_image_number })
+                        body: JSON.stringify({ prompt, aspect_ratio, style, ai_image_number })
                     });
 
                     const result = await response.json();
                     console.log(result);
                     if (response.ok) {
                         generatedImage.src = result.imageUrl;
+                        document.getElementById('img-container').insertAdjacentHTML('afterbegin', `<img src="${result.imageUrl}" />`);
                     } else {
                         alert('Failed to generate image');
                         console.log(response);
                     }
                 });
-                for (let i = 0; i < 10; i++) {
+                var images;
+                async function fetchImages() {
+                    try {
+                        const response = await fetch('/images');
+                        images = await response.json();
+                    } catch (error) {
+                        console.error('Error fetching images:', error);
+                    }
+                }
+                fetchImages();
+                for (let i = 0; i < 20; i++) {
                     ai_image_number = i;
                     if (!fileExists(`./images/generated_image${i}.jpg`)) {
                         break;

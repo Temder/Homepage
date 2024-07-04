@@ -334,11 +334,12 @@ select {
     flex-wrap: wrap;
     justify-content: space-around;
     gap: 1em;
-    min-width: 50em;
+    width: auto;
     margin: 0;
 }
 #img-container img {
     width: 20em;
+    object-fit: contain;
 }
 /*#endregion*/
 

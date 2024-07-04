@@ -101,7 +101,20 @@ app.get('/api/calendar/remove/*', function(req, res) {
     if (error) {
       res.status(500).send('Database query (remove calendar event) failed');
     }
+    next();
   })
+});
+
+// Get all images
+app.get('/images', (req, res) => {
+  const directoryPath = path.join(__dirname, 'public/images');
+  fs.readdir(directoryPath, (err, files) => {
+    if (err) {
+      return res.status(500).send('Unable to scan directory: ' + err);
+    }
+    const images = files.filter(file => /\.(jpg|jpeg|png|gif)$/.test(file) && file.includes('generated_image'));
+    res.json(images);
+  });
 });
 
 // Handle form submission
@@ -120,20 +133,20 @@ app.post('/create_event', (req, res) => {
 
 // Handle image generation
 app.post('/generate-image', async (req, res) => {
-  const { prompt, aspect_ratio, model, ai_image_number } = req.body;
+  const { prompt, aspect_ratio, style, ai_image_number } = req.body;
   const apiKey = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6IjdlYzA4NWQwNmM1ZTUxNzFlNjUwMTllMmFkMzA2NDdiIiwiY3JlYXRlZF9hdCI6IjIwMjQtMDctMDNUMDc6Mzk6MzQuNjU0ODU4In0.97IJq6HF-ZBZd6tfOPDLn14bSqRombLL050P0cBouL8'; //21ce9ad7-e57a-42e4-a163-13c2082a98b7 c86d07e2-65be-41c5-9fe7-185950a97f7f(keine credits)
   var process_id = '';
 
 
   const options = {
     method: 'POST',
-    url: 'https://api.monsterapi.ai/v1/generate/txt2img',
+    url: 'https://api.monsterapi.ai/v1/generate/sdxl-base',
     headers: {
       accept: 'application/json',
       'content-type': 'application/json',
       authorization: `Bearer ${apiKey}`
     },
-    data: {safe_filter: true, prompt: prompt, aspect_ratio: aspect_ratio}
+    data: {enhance: true, optimize: true, safe_filter: true, prompt: prompt, aspect_ratio: aspect_ratio, style: style}
   };
   
   axios
@@ -161,7 +174,6 @@ app.post('/generate-image', async (req, res) => {
               console.log('Image generated:', result);
               const imageUrl = result.output[0];
               saveImage(imageUrl);
-              res.json({ imageUrl: `./images/generated_image${ai_image_number}.jpg` });
             } else {
               console.error('Unexpected status:', status);
             }
@@ -189,6 +201,7 @@ app.post('/generate-image', async (req, res) => {
             console.error('Error saving the image:', err);
           } else {
             console.log('Image saved as', imageName);
+            res.json({ imageUrl: `./images/generated_image${ai_image_number}.jpg` });
           }
         });
       })
