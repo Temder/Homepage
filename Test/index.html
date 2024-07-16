@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="main">
+        <div id="standard">
+            <div onclick="addObj(this);">
+                <div data-candrop="true" style="height: 3em; outline: solid 1px green; background-color: var(--color-background);"></div>
+                div
+            </div>
+            <div onclick="addObj(this);">
+                <div data-candrop="false">
+                    <button style="width: 3em; padding: 0; pointer-events: none;">Text</button>
+                </div>
+                button
+            </div>
+        </div>
+        <div id="presets"></div>
+        <div id="ground" data-candrop="true" ondrop="drop(event);" ondragover="allowDrop(event);">
+        </div>
+    </div>
+    <script>
+        var objCount = 0;
+        var ground = document.getElementById('ground');
+        function addObj(obj) {
+            var objDrag = obj.children[0].cloneNode(true);
+            objDrag.id = objCount++;
+            objDrag.draggable = true;
+            objDrag.ondragstart = drag;
+            ground.appendChild(objDrag);
+        }
+        function allowDrop(event) {
+            var id = event.dataTransfer.getData('text');
+            var draggedElement = document.getElementById(id);
+            if (event.target.dataset.candrop !== 'false') {
+                event.preventDefault();
+            }
+            /*document.querySelectorAll(".field").forEach(el => {
+                var rect = el.getBoundingClientRect();
+                var halfHeight = {x: rect.width / 2, y: rect.height / 2};
+                console.log(`${Math.abs(event.clientX - (rect.left + halfHeight.x))}, ${event.clientY - (rect.top + halfHeight.y)}`);
+                el.style.height = '0';
+                if (Math.abs(event.clientX - (rect.left + halfHeight.x)) < halfHeight.x + 10 && event.clientY - (rect.top + halfHeight.y) < halfHeight.y + 10) {
+                    el.style.height = '1em';
+                }
+            });*/
+            var nearestField = null;
+            var nearestDistance = Infinity;
+            document.querySelectorAll('.field').forEach(el => {
+                var rect = el.getBoundingClientRect();
+                var halfHeight = { x: rect.width / 2, y: rect.height / 2 };
+                var distance = Math.abs(event.clientX - (rect.left + halfHeight.x)) + Math.abs(event.clientY - (rect.top + halfHeight.y));
+                if (distance < nearestDistance) {
+                    nearestDistance = distance;
+                    nearestField = el;
+                }
+                el.style.height = '0.25em';
+            });
+            if (nearestField && nearestDistance < 50) { // You can adjust this threshold value
+                var h = draggedElement.getBoundingClientRect().height;
+                nearestField.style.height = `${h}px`;
+            }
+        }
+        function drag(event) {
+            event.dataTransfer.setData('text', event.target.id);
+            event.target.style.position = 'absolute';
+            event.target.style.zIndex = '-1';
+            Array.from(ground.children).forEach(ele => {
+                if (ele != event.target) {
+                    ele.insertAdjacentHTML('beforebegin', '<div class="field"></div>');
+                }
+            });
+            ground.insertAdjacentHTML('beforeend', '<div class="field"></div>');
+        }
+        function drop(event) {
+            event.preventDefault();
+            var id = event.dataTransfer.getData('text');
+            var draggedElement = document.getElementById(id);
+            draggedElement.style.position = 'relative';
+            draggedElement.style.zIndex = 'auto';
+            if (event.target.className === 'field') {
+                event.target.insertAdjacentElement('afterend', draggedElement);
+            } else if (event.target.dataset.candrop === 'true') {
+                event.target.appendChild(draggedElement);
+            }
+            document.querySelectorAll('.field').forEach(el => el.remove());
+        }
+    </script>
+</body>
+</html>
