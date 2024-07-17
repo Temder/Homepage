@@ -9,26 +9,62 @@
 <body>
     <div id="main">
         <div id="standard">
-            <div onclick="addObj(this);">
-                <div data-candrop="true" style="height: 3em; outline: solid 1px green; background-color: var(--color-background);"></div>
-                div
-            </div>
-            <div onclick="addObj(this);">
-                <div data-candrop="false">
-                    <button style="width: 3em; padding: 0; pointer-events: none;">Text</button>
+            <div onclick="addObj(this);" class="noselect">
+                <div class="pointer-events-all cursor-pointer" data-candrop="false" style="line-height: 0;">
+                    <button data-candrop="true" style="display: inline-block; vertical-align: top; min-width: 3em; min-height: 1.25em; padding: 0; margin: 0; background-color: #e9e9ed; border: 2px solid #717171; border-radius: 100vw; pointer-events: none;"></button>
                 </div>
-                button
+                Button
+            </div>
+            <div onclick="addObj(this);" class="noselect">
+                <div id="div" class="pointer-events-all cursor-pointer" data-candrop="true" style="width: 3em; min-height: 3em; outline: solid 1px #00a800;"></div>
+                Div
+            </div>
+            <div onclick="addObj(this);" class="noselect">
+                <div class="pointer-events-all cursor-pointer" data-candrop="false" style="line-height: 0;">
+                    <input disabled style="width: 4em; width: -moz-available; width: -webkit-fill-available; padding: 0; background-color: white; border: none; pointer-events: none;">
+                </div>
+                Input
+            </div>
+            <div onclick="addObj(this);" class="noselect">
+                <p id="p" class="pointer-events-all cursor-pointer" data-candrop="true" style="width: 3em; min-height: 3em; outline: solid 1px #da8d00;"></p>
+                Paragraph
+            </div>
+            <div onclick="addObj(this);" class="noselect">
+                <div class="pointer-events-all cursor-pointer" data-candrop="false">Text</div>
+                Text
             </div>
         </div>
         <div id="presets"></div>
         <div id="ground" data-candrop="true" ondrop="drop(event);" ondragover="allowDrop(event);">
+            <!--<div class="pointer-events-all cursor-pointer" data-candrop="true" style="width: 3em; min-height: 3em; outline: solid 1px #00a800;">
+                <div class="field"></div>
+            </div>
+            <div class="field"></div>
+            <div class="pointer-events-all cursor-pointer" data-candrop="true" style="width: 3em; min-height: 3em; outline: solid 1px #00a800;"></div>
+            <div class="field"></div>
+            <p class="pointer-events-all cursor-pointer" data-candrop="true" style="width: 3em; min-height: 3em; outline: solid 1px #da8d00;"></p>
+            <div class="field"></div>
+            <div class="pointer-events-all cursor-pointer" data-candrop="false" style="line-height: 0;">
+                <button data-candrop="true" style="display: inline-block; vertical-align: top; min-width: 3em; min-height: 1.25em; padding: 0; margin: 0; background-color: #e9e9ed; border: 2px solid #717171; border-radius: 100vw; line-height: 0; pointer-events: none;">
+                    <div class="field"></div>
+                </button>
+            </div>
+            <div class="field"></div>
+            <div class="pointer-events-all cursor-pointer" data-candrop="false" style="line-height: 0;">
+                <input disabled style="width: 4em; width: -moz-available; width: -webkit-fill-available; padding: 0; background-color: white; border: none; pointer-events: none;">
+            </div>-->
         </div>
     </div>
     <script>
         var objCount = 0;
         var ground = document.getElementById('ground');
+        var nearestField = null;
+
         function addObj(obj) {
             var objDrag = obj.children[0].cloneNode(true);
+            if (objDrag.id === 'div' || objDrag.id === 'p') {
+                objDrag.classList += ' drag';
+            }
             objDrag.id = objCount++;
             objDrag.draggable = true;
             objDrag.ondragstart = drag;
@@ -38,8 +74,8 @@
             var id = event.dataTransfer.getData('text');
             var draggedElement = document.getElementById(id);
             if (event.target.dataset.candrop !== 'false') {
-                event.preventDefault();
             }
+            event.preventDefault();
             /*document.querySelectorAll(".field").forEach(el => {
                 var rect = el.getBoundingClientRect();
                 var halfHeight = {x: rect.width / 2, y: rect.height / 2};
@@ -49,7 +85,6 @@
                     el.style.height = '1em';
                 }
             });*/
-            var nearestField = null;
             var nearestDistance = Infinity;
             document.querySelectorAll('.field').forEach(el => {
                 var rect = el.getBoundingClientRect();
@@ -59,35 +94,53 @@
                     nearestDistance = distance;
                     nearestField = el;
                 }
-                el.style.height = '0.25em';
+                //el.style.height = '0.25em';
+                el.style.backgroundColor = 'gray';
             });
-            if (nearestField && nearestDistance < 50) { // You can adjust this threshold value
-                var h = draggedElement.getBoundingClientRect().height;
-                nearestField.style.height = `${h}px`;
+            if (nearestField) { // You can adjust this threshold value && nearestDistance < 30
+                //var h = draggedElement.getBoundingClientRect().height;
+                //nearestField.style.height = `${h}px`;
+                nearestField.style.backgroundColor = 'var(--color-foreground)';
+                nearestField.style.outline = 'solid 2px var(--color-background)';
             }
         }
         function drag(event) {
             event.dataTransfer.setData('text', event.target.id);
             event.target.style.position = 'absolute';
-            event.target.style.zIndex = '-1';
-            Array.from(ground.children).forEach(ele => {
-                if (ele != event.target) {
-                    ele.insertAdjacentHTML('beforebegin', '<div class="field"></div>');
+            event.target.style.transform = 'translateX(-10000px)';
+            //event.target.style.zIndex = '-1';
+            document.querySelectorAll('.field').forEach(el => el.remove());
+            var html = '<div class="field"></div>';
+            Array.from(ground.querySelectorAll('[data-candrop]')).concat(ground).forEach(ele => {
+                if (ele !== ground) {
+                    if (ele !== event.target && ele.tagName !== 'BUTTON') {
+                        console.log(ele.tagName);
+                        ele.insertAdjacentHTML('beforebegin', html);
+                    }
+                    if (ele.dataset.candrop === 'true') {
+                        if (ele.children.length === 0) {
+                            ele.insertAdjacentHTML('afterbegin', html);
+                        } else {
+                            ele.insertAdjacentHTML('beforeend', html);
+                        }
+                    }
                 }
             });
-            ground.insertAdjacentHTML('beforeend', '<div class="field"></div>');
+            ground.insertAdjacentHTML('beforeend', html);
         }
         function drop(event) {
             event.preventDefault();
             var id = event.dataTransfer.getData('text');
             var draggedElement = document.getElementById(id);
-            draggedElement.style.position = 'relative';
-            draggedElement.style.zIndex = 'auto';
-            if (event.target.className === 'field') {
+            draggedElement.style.removeProperty('position');
+            draggedElement.style.removeProperty('transform');
+            //draggedElement.style.zIndex = 'auto';
+            /*if (event.target.className === 'field') {
                 event.target.insertAdjacentElement('afterend', draggedElement);
             } else if (event.target.dataset.candrop === 'true') {
                 event.target.appendChild(draggedElement);
-            }
+            }*/
+            nearestField.insertAdjacentElement('afterend', draggedElement);
             document.querySelectorAll('.field').forEach(el => el.remove());
         }
     </script>
