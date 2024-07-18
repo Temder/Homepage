@@ -7,29 +7,37 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="main">
+    <div id="main" class="noselect">
         <div id="standard">
-            <div onclick="addObj(this);" class="noselect">
+            <div onclick="addObj(this);">
                 <div class="pointer-events-all cursor-pointer" data-candrop="false" style="line-height: 0;">
                     <button data-candrop="true" style="display: inline-block; vertical-align: top; min-width: 3em; min-height: 1.25em; padding: 0; margin: 0; background-color: #e9e9ed; border: 2px solid #717171; border-radius: 100vw; pointer-events: none;"></button>
                 </div>
                 Button
             </div>
-            <div onclick="addObj(this);" class="noselect">
+            <div onclick="addObj(this);">
+                <div id="container" class="pointer-events-all cursor-pointer" data-candrop="true" style="width: 3em; min-height: 3em; outline: solid 1px #1fe9f0;"></div>
+                Container
+            </div>
+            <div onclick="addObj(this);">
                 <div id="div" class="pointer-events-all cursor-pointer" data-candrop="true" style="width: 3em; min-height: 3em; outline: solid 1px #00a800;"></div>
                 Div
             </div>
-            <div onclick="addObj(this);" class="noselect">
+            <div onclick="addObj(this);">
+                <form id="form" class="pointer-events-all cursor-pointer" data-candrop="true" style="width: 3em; min-height: 3em; outline: solid 1px #9f1bdb;"></form>
+                Form
+            </div>
+            <div onclick="addObj(this);">
                 <div class="pointer-events-all cursor-pointer" data-candrop="false" style="line-height: 0;">
                     <input disabled style="width: 4em; width: -moz-available; width: -webkit-fill-available; padding: 0; background-color: white; border: none; pointer-events: none;">
                 </div>
                 Input
             </div>
-            <div onclick="addObj(this);" class="noselect">
+            <div onclick="addObj(this);">
                 <p id="p" class="pointer-events-all cursor-pointer" data-candrop="true" style="width: 3em; min-height: 3em; outline: solid 1px #da8d00;"></p>
                 Paragraph
             </div>
-            <div onclick="addObj(this);" class="noselect">
+            <div onclick="addObj(this);">
                 <div class="pointer-events-all cursor-pointer" data-candrop="false">Text</div>
                 Text
             </div>
@@ -56,18 +64,37 @@
         </div>
     </div>
     <script>
-        var objCount = 0;
         var ground = document.getElementById('ground');
         var nearestField = null;
+        var objCount = 0;
+        var editMenu = document.createElement('div');
+
+        editMenu.id = 'editMenu';
+        editMenu.hidden = 'true';
+        editMenu.oncontextmenu = function() {
+            return false;
+        }
+        document.body.appendChild(editMenu);
 
         function addObj(obj) {
             var objDrag = obj.children[0].cloneNode(true);
-            if (objDrag.id === 'div' || objDrag.id === 'p') {
+            if (objDrag.id === 'div' || objDrag.id === 'form' || objDrag.id === 'p') {
                 objDrag.classList += ' drag';
             }
             objDrag.id = objCount++;
             objDrag.draggable = true;
             objDrag.ondragstart = drag;
+            objDrag.onmousedown = function(event) {
+                if (event.which == 3) {
+                    editMenu.removeAttribute('hidden');
+                    var mousePos = [event.clientX, event.clientY];
+                    editMenu.style.left = `${mousePos[0]}px`;
+                    editMenu.style.top = `${mousePos[1]}px`;
+                }
+            }
+            objDrag.oncontextmenu = function() {
+                return false;
+            }
             ground.appendChild(objDrag);
         }
         function allowDrop(event) {

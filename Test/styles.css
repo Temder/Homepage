@@ -15,8 +15,30 @@ body {
 button * {
     line-height: initial;
 }
-div:has(p) {
+div:has(p), form:has(p), p:has(p) {
     overflow: auto;
+}
+#container{
+    border: solid 1px #1fe9f0;;
+}
+#div{
+    border: solid 1px #00a800;
+}
+#form {
+    border: solid 1px #9f1bdb;
+}
+#p {
+    border: solid 1px #da8d00;
+}
+#container, #div, #form, #p {
+    outline: none !important;
+}
+#editMenu {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    z-index: 100;
 }
 #ground {
     position: relative;
@@ -35,6 +57,10 @@ div:has(p) {
 #ground p {
     margin: revert !important;
 }
+#ground > .field {
+    display: block;
+    width: 2.5em !important;
+}
 #main {
     display: flex;
     flex-direction: row;
@@ -52,29 +78,18 @@ div:has(p) {
 #main > * > * > * {
     margin: 0 auto 0.25em;
 }
-#standard,
-#presets {
+#presets,
+#standard {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75em;
-    width: calc(50% - 3em);
+    width: calc(50% - 0.5em);
     height: 100%;
     padding: 1em;
     border: solid 2px var(--color-foreground);
 }
-#div{
-    border: solid 1px #00a800;
-}
-#ground > .field {
-    display: block;
-    width: 2.5em !important;
-}
-#p {
-    border: solid 1px #da8d00;
-}
 .drag {
     outline: none;
-    background-color: var(--color-background);
 }
 .drag:before {
     position: absolute;
@@ -84,6 +99,9 @@ div:has(p) {
     transform: translate(-5px, -5px);
     border: solid 2px rgba(19, 19, 19, 0.5);
     border-radius: 100vw;
+    line-height: 20px;
+    font-size: 20px;
+    text-align: center;
     background-color: rgba(255, 255, 255, 0.5);
 }
 .field {
