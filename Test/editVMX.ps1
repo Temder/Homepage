@@ -43,60 +43,72 @@ function Get-Choise {
     param (
         [Parameter(Mandatory)]
         [string]$title,
-        [string]$question = 'Do you want to continue?',
-        [array]$choices = @('&Yes', '&No'),
+        [string]$question = 'Möchten Sie fortfahren?',
+        [array]$choices = @('&Ja', '&Nein'),
         [int]$standardChoise = 1
     )
     return $Host.UI.PromptForChoice($title, $question, $choices, $standardChoise)
 }
 
-$viServerIp = 192.168.8.50
+$viServerIp = "192.168.8.50"
 $viServerLogin = "Administrator@vsphere.local"
 $viServerPassword = "Start123#"
-$vmName = "Win10"
 $vmxKey = "displayName"
 $vmxValue = "Win10Renamed"
 $vmxPathLocal = "C:\Users\Tom\Documents"
 $vmxPathServer = "vmstore:Datacenter\Datastore 1"
+$currentHardwareVersion = "vmx-17"
 $newHardwareVersion = "vmx-19"
 
 if ($global:DefaultVIServers.Count -ne 1) {
     Connect-VIServer -Server $viServerIp -User $viServerLogin -Password $viServerPassword
 }
-Write-Host "Connected to server $($global:DefaultVIServers.Name) with port $($global:DefaultVIServers.Port) as user $($global:DefaultVIServers.User)"
+Write-Host "Verbunden mit dem Server $($global:DefaultVIServers.Name) angemeldet als $($global:DefaultVIServers.User)"
 
-if ((Get-VM Win10).PowerState -eq 'PoweredOn') {
-    if ((Get-Choise -title "Shutting down the VM $vmName for following tasks") -eq 0) {
-        Shutdown-VMGuest -VM $vmName
-    } else {
-        exit
+$vmNames = (Get-VM | Where-Object { $_.HardwareVersion -eq $currentHardwareVersion }).Name
+
+Write-Host "Folgende VMs werden verändert: $($vmNames -join ", ")"
+
+$vmNames | ForEach-Object {
+    $vmName = $_
+
+    $vmHardDisks = Get-HardDisk -VM $vmName
+    if ($vmHardDisks.Count -gt 1) {
+        if ((Get-Choise -title "Es wurden mehrere Festplatten festgestellt. Die Laufwerkbezeichnungen können im folgenden geändert ungewollt geändert werden.") -eq 1) {
+            exit
+        }
     }
-}
-if ((Get-Choise -title "Editing the vmx file value $vmxKey to $vmxValue") -eq 0) {
-    Copy-DatastoreItem -Item "$vmxPathServer\$vmName\$vmName.vmx" -Destination $vmxPathLocal
-    Edit-VmxFile -vmxFilePath "$vmxPathLocal\$vmName.vmx" -key $vmxKey -value $vmxValue
-    Copy-DatastoreItem -Item "$vmxPathLocal\$vmName.vmx" -Destination "$vmxPathServer\$vmName\"
-} else {
-    Write-Host "`nSkipping vmx file edit"
-}
-
-if ((Get-Choise -title "Upgrading the Hardware Version to $newHardwareVersion") -eq 0) {
-    Set-VM -VM $vmName -HardwareVersion $newHardwareVersion
-} else {
-    Write-Host "`nSkipping Hardware Version Upgrade"
-}
-
-if ((Get-Choise -title "Deleting all CD-Drive(s)") -eq 0) {
-    $cdDrives = Get-CDDrive -VM $vmName
-    if ($cdDrives) {
-        Remove-CDDrive -CD $cdDrives
-    } else {
-        Write-Host "There are no CD-Drive(s) to remove"
+    
+    if ((Get-VM Win10).PowerState -eq 'PoweredOn') {
+        if ((Get-Choise -title "Die VM $vmName wird für folgende Aufgaben heruntergefahren") -eq 0) {
+            Shutdown-VMGuest -VM $vmName
+        } else {
+            exit
+        }
     }
-} else {
-    Write-Host "`nSkipping CD-Drive deletion"
-}
-
-if ((Get-Choise -title "Starting the VM") -eq 0) {
-    Start-VM $vmName
+    
+    if ((Get-Choise -title "Der Wert $vmxKey in der VMX Datei wird zu $vmxValue geändert") -eq 0) {
+        Copy-DatastoreItem -Item "$vmxPathServer\$vmName\$vmName.vmx" -Destination $vmxPathLocal
+        Edit-VmxFile -vmxFilePath "$vmxPathLocal\$vmName.vmx" -key $vmxKey -value $vmxValue
+        Copy-DatastoreItem -Item "$vmxPathLocal\$vmName.vmx" -Destination "$vmxPathServer\$vmName\"
+    }
+    
+    if ($currentHardwareVersion -ne $newHardwareVersion) {
+        if ((Get-Choise -title "Die Hardware Version wird zu $newHardwareVersion geändert") -eq 0) {
+            Set-VM -VM $vmName -HardwareVersion $newHardwareVersion
+        }
+    }
+    
+    if ((Get-Choise -title "Alle CD-Laufwerke werden gelöscht") -eq 0) {
+        $cdDrives = Get-CDDrive -VM $vmName
+        if ($cdDrives) {
+            Remove-CDDrive -CD $cdDrives
+        } else {
+            Write-Host "Es sind keine CD-Laufwerke vorhanden"
+        }
+    }
+    
+    if ((Get-Choise -title "Die VM wird gestartet") -eq 0) {
+        Start-VM $vmName
+    }
 }

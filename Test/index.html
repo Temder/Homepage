@@ -13,37 +13,56 @@
                 <div class="pointer-events-all cursor-pointer" data-candrop="false" style="line-height: 0;">
                     <button data-candrop="true" style="display: inline-block; vertical-align: top; min-width: 3em; min-height: 1.25em; padding: 0; margin: 0; background-color: #e9e9ed; border: 2px solid #717171; border-radius: 100vw; pointer-events: none;"></button>
                 </div>
+                <div hidden></div>
                 Button
             </div>
-            <div onclick="addObj(this);">
-                <div id="container" class="pointer-events-all cursor-pointer" data-candrop="true" style="width: 3em; min-height: 3em; outline: solid 1px #1fe9f0;"></div>
+            <div id="container" onclick="addObj(this);">
+                <div class="pointer-events-all cursor-pointer" data-candrop="true" style="width: 3em; min-height: 3em; outline: solid 1px #1fe9f0;"></div>
+                <div hidden>
+                    <select oninput="selected(this)">
+                        <option value="div">Div</option>
+                        <option value="form">Form</option>
+                        <option value="p">Paragraph</option>
+                    </select>
+                </div>
                 Container
             </div>
-            <div onclick="addObj(this);">
-                <div id="div" class="pointer-events-all cursor-pointer" data-candrop="true" style="width: 3em; min-height: 3em; outline: solid 1px #00a800;"></div>
+            <!--<div id="div" onclick="addObj(this);">
+                <div class="pointer-events-all cursor-pointer" data-candrop="true" style="width: 3em; min-height: 3em; outline: solid 1px #00a800;"></div>
+                <div hidden>
+                    div
+                </div>
                 Div
             </div>
-            <div onclick="addObj(this);">
-                <form id="form" class="pointer-events-all cursor-pointer" data-candrop="true" style="width: 3em; min-height: 3em; outline: solid 1px #9f1bdb;"></form>
+            <div id="form" onclick="addObj(this);">
+                <form class="pointer-events-all cursor-pointer" data-candrop="true" style="width: 3em; min-height: 3em; outline: solid 1px #9f1bdb;"></form>
+                <div hidden>
+                    form
+                </div>
                 Form
-            </div>
+            </div>-->
             <div onclick="addObj(this);">
                 <div class="pointer-events-all cursor-pointer" data-candrop="false" style="line-height: 0;">
                     <input disabled style="width: 4em; width: -moz-available; width: -webkit-fill-available; padding: 0; background-color: white; border: none; pointer-events: none;">
                 </div>
+                <div hidden></div>
                 Input
             </div>
-            <div onclick="addObj(this);">
-                <p id="p" class="pointer-events-all cursor-pointer" data-candrop="true" style="width: 3em; min-height: 3em; outline: solid 1px #da8d00;"></p>
+            <!--<div id="p" onclick="addObj(this);">
+                <p class="pointer-events-all cursor-pointer" data-candrop="true" style="width: 3em; min-height: 3em; outline: solid 1px #da8d00;"></p>
+                <div hidden>
+                    paragraph
+                </div>
                 Paragraph
-            </div>
+            </div>-->
             <div onclick="addObj(this);">
                 <div class="pointer-events-all cursor-pointer" data-candrop="false">Text</div>
+                <div hidden></div>
                 Text
             </div>
         </div>
         <div id="presets"></div>
-        <div id="ground" data-candrop="true" ondrop="drop(event);" ondragover="allowDrop(event);">
+        <div id="ground" data-candrop="true" ondrop="drop(event);" ondragover="allowDrop(event);"> <!-- ondragend="console.log(document.elementFromPoint(event.x, event.x)); var point = document.body.insertAdjacentHTML('beforeend', `<div style='position: absolute; left: ${event.x}px; top: ${event.y}px; background-color: red; width: 10px; height: 10px;'></div>`);"-->
             <!--<div class="pointer-events-all cursor-pointer" data-candrop="true" style="width: 3em; min-height: 3em; outline: solid 1px #00a800;">
                 <div class="field"></div>
             </div>
@@ -64,21 +83,65 @@
         </div>
     </div>
     <script>
+        var currentElementEdit;
+        var editMenu = document.createElement('div');
         var ground = document.getElementById('ground');
         var nearestField = null;
         var objCount = 0;
-        var editMenu = document.createElement('div');
 
         editMenu.id = 'editMenu';
         editMenu.hidden = 'true';
+        editMenu.addEventListener('click', function (e) {
+            if (e.target === editMenu && e.offsetX < 0) {
+                editMenu.hidden = 'true';
+            }
+        });
         editMenu.oncontextmenu = function() {
             return false;
         }
-        document.body.appendChild(editMenu);
+        ground.appendChild(editMenu);
 
+        /*ground.addEventListener('dragleave', (event) => {
+            var id = event.dataTransfer.getData('text');
+            var draggedElement = document.getElementById(id);
+            draggedElement.style.removeProperty('position');
+            draggedElement.style.removeProperty('transform');
+            document.querySelectorAll('.field').forEach(el => el.remove());
+        });*/
+
+        function selected(self) {
+            //console.log(currentElementEdit.innerHTML);
+            var cloned = document.createElement(self.value);
+            Array.from(currentElementEdit.attributes).forEach(ele => {
+                cloned.setAttribute(ele.name, ele.value);
+            })
+            cloned.ondragstart = drag;
+            cloned.onmousedown = function(event) {
+                if (event.which == 3) {
+                    editMenu.removeAttribute('hidden');
+                    editMenu.innerHTML = '';
+                    var mousePos = [event.clientX, event.clientY];
+                    editMenu.style.left = `calc(${mousePos[0]}px - ${ground.offsetLeft}px)`;
+                    editMenu.style.top = `calc(${mousePos[1]}px - ${ground.offsetTop}px)`;
+                    var edit = currentElementEdit.children[1].cloneNode(true);
+                    edit.removeAttribute('hidden');
+                    edit.getElementsByTagName('select')[0].value = currentElementEdit.tagName.toLowerCase();
+                    editMenu.appendChild(edit);
+                }
+            }
+            cloned.oncontextmenu = function() {
+                return false;
+            }
+            cloned.insertAdjacentHTML('afterbegin', currentElementEdit.innerHTML);
+            //cloned.ondragstart = drag;
+            currentElementEdit.insertAdjacentElement('afterend', cloned);
+            currentElementEdit.remove();
+            currentElementEdit = cloned;
+        }
         function addObj(obj) {
-            var objDrag = obj.children[0].cloneNode(true);
-            if (objDrag.id === 'div' || objDrag.id === 'form' || objDrag.id === 'p') {
+            /*var objDrag = obj.children[0].cloneNode(true);
+            var objEdit = obj.children[1].cloneNode(true);
+            if (objDrag.id === 'container' || objDrag.id === 'div' || objDrag.id === 'form' || objDrag.id === 'p') {
                 objDrag.classList += ' drag';
             }
             objDrag.id = objCount++;
@@ -87,20 +150,85 @@
             objDrag.onmousedown = function(event) {
                 if (event.which == 3) {
                     editMenu.removeAttribute('hidden');
+                    editMenu.innerHTML = '';
                     var mousePos = [event.clientX, event.clientY];
-                    editMenu.style.left = `${mousePos[0]}px`;
-                    editMenu.style.top = `${mousePos[1]}px`;
+                    editMenu.style.left = `calc(${mousePos[0]}px - 1em)`;
+                    editMenu.style.top = `calc(${mousePos[1]}px - 1em)`;
+                    objEdit.removeAttribute('hidden');
+                    editMenu.appendChild(objEdit);
+                    currentElementEdit = objDrag;
+                }
+            }
+            objDrag.oncontextmenu = function() {
+                return false;
+            }
+            ground.appendChild(objDrag);*/
+            var a = document.createElement('div');
+            var dragObj = obj.children[0].cloneNode(true);
+            var editObj = obj.children[1].cloneNode(true)
+            try {
+                a.style = dragObj.attributes.style.value;
+                a.dataset.candrop = dragObj.dataset.candrop;
+            } catch {}
+            dragObj.removeAttribute('style');
+            dragObj.removeAttribute('data-candrop');
+            a.append(dragObj);
+            a.append(editObj);
+            var objDrag = a;
+            if (objDrag.id === 'container' || objDrag.id === 'div' || objDrag.id === 'form' || objDrag.id === 'p') {
+                objDrag.classList += ' drag';
+            }
+            objDrag.id = objCount++;
+            objDrag.draggable = true;
+            objDrag.ondragstart = drag;
+            objDrag.onmousedown = function(event) {
+                if (event.which == 3) {
+                    editMenu.removeAttribute('hidden');
+                    editMenu.innerHTML = '';
+                    var mousePos = [event.clientX, event.clientY];
+                    editMenu.style.left = `calc(${mousePos[0]}px - ${ground.offsetLeft}px)`;
+                    editMenu.style.top = `calc(${mousePos[1]}px - ${ground.offsetTop}px)`;
+                    var edit = objDrag.children[1].cloneNode(true);
+                    edit.removeAttribute('hidden');
+                    edit.getElementsByTagName('select')[0].value = 'div';
+                    editMenu.appendChild(edit);
+                    currentElementEdit = objDrag;
                 }
             }
             objDrag.oncontextmenu = function() {
                 return false;
             }
             ground.appendChild(objDrag);
+
+        }
+        function drag(event) {
+            console.log(event);
+            event.dataTransfer.setData('text', event.target.id);
+            event.target.style.position = 'absolute';
+            event.target.style.transform = 'translateX(-10000px)';
+            //event.target.style.zIndex = '-1';
+            document.querySelectorAll('.field').forEach(el => el.remove());
+            var html = '<div class="field"></div>';
+            Array.from(ground.querySelectorAll('[data-candrop]')).concat(ground).forEach(ele => {
+                if (ele !== ground) {
+                    if (ele !== event.target && ele.tagName !== 'BUTTON') {
+                        ele.insertAdjacentHTML('beforebegin', html);
+                    }
+                    if (ele.dataset.candrop === 'true') {
+                        if (ele.children.length === 0) {
+                            ele.insertAdjacentHTML('afterbegin', html);
+                        } else {
+                            ele.insertAdjacentHTML('beforeend', html);
+                        }
+                    }
+                }
+            });
+            ground.insertAdjacentHTML('beforeend', html);
         }
         function allowDrop(event) {
             var id = event.dataTransfer.getData('text');
             var draggedElement = document.getElementById(id);
-            if (event.target.dataset.candrop !== 'false') {
+            if (event.target.dataset.candrop === 'true') {
             }
             event.preventDefault();
             /*document.querySelectorAll(".field").forEach(el => {
@@ -130,30 +258,6 @@
                 nearestField.style.backgroundColor = 'var(--color-foreground)';
                 nearestField.style.outline = 'solid 2px var(--color-background)';
             }
-        }
-        function drag(event) {
-            event.dataTransfer.setData('text', event.target.id);
-            event.target.style.position = 'absolute';
-            event.target.style.transform = 'translateX(-10000px)';
-            //event.target.style.zIndex = '-1';
-            document.querySelectorAll('.field').forEach(el => el.remove());
-            var html = '<div class="field"></div>';
-            Array.from(ground.querySelectorAll('[data-candrop]')).concat(ground).forEach(ele => {
-                if (ele !== ground) {
-                    if (ele !== event.target && ele.tagName !== 'BUTTON') {
-                        console.log(ele.tagName);
-                        ele.insertAdjacentHTML('beforebegin', html);
-                    }
-                    if (ele.dataset.candrop === 'true') {
-                        if (ele.children.length === 0) {
-                            ele.insertAdjacentHTML('afterbegin', html);
-                        } else {
-                            ele.insertAdjacentHTML('beforeend', html);
-                        }
-                    }
-                }
-            });
-            ground.insertAdjacentHTML('beforeend', html);
         }
         function drop(event) {
             event.preventDefault();

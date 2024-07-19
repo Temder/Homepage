@@ -18,27 +18,38 @@ button * {
 div:has(p), form:has(p), p:has(p) {
     overflow: auto;
 }
-#container{
-    border: solid 1px #1fe9f0;;
+div[data-candrop="true"] {
+    outline: solid 1px #00a800 !important;
 }
-#div{
-    border: solid 1px #00a800;
+form {
+    outline: solid 1px #9f1bdb !important;
 }
-#form {
-    border: solid 1px #9f1bdb;
-}
-#p {
-    border: solid 1px #da8d00;
-}
-#container, #div, #form, #p {
-    outline: none !important;
+p {
+    outline: solid 1px #da8d00 !important;
 }
 #editMenu {
     position: absolute;
-    width: 50px;
-    height: 50px;
-    background-color: red;
+    min-width: 5em;
+    min-height: 5em;
+    padding: 0.5em;
+    background-color: rgba(255, 255, 255, 0.75);
+    color: var(--color-background);
     z-index: 100;
+}
+#editMenu:before {
+    position: absolute;
+    content: "✖";
+    width: 20px;
+    height: 20px;
+    transform: translate(calc(-1em - 16px), -8px);
+    border-left: solid 2px rgba(255, 255, 255, 0.75);
+    border-bottom-left-radius: 100vw;
+    border-top-left-radius: 100vw;
+    line-height: 20px;
+    font-size: 14px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.75);
+    color: red;
 }
 #ground {
     position: relative;
@@ -68,7 +79,7 @@ div:has(p), form:has(p), p:has(p) {
     gap: 1em;
     height: min-content;
 }
-#main > * > * {
+#main > *:not(#ground) > * {
     max-width: 4.5em;
     width: min-content;
     margin-top: auto;
