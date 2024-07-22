@@ -322,11 +322,15 @@ select {
 #generated-image {
     outline: solid white 1px;
     min-width: 300px;
-    min-height: 300px;
     aspect-ratio: 1;
 }
 #image-form {
     margin-bottom: 1em;
+}
+#image-form #width,
+#image-form #height {
+    width: calc(50% - 0.5em - 26.025px);
+    margin-right: 0.5em;
 }
 #img-container {
     display: flex;

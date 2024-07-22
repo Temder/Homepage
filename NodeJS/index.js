@@ -106,15 +106,33 @@ app.get('/api/calendar/remove/*', function(req, res) {
 });
 
 // Get all images
+var imgCount = 0;
 app.get('/images', (req, res) => {
-  const directoryPath = path.join(__dirname, 'public/images');
+  const directoryPath = path.join(__dirname, 'content/images');
   fs.readdir(directoryPath, (err, files) => {
     if (err) {
       return res.status(500).send('Unable to scan directory: ' + err);
     }
     const images = files.filter(file => /\.(jpg|jpeg|png|gif)$/.test(file) && file.includes('generated_image'));
+    imgCount = images.length;
     res.json(images);
   });
+});
+
+// Get generation status
+app.get('/generationStatus', async (req, res) => {
+  try {
+    const response = await axios.get('http://localhost:7860/sdapi/v1/progress?skip_current_image=false', {});
+    res.json(response.data);
+    //res.json(response);
+  } catch (error) {
+    if (error.data) {
+      console.log(error.data);
+    } else {
+      console.log(error);
+    }
+    res.status(500).json({ error: 'Failed to generate image' });
+  }
 });
 
 // Handle form submission
@@ -133,7 +151,7 @@ app.post('/create_event', (req, res) => {
 
 // Handle image generation
 app.post('/generate-image', async (req, res) => {
-  const { prompt, width, height, ai_image_number } = req.body;
+  const { prompt, width, height } = req.body;
   /*const apiKey = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6IjdlYzA4NWQwNmM1ZTUxNzFlNjUwMTllMmFkMzA2NDdiIiwiY3JlYXRlZF9hdCI6IjIwMjQtMDctMDNUMDc6Mzk6MzQuNjU0ODU4In0.97IJq6HF-ZBZd6tfOPDLn14bSqRombLL050P0cBouL8'; //21ce9ad7-e57a-42e4-a163-13c2082a98b7 c86d07e2-65be-41c5-9fe7-185950a97f7f(keine credits)
   var process_id = '';
 
@@ -218,19 +236,29 @@ app.post('/generate-image', async (req, res) => {
       console.error(error);
     });*/
   try {
+    const directoryPath = path.join(__dirname, 'content/images');
+    fs.readdir(directoryPath, (err, files) => {
+      if (err) {
+        console.log('Unable to scan directory: ' + err);
+      }
+      const images = files.filter(file => /\.(jpg|jpeg|png|gif)$/.test(file) && file.includes('generated_image'));
+      imgCount = images.length;
+    });
+    
     const response = await axios.post('http://localhost:7860/sdapi/v1/txt2img', {
       prompt,
       width,
       height
     });
-    console.log(response.data.info);
+    //console.log(response.data.info);
 
+    imgCount++;
     const imageBase64 = response.data.images[0];
     const imageBuffer = Buffer.from(imageBase64, 'base64');
-    const imagePath = path.join(__dirname, 'content', 'images', `generated_image${ai_image_number}.jpg`);
+    const imagePath = path.join(__dirname, 'content', 'images', `generated_image${imgCount}.jpg`);
     fs.writeFileSync(imagePath, imageBuffer);
 
-    res.json({ imageUrl: `./images/generated_image${ai_image_number}.jpg` });
+    res.json({ imageUrl: `./images/generated_image${imgCount}.jpg` });
   } catch (error) {
     if (error.data) {
       console.log(error.data);

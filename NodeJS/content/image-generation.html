@@ -6,10 +6,8 @@
         <form id="image-form" class="form">
             <label for="prompt"><div class="de">Eingabe</div><div class="en">Prompt</div></label>
             <input type="text" id="prompt" name="prompt" required>
-            <label for="width"><div class="de">Breite</div><div class="en">Width</div></label>
-            <input type="text" id="width" name="width">
-            <label for="height"><div class="de">Höhe</div><div class="en">Height</div></label>
-            <input type="text" id="height" name="height">
+            <label><div class="de">Breite &times; Höhe</div><div class="en">Width &times; Height</div></label>
+            <div><input type="number" id="width" name="width">px &times; <input type="number" id="height" name="height">px</div>
             <!--<label for="style"><div class="de">Stil</div><div class="en">Style</div></label>
             <select id="style" name="style">
                 <option value=""></option>
@@ -37,6 +35,7 @@
             </select>-->
             <button type="submit"><div class="de">Bild generieren</div><div class="en">Generate Image</div></button>
         </form>
+        <button id="get-status" style="height: min-content;">Get Status</button>
         <img id="generated-image" src="">
     </div>
     <div class="wrapper" style="width: max-content;">

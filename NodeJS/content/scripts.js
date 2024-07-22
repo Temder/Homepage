@@ -33,6 +33,9 @@ if (localStorage.getItem('volume')) {
 
 
 //#region functions
+function calculateRatio (a, b) {
+    return (b == 0) ? a : calculateRatio (b, a%b);
+}
 function fileExists(image_url){
     var http = new XMLHttpRequest();
     http.open('HEAD', image_url, false);
@@ -123,7 +126,34 @@ function loadPage(page) {
                 var width = document.getElementById('width');
                 var height = document.getElementById('height');
                 //var ratio = document.getElementById('aspect_ratio');
-                var ai_image_number = 0;
+
+                async function getStatus() {
+                    const response = await fetch('/generationStatus');
+                    var status = await response.json();
+                    console.log(status);
+                    /*if (status.queue_size === 0) {
+                        console.log("Nothing is being generated");
+                    } else {
+                    }*/
+                }
+                function set_ratio() {
+                    var w = width.value;
+                    var h = height.value;
+                    if (w && h) {
+                        console.log(`${w} : ${h}`);
+                        var ratio_num = calculateRatio(w, h);
+                        var ratio = [w/ratio_num, h/ratio_num];
+                        console.log(`${ratio[0]} : ${ratio[1]}`);
+                        generatedImage.style.aspectRatio = `${ratio[0]} / ${ratio[1]}`;
+                    }
+                }
+                width.addEventListener("input", (event) => set_ratio());
+                height.addEventListener("input", (event) => set_ratio());
+                document.getElementById('get-status').addEventListener('click', async (event) => {
+                    const response = await fetch('/generationStatus');
+                    var status = await response.json();
+                    console.log(status);
+                });
 
                 document.getElementById('image-form').addEventListener('submit', async (event) => {
                     event.preventDefault();
@@ -133,13 +163,12 @@ function loadPage(page) {
                     const height = document.getElementById('height').value;
                     //const style = document.getElementById('style').value;
 
-                    ai_image_number++;
                     const response = await fetch('/generate-image', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ prompt, width, height, ai_image_number })
+                        body: JSON.stringify({ prompt, width, height })
                     });
 
                     const result = await response.json();
@@ -156,18 +185,26 @@ function loadPage(page) {
                     try {
                         const response = await fetch('/images');
                         images = await response.json();
+                        images.sort((a, b) => {
+                            let numA = parseInt(a.match(/\d+/)[0]);
+                            let numB = parseInt(b.match(/\d+/)[0]);
+                            return numA - numB;
+                        });
+                        images.forEach(img => {
+                            document.getElementById('img-container').insertAdjacentHTML('afterbegin', `<img src="./images/${img}" />`);
+                        });
                     } catch (error) {
                         console.error('Error fetching images:', error);
                     }
                 }
                 fetchImages();
-                for (let i = 0; i < 20; i++) {
+                /*for (let i = 0; i < images.length; i++) {
                     ai_image_number = i;
                     if (!fileExists(`./images/generated_image${i}.jpg`)) {
                         break;
                     }
                     document.getElementById('img-container').insertAdjacentHTML('afterbegin', `<img src="./images/generated_image${i}.jpg" />`);
-                }
+                }*/
                 /*ratio.addEventListener("change", (event) => {
                     var selectedRatio = ratio[ratio.selectedIndex].innerHTML;
                     var selectedRatioSplit = selectedRatio.split(':');
