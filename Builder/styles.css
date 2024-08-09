@@ -13,9 +13,11 @@ body {
     color: var(--color-foreground);
 }
 #classList {
-    list-style-type: none;
+    max-height: 20em;
     margin: 0;
     padding: 0;
+    list-style-type: none;
+    overflow: scroll;
 }
 #editMenu {
     position: absolute;

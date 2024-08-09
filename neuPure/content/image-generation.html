@@ -1,0 +1,46 @@
+<h1 class="de">Bilder Generierung</h1>
+<h1 class="en">Image Generation</h1>
+
+<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+    <div class="flex-container">
+        <form id="image-form" class="form">
+            <label for="prompt"><div class="de">Eingabe</div><div class="en">Prompt</div></label>
+            <input type="text" id="prompt" name="prompt" required>
+            <label><div class="de">Breite &times; Höhe</div><div class="en">Width &times; Height</div></label>
+            <div><input type="number" id="width" name="width">px &times; <input type="number" id="height" name="height">px</div>
+            <!--<label for="style"><div class="de">Stil</div><div class="en">Style</div></label>
+            <select id="style" name="style">
+                <option value=""></option>
+                <option value="enhance">enhance</option>
+                <option value="anime">anime</option>
+                <option value="photographic">photographic</option>
+                <option value="digital-art">digital-art</option>
+                <option value="comic-book">comic-book</option>
+                <option value="fantasy-art">fantasy-art</option>
+                <option value="analog-film">analog-film</option>
+                <option value="neonpunk">neonpunk</option>
+                <option value="isometric">isometric</option>
+                <option value="lowpoly">lowpoly</option>
+                <option value="origami">origami</option>
+                <option value="line-art">line-art</option>
+                <option value="craft-clay">craft-clay</option>
+                <option value="cinematic">cinematic</option>
+                <option value="3d-model">3d-model</option>
+                <option value="pixel-art">pixel-art</option>
+                <option value="texture">texture</option>
+                <option value="futuristic">futuristic</option>
+                <option value="realism">realism</option>
+                <option value="watercolor">watercolor</option>
+                <option value="photorealistic">photorealistic</option>
+            </select>-->
+            <button type="submit"><div class="de">Bild generieren</div><div class="en">Generate Image</div></button>
+        </form>
+        <button id="get-status" style="height: min-content;">Get Status</button>
+        <img id="generated-image" src="">
+    </div>
+    <div class="wrapper" style="width: max-content;">
+        <h3 class="de">Generierte Bilder</h3>
+        <h3 class="en">Generated Images</h3>
+        <div id="img-container"></div>
+    </div>
+</div>

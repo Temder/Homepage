@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <style>
+:root {
+    --gallery-size: 7em;
+}
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 1em;
+    gap: 1em;
+}
+/*#region CSS image gallery*/
+#closeGallery {
+    display: none;
+    position: fixed;
+    right: 1em;
+    top: 1em;
+    width: var(--gallery-size);
+    height: var(--gallery-size);
+    border-radius: 10% !important;
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path stroke="red" stroke-width="10" d="M10 10 L90 90 M10 90 L90 10" /></svg>');
+    cursor: pointer;
+    z-index: 100;
+}
+#cssImageGallery div {
+    width: var(--gallery-size);
+    height: var(--gallery-size);
+    border-radius: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+#cssImageGallery div:not(:focus):not(#closeGallery):hover {
+    transform: scale(1.2);
+}
+#cssImageGallery div:not(:focus):hover {
+    background-color: var(--color-radio-hover-1);
+    background-blend-mode: saturation;
+}
+#cssImageGallery div:focus-visible {
+    outline: none;
+}
+#cssImageGallery div:focus {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    border-radius: 0;
+    background-size: contain;
+    cursor: default;
+    transform: scale(1);
+    transition: transform 0s;
+    z-index: 50;
+    background-color: black;
+}
+#cssImageGallery div:focus + div:not(#closeGallery) {
+    position: fixed;
+    width: 7em;
+    height: 7em;
+    right: 0;
+    top: calc(50vh - var(--gallery-size) / 2);
+    z-index: 102;
+}
+#cssImageGallery div:has( + div:focus) {
+    position: fixed;
+    width: 7em;
+    height: 7em;
+    left: 0;
+    top: calc(50vh - var(--gallery-size) / 2);
+    z-index: 102;
+}
+#cssImageGallery div:focus ~ #closeGallery {
+    display: block;
+}
+/*#endregion*/
+    </style>
+</head>
+<body>
+    <h3 class="de">CSS Bilder Galerie</h3>
+    <h3 class="en">CSS Image Gallery</h3>
+    <div id="cssImageGallery" class="flex-container" style="width: 75vw;">
+        <div id="closeGallery"></div>
+    </div>
+    <script>
+        const imgGallery = document.querySelector('#cssImageGallery');
+        for (let i = 0; i < 10; i++) {
+            var randID = Math.floor(Math.random() * 86);
+            var randWidth = Math.floor(Math.random() * 200) + 100;
+            var randHeight = Math.floor(Math.random() * 200) + 100;
+            imgGallery.insertAdjacentHTML('afterbegin', `<div class="noselect" style="background-image: url('https://picsum.photos/id/${randID}/${randWidth}/${randHeight}');" tabindex="0"></div>`);
+        }
+    </script>
+</body>
+</html>

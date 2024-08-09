@@ -1,0 +1,25 @@
+<div>
+    <h1 class="de">Einstellungen</h1>
+    <h1 class="en">Settings</h1>
+    
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+        <div class="wrapper">
+            <h3 class="de center">Sprache</h3>
+            <h3 class="en center">Language</h3>
+            <div>
+                <select id="languageSelect" onchange="setLanguage(this.value)">
+                    <option value="de">Deutsch</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+        </div>
+        <div class="wrapper">
+            <h3 class="de center">Lautstärke</h3>
+            <h3 class="en center">Volume</h3>
+            <div>
+                <input id="volumeSlider" type="range" oninput="setVolume(this, this.value)">
+                <div class="center nowrap"></div>
+            </div>
+        </div>
+    </div>
+</div>

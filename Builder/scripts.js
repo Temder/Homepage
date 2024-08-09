@@ -37,7 +37,7 @@ Array.from(templates).forEach(temp => {
                 var computedStyles = getComputedStyle(event.target)
                 Array.from(computedStyles).forEach(attr => {
                     var value = computedStyles.getPropertyValue(attr);
-                    classList.insertAdjacentHTML('beforeend', `<li>${attr}<select><option>${value}</option></select></li>`);
+                    classList.insertAdjacentHTML('beforeend', `<li>${attr}<input type="text" value="${value}" /></li>`);
                 })
 
                 if (currentEleEdit) {
@@ -49,7 +49,9 @@ Array.from(templates).forEach(temp => {
                 editMenu.style.top = `calc(${mousePos[1]}px - ${ground.offsetTop}px)`;
                 editMenu.removeAttribute('hidden');
                 editMenu.appendChild(edit);
+                edit.insertAdjacentHTML('afterend', '<hr style="margin-bottom: 0">');
                 editMenu.appendChild(classList);
+                editMenu.insertAdjacentHTML('beforeend', `<hr style="margin-top: 0"><div onclick="applyChanges('${event.target.id}')">✅</div>`);
                 edit.removeAttribute('hidden');
                 currentEleEdit = event.target;
                 currentEleEdit.style.outline = 'solid red 2px';
@@ -65,6 +67,9 @@ Array.from(templates).forEach(temp => {
     stdEle.appendChild(div);
 })
 
+function applyChanges(ele) {
+    console.log(ele);
+}
 function changeTag(self) {
     var cloned = document.createElement(self.value);
     Array.from(currentEleEdit.attributes).forEach(ele => {

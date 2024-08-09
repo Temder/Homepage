@@ -1,0 +1,66 @@
+<h1>Blog</h1>
+
+<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+    <div class="wrapper">
+        <h3>ChatGPT Snake</h3>
+        <div class="flex-container">
+            <canvas id="gameCanvas" width="400" height="400"></canvas>
+            <button onclick="showHideEle(this.nextElementSibling)" style="width: 100%; margin: 0 35%;">Gamepad</button>
+            <div class="hidden snake-controls">
+                <div></div>
+                <div class="noselect" onclick="changeDirection(38)">⬆️</div>
+                <div></div>
+                <div class="noselect" onclick="changeDirection(37)">⬅️</div>
+                <div></div>
+                <div class="noselect" onclick="changeDirection(39)">➡️</div>
+                <div></div>
+                <div class="noselect" onclick="changeDirection(40)">⬇️</div>
+            </div>
+        </div>
+        <h3 class="de">Kalender</h3>
+        <h3 class="en">Calendar</h3>
+        <div id="calendar" class="flex-container">
+            <div>
+                <select oninput="calendarChangeView(this.value)">
+                    <option class="de" value="month">Monat</option>
+                    <option class="en" value="month">Month</option>
+                    <option class="de" value="week">Woche</option>
+                    <option class="en" value="week">Week</option>
+                </select>
+                <div id="calendar-nav">Datum, Tag</div>
+                <div id="calendar-view"></div>
+            </div>
+            <div id="calendar-event"></div>
+            <div class="form-wrapper">
+                <div class="de smallHeading">Neuer Eintrag</div>
+                <div class="en smallHeading">New entry</div>
+                <form action="/create_event" method="post" id="event-form" class="form">
+                    <label for="title"><div class="de">Titel</div><div class="en">Title</div></label>
+                    <input type="text" id="entry-title" name="title" required>
+    
+                    <label for="description"><div class="de">Beschreibung</div><div class="en">Description</div></label>
+                    <textarea id="entry-description" name="description"></textarea>
+            
+                    <label for="start_time"><div class="de">Startzeit</div><div class="en">Start Time</div></label>
+                    <input type="datetime-local" id="entry-start_time" name="start_time" required>
+                    
+                    <label for="end_time"><div class="de">Endzeit</div><div class="en">End Time</div></label>
+                    <input type="datetime-local" id="entry-end_time" name="end_time" required>
+            
+                    <label for="location"><div class="de">Ort</div><div class="en">Location</div></label>
+                    <input type="text" id="entry-location" name="location">
+            
+                    <label for="is_all_day"><div class="de">Ganztägig</div><div class="en">All Day</div></label>
+                    <input type="checkbox" id="entry-is_all_day" name="is_all_day" value="1">
+            
+                    <button type="submit"><div class="de">Hinzufügen</div><div class="en">Add</div></button>
+                </form>
+            </div>
+        </div>
+        <h3 class="de">CSS Bilder Galerie</h3>
+        <h3 class="en">CSS Image Gallery</h3>
+        <div id="cssImageGallery" class="flex-container" style="width: 75vw;">
+            <div id="closeGallery"></div>
+        </div>
+    </div>
+</div>
