@@ -68,7 +68,7 @@ Array.from(templates).forEach(temp => {
 })
 
 function applyChanges(ele) {
-    console.log(ele);
+    
 }
 function changeTag(self) {
     var cloned = document.createElement(self.value);
