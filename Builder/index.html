@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Builder</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <div id="main" class="noselect">
         <div id="standard"></div>
@@ -33,7 +35,7 @@
         Button
     </template>
     <template>
-        <div class="image pointer-events-all cursor-pointer" data-candrop="false">
+        <div class="img pointer-events-all cursor-pointer" data-candrop="false">
             <img src="placeholder.png" style="display: block; width: 3em; height: 3em; pointer-events: none;">
         </div>
         <div hidden></div>
@@ -41,16 +43,18 @@
     </template>
     <template>
         <div class="input pointer-events-all cursor-pointer" data-candrop="false" style="line-height: 0;">
-            <input disabled style="width: 4em; width: -moz-available; width: -webkit-fill-available; padding: 0; background-color: white; border: none; pointer-events: none;">
+            <input disabled
+                style="width: 4em; width: -moz-available; width: -webkit-fill-available; padding: 0; background-color: white; border: none; pointer-events: none;">
         </div>
         <div hidden></div>
         Input
     </template>
     <template>
-        <div class="text pointer-events-all cursor-pointer" data-candrop="false">Text</div>
+        <span class="text pointer-events-all cursor-pointer" data-candrop="false">Text</span>
         <div hidden></div>
         Text
     </template>
     <script src="scripts.js"></script>
 </body>
+
 </html>

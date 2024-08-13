@@ -15,16 +15,29 @@ body {
 #classList {
     max-height: 20em;
     margin: 0;
-    padding: 0;
+    padding: 0.5em;
     list-style-type: none;
     overflow: scroll;
+}
+#classList li {
+    display: flex;
+    height: 1.5em;
+    padding: 0 0.2em;
+    align-items: center;
+    gap: 0.2em;
+}
+#classList li:nth-child(even) {
+    background-color: lightgrey;
+}
+#classList li input {
+    margin-left: auto;
 }
 #editMenu {
     position: absolute;
     min-width: 5em;
     min-height: 5em;
     padding: 0.5em;
-    background-color: rgba(255, 255, 255, 0.75);
+    background-color: rgb(182, 182, 182);
     color: var(--color-background);
     z-index: 100;
 }
@@ -33,14 +46,31 @@ body {
     content: "✖";
     width: 20px;
     height: 20px;
-    transform: translate(calc(-1em - 16px), -8px);
-    border-left: solid 2px rgba(255, 255, 255, 0.75);
+    top: 0;
+    left: -22px;
+    border-left: solid 2px rgb(182, 182, 182);
     border-bottom-left-radius: 100vw;
     border-top-left-radius: 100vw;
     line-height: 20px;
     font-size: 14px;
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.75);
+    background-color: rgb(182, 182, 182);
+    color: red;
+}
+#editMenu:after {
+    position: absolute;
+    content: "✅";
+    width: 20px;
+    height: 20px;
+    top: 0;
+    right: -22px;
+    border-left: solid 2px rgb(182, 182, 182);
+    border-bottom-right-radius: 100vw;
+    border-top-right-radius: 100vw;
+    line-height: 20px;
+    font-size: 14px;
+    text-align: center;
+    background-color: rgb(182, 182, 182);
     color: red;
 }
 #ground {
@@ -54,6 +84,9 @@ body {
 #ground > .field {
     display: block;
     width: 2.5em !important;
+}
+#ground *:not(#editMenu):not(#editMenu *):not(:has(*:hover)):hover {
+    outline: solid 1px rgb(25, 247, 255);
 }
 #main {
     display: flex;
@@ -88,8 +121,14 @@ body {
 }
 .field {
     display: inline-block;
-    width: calc(100% - 0.5em) !important;
-    height: 0.5em;
+    min-width: 0.5em;
+    width: -moz-available !important;
+    width: -webkit-fill-available;
+    max-width: 3em;
+    min-height: 0.5em;
+    height: -moz-available;
+    height: -webkit-fill-available;
+    max-height: 3em;
     margin: 0.25em !important;
     background-color: gray;
     cursor: unset !important;
@@ -117,6 +156,10 @@ button {
     pointer-events: none;
 }
 
+.button {
+    width: min-content;
+}
+
 /* Container */
 .container {
     width: 3em;
@@ -135,6 +178,7 @@ p.container {
     overflow: auto;
 }
 #ground .container:before {
+    display: none;
     position: absolute;
     content: "⇱";
     width: 20px;
@@ -149,10 +193,13 @@ p.container {
     color: var(--color-background);
     cursor: pointer;
 }
+/*#ground .container:hover:before {
+    display: block;
+}*/
 
 /* Image */
 
-.image {
+.img {
     width: min-content;
 }
 
@@ -161,5 +208,9 @@ p.container {
 .text {
     line-height: normal;
 }
-/*  */
-/*  */
+
+/* Input */
+
+#ground .input {
+    width: min-content;
+}

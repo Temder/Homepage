@@ -11,11 +11,55 @@ editMenu.addEventListener('click', function (e) {
         editMenu.hidden = 'true';
         editMenu.innerHTML = '';
         currentEleEdit.style.outline = '';
+        Array.from(editMenu.querySelectorAll('#classList li[data-changed]')).forEach(ele => {
+            ele.removeAttribute('data-changed')
+        })
+    } else if (e.target === editMenu && e.offsetX > e.target.style.width) {
+        applyChanges(currentEleEdit.id);
     }
 });
 editMenu.oncontextmenu = function() {
     return false;
 }
+
+var style = document.createElement('div').style;
+var name;
+var names = [];
+            
+for (name in style) {
+    switch (name) {
+        case "parentRule":
+        case "length":
+        case "cssText":
+            // Skip these
+            break;
+        default:
+            names.push(name);
+            break;
+    }
+}
+cssRules = names.filter(str => str === str.toLowerCase());
+// Custom sort function
+const customSort = (a, b) => {
+    // Remove vendor prefixes for comparison
+    const aWithoutPrefix = a.replace(/^-(webkit|moz|ms|o)-/, '');
+    const bWithoutPrefix = b.replace(/^-(webkit|moz|ms|o)-/, '');
+
+    // Compare based on the rule without prefix
+    if (aWithoutPrefix === bWithoutPrefix) {
+        // If the base rule is the same, sort vendor-prefixed rules after the standard one
+        return b.localeCompare(a);
+    } else {
+        // Otherwise, sort alphabetically by the base rule
+        return aWithoutPrefix.localeCompare(bWithoutPrefix);
+    }
+};
+
+// Sort the CSS rules using the custom sort function
+const sortedRules = cssRules.sort(customSort);
+
+// Output the sorted rules
+console.log(sortedRules);
 
 Array.from(templates).forEach(temp => {
     const tempClone = temp.content.cloneNode(true);
@@ -23,7 +67,7 @@ Array.from(templates).forEach(temp => {
     const div = document.createElement('div');
 
     div.addEventListener('click', () => {
-        tempObjClone.id = objCount++;
+        tempObjClone.id = `e${objCount++}`;
         tempObjClone.draggable = true;
         var obj = tempObjClone.cloneNode(true);
         obj.ondragstart = drag;
@@ -32,12 +76,16 @@ Array.from(templates).forEach(temp => {
                 editMenu.innerHTML = '';
                 var classList = document.createElement('ul');
                 classList.id = 'classList';
-                for (let i = 1; i <= 10; i++) {
-                }
                 var computedStyles = getComputedStyle(event.target)
-                Array.from(computedStyles).forEach(attr => {
-                    var value = computedStyles.getPropertyValue(attr);
-                    classList.insertAdjacentHTML('beforeend', `<li>${attr}<input type="text" value="${value}" /></li>`);
+                var headStyle = document.querySelector('head style');
+                Array.from(sortedRules).forEach(attr => {
+                    if (headStyle && hasStyleRule(event.target.id, attr)) {
+                        var value = getStyleRuleValue(event.target.id, attr);
+                        classList.insertAdjacentHTML('beforeend', `<li data-changed="">${attr}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
+                    } else {
+                        var value = computedStyles.getPropertyValue(attr);
+                        classList.insertAdjacentHTML('beforeend', `<li>${attr}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
+                    }
                 })
 
                 if (currentEleEdit) {
@@ -46,7 +94,7 @@ Array.from(templates).forEach(temp => {
                 var edit = temp.content.children[1].cloneNode(true);
                 var mousePos = [event.clientX, event.clientY];
                 editMenu.style.left = `calc(${mousePos[0]}px - ${ground.offsetLeft}px)`;
-                editMenu.style.top = `calc(${mousePos[1]}px - ${ground.offsetTop}px)`;
+                editMenu.style.top = `calc(${mousePos[1] + 5}px - ${ground.offsetTop}px)`;
                 editMenu.removeAttribute('hidden');
                 editMenu.appendChild(edit);
                 edit.insertAdjacentHTML('afterend', '<hr style="margin-bottom: 0">');
@@ -67,8 +115,126 @@ Array.from(templates).forEach(temp => {
     stdEle.appendChild(div);
 })
 
-function applyChanges(ele) {
+function hasStyleRule(id, ruleName) {
+    // Find the <style> element in the head
+    const styleSheet = document.querySelector('head style');
+
+    // If no stylesheet exists, return false
+    if (!styleSheet) {
+        return false;
+    }
+
+    // Get the stylesheet object from the <style> element
+    const sheet = styleSheet.sheet || styleSheet.styleSheet;
+    const rules = sheet.cssRules || sheet.rules;
+
+    // Create a regex to find the specific rule
+    const selector = `#${id}`;
+
+    // Iterate through all the rules in the stylesheet
+    for (let i = 0; i < rules.length; i++) {
+        const rule = rules[i];
+
+        // Check if the rule's selectorText matches the id
+        if (rule.selectorText.includes(selector)) {
+            // Check if the specific rule exists in the style declaration
+            if (rule.style[ruleName]) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+function getStyleRuleValue(selector, property) {
+    // Find the <style> element in the head
+    let styleSheet = document.querySelector('head style');
     
+    if (!styleSheet) {
+        console.warn('No <style> element found in the <head>.');
+        return null;
+    }
+
+    // Get the stylesheet's content
+    let cssRules = styleSheet.textContent || '';
+
+    // Create a RegExp to find the rule for the specific selector
+    const eleType = document.getElementById(selector).classList[0]
+    const regex = new RegExp(`${selector}.*{[^}]*}`, 'm');
+    const match = cssRules.match(regex);
+
+    if (match) {
+        // Extract the rule content between the curly braces
+        var ruleContent = '';
+        if (!['container', 'text'].includes(eleType)) {
+            ruleContent = match[0].replace(`${selector} ${eleType} {`, '').replace('}', '').trim();
+        } else {
+            ruleContent = match[0].replace(`${selector} {`, '').replace('}', '').trim();
+        }
+
+        // Convert rule content into an object with property-value pairs
+        const ruleObject = ruleContent.split(';').reduce((acc, curr) => {
+            if (curr.trim()) {
+                let [prop, val] = curr.split(':');
+                acc[prop.trim()] = val.trim();
+            }
+            return acc;
+        }, {});
+
+        // Return the value of the specified property
+        return ruleObject[property] || null;
+    } else {
+        console.warn(`No rule found for selector: ${selector}`);
+        return null;
+    }
+}
+
+function addOrUpdateStyle(id, content) {
+    // Check if there's already a stylesheet in the head
+    let styleSheet = document.querySelector('head style');
+
+    // If no stylesheet exists, create a new one and append it to the head
+    if (!styleSheet) {
+        styleSheet = document.createElement('style');
+        document.head.appendChild(styleSheet);
+    }
+
+    // Get the existing CSS rules in the stylesheet
+    let cssRules = styleSheet.textContent || '';
+
+    // Create a RegExp to find if the style with the given id already exists
+    const eleType = document.getElementById(id).classList[0]
+    const regex = new RegExp(`#${id}.*{[^}]*}`, 'm');
+
+    if (regex.test(cssRules)) {
+        // If it exists, replace the existing rule with the new content
+        if (!['container', 'text', undefined].includes(eleType) ) {
+            cssRules = cssRules.replace(regex, `#${id} ${eleType} { ${content} }`);
+        } else {
+            cssRules = cssRules.replace(regex, `#${id} { ${content} }`);
+        }
+    } else {
+        // If not, append the new rule
+        if (!['container', 'text', undefined].includes(eleType)) {
+            cssRules += `\n#${id} ${eleType} { ${content} }`;
+        } else {
+            cssRules += `\n#${id} { ${content} }`;
+        }
+    }
+
+    // Update the styleSheet's content
+    styleSheet.textContent = cssRules;
+}
+
+
+function applyChanges(id) {
+    var styleSheetContent = '';
+    Array.from(editMenu.querySelectorAll('#classList li[data-changed]')).forEach(ele => {
+        styleSheetContent += `${ele.textContent}:${ele.children[0].value};`;
+    })
+    console.log(id);
+    addOrUpdateStyle(id, styleSheetContent);
 }
 function changeTag(self) {
     var cloned = document.createElement(self.value);
@@ -76,6 +242,7 @@ function changeTag(self) {
         cloned.setAttribute(ele.name, ele.value);
     })
     setEvents(cloned);
+    console.log(currentEleEdit.innerHTML);
     cloned.insertAdjacentHTML('afterbegin', currentEleEdit.innerHTML);
     Array.from(cloned.children).forEach(child => {
         if (child.hasAttribute('draggable')) {
@@ -128,7 +295,9 @@ function drag(event) {
             }
             if (ele.dataset.candrop === 'true') {
                 if (ele.children.length === 0) {
-                    ele.insertAdjacentHTML('afterbegin', html);
+                    if (ele.tagName != 'P' || ele.tagName == 'P' && event.target.textContent == 'Text') {
+                        ele.insertAdjacentHTML('afterbegin', html);
+                    }
                 } else {
                     ele.insertAdjacentHTML('beforeend', html);
                 }
