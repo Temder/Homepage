@@ -58,9 +58,6 @@ const customSort = (a, b) => {
 // Sort the CSS rules using the custom sort function
 const sortedRules = cssRules.sort(customSort);
 
-// Output the sorted rules
-console.log(sortedRules);
-
 Array.from(templates).forEach(temp => {
     const tempClone = temp.content.cloneNode(true);
     const tempObjClone = tempClone.children[0].cloneNode(true);
@@ -92,14 +89,16 @@ Array.from(templates).forEach(temp => {
                     currentEleEdit.style.outline = '';
                 }
                 var edit = temp.content.children[1].cloneNode(true);
+
                 var mousePos = [event.clientX, event.clientY];
                 editMenu.style.left = `calc(${mousePos[0]}px - ${ground.offsetLeft}px)`;
                 editMenu.style.top = `calc(${mousePos[1] + 5}px - ${ground.offsetTop}px)`;
+
                 editMenu.removeAttribute('hidden');
                 editMenu.appendChild(edit);
-                edit.insertAdjacentHTML('afterend', '<hr style="margin-bottom: 0">');
+                edit.insertAdjacentHTML('afterend', 'Search Rule<input oninput="searchRules(this)" style="margin: 1em 0 0 1em;" /><hr style="margin-bottom: 0">');
                 editMenu.appendChild(classList);
-                editMenu.insertAdjacentHTML('beforeend', `<hr style="margin-top: 0"><div onclick="applyChanges('${event.target.id}')">✅</div>`);
+                //editMenu.insertAdjacentHTML('beforeend', `<hr style="margin-top: 0"><div onclick="applyChanges('${event.target.id}')">✅</div>`);
                 edit.removeAttribute('hidden');
                 currentEleEdit = event.target;
                 currentEleEdit.style.outline = 'solid red 2px';
@@ -253,12 +252,27 @@ function changeTag(self) {
     currentEleEdit.remove();
     currentEleEdit = cloned;
 }
-
+function searchRules(self) {
+    
+}
 function setEvents(ele) {
     ele.ondragstart = drag;
     ele.onmousedown = function(event) {
         if (event.which == 3) {
             editMenu.innerHTML = '';
+            var classList = document.createElement('ul');
+            classList.id = 'classList';
+            var computedStyles = getComputedStyle(event.target)
+            var headStyle = document.querySelector('head style');
+            Array.from(sortedRules).forEach(attr => {
+                if (headStyle && hasStyleRule(event.target.id, attr)) {
+                    var value = getStyleRuleValue(event.target.id, attr);
+                    classList.insertAdjacentHTML('beforeend', `<li data-changed="">${attr}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
+                } else {
+                    var value = computedStyles.getPropertyValue(attr);
+                    classList.insertAdjacentHTML('beforeend', `<li>${attr}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
+                }
+            })
             if (currentEleEdit) {
                 currentEleEdit.style.outline = '';
             }
@@ -268,12 +282,15 @@ function setEvents(ele) {
             editMenu.style.top = `calc(${mousePos[1]}px - ${ground.offsetTop}px)`;
             var edit = document.querySelector(`.${event.target.classList[0]}`).parentNode.children[1].cloneNode(true);
             editMenu.appendChild(edit);
+            edit.insertAdjacentHTML('afterend', '<hr style="margin-bottom: 0">');
+            editMenu.appendChild(classList);
             if (edit.getElementsByTagName('select').length != 0) {
                 edit.getElementsByTagName('select')[0].value = currentEleEdit.tagName.toLowerCase();
             }
             currentEleEdit = event.target;
             currentEleEdit.style.outline = 'solid red 2px';
             edit.removeAttribute('hidden');
+            event.stopPropagation();
         }
     }
     ele.oncontextmenu = function() {
