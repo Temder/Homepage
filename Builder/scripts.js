@@ -14,7 +14,7 @@ editMenu.addEventListener('click', function (e) {
         Array.from(editMenu.querySelectorAll('#classList li[data-changed]')).forEach(ele => {
             ele.removeAttribute('data-changed')
         })
-    } else if (e.target === editMenu && e.offsetX > e.target.style.width) {
+    } else if (e.target === editMenu && e.offsetX > editMenu.offsetWidth) {
         applyChanges(currentEleEdit.id);
     }
 });
@@ -70,10 +70,14 @@ Array.from(templates).forEach(temp => {
         obj.ondragstart = drag;
         obj.onmousedown = function(event) {
             if (event.which == 3) {
-                editMenu.innerHTML = '';
+                editMenu.innerHTML = '<details><summary>All Rules</summary></details>';
+                var details = document.getElementsByTagName('details')[0];
+                var search = document.createElement('input');
+                search.addEventListener('input', searchRules);
+                search.style.margin = '1em 0 0 1em';
                 var classList = document.createElement('ul');
                 classList.id = 'classList';
-                var computedStyles = getComputedStyle(event.target)
+                var computedStyles = getComputedStyle(event.target);
                 var headStyle = document.querySelector('head style');
                 Array.from(sortedRules).forEach(attr => {
                     if (headStyle && hasStyleRule(event.target.id, attr)) {
@@ -95,10 +99,12 @@ Array.from(templates).forEach(temp => {
                 editMenu.style.top = `calc(${mousePos[1] + 5}px - ${ground.offsetTop}px)`;
 
                 editMenu.removeAttribute('hidden');
-                editMenu.appendChild(edit);
-                edit.insertAdjacentHTML('afterend', 'Search Rule<input oninput="searchRules(this)" style="margin: 1em 0 0 1em;" /><hr style="margin-bottom: 0">');
-                editMenu.appendChild(classList);
-                //editMenu.insertAdjacentHTML('beforeend', `<hr style="margin-top: 0"><div onclick="applyChanges('${event.target.id}')">✅</div>`);
+                editMenu.insertAdjacentElement('afterbegin', edit);
+                edit.insertAdjacentHTML('afterend', '<hr>');
+                details.insertAdjacentText('afterbegin', 'Search Rule');
+                details.appendChild(search);
+                details.insertAdjacentHTML('beforeend', '<hr style="margin-bottom: 0">');
+                details.appendChild(classList);
                 edit.removeAttribute('hidden');
                 currentEleEdit = event.target;
                 currentEleEdit.style.outline = 'solid red 2px';
@@ -252,8 +258,22 @@ function changeTag(self) {
     currentEleEdit.remove();
     currentEleEdit = cloned;
 }
-function searchRules(self) {
-    
+function searchRules(e) {
+    document.getElementById('classList').innerHTML = '';
+    var headStyle = document.querySelector('head style');
+    var computedStyles = getComputedStyle(currentEleEdit);
+    Array.from(sortedRules).forEach(attr => {
+        if (e.target.value && !attr.includes(e.target.value)) {
+            return;
+        }
+        if (headStyle && hasStyleRule(currentEleEdit.id, attr)) {
+            var value = getStyleRuleValue(currentEleEdit.id, attr);
+            classList.insertAdjacentHTML('beforeend', `<li data-changed="">${attr}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
+        } else {
+            var value = computedStyles.getPropertyValue(attr);
+            classList.insertAdjacentHTML('beforeend', `<li>${attr}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
+        }
+    })
 }
 function setEvents(ele) {
     ele.ondragstart = drag;

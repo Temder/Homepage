@@ -44,7 +44,7 @@ body {
 #editMenu:before {
     position: absolute;
     content: "✖";
-    width: 20px;
+    width: 21px;
     height: 20px;
     top: 0;
     left: -22px;
@@ -60,7 +60,7 @@ body {
 #editMenu:after {
     position: absolute;
     content: "✅";
-    width: 20px;
+    width: 21px;
     height: 20px;
     top: 0;
     right: -22px;
