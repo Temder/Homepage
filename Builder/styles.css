@@ -73,7 +73,15 @@ body {
     background-color: rgb(182, 182, 182);
     color: red;
 }
-#ground {
+#generateCode {
+    position: absolute;
+    width: 5em;
+    height: 5em;
+    right: 1em;
+    bottom: 1em;
+}
+#ground,
+#output {
     position: relative;
     width: 100%;
     min-height: 20em;
@@ -143,7 +151,7 @@ body {
 }
 
 /* Button */
-button {
+button:not(#generateCode) {
     display: inline-block;
     vertical-align: top;
     min-width: 3em;

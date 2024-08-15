@@ -70,7 +70,7 @@ Array.from(templates).forEach(temp => {
         obj.ondragstart = drag;
         obj.onmousedown = function(event) {
             if (event.which == 3) {
-                editMenu.innerHTML = '<details><summary>All Rules</summary></details>';
+                editMenu.innerHTML = '<details><summary>CSS Rules</summary></details>';
                 var details = document.getElementsByTagName('details')[0];
                 var search = document.createElement('input');
                 search.addEventListener('input', searchRules);
