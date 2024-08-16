@@ -1,5 +1,6 @@
 const editMenu = document.getElementById('editMenu');
 const ground = document.getElementById('ground');
+const output = document.getElementById('output');
 const stdEle = document.getElementById('standard');
 const templates = document.getElementsByTagName('template');
 
@@ -151,7 +152,6 @@ function hasStyleRule(id, ruleName) {
 
     return false;
 }
-
 function getStyleRuleValue(selector, property) {
     // Find the <style> element in the head
     let styleSheet = document.querySelector('head style');
@@ -194,7 +194,6 @@ function getStyleRuleValue(selector, property) {
         return null;
     }
 }
-
 function addOrUpdateStyle(id, content) {
     // Check if there's already a stylesheet in the head
     let styleSheet = document.querySelector('head style');
@@ -231,7 +230,6 @@ function addOrUpdateStyle(id, content) {
     // Update the styleSheet's content
     styleSheet.textContent = cssRules;
 }
-
 
 function applyChanges(id) {
     var styleSheetContent = '';
@@ -317,6 +315,69 @@ function setEvents(ele) {
         return false;
     }
 }
+function simplifyHtml(html) {
+    // Create a temporary DOM element to manipulate the HTML
+    const groundClone = ground.cloneNode(true);
+    groundClone.children[0].remove();
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = groundClone.innerHTML;
+
+    // Recursively simplify the elements
+    function simplifyElement(element) {
+        console.log(element);
+
+        // Check if the element is a div and has one child with a matching class name
+        if (element.tagName.toLowerCase() === 'div' && element.children.length > 0) {
+            const child = element.children[0];
+            const className = element.className;
+            const tagName = child.tagName.toLowerCase();
+            
+            // If the div class name matches the child's tag name, merge them
+            if (className.split(' ')[0] === tagName) {
+				console.log(className === tagName);
+                for (const attr of element.attributes) {
+                    child.setAttribute(attr.name, attr.value);
+                }
+                element.replaceWith(child);
+                element = child;
+            }
+            // Remove unnecessary attributes
+            element.removeAttribute('class');
+            element.removeAttribute('draggable');
+            element.removeAttribute('style');
+            element.removeAttribute('data-candrop');
+            element.removeAttribute('data-id');
+        }
+
+        // Recursively simplify child elements
+        Array.from(element.children).forEach(simplifyElement);
+    }
+
+    // Simplify the root element
+    simplifyElement(tempDiv);
+
+    // Return the simplified HTML
+    return tempDiv.innerHTML;
+}
+function format(html) {
+    var tab = '\t';
+    var result = '';
+    var indent= '';
+
+    html.split(/>\s*</).forEach(function(element) {
+        if (element.match( /^\/\w/ )) {
+            indent = indent.substring(tab.length);
+        }
+
+        result += indent + '<' + element + '>\r\n';
+
+        if (element.match( /^<?\w[^>]*[^\/]$/ ) && !element.startsWith("input")  ) { 
+            indent += tab;              
+        }
+    });
+
+    return result.substring(1, result.length-3);
+}
 
 function drag(event) {
     console.log(event);
@@ -369,4 +430,5 @@ function drop(event) {
     draggedElement.style.removeProperty('transform');
     nearestField.insertAdjacentElement('afterend', draggedElement);
     document.querySelectorAll('.field').forEach(el => el.remove());
+    output.innerText = format(simplifyHtml(ground.innerHTML));
 }
