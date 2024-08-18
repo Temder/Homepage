@@ -324,30 +324,26 @@ function simplifyHtml(html) {
 
     // Recursively simplify the elements
     function simplifyElement(element) {
-        console.log(element);
-
-        // Check if the element is a div and has one child with a matching class name
-        if (element.tagName.toLowerCase() === 'div' && element.children.length > 0) {
+        if (element.children[0]) {
             const child = element.children[0];
             const className = element.className;
             const tagName = child.tagName.toLowerCase();
             
             // If the div class name matches the child's tag name, merge them
             if (className.split(' ')[0] === tagName) {
-				console.log(className === tagName);
                 for (const attr of element.attributes) {
                     child.setAttribute(attr.name, attr.value);
                 }
                 element.replaceWith(child);
                 element = child;
             }
-            // Remove unnecessary attributes
-            element.removeAttribute('class');
-            element.removeAttribute('draggable');
-            element.removeAttribute('style');
-            element.removeAttribute('data-candrop');
-            element.removeAttribute('data-id');
         }
+        // Remove unnecessary attributes
+        element.removeAttribute('class');
+        element.removeAttribute('draggable');
+        element.removeAttribute('style');
+        element.removeAttribute('data-candrop');
+        element.removeAttribute('data-id');
 
         // Recursively simplify child elements
         Array.from(element.children).forEach(simplifyElement);
@@ -359,24 +355,24 @@ function simplifyHtml(html) {
     // Return the simplified HTML
     return tempDiv.innerHTML;
 }
-function format(html) {
-    var tab = '\t';
-    var result = '';
-    var indent= '';
+function formatHTML(html) {
+    const formatted = [];
+    const tab = '    ';
+    let indentLevel = 0;
 
-    html.split(/>\s*</).forEach(function(element) {
-        if (element.match( /^\/\w/ )) {
-            indent = indent.substring(tab.length);
+    // Fix splitting issue by ensuring tags are correctly handled
+    html = html.replace(/>\s*</g, '>|<');
+    const lines = html.split('|')
+    for (let i = 0; i < lines.length; i++) {
+        if (lines[i]) {
+            
         }
+        formatted.push(tab.repeat(indentLevel) + line);
+    }
 
-        result += indent + '<' + element + '>\r\n';
-
-        if (element.match( /^<?\w[^>]*[^\/]$/ ) && !element.startsWith("input")  ) { 
-            indent += tab;              
-        }
-    });
-
-    return result.substring(1, result.length-3);
+    // Join the array into a single formatted string
+    console.log(formatted.join('\n'));
+    return formatted.join('\n');
 }
 
 function drag(event) {
@@ -430,5 +426,6 @@ function drop(event) {
     draggedElement.style.removeProperty('transform');
     nearestField.insertAdjacentElement('afterend', draggedElement);
     document.querySelectorAll('.field').forEach(el => el.remove());
-    output.innerText = format(simplifyHtml(ground.innerHTML));
+    //console.log(`|${formatHTML(simplifyHtml(ground.innerHTML).trimStart())}|`);
+    output.innerText = formatHTML(simplifyHtml(ground.innerHTML).trimStart());
 }
