@@ -87,7 +87,9 @@ body {
     min-height: 20em;
     padding: 1em;
     border: solid var(--color-foreground) 2px;
-    z-index: 0;
+}
+#output {
+    white-space: pre;
 }
 #ground > .field {
     display: block;

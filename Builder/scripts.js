@@ -116,6 +116,7 @@ Array.from(templates).forEach(temp => {
             return false;
         }
         ground.appendChild(obj);
+        output.innerText = formatHTML(simplifyHtml(ground.innerHTML).trimStart());
     });
     div.appendChild(tempClone);
     stdEle.appendChild(div);
@@ -315,7 +316,7 @@ function setEvents(ele) {
         return false;
     }
 }
-function simplifyHtml(html) {
+function simplifyHtml() {
     // Create a temporary DOM element to manipulate the HTML
     const groundClone = ground.cloneNode(true);
     groundClone.children[0].remove();
@@ -359,16 +360,24 @@ function formatHTML(html) {
     const formatted = [];
     const tab = '    ';
     let indentLevel = 0;
+    const indentBlocks = ['div', 'p', 'form', 'button'];
 
     // Fix splitting issue by ensuring tags are correctly handled
     html = html.replace(/>\s*</g, '>|<');
     const lines = html.split('|')
-    for (let i = 0; i < lines.length; i++) {
-        if (lines[i]) {
-            
+
+    lines.forEach(line => {
+        let startTag = line.match(/^<\w+/g);
+        let endTag = line.match(/<\/\w*/g);
+        console.log(endTag);
+        if (endTag != null && indentBlocks.map(ele => `</${ele}`).includes(endTag[0])) {
+            indentLevel--;
         }
         formatted.push(tab.repeat(indentLevel) + line);
-    }
+        if (startTag != null && indentBlocks.map(ele => `<${ele}`).includes(startTag[0])) {
+            indentLevel++;
+        }
+    });
 
     // Join the array into a single formatted string
     console.log(formatted.join('\n'));
@@ -426,6 +435,5 @@ function drop(event) {
     draggedElement.style.removeProperty('transform');
     nearestField.insertAdjacentElement('afterend', draggedElement);
     document.querySelectorAll('.field').forEach(el => el.remove());
-    //console.log(`|${formatHTML(simplifyHtml(ground.innerHTML).trimStart())}|`);
     output.innerText = formatHTML(simplifyHtml(ground.innerHTML).trimStart());
 }
