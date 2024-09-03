@@ -4,6 +4,8 @@ const output = document.getElementById('output');
 const stdEle = document.getElementById('standard');
 const templates = document.getElementsByTagName('template');
 
+const singleElements = ['container', 'text', undefined];
+
 var currentEleEdit = null;
 var objCount = 0;
 
@@ -78,12 +80,13 @@ Array.from(templates).forEach(temp => {
                 search.style.margin = '1em 0 0 1em';
                 var classList = document.createElement('ul');
                 classList.id = 'classList';
+                classList.innerHTML = '<div></div>';
                 var computedStyles = getComputedStyle(event.target);
                 var headStyle = document.querySelector('head style');
                 Array.from(sortedRules).forEach(attr => {
                     if (headStyle && hasStyleRule(event.target.id, attr)) {
                         var value = getStyleRuleValue(event.target.id, attr);
-                        classList.insertAdjacentHTML('beforeend', `<li data-changed="">${attr}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
+                        classList.children[0].insertAdjacentHTML('beforeend', `<li data-changed="">${attr}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
                     } else {
                         var value = computedStyles.getPropertyValue(attr);
                         classList.insertAdjacentHTML('beforeend', `<li>${attr}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
@@ -104,7 +107,6 @@ Array.from(templates).forEach(temp => {
                 edit.insertAdjacentHTML('afterend', '<hr>');
                 details.insertAdjacentText('afterbegin', 'Search Rule');
                 details.appendChild(search);
-                details.insertAdjacentHTML('beforeend', '<hr style="margin-bottom: 0">');
                 details.appendChild(classList);
                 edit.removeAttribute('hidden');
                 currentEleEdit = event.target;
@@ -116,7 +118,7 @@ Array.from(templates).forEach(temp => {
             return false;
         }
         ground.appendChild(obj);
-        output.innerText = formatHTML(simplifyHtml(ground.innerHTML).trimStart());
+        output.querySelector('div').innerText = formatHTML(simplifyHtml(ground.innerHTML).trimStart());
     });
     div.appendChild(tempClone);
     stdEle.appendChild(div);
@@ -214,14 +216,14 @@ function addOrUpdateStyle(id, content) {
 
     if (regex.test(cssRules)) {
         // If it exists, replace the existing rule with the new content
-        if (!['container', 'text', undefined].includes(eleType) ) {
+        if (!singleElements.includes(eleType) ) {
             cssRules = cssRules.replace(regex, `#${id} ${eleType} { ${content} }`);
         } else {
             cssRules = cssRules.replace(regex, `#${id} { ${content} }`);
         }
     } else {
         // If not, append the new rule
-        if (!['container', 'text', undefined].includes(eleType)) {
+        if (!singleElements.includes(eleType)) {
             cssRules += `\n#${id} ${eleType} { ${content} }`;
         } else {
             cssRules += `\n#${id} { ${content} }`;
@@ -234,11 +236,19 @@ function addOrUpdateStyle(id, content) {
 
 function applyChanges(id) {
     var styleSheetContent = '';
+    const eleType = document.getElementById(id).classList[0]
     Array.from(editMenu.querySelectorAll('#classList li[data-changed]')).forEach(ele => {
+        if (singleElements.includes(eleType)) {
+            currentEleEdit.style[`${ele.textContent}`] = '';
+        } else {
+            currentEleEdit.children[0].style[`${ele.textContent}`] = '';
+        }
         styleSheetContent += `${ele.textContent}:${ele.children[0].value};`;
+        classList.children[0].insertAdjacentElement('beforeend', ele);
     })
     console.log(id);
     addOrUpdateStyle(id, styleSheetContent);
+    output.querySelector('div:last-of-type').innerText = formatCSS(document.querySelector('head style').textContent || '');
 }
 function changeTag(self) {
     var cloned = document.createElement(self.value);
@@ -258,13 +268,25 @@ function changeTag(self) {
     currentEleEdit = cloned;
 }
 function searchRules(e) {
-    document.getElementById('classList').innerHTML = '';
+    var classList = document.getElementById('classList')
+    //classList.innerHTML = '';
     var headStyle = document.querySelector('head style');
     var computedStyles = getComputedStyle(currentEleEdit);
-    Array.from(sortedRules).forEach(attr => {
-        if (e.target.value && !attr.includes(e.target.value)) {
+    Array.from(classList.children).forEach(ele => {
+        if (ele.tagName == 'DIV') {
             return;
         }
+        if (e.target.value && !ele.textContent.includes(e.target.value)) {
+            if (ele.tagName != 'DIV') {
+                ele.style.display = 'none';
+            }
+        } else {
+            if (ele.tagName == 'LI') {
+                ele.style.display = 'flex';
+            }
+        }
+    });
+    /*Array.from(sortedRules).forEach(attr => {
         if (headStyle && hasStyleRule(currentEleEdit.id, attr)) {
             var value = getStyleRuleValue(currentEleEdit.id, attr);
             classList.insertAdjacentHTML('beforeend', `<li data-changed="">${attr}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
@@ -272,7 +294,7 @@ function searchRules(e) {
             var value = computedStyles.getPropertyValue(attr);
             classList.insertAdjacentHTML('beforeend', `<li>${attr}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
         }
-    })
+    })*/
 }
 function setEvents(ele) {
     ele.ondragstart = drag;
@@ -383,6 +405,52 @@ function formatHTML(html) {
     console.log(formatted.join('\n'));
     return formatted.join('\n');
 }
+function formatCSS(css) {
+    let formattedCSS = '';
+    let indentLevel = 0;
+    const indentSize = 4; // Number of spaces per indentation level
+
+    // Utility function to create indentation
+    function getIndentation(level) {
+        return ' '.repeat(level * indentSize);
+    }
+
+    // Remove existing newlines and extra spaces for clean parsing
+    css = css.replace(/\s+/g, ' ').replace(/\s*{\s*/g, ' {').replace(/\s*}\s*/g, '}').trim();
+
+    // Regular expression to match ID selectors followed by other elements
+    const idSelectorRegex = /#\w+\s+[^\{]+/g;
+    css = css.replace(idSelectorRegex, match => match.split(' ')[0]);
+
+    // Iterate over each character in the CSS string
+    for (let i = 0; i < css.length; i++) {
+        const char = css[i];
+
+        if (char === '{') {
+            // Increase indentation and add newline
+            formattedCSS += ' {\n';
+            indentLevel++;
+            formattedCSS += getIndentation(indentLevel);
+        } else if (char === '}') {
+            // Decrease indentation before closing brace
+            indentLevel--;
+            formattedCSS = formattedCSS.trimEnd(); // Remove trailing whitespace/newline before adding closing brace
+            formattedCSS += '\n' + getIndentation(indentLevel) + '}';
+            if (i + 1 < css.length && css[i + 1] !== '}') {
+                // Add newline after closing brace unless followed by another brace
+                formattedCSS += '\n' + getIndentation(indentLevel);
+            }
+        } else if (char === ';') {
+            // Add semicolon and newline
+            formattedCSS += ';\n' + getIndentation(indentLevel);
+        } else {
+            // Add the character as is
+            formattedCSS += char;
+        }
+    }
+
+    return formattedCSS.trim();
+}
 
 function drag(event) {
     console.log(event);
@@ -435,5 +503,5 @@ function drop(event) {
     draggedElement.style.removeProperty('transform');
     nearestField.insertAdjacentElement('afterend', draggedElement);
     document.querySelectorAll('.field').forEach(el => el.remove());
-    output.innerText = formatHTML(simplifyHtml(ground.innerHTML).trimStart());
+    output.querySelector('div').innerText = formatHTML(simplifyHtml(ground.innerHTML).trimStart());
 }

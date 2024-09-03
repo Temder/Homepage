@@ -19,15 +19,16 @@ body {
     list-style-type: none;
     overflow: scroll;
 }
+#classList div:has(*) {
+    margin-bottom: 1.5em;
+}
 #classList li {
     display: flex;
     height: 1.5em;
     padding: 0 0.2em;
     align-items: center;
     gap: 0.2em;
-}
-#classList li:nth-child(even) {
-    background-color: lightgrey;
+    border-bottom: solid var(--color-foreground) 1px;
 }
 #classList li input {
     margin-left: auto;
@@ -89,14 +90,34 @@ body {
     border: solid var(--color-foreground) 2px;
 }
 #output {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 0;
     white-space: pre;
+    user-select: text;
+}
+#output > span {
+    display: inline-block;
+    text-align: center;
+    padding-top: 1em;
+}
+#output > div {
+    height: calc(100% - 1em);
+    padding: 1em;
+}
+#output > *:first-of-type {
+    border-right: solid var(--color-foreground) 2px;
+}
+#output > * {
+    width: 50%;
 }
 #ground > .field {
     display: block;
     width: 2.5em !important;
 }
 #ground *:not(#editMenu):not(#editMenu *):not(:has(*:hover)):hover {
-    outline: solid 1px rgb(25, 247, 255);
+    /*background-color: rgba(25, 247, 255, 0.5);*/
+    filter: invert(75%);
 }
 #main {
     display: flex;
@@ -105,7 +126,7 @@ body {
     gap: 1em;
     height: min-content;
 }
-#main > *:not(#ground) > * {
+#main > *:not(#ground):not(#output) > * {
     max-width: 4.5em;
     width: min-content;
     margin-top: auto;
@@ -202,15 +223,17 @@ p.container {
     background-color: rgba(255, 255, 255, 0.75);
     color: var(--color-background);
     cursor: pointer;
+    z-index: 10;
 }
-/*#ground .container:hover:before {
+#ground .container:hover:before {
     display: block;
-}*/
+}
 
 /* Image */
 
 .img {
     width: min-content;
+    height: min-content;
 }
 
 /* Text */
