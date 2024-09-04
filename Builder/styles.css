@@ -74,13 +74,6 @@ body {
     background-color: rgb(182, 182, 182);
     color: red;
 }
-#generateCode {
-    position: absolute;
-    width: 5em;
-    height: 5em;
-    right: 1em;
-    bottom: 1em;
-}
 #ground,
 #output {
     position: relative;
@@ -93,7 +86,6 @@ body {
     display: flex;
     flex-wrap: wrap;
     padding-top: 0;
-    white-space: pre;
     user-select: text;
 }
 #output > span {
@@ -101,9 +93,10 @@ body {
     text-align: center;
     padding-top: 1em;
 }
-#output > div {
-    height: calc(100% - 1em);
+#output > pre {
+    height: calc(100% - 16px);
     padding: 1em;
+    margin: 0;
 }
 #output > *:first-of-type {
     border-right: solid var(--color-foreground) 2px;
@@ -116,8 +109,8 @@ body {
     width: 2.5em !important;
 }
 #ground *:not(#editMenu):not(#editMenu *):not(:has(*:hover)):hover {
-    /*background-color: rgba(25, 247, 255, 0.5);*/
-    filter: invert(75%);
+    background-color: rgb(161, 159, 255);
+    filter: brightness(75%);
 }
 #main {
     display: flex;
@@ -173,8 +166,13 @@ body {
     pointer-events: all;
 }
 
+/* Break */
+.br:before {
+    content: '↩';
+}
+
 /* Button */
-button:not(#generateCode) {
+button {
     display: inline-block;
     vertical-align: top;
     min-width: 3em;
@@ -186,7 +184,6 @@ button:not(#generateCode) {
     border-radius: 100vw;
     pointer-events: none;
 }
-
 .button {
     width: min-content;
 }
@@ -208,6 +205,7 @@ p.container {
 #ground > div:has(p), #ground > form:has(p), #ground > p:has(p) {
     overflow: auto;
 }
+#ground .hr:before,
 #ground .container:before {
     display: none;
     position: absolute;
@@ -215,35 +213,44 @@ p.container {
     width: 20px;
     height: 20px;
     transform: translate(-5px, -5px);
-    border: solid 2px rgba(19, 19, 19, 0.5);
+    border: solid 2px var(--color-background);
     border-radius: 100vw;
     line-height: 20px;
     font-size: 20px;
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.75);
+    background-color: var(--color-foreground);
     color: var(--color-background);
     cursor: pointer;
+    filter: invert(100%);
     z-index: 10;
+}
+#ground .hr:before {
+    display: block;
+}
+#ground .hr {
+    overflow: visible;
 }
 #ground .container:hover:before {
     display: block;
 }
 
 /* Image */
-
 .img {
     width: min-content;
     height: min-content;
 }
 
-/* Text */
-
-.text {
-    line-height: normal;
-}
-
 /* Input */
-
 #ground .input {
     width: min-content;
+}
+
+/* Link */
+a {
+    pointer-events: none;
+}
+
+/* Text */
+.text {
+    line-height: normal;
 }

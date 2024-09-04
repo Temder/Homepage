@@ -16,7 +16,7 @@
             <div id="editMenu" hidden></div>
         </div>
         <h3>Output</h3>
-        <div id="output"><span>HTML</span><span>CSS</span><div></div><div></div></div>
+        <div id="output"><span>HTML</span><span>CSS</span><pre></pre><pre></pre></div>
     </div>
     <template>
         <div class="container pointer-events-all cursor-pointer" data-candrop="true"></div>
@@ -52,9 +52,65 @@
         Input
     </template>
     <template>
+        <h1 class="heading pointer-events-all cursor-pointer" data-candrop="false">H</h1>
+        <div hidden>
+            <select oninput="changeTag(this)">
+                <option value="h1">Heading 1</option>
+                <option value="h2">Heading 2</option>
+                <option value="h3">Heading 3</option>
+                <option value="h4">Heading 4</option>
+                <option value="h5">Heading 5</option>
+                <option value="h6">Heading 6</option>
+            </select>
+            <input type="text" oninput="changeText(this)">
+        </div>
+        Heading
+    </template>
+    <template>
         <span class="text pointer-events-all cursor-pointer" data-candrop="false">Text</span>
-        <div hidden></div>
+        <div hidden>
+            <input type="text" oninput="changeText(this)">
+        </div>
         Text
+    </template>
+    <template>
+        <pre class="pre pointer-events-all cursor-pointer" data-candrop="false">Pre</pre>
+        <div hidden>
+            <input type="text" oninput="changeText(this)">
+        </div>
+        Monospace
+    </template>
+    <template>
+        <hr class="hr pointer-events-all cursor-pointer" data-candrop="false"></hr>
+        <div hidden></div>
+        Line
+    </template>
+    <template>
+        <span class="br pointer-events-all cursor-pointer" data-candrop="false"><br></span>
+        <div hidden></div>
+        Break
+    </template>
+    <template>
+        <span class="a cursor-pointer" data-candrop="false">
+            <a href="a">Link</a>
+        </span>
+        <div hidden>
+            <input type="text" oninput="changeText(this)">
+        </div>
+        Link
+    </template>
+    <template>
+        <ul class="list pointer-events-all cursor-pointer" data-candrop="false">
+            <li>1</li>
+            <li>2</li>
+        </ul>
+        <div hidden>
+            <select oninput="changeTag(this)">
+                <option value="ul">Unordered List</option>
+                <option value="ol">Ordered List</option>
+            </select>
+        </div>
+        List
     </template>
     <script src="scripts.js"></script>
 </body>

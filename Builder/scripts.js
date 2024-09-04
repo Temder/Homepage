@@ -3,8 +3,9 @@ const ground = document.getElementById('ground');
 const output = document.getElementById('output');
 const stdEle = document.getElementById('standard');
 const templates = document.getElementsByTagName('template');
+const overlay = document.createElement('div');
 
-const singleElements = ['container', 'text', undefined];
+const singleElements = ['container', 'heading', 'hr', 'pre', 'text', undefined];
 
 var currentEleEdit = null;
 var objCount = 0;
@@ -18,7 +19,7 @@ editMenu.addEventListener('click', function (e) {
             ele.removeAttribute('data-changed')
         })
     } else if (e.target === editMenu && e.offsetX > editMenu.offsetWidth) {
-        applyChanges(currentEleEdit.id);
+        applyCSS(currentEleEdit.id);
     }
 });
 editMenu.oncontextmenu = function() {
@@ -26,18 +27,19 @@ editMenu.oncontextmenu = function() {
 }
 
 var style = document.createElement('div').style;
-var name;
+var attr;
 var names = [];
             
-for (name in style) {
-    switch (name) {
+for (attr in style) {
+    switch (attr) {
         case "parentRule":
         case "length":
         case "cssText":
+        case "item":
             // Skip these
             break;
         default:
-            names.push(name);
+            names.push(attr);
             break;
     }
 }
@@ -74,15 +76,23 @@ Array.from(templates).forEach(temp => {
         obj.onmousedown = function(event) {
             if (event.which == 3) {
                 editMenu.innerHTML = '<details><summary>CSS Rules</summary></details>';
-                var details = document.getElementsByTagName('details')[0];
+                var details = editMenu.getElementsByTagName('details')[0];
                 var search = document.createElement('input');
-                search.addEventListener('input', searchRules);
-                search.style.margin = '1em 0 0 1em';
                 var classList = document.createElement('ul');
-                classList.id = 'classList';
-                classList.innerHTML = '<div></div>';
                 var computedStyles = getComputedStyle(event.target);
                 var headStyle = document.querySelector('head style');
+                var edit = temp.content.children[1].cloneNode(true);
+
+                if (currentEleEdit) {
+                    currentEleEdit.style.outline = '';
+                }
+                currentEleEdit = event.target;
+                currentEleEdit.style.outline = 'solid red 2px';
+
+                search.addEventListener('input', searchRules);
+                search.style.margin = '1em 0 0 1em';
+                classList.id = 'classList';
+                classList.innerHTML = '<div></div>';
                 Array.from(sortedRules).forEach(attr => {
                     if (headStyle && hasStyleRule(event.target.id, attr)) {
                         var value = getStyleRuleValue(event.target.id, attr);
@@ -92,11 +102,9 @@ Array.from(templates).forEach(temp => {
                         classList.insertAdjacentHTML('beforeend', `<li>${attr}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
                     }
                 })
-
-                if (currentEleEdit) {
-                    currentEleEdit.style.outline = '';
+                if (edit.getElementsByTagName('input').length != 0) {
+                    edit.getElementsByTagName('input')[0].value = currentEleEdit.textContent.trim();
                 }
-                var edit = temp.content.children[1].cloneNode(true);
 
                 var mousePos = [event.clientX, event.clientY];
                 editMenu.style.left = `calc(${mousePos[0]}px - ${ground.offsetLeft}px)`;
@@ -109,16 +117,17 @@ Array.from(templates).forEach(temp => {
                 details.appendChild(search);
                 details.appendChild(classList);
                 edit.removeAttribute('hidden');
-                currentEleEdit = event.target;
-                currentEleEdit.style.outline = 'solid red 2px';
                 event.stopPropagation();
             }
         }
         obj.oncontextmenu = function() {
             return false;
         }
+        obj.onmouseover = function(event) {
+            event.target.style.border = 'solid rgb(133, 63, 214) 5px';
+        }
         ground.appendChild(obj);
-        output.querySelector('div').innerText = formatHTML(simplifyHtml(ground.innerHTML).trimStart());
+        output.querySelector('pre').innerText = formatHTML(simplifyHtml(ground.innerHTML).trimStart());
     });
     div.appendChild(tempClone);
     stdEle.appendChild(div);
@@ -175,7 +184,7 @@ function getStyleRuleValue(selector, property) {
     if (match) {
         // Extract the rule content between the curly braces
         var ruleContent = '';
-        if (!['container', 'text'].includes(eleType)) {
+        if (!singleElements.includes(eleType)) {
             ruleContent = match[0].replace(`${selector} ${eleType} {`, '').replace('}', '').trim();
         } else {
             ruleContent = match[0].replace(`${selector} {`, '').replace('}', '').trim();
@@ -234,7 +243,7 @@ function addOrUpdateStyle(id, content) {
     styleSheet.textContent = cssRules;
 }
 
-function applyChanges(id) {
+function applyCSS(id) {
     var styleSheetContent = '';
     const eleType = document.getElementById(id).classList[0]
     Array.from(editMenu.querySelectorAll('#classList li[data-changed]')).forEach(ele => {
@@ -248,7 +257,7 @@ function applyChanges(id) {
     })
     console.log(id);
     addOrUpdateStyle(id, styleSheetContent);
-    output.querySelector('div:last-of-type').innerText = formatCSS(document.querySelector('head style').textContent || '');
+    output.querySelector('pre:last-of-type').innerText = formatCSS(document.querySelector('head style').textContent || '');
 }
 function changeTag(self) {
     var cloned = document.createElement(self.value);
@@ -266,6 +275,18 @@ function changeTag(self) {
     currentEleEdit.insertAdjacentElement('afterend', cloned);
     currentEleEdit.remove();
     currentEleEdit = cloned;
+    output.querySelector('pre').innerText = formatHTML(simplifyHtml(ground.innerHTML).trimStart());
+}
+function changeText(self) {
+    const eleType = currentEleEdit.classList[0]
+    var txt = self.value;
+    console.log(eleType);
+    if (singleElements.includes(eleType)) {
+        currentEleEdit.textContent = txt;
+    } else {
+        currentEleEdit.children[0].textContent = txt;
+    }
+    output.querySelector('pre').innerText = formatHTML(simplifyHtml(ground.innerHTML).trimStart());
 }
 function searchRules(e) {
     var classList = document.getElementById('classList')
@@ -300,36 +321,51 @@ function setEvents(ele) {
     ele.ondragstart = drag;
     ele.onmousedown = function(event) {
         if (event.which == 3) {
-            editMenu.innerHTML = '';
+            editMenu.innerHTML = '<details><summary>CSS Rules</summary></details>';
+            var details = editMenu.getElementsByTagName('details')[0];
+            var search = document.createElement('input');
             var classList = document.createElement('ul');
-            classList.id = 'classList';
-            var computedStyles = getComputedStyle(event.target)
+            var computedStyles = getComputedStyle(event.target);
             var headStyle = document.querySelector('head style');
+            var edit = document.querySelector(`.${event.target.classList[0]}`).parentNode.children[1].cloneNode(true);
+
+            if (currentEleEdit) {
+                currentEleEdit.style.outline = '';
+            }
+            currentEleEdit = event.target;
+            currentEleEdit.style.outline = 'solid red 2px';
+            
+            search.addEventListener('input', searchRules);
+            search.style.margin = '1em 0 0 1em';
+            classList.id = 'classList';
+            classList.innerHTML = '<div></div>';
             Array.from(sortedRules).forEach(attr => {
                 if (headStyle && hasStyleRule(event.target.id, attr)) {
                     var value = getStyleRuleValue(event.target.id, attr);
-                    classList.insertAdjacentHTML('beforeend', `<li data-changed="">${attr}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
+                    classList.children[0].insertAdjacentHTML('beforeend', `<li data-changed="">${attr}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
                 } else {
                     var value = computedStyles.getPropertyValue(attr);
                     classList.insertAdjacentHTML('beforeend', `<li>${attr}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
                 }
             })
-            if (currentEleEdit) {
-                currentEleEdit.style.outline = '';
+            if (edit.getElementsByTagName('input').length != 0) {
+                edit.getElementsByTagName('input')[0].value = currentEleEdit.textContent.trim();
             }
-            editMenu.removeAttribute('hidden');
+
             var mousePos = [event.clientX, event.clientY];
             editMenu.style.left = `calc(${mousePos[0]}px - ${ground.offsetLeft}px)`;
-            editMenu.style.top = `calc(${mousePos[1]}px - ${ground.offsetTop}px)`;
-            var edit = document.querySelector(`.${event.target.classList[0]}`).parentNode.children[1].cloneNode(true);
-            editMenu.appendChild(edit);
-            edit.insertAdjacentHTML('afterend', '<hr style="margin-bottom: 0">');
-            editMenu.appendChild(classList);
+            editMenu.style.top = `calc(${mousePos[1] + 5}px - ${ground.offsetTop}px)`;
+
             if (edit.getElementsByTagName('select').length != 0) {
                 edit.getElementsByTagName('select')[0].value = currentEleEdit.tagName.toLowerCase();
             }
-            currentEleEdit = event.target;
-            currentEleEdit.style.outline = 'solid red 2px';
+
+            editMenu.removeAttribute('hidden');
+            editMenu.insertAdjacentElement('afterbegin', edit);
+            edit.insertAdjacentHTML('afterend', '<hr>');
+            details.insertAdjacentText('afterbegin', 'Search Rule');
+            details.appendChild(search);
+            details.appendChild(classList);
             edit.removeAttribute('hidden');
             event.stopPropagation();
         }
@@ -382,7 +418,7 @@ function formatHTML(html) {
     const formatted = [];
     const tab = '    ';
     let indentLevel = 0;
-    const indentBlocks = ['div', 'p', 'form', 'button'];
+    const indentBlocks = ['div', 'p', 'form', 'button', 'ul', 'ol'];
 
     // Fix splitting issue by ensuring tags are correctly handled
     html = html.replace(/>\s*</g, '>|<');
@@ -503,5 +539,5 @@ function drop(event) {
     draggedElement.style.removeProperty('transform');
     nearestField.insertAdjacentElement('afterend', draggedElement);
     document.querySelectorAll('.field').forEach(el => el.remove());
-    output.querySelector('div').innerText = formatHTML(simplifyHtml(ground.innerHTML).trimStart());
+    output.querySelector('pre').innerText = formatHTML(simplifyHtml(ground.innerHTML).trimStart());
 }
