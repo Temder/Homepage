@@ -6,6 +6,11 @@ const templates = document.getElementsByTagName('template');
 const overlay = document.createElement('div');
 
 const singleElements = ['container', 'heading', 'hr', 'pre', 'text', undefined];
+const indentBlocks = ['div', 'p', 'form', 'button', 'ul', 'ol'];
+const attributes = {
+    'select': ['type'], //'class', 
+    'input': ['alt', 'src']
+}
 
 var currentEleEdit = null;
 var objCount = 0;
@@ -88,23 +93,68 @@ Array.from(templates).forEach(temp => {
                 }
                 currentEleEdit = event.target;
                 currentEleEdit.style.outline = 'solid red 2px';
+                const eleType = currentEleEdit.classList[0]
 
                 search.addEventListener('input', searchRules);
                 search.style.margin = '1em 0 0 1em';
                 classList.id = 'classList';
                 classList.innerHTML = '<div></div>';
-                Array.from(sortedRules).forEach(attr => {
-                    if (headStyle && hasStyleRule(event.target.id, attr)) {
-                        var value = getStyleRuleValue(event.target.id, attr);
-                        classList.children[0].insertAdjacentHTML('beforeend', `<li data-changed="">${attr}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
+                Array.from(sortedRules).forEach(rule => {
+                    if (headStyle && hasStyleRule(event.target.id, rule)) {
+                        var value = getStyleRuleValue(event.target.id, rule);
+                        classList.children[0].insertAdjacentHTML('beforeend', `<li data-changed="">${rule}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
                     } else {
-                        var value = computedStyles.getPropertyValue(attr);
-                        classList.insertAdjacentHTML('beforeend', `<li>${attr}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
+                        var value = computedStyles.getPropertyValue(rule);
+                        classList.insertAdjacentHTML('beforeend', `<li>${rule}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
                     }
                 })
-                if (edit.getElementsByTagName('input').length != 0) {
+                Object.entries(attributes).forEach(([tagName, attrs]) => {
+                    Array.from(edit.getElementsByTagName(tagName)).forEach((obj, i) => {
+                        attrs.forEach(attr => {
+                            console.log(`${obj.tagName} ${i + 1}: ${attr}`);
+                            var value, txt, tag;
+                            if (singleElements.includes(eleType)) {
+                                value = currentEleEdit.getAttribute(attr);
+                                txt = currentEleEdit.textContent.trim();
+                                tag = currentEleEdit.tagName.toLowerCase();
+                            } else {
+                                value = currentEleEdit.children[0].getAttribute(attr);
+                                txt = currentEleEdit.children[0].textContent.trim();
+                                tag = currentEleEdit.children[0].tagName.toLowerCase();
+                            }
+                            if (tag) {
+                                obj.value = tag;
+                                console.log(tag);
+                            }
+                            if (value) {
+                                obj.value = value;
+                                console.log(value);
+                            }
+                            if (txt && obj.name == attr) {
+                                obj.value = txt;
+                                console.log(txt);
+                            }
+                        })
+                    })
+                })
+                /*if (edit.getElementsByTagName('input').length != 0) {
                     edit.getElementsByTagName('input')[0].value = currentEleEdit.textContent.trim();
                 }
+                if (edit.getElementsByTagName('select').length != 0) {
+                    attributes.forEach(attr => {
+                        if (singleElements.includes(eleType)) {
+                            if (currentEleEdit.hasAttribute(attr)) {
+                                var value = currentEleEdit.getAttribute(attr);
+                                edit.getElementsByTagName('select')[0].value = value;
+                            }
+                        } else {
+                            if (currentEleEdit.children[0].hasAttribute(attr)) {
+                                var value = currentEleEdit.children[0].getAttribute(attr);
+                                edit.getElementsByTagName('select')[0].value = value;
+                            }
+                        }
+                    })
+                }*/
 
                 var mousePos = [event.clientX, event.clientY];
                 editMenu.style.left = `calc(${mousePos[0]}px - ${ground.offsetLeft}px)`;
@@ -124,7 +174,11 @@ Array.from(templates).forEach(temp => {
             return false;
         }
         obj.onmouseover = function(event) {
-            event.target.style.border = 'solid rgb(133, 63, 214) 5px';
+            overlay.style.width = event.target.style.width;
+            overlay.style.height = event.target.style.height;
+            overlay.style.backgroundColor = 'red';
+            overlay.style.position
+            //event.target.style.border = 'solid rgb(133, 63, 214) 5px';
         }
         ground.appendChild(obj);
         output.querySelector('pre').innerText = formatHTML(simplifyHtml(ground.innerHTML).trimStart());
@@ -242,7 +296,6 @@ function addOrUpdateStyle(id, content) {
     // Update the styleSheet's content
     styleSheet.textContent = cssRules;
 }
-
 function applyCSS(id) {
     var styleSheetContent = '';
     const eleType = document.getElementById(id).classList[0]
@@ -255,17 +308,18 @@ function applyCSS(id) {
         styleSheetContent += `${ele.textContent}:${ele.children[0].value};`;
         classList.children[0].insertAdjacentElement('beforeend', ele);
     })
-    console.log(id);
+    //console.log(id);
     addOrUpdateStyle(id, styleSheetContent);
     output.querySelector('pre:last-of-type').innerText = formatCSS(document.querySelector('head style').textContent || '');
 }
+
 function changeTag(self) {
     var cloned = document.createElement(self.value);
     Array.from(currentEleEdit.attributes).forEach(ele => {
         cloned.setAttribute(ele.name, ele.value);
     })
     setEvents(cloned);
-    console.log(currentEleEdit.innerHTML);
+    //console.log(currentEleEdit.innerHTML);
     cloned.insertAdjacentHTML('afterbegin', currentEleEdit.innerHTML);
     Array.from(cloned.children).forEach(child => {
         if (child.hasAttribute('draggable')) {
@@ -279,8 +333,7 @@ function changeTag(self) {
 }
 function changeText(self) {
     const eleType = currentEleEdit.classList[0]
-    var txt = self.value;
-    console.log(eleType);
+    const txt = self.value;
     if (singleElements.includes(eleType)) {
         currentEleEdit.textContent = txt;
     } else {
@@ -288,6 +341,17 @@ function changeText(self) {
     }
     output.querySelector('pre').innerText = formatHTML(simplifyHtml(ground.innerHTML).trimStart());
 }
+function changeAttribute(self, attr) {
+    const eleType = currentEleEdit.classList[0]
+    const value = self.value
+    if (singleElements.includes(eleType)) {
+        currentEleEdit.setAttribute(attr, value);
+    } else {
+        currentEleEdit.children[0].setAttribute(attr, value);
+    }
+    output.querySelector('pre').innerText = formatHTML(simplifyHtml(ground.innerHTML).trimStart());
+}
+
 function searchRules(e) {
     var classList = document.getElementById('classList')
     //classList.innerHTML = '';
@@ -334,6 +398,7 @@ function setEvents(ele) {
             }
             currentEleEdit = event.target;
             currentEleEdit.style.outline = 'solid red 2px';
+            const eleType = currentEleEdit.classList[0]
             
             search.addEventListener('input', searchRules);
             search.style.margin = '1em 0 0 1em';
@@ -348,17 +413,36 @@ function setEvents(ele) {
                     classList.insertAdjacentHTML('beforeend', `<li>${attr}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
                 }
             })
-            if (edit.getElementsByTagName('input').length != 0) {
-                edit.getElementsByTagName('input')[0].value = currentEleEdit.textContent.trim();
-            }
+            Object.entries(attributes).forEach(([tagName, attrs]) => {
+                Array.from(edit.getElementsByTagName(tagName)).forEach(obj => {
+                    attrs.forEach(attr => {
+                        console.log(`${obj.tagName}: ${attr}`);
+                        var value, txt, tag;
+                        if (singleElements.includes(eleType)) {
+                            value = currentEleEdit.getAttribute(attr);
+                            txt = currentEleEdit.textContent.trim();
+                            tag = currentEleEdit.tagName.toLowerCase();
+                        } else {
+                            value = currentEleEdit.children[0].getAttribute(attr);
+                            txt = currentEleEdit.children[0].textContent.trim();
+                            tag = currentEleEdit.children[0].tagName.toLowerCase();
+                        }
+                        if (tag) {
+                            obj.value = tag;
+                        }
+                        if (value) {
+                            obj.value = value;
+                        }
+                        if (txt && obj.tagName == 'INPUT') {
+                            obj.value = txt;
+                        }
+                    })
+                })
+            })
 
             var mousePos = [event.clientX, event.clientY];
             editMenu.style.left = `calc(${mousePos[0]}px - ${ground.offsetLeft}px)`;
             editMenu.style.top = `calc(${mousePos[1] + 5}px - ${ground.offsetTop}px)`;
-
-            if (edit.getElementsByTagName('select').length != 0) {
-                edit.getElementsByTagName('select')[0].value = currentEleEdit.tagName.toLowerCase();
-            }
 
             editMenu.removeAttribute('hidden');
             editMenu.insertAdjacentElement('afterbegin', edit);
@@ -399,10 +483,11 @@ function simplifyHtml() {
         }
         // Remove unnecessary attributes
         element.removeAttribute('class');
-        element.removeAttribute('draggable');
-        element.removeAttribute('style');
         element.removeAttribute('data-candrop');
         element.removeAttribute('data-id');
+        element.removeAttribute('draggable');
+        element.removeAttribute('disabled');
+        element.removeAttribute('style');
 
         // Recursively simplify child elements
         Array.from(element.children).forEach(simplifyElement);
@@ -418,7 +503,6 @@ function formatHTML(html) {
     const formatted = [];
     const tab = '    ';
     let indentLevel = 0;
-    const indentBlocks = ['div', 'p', 'form', 'button', 'ul', 'ol'];
 
     // Fix splitting issue by ensuring tags are correctly handled
     html = html.replace(/>\s*</g, '>|<');
@@ -427,7 +511,7 @@ function formatHTML(html) {
     lines.forEach(line => {
         let startTag = line.match(/^<\w+/g);
         let endTag = line.match(/<\/\w*/g);
-        console.log(endTag);
+        //console.log(endTag);
         if (endTag != null && indentBlocks.map(ele => `</${ele}`).includes(endTag[0])) {
             indentLevel--;
         }
@@ -438,7 +522,7 @@ function formatHTML(html) {
     });
 
     // Join the array into a single formatted string
-    console.log(formatted.join('\n'));
+    //console.log(formatted.join('\n'));
     return formatted.join('\n');
 }
 function formatCSS(css) {
@@ -489,7 +573,7 @@ function formatCSS(css) {
 }
 
 function drag(event) {
-    console.log(event);
+    //console.log(event);
     event.dataTransfer.setData('text', event.target.id);
     event.target.style.position = 'absolute';
     event.target.style.transform = 'translateX(-10000px)';

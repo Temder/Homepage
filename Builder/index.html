@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
+<body ondrop="drop(event);" ondragover="allowDrop(event);">
     <div id="main" class="noselect">
         <div id="standard"></div>
         <div id="presets"></div>
-        <div id="ground" data-candrop="true" ondrop="drop(event);" ondragover="allowDrop(event);">
+        <div id="ground" data-candrop="true">
             <div id="editMenu" hidden></div>
         </div>
         <h3>Output</h3>
@@ -38,17 +38,45 @@
     </template>
     <template>
         <div class="img pointer-events-all cursor-pointer" data-candrop="false">
-            <img src="placeholder.png" style="display: block; width: 3em; height: 3em; pointer-events: none;" />
+            <img src="placeholder.png" alt="bild" style="display: block; width: 3em; height: 3em; pointer-events: none;" />
         </div>
-        <div hidden></div>
+        <div hidden>
+            <input type="text" name="src" oninput="changeAttribute(this, 'src')">
+            <input type="text" name="alt" oninput="changeAttribute(this, 'alt')">
+        </div>
         Image
     </template>
     <template>
         <div class="input pointer-events-all cursor-pointer" data-candrop="false" style="line-height: 0;">
-            <input disabled
+            <input type="text" disabled
                 style="width: 4em; width: -moz-available; width: -webkit-fill-available; padding: 0; background-color: white; border: none; pointer-events: none;">
         </div>
-        <div hidden></div>
+        <div hidden>
+            <select oninput="changeAttribute(this, 'type')">
+                <option value="button">Button</option>
+                <option value="checkbox">Checkbox</option>
+                <option value="color">Color</option>
+                <option value="date">Date</option>
+                <option value="datetime-local">Date, Time</option>
+                <option value="email">Email</option>
+                <option value="file">File</option>
+                <option value="hidden">Hidden</option>
+                <option value="image">Image</option>
+                <option value="month">Month</option>
+                <option value="number">Number</option>
+                <option value="password">Password</option>
+                <option value="radio">Radio</option>
+                <option value="range">Range</option>
+                <option value="reset">Reset</option>
+                <option value="search">Search</option>
+                <option value="submit">Submit</option>
+                <option value="tel">Telefon</option>
+                <option value="text" selected="selected">Text</option>
+                <option value="time">Time</option>
+                <option value="url">URL</option>
+                <option value="week">Week</option>
+            </select>
+        </div>
         Input
     </template>
     <template>

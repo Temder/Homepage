@@ -97,6 +97,7 @@ body {
     height: calc(100% - 16px);
     padding: 1em;
     margin: 0;
+    overflow: auto;
 }
 #output > *:first-of-type {
     border-right: solid var(--color-foreground) 2px;
@@ -243,6 +244,9 @@ p.container {
 /* Input */
 #ground .input {
     width: min-content;
+}
+#ground .input input {
+    min-width: 1.25em;
 }
 
 /* Link */
