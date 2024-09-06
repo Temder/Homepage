@@ -5,12 +5,9 @@ const stdEle = document.getElementById('standard');
 const templates = document.getElementsByTagName('template');
 const overlay = document.createElement('div');
 
-const singleElements = ['container', 'heading', 'hr', 'pre', 'text', undefined];
-const indentBlocks = ['div', 'p', 'form', 'button', 'ul', 'ol'];
-const attributes = {
-    'select': ['type'], //'class', 
-    'input': ['alt', 'src']
-}
+const singleElements = ['container', 'heading', 'hr', 'list', 'pre', 'text', undefined];
+const indentBlocks = ['button', 'div', 'form', 'ol', 'p', 'pre', 'ul'];
+const inputFields = ['select', 'input', 'textarea'];
 
 var currentEleEdit = null;
 var objCount = 0;
@@ -18,6 +15,7 @@ var objCount = 0;
 editMenu.addEventListener('click', function (e) {
     if (e.target === editMenu && e.offsetX < 0) {
         editMenu.hidden = 'true';
+        editMenu.style.display = 'none';
         editMenu.innerHTML = '';
         currentEleEdit.style.outline = '';
         Array.from(editMenu.querySelectorAll('#classList li[data-changed]')).forEach(ele => {
@@ -108,33 +106,36 @@ Array.from(templates).forEach(temp => {
                         classList.insertAdjacentHTML('beforeend', `<li>${rule}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
                     }
                 })
-                Object.entries(attributes).forEach(([tagName, attrs]) => {
+                inputFields.forEach(tagName => {
                     Array.from(edit.getElementsByTagName(tagName)).forEach((obj, i) => {
-                        attrs.forEach(attr => {
-                            console.log(`${obj.tagName} ${i + 1}: ${attr}`);
-                            var value, txt, tag;
-                            if (singleElements.includes(eleType)) {
-                                value = currentEleEdit.getAttribute(attr);
-                                txt = currentEleEdit.textContent.trim();
-                                tag = currentEleEdit.tagName.toLowerCase();
-                            } else {
-                                value = currentEleEdit.children[0].getAttribute(attr);
-                                txt = currentEleEdit.children[0].textContent.trim();
-                                tag = currentEleEdit.children[0].tagName.toLowerCase();
-                            }
+                        var attr = obj.name
+                        //console.log(`${tagName} ${i + 1}, ${eleType}: ${attr}, ${obj.name}`);
+                        var value, txt, tag;
+                        if (singleElements.includes(eleType)) {
+                            value = currentEleEdit.getAttribute(attr);
+                            txt = currentEleEdit.textContent.trim();
+                            tag = currentEleEdit.tagName.toLowerCase();
+                        } else {
+                            value = currentEleEdit.children[0].getAttribute(attr);
+                            txt = currentEleEdit.children[0].textContent.trim();
+                            tag = currentEleEdit.children[0].tagName.toLowerCase();
+                        }
+                        if (['select', 'input'].includes(tagName)) {
                             if (tag) {
                                 obj.value = tag;
-                                console.log(tag);
+                                //console.log(tag, currentEleEdit);
                             }
-                            if (value) {
+                            if (attr && value) {
                                 obj.value = value;
-                                console.log(value);
+                                //console.log(value);
                             }
-                            if (txt && obj.name == attr) {
+                        }
+                        if (['input', 'textarea'].includes(tagName)) {
+                            if (txt && !obj.hasAttribute('name')) {
                                 obj.value = txt;
-                                console.log(txt);
+                                //console.log(txt);
                             }
-                        })
+                        }
                     })
                 })
                 /*if (edit.getElementsByTagName('input').length != 0) {
@@ -161,6 +162,7 @@ Array.from(templates).forEach(temp => {
                 editMenu.style.top = `calc(${mousePos[1] + 5}px - ${ground.offsetTop}px)`;
 
                 editMenu.removeAttribute('hidden');
+                editMenu.style.display = 'flex';
                 editMenu.insertAdjacentElement('afterbegin', edit);
                 edit.insertAdjacentHTML('afterend', '<hr>');
                 details.insertAdjacentText('afterbegin', 'Search Rule');
@@ -172,13 +174,6 @@ Array.from(templates).forEach(temp => {
         }
         obj.oncontextmenu = function() {
             return false;
-        }
-        obj.onmouseover = function(event) {
-            overlay.style.width = event.target.style.width;
-            overlay.style.height = event.target.style.height;
-            overlay.style.backgroundColor = 'red';
-            overlay.style.position
-            //event.target.style.border = 'solid rgb(133, 63, 214) 5px';
         }
         ground.appendChild(obj);
         output.querySelector('pre').innerText = formatHTML(simplifyHtml(ground.innerHTML).trimStart());
@@ -413,30 +408,37 @@ function setEvents(ele) {
                     classList.insertAdjacentHTML('beforeend', `<li>${attr}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
                 }
             })
-            Object.entries(attributes).forEach(([tagName, attrs]) => {
-                Array.from(edit.getElementsByTagName(tagName)).forEach(obj => {
-                    attrs.forEach(attr => {
-                        console.log(`${obj.tagName}: ${attr}`);
-                        var value, txt, tag;
-                        if (singleElements.includes(eleType)) {
-                            value = currentEleEdit.getAttribute(attr);
-                            txt = currentEleEdit.textContent.trim();
-                            tag = currentEleEdit.tagName.toLowerCase();
-                        } else {
-                            value = currentEleEdit.children[0].getAttribute(attr);
-                            txt = currentEleEdit.children[0].textContent.trim();
-                            tag = currentEleEdit.children[0].tagName.toLowerCase();
-                        }
+            
+            inputFields.forEach(tagName => {
+                Array.from(edit.getElementsByTagName(tagName)).forEach((obj, i) => {
+                    var attr = obj.name
+                    //console.log(`${tagName} ${i + 1}, ${eleType}: ${attr}, ${obj.name}`);
+                    var value, txt, tag;
+                    if (singleElements.includes(eleType)) {
+                        value = currentEleEdit.getAttribute(attr);
+                        txt = currentEleEdit.textContent.trim();
+                        tag = currentEleEdit.tagName.toLowerCase();
+                    } else {
+                        value = currentEleEdit.children[0].getAttribute(attr);
+                        txt = currentEleEdit.children[0].textContent.trim();
+                        tag = currentEleEdit.children[0].tagName.toLowerCase();
+                    }
+                    if (['select', 'input'].includes(tagName)) {
                         if (tag) {
                             obj.value = tag;
+                            //console.log(tag, currentEleEdit);
                         }
-                        if (value) {
+                        if (attr && value) {
                             obj.value = value;
+                            //console.log(value);
                         }
-                        if (txt && obj.tagName == 'INPUT') {
+                    }
+                    if (['input', 'textarea'].includes(tagName)) {
+                        if (txt && !obj.hasAttribute('name')) {
                             obj.value = txt;
+                            //console.log(txt);
                         }
-                    })
+                    }
                 })
             })
 
@@ -445,6 +447,7 @@ function setEvents(ele) {
             editMenu.style.top = `calc(${mousePos[1] + 5}px - ${ground.offsetTop}px)`;
 
             editMenu.removeAttribute('hidden');
+            editMenu.style.display = 'flex';
             editMenu.insertAdjacentElement('afterbegin', edit);
             edit.insertAdjacentHTML('afterend', '<hr>');
             details.insertAdjacentText('afterbegin', 'Search Rule');
@@ -512,7 +515,7 @@ function formatHTML(html) {
         let startTag = line.match(/^<\w+/g);
         let endTag = line.match(/<\/\w*/g);
         //console.log(endTag);
-        if (endTag != null && indentBlocks.map(ele => `</${ele}`).includes(endTag[0])) {
+        if (endTag != null && indentBlocks.map(ele => `</${ele}`).includes(endTag[0]) && indentLevel > 0) {
             indentLevel--;
         }
         formatted.push(tab.repeat(indentLevel) + line);

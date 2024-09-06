@@ -1,6 +1,8 @@
 * {
     --color-background: #131313;
     --color-foreground: white;
+    --color-edit: rgb(182, 182, 182);
+    --color-edit-border: #555555;
 }
 * {
     box-sizing: border-box;
@@ -38,24 +40,40 @@ body {
     min-width: 5em;
     min-height: 5em;
     padding: 0.5em;
-    background-color: rgb(182, 182, 182);
+    border: solid var(--color-edit-border) 5px;
+    background-color: var(--color-edit);
     color: var(--color-background);
     z-index: 100;
+}
+#editMenu > div:first-of-type {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    max-width: 25em;
+}
+#editMenu > div:first-of-type select,
+#editMenu > div:first-of-type input {
+    margin-top: 0.25em;
+}
+#editMenu hr {
+    margin: 0 0.5em;
 }
 #editMenu:before {
     position: absolute;
     content: "✖";
     width: 21px;
     height: 20px;
-    top: 0;
-    left: -22px;
-    border-left: solid 2px rgb(182, 182, 182);
+    top: -5px;
+    left: -26px;
     border-bottom-left-radius: 100vw;
     border-top-left-radius: 100vw;
+    border-left: solid var(--color-edit-border) 5px;
+    border-top: solid var(--color-edit-border) 5px;
+    border-bottom: solid var(--color-edit-border) 5px;
     line-height: 20px;
     font-size: 14px;
     text-align: center;
-    background-color: rgb(182, 182, 182);
+    background-color: var(--color-edit);
     color: red;
 }
 #editMenu:after {
@@ -63,15 +81,17 @@ body {
     content: "✅";
     width: 21px;
     height: 20px;
-    top: 0;
-    right: -22px;
-    border-left: solid 2px rgb(182, 182, 182);
+    top: -5px;
+    right: -26px;
     border-bottom-right-radius: 100vw;
     border-top-right-radius: 100vw;
+    border-right: solid var(--color-edit-border) 5px;
+    border-top: solid var(--color-edit-border) 5px;
+    border-bottom: solid var(--color-edit-border) 5px;
     line-height: 20px;
     font-size: 14px;
     text-align: center;
-    background-color: rgb(182, 182, 182);
+    background-color: var(--color-edit);
     color: red;
 }
 #ground,
@@ -162,6 +182,9 @@ body {
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
+}
+.noedit {
+    pointer-events: none;
 }
 .pointer-events-all {
     pointer-events: all;

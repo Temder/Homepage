@@ -18,14 +18,17 @@
         <h3>Output</h3>
         <div id="output"><span>HTML</span><span>CSS</span><pre></pre><pre></pre></div>
     </div>
+
     <template>
         <div class="container pointer-events-all cursor-pointer" data-candrop="true"></div>
         <div hidden>
-            <select oninput="changeTag(this)">
-                <option value="div">Div</option>
-                <option value="form">Form</option>
-                <option value="p">Paragraph</option>
-            </select>
+            <div>Type<br>
+                <select oninput="changeTag(this)">
+                    <option value="div">Div</option>
+                    <option value="form">Form</option>
+                    <option value="p">Paragraph</option>
+                </select>
+            </div>
         </div>
         Container
     </template>
@@ -38,73 +41,77 @@
     </template>
     <template>
         <div class="img pointer-events-all cursor-pointer" data-candrop="false">
-            <img src="placeholder.png" alt="bild" style="display: block; width: 3em; height: 3em; pointer-events: none;" />
+            <img class="noedit" src="placeholder.png" alt="bild" style="display: block; width: 3em; height: 3em;" />
         </div>
         <div hidden>
-            <input type="text" name="src" oninput="changeAttribute(this, 'src')">
-            <input type="text" name="alt" oninput="changeAttribute(this, 'alt')">
+            <div>Source<br><input type="text" name="src" oninput="changeAttribute(this, 'src')"></div>
+            <div>Alt<br><input type="text" name="alt" oninput="changeAttribute(this, 'alt')"></div>
         </div>
         Image
     </template>
     <template>
         <div class="input pointer-events-all cursor-pointer" data-candrop="false" style="line-height: 0;">
-            <input type="text" disabled
-                style="width: 4em; width: -moz-available; width: -webkit-fill-available; padding: 0; background-color: white; border: none; pointer-events: none;">
+            <input class="noedit" type="text" disabled
+                style="width: 4em; width: -moz-available; width: -webkit-fill-available; padding: 0; background-color: white; border: none;">
         </div>
         <div hidden>
-            <select oninput="changeAttribute(this, 'type')">
-                <option value="button">Button</option>
-                <option value="checkbox">Checkbox</option>
-                <option value="color">Color</option>
-                <option value="date">Date</option>
-                <option value="datetime-local">Date, Time</option>
-                <option value="email">Email</option>
-                <option value="file">File</option>
-                <option value="hidden">Hidden</option>
-                <option value="image">Image</option>
-                <option value="month">Month</option>
-                <option value="number">Number</option>
-                <option value="password">Password</option>
-                <option value="radio">Radio</option>
-                <option value="range">Range</option>
-                <option value="reset">Reset</option>
-                <option value="search">Search</option>
-                <option value="submit">Submit</option>
-                <option value="tel">Telefon</option>
-                <option value="text" selected="selected">Text</option>
-                <option value="time">Time</option>
-                <option value="url">URL</option>
-                <option value="week">Week</option>
-            </select>
+            <div>Type<br>
+                <select name="type" oninput="changeAttribute(this, 'type')">
+                    <option value="button">Button</option>
+                    <option value="checkbox">Checkbox</option>
+                    <option value="color">Color</option>
+                    <option value="date">Date</option>
+                    <option value="datetime-local">Date, Time</option>
+                    <option value="email">Email</option>
+                    <option value="file">File</option>
+                    <option value="hidden">Hidden</option>
+                    <option value="image">Image</option>
+                    <option value="month">Month</option>
+                    <option value="number">Number</option>
+                    <option value="password">Password</option>
+                    <option value="radio">Radio</option>
+                    <option value="range">Range</option>
+                    <option value="reset">Reset</option>
+                    <option value="search">Search</option>
+                    <option value="submit">Submit</option>
+                    <option value="tel">Telefon</option>
+                    <option value="text" selected="selected">Text</option>
+                    <option value="time">Time</option>
+                    <option value="url">URL</option>
+                    <option value="week">Week</option>
+                </select>
+            </div>
         </div>
         Input
     </template>
     <template>
         <h1 class="heading pointer-events-all cursor-pointer" data-candrop="false">H</h1>
         <div hidden>
-            <select oninput="changeTag(this)">
-                <option value="h1">Heading 1</option>
-                <option value="h2">Heading 2</option>
-                <option value="h3">Heading 3</option>
-                <option value="h4">Heading 4</option>
-                <option value="h5">Heading 5</option>
-                <option value="h6">Heading 6</option>
-            </select>
-            <input type="text" oninput="changeText(this)">
+            <div>Type<br>
+                <select oninput="changeTag(this)">
+                    <option value="h1">Heading 1</option>
+                    <option value="h2">Heading 2</option>
+                    <option value="h3">Heading 3</option>
+                    <option value="h4">Heading 4</option>
+                    <option value="h5">Heading 5</option>
+                    <option value="h6">Heading 6</option>
+                </select>
+            </div>
+            <div>Text<br><input type="text" oninput="changeText(this)"></div>
         </div>
         Heading
     </template>
     <template>
         <span class="text pointer-events-all cursor-pointer" data-candrop="false">Text</span>
         <div hidden>
-            <input type="text" oninput="changeText(this)">
+            <div>Text<br><input type="text" oninput="changeText(this)"></div>
         </div>
         Text
     </template>
     <template>
         <pre class="pre pointer-events-all cursor-pointer" data-candrop="false">Pre</pre>
         <div hidden>
-            <input type="text" oninput="changeText(this)">
+            <div>Text<br><textarea type="text" oninput="changeText(this)"></textarea></div>
         </div>
         Monospace
     </template>
@@ -120,23 +127,26 @@
     </template>
     <template>
         <span class="a cursor-pointer" data-candrop="false">
-            <a href="a">Link</a>
+            <a class="noedit" href="a">Link</a>
         </span>
         <div hidden>
-            <input type="text" oninput="changeText(this)">
+            <div>Text<br><input type="text" oninput="changeText(this)"></div>
+            <div>Href<br><input name="href" type="text" oninput="changeAttribute(this, 'href')"></div>
         </div>
         Link
     </template>
     <template>
         <ul class="list pointer-events-all cursor-pointer" data-candrop="false">
-            <li>1</li>
-            <li>2</li>
+            <li class="noedit">1</li>
+            <li class="noedit">2</li>
         </ul>
         <div hidden>
-            <select oninput="changeTag(this)">
-                <option value="ul">Unordered List</option>
-                <option value="ol">Ordered List</option>
-            </select>
+            <div>Type<br>
+                <select oninput="changeTag(this)">
+                    <option value="ul">Unordered List</option>
+                    <option value="ol">Ordered List</option>
+                </select>
+            </div>
         </div>
         List
     </template>
