@@ -15,8 +15,19 @@
         <div id="ground" data-candrop="true">
             <div id="editMenu" hidden></div>
         </div>
+        <menu>
+            <li>Container&nbsp;Borders<br><label class="switch">
+                <input type="checkbox" checked onclick="toggleBorders(this)">
+                <span class="slider round"></span>
+            </label></li>
+            <li><button onclick="document.getElementById('overlay').style.display = 'flex'; showOverlay('class')">Add Class</button></li>
+        </menu>
         <h3>Output</h3>
         <div id="output"><span>HTML</span><span>CSS</span><pre></pre><pre></pre></div>
+    </div>
+    <div id="overlay">
+        <span class="noselect" onclick="this.parentElement.style.display = 'none';">✖</span>
+        <span class="noselect" onclick="addClass(this)">✔</span>
     </div>
 
     <template>

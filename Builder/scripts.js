@@ -3,7 +3,7 @@ const ground = document.getElementById('ground');
 const output = document.getElementById('output');
 const stdEle = document.getElementById('standard');
 const templates = document.getElementsByTagName('template');
-const overlay = document.createElement('div');
+const overlay = document.getElementById('overlay');
 
 const singleElements = ['container', 'heading', 'hr', 'list', 'pre', 'text', undefined];
 const indentBlocks = ['button', 'div', 'form', 'ol', 'p', 'pre', 'ul'];
@@ -18,10 +18,11 @@ editMenu.addEventListener('click', function (e) {
         editMenu.style.display = 'none';
         editMenu.innerHTML = '';
         currentEleEdit.style.outline = '';
-        Array.from(editMenu.querySelectorAll('#classList li[data-changed]')).forEach(ele => {
+        currentEleEdit.style.outlineOffset = '';
+        Array.from(editMenu.querySelectorAll('#editMenu .classList li[data-changed]')).forEach(ele => {
             ele.removeAttribute('data-changed')
         })
-    } else if (e.target === editMenu && e.offsetX > editMenu.offsetWidth) {
+    } else if (e.target === editMenu && e.offsetX > editMenu.offsetWidth - 10) {
         applyCSS(currentEleEdit.id);
     }
 });
@@ -88,14 +89,16 @@ Array.from(templates).forEach(temp => {
 
                 if (currentEleEdit) {
                     currentEleEdit.style.outline = '';
+                    currentEleEdit.style.outlineOffset = '';
                 }
                 currentEleEdit = event.target;
                 currentEleEdit.style.outline = 'solid red 2px';
+                currentEleEdit.style.outlineOffset = '-2px';
                 const eleType = currentEleEdit.classList[0]
 
                 search.addEventListener('input', searchRules);
                 search.style.margin = '1em 0 0 1em';
-                classList.id = 'classList';
+                classList.class = 'classList';
                 classList.innerHTML = '<div></div>';
                 Array.from(sortedRules).forEach(rule => {
                     if (headStyle && hasStyleRule(event.target.id, rule)) {
@@ -255,7 +258,7 @@ function getStyleRuleValue(selector, property) {
         return null;
     }
 }
-function addOrUpdateStyle(id, content) {
+function addOrUpdateStyle(identifier, content, type) {
     // Check if there's already a stylesheet in the head
     let styleSheet = document.querySelector('head style');
 
@@ -269,22 +272,44 @@ function addOrUpdateStyle(id, content) {
     let cssRules = styleSheet.textContent || '';
 
     // Create a RegExp to find if the style with the given id already exists
-    const eleType = document.getElementById(id).classList[0]
-    const regex = new RegExp(`#${id}.*{[^}]*}`, 'm');
+    var eleType = undefined;
+    try {
+        eleType = document.getElementById(identifier).classList[0];
+    } catch (error) {
+        
+    }
+    const regex = new RegExp(`[#.]${identifier}.*{[^}]*}`, 'm');
 
+    var char = '';
     if (regex.test(cssRules)) {
+        switch (type) {
+            case 'id':
+                char = '#';
+                break;
+            case 'class':
+                char = '.';
+                break;
+        }
         // If it exists, replace the existing rule with the new content
         if (!singleElements.includes(eleType) ) {
-            cssRules = cssRules.replace(regex, `#${id} ${eleType} { ${content} }`);
+            cssRules = cssRules.replace(regex, `${char}${identifier} ${eleType} { ${content} }`);
         } else {
-            cssRules = cssRules.replace(regex, `#${id} { ${content} }`);
+            cssRules = cssRules.replace(regex, `${char}${identifier} { ${content} }`);
         }
     } else {
+        switch (type) {
+            case 'id':
+                char = '#';
+                break;
+            case 'class':
+                char = '.';
+                break;
+        }
         // If not, append the new rule
         if (!singleElements.includes(eleType)) {
-            cssRules += `\n#${id} ${eleType} { ${content} }`;
+            cssRules += `\n${char}${identifier} ${eleType} { ${content} }`;
         } else {
-            cssRules += `\n#${id} { ${content} }`;
+            cssRules += `\n${char}${identifier} { ${content} }`;
         }
     }
 
@@ -294,18 +319,30 @@ function addOrUpdateStyle(id, content) {
 function applyCSS(id) {
     var styleSheetContent = '';
     const eleType = document.getElementById(id).classList[0]
-    Array.from(editMenu.querySelectorAll('#classList li[data-changed]')).forEach(ele => {
+    Array.from(editMenu.querySelectorAll('#editMenu .classList li[data-changed]')).forEach(ele => {
         if (singleElements.includes(eleType)) {
             currentEleEdit.style[`${ele.textContent}`] = '';
         } else {
             currentEleEdit.children[0].style[`${ele.textContent}`] = '';
         }
         styleSheetContent += `${ele.textContent}:${ele.children[0].value};`;
+        ele.style.display = 'flex';
         classList.children[0].insertAdjacentElement('beforeend', ele);
     })
     //console.log(id);
-    addOrUpdateStyle(id, styleSheetContent);
-    output.querySelector('pre:last-of-type').innerText = formatCSS(document.querySelector('head style').textContent || '');
+    if (styleSheetContent) {
+        addOrUpdateStyle(id, styleSheetContent, 'id');
+        output.querySelector('pre:last-of-type').innerText = formatCSS(document.querySelector('head style').textContent || '');
+    }
+}
+function addClass(self) {
+    var identifier = overlay.getElementsByTagName('input')[0].value;
+    var styleSheetContent = overlay.getElementsByTagName('input')[1].value;
+
+    if (identifier && styleSheetContent) {
+        addOrUpdateStyle(identifier, styleSheetContent, 'class');
+        self.parentElement.style.display = 'none';
+    }
 }
 
 function changeTag(self) {
@@ -348,24 +385,26 @@ function changeAttribute(self, attr) {
 }
 
 function searchRules(e) {
-    var classList = document.getElementById('classList')
-    //classList.innerHTML = '';
+    var classList = document.getElementsByClassName('classList');
+    /*classList.innerHTML = '';
     var headStyle = document.querySelector('head style');
-    var computedStyles = getComputedStyle(currentEleEdit);
-    Array.from(classList.children).forEach(ele => {
-        if (ele.tagName == 'DIV') {
-            return;
-        }
-        if (e.target.value && !ele.textContent.includes(e.target.value)) {
-            if (ele.tagName != 'DIV') {
-                ele.style.display = 'none';
+    var computedStyles = getComputedStyle(currentEleEdit);*/
+    Object.entries(classList).forEach(cl => {
+        Array.from(cl.children).forEach(ele => {
+            if (ele.tagName == 'DIV') {
+                return;
             }
-        } else {
-            if (ele.tagName == 'LI') {
-                ele.style.display = 'flex';
+            if (e.target.value && !ele.textContent.includes(e.target.value)) {
+                if (ele.tagName != 'DIV') {
+                    ele.style.display = 'none';
+                }
+            } else {
+                if (ele.tagName == 'LI') {
+                    ele.style.display = 'flex';
+                }
             }
-        }
-    });
+        });
+    })
     /*Array.from(sortedRules).forEach(attr => {
         if (headStyle && hasStyleRule(currentEleEdit.id, attr)) {
             var value = getStyleRuleValue(currentEleEdit.id, attr);
@@ -390,14 +429,16 @@ function setEvents(ele) {
 
             if (currentEleEdit) {
                 currentEleEdit.style.outline = '';
+                currentEleEdit.style.outlineOffset = '';
             }
             currentEleEdit = event.target;
             currentEleEdit.style.outline = 'solid red 2px';
+            currentEleEdit.style.outlineOffset = '-2px';
             const eleType = currentEleEdit.classList[0]
             
             search.addEventListener('input', searchRules);
             search.style.margin = '1em 0 0 1em';
-            classList.id = 'classList';
+            classList.class = 'classList';
             classList.innerHTML = '<div></div>';
             Array.from(sortedRules).forEach(attr => {
                 if (headStyle && hasStyleRule(event.target.id, attr)) {
@@ -627,4 +668,47 @@ function drop(event) {
     nearestField.insertAdjacentElement('afterend', draggedElement);
     document.querySelectorAll('.field').forEach(el => el.remove());
     output.querySelector('pre').innerText = formatHTML(simplifyHtml(ground.innerHTML).trimStart());
+}
+
+function toggleBorders(self) {
+    const containers = ground.querySelectorAll('#ground *.container');
+    if (self.checked) {
+        containers.forEach(ele => {
+            console.log(ele);
+            ele.classList.remove('noborder');
+        })
+    } else {
+        containers.forEach(ele => {
+            console.log(ele);
+            ele.classList.add('noborder');
+        })
+    }
+}
+function showOverlay(type) {
+    var content = '';
+    switch (type) {
+        case 'class':
+            content = '<div>Class Name<input type="text"></div>'
+            var search = document.createElement('input');
+            var classList = document.createElement('ul');
+            search.addEventListener('input', searchRules);
+            search.style.margin = '1em 0 0 1em';
+            classList.class = 'classList';
+            classList.innerHTML = '<div></div>';
+            Array.from(sortedRules).forEach(rule => {
+                classList.insertAdjacentHTML('beforeend', `<li>${rule}<input type="text" value="null" oninput="this.parentElement.dataset.changed = '';document.querySelector('#overlay .classList > div:nth-child(1)').append(this.parentElement); this.focus();" /></li>`);
+            })
+            var element = document.createElement('div');
+            element.insertAdjacentText('afterbegin', 'Search Rule');
+            element.appendChild(search);
+            element.appendChild(classList);
+            break;
+    }
+    Array.from(overlay.getElementsByTagName('div')).forEach(ele => {
+        ele.remove();
+    });
+    overlay.insertAdjacentHTML('beforeend', content);
+    if (element) {
+        overlay.append(element);
+    }
 }
