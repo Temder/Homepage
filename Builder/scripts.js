@@ -83,8 +83,6 @@ Array.from(templates).forEach(temp => {
                 var details = editMenu.getElementsByTagName('details')[0];
                 var search = document.createElement('input');
                 var classList = document.createElement('ul');
-                var computedStyles = getComputedStyle(event.target);
-                var headStyle = document.querySelector('head style');
                 var edit = temp.content.children[1].cloneNode(true);
 
                 if (currentEleEdit) {
@@ -98,17 +96,8 @@ Array.from(templates).forEach(temp => {
 
                 search.addEventListener('input', searchRules);
                 search.style.margin = '1em 0 0 1em';
-                classList.class = 'classList';
-                classList.innerHTML = '<div></div>';
-                Array.from(sortedRules).forEach(rule => {
-                    if (headStyle && hasStyleRule(event.target.id, rule)) {
-                        var value = getStyleRuleValue(event.target.id, rule);
-                        classList.children[0].insertAdjacentHTML('beforeend', `<li data-changed="">${rule}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
-                    } else {
-                        var value = computedStyles.getPropertyValue(rule);
-                        classList.insertAdjacentHTML('beforeend', `<li>${rule}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
-                    }
-                })
+                classList.classList.add('classList');
+                updateClassList(classList);
                 inputFields.forEach(tagName => {
                     Array.from(edit.getElementsByTagName(tagName)).forEach((obj, i) => {
                         var attr = obj.name
@@ -124,7 +113,7 @@ Array.from(templates).forEach(temp => {
                             tag = currentEleEdit.children[0].tagName.toLowerCase();
                         }
                         if (['select', 'input'].includes(tagName)) {
-                            if (tag) {
+                            if (tag && !obj.hasAttribute('name')) {
                                 obj.value = tag;
                                 //console.log(tag, currentEleEdit);
                             }
@@ -185,7 +174,30 @@ Array.from(templates).forEach(temp => {
     stdEle.appendChild(div);
 })
 
-function hasStyleRule(id, ruleName) {
+var lastClassList = null;
+function updateClassList(classList) {
+    var computedStyles = getComputedStyle(currentEleEdit);
+    var headStyle = document.querySelector('head style');
+    if (!classList) {
+        classList = lastClassList
+    } else {
+        lastClassList = classList
+    }
+
+    classList.innerHTML = '<div></div><div></div><div></div>';
+    Array.from(sortedRules).forEach(rule => {
+        var value = getStyleRuleValue([`${currentEleEdit.id}`, currentEleEdit.tagName.toLowerCase()], rule);
+        if (headStyle && hasStyleRule([`${currentEleEdit.id}`, currentEleEdit.tagName.toLowerCase()], rule) && value) {
+            //console.log([`#${currentEleEdit.id}`, currentEleEdit.tagName.toLowerCase()], rule , '->', value);
+            classList.children[0].insertAdjacentHTML('beforeend', `<li data-changed="">${rule}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
+        } else {
+            value = computedStyles.getPropertyValue(rule);
+            classList.insertAdjacentHTML('beforeend', `<li>${rule}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';document.querySelector('#editMenu .classList > div:nth-child(1)').append(this.parentElement); this.focus();" /></li>`);
+        }
+    })
+}
+
+function hasStyleRule(identifier, ruleName) {
     // Find the <style> element in the head
     const styleSheet = document.querySelector('head style');
 
@@ -199,24 +211,31 @@ function hasStyleRule(id, ruleName) {
     const rules = sheet.cssRules || sheet.rules;
 
     // Create a regex to find the specific rule
-    const selector = `#${id}`;
+    const selectors = identifier;
 
-    // Iterate through all the rules in the stylesheet
-    for (let i = 0; i < rules.length; i++) {
-        const rule = rules[i];
-
-        // Check if the rule's selectorText matches the id
-        if (rule.selectorText.includes(selector)) {
-            // Check if the specific rule exists in the style declaration
-            if (rule.style[ruleName]) {
-                return true;
+    var back = '';
+    selectors.forEach(selector => {
+        // Iterate through all the rules in the stylesheet
+        for (let i = 0; i < rules.length; i++) {
+            const rule = rules[i];
+    
+            // Check if the rule's selectorText matches the id
+            if (rule.selectorText.includes(selector)) {
+                // Check if the specific rule exists in the style declaration
+                if (rule.style[ruleName]) {
+                    //console.log(selector, ruleName,rule.style[ruleName]);
+                    back = 'ja';
+                }
             }
         }
+    })
+    if (back == 'ja') {
+        return true;
+    } else {
+        return false;
     }
-
-    return false;
 }
-function getStyleRuleValue(selector, property) {
+function getStyleRuleValue(selectors, property) {
     // Find the <style> element in the head
     let styleSheet = document.querySelector('head style');
     
@@ -229,32 +248,43 @@ function getStyleRuleValue(selector, property) {
     let cssRules = styleSheet.textContent || '';
 
     // Create a RegExp to find the rule for the specific selector
-    const eleType = document.getElementById(selector).classList[0]
-    const regex = new RegExp(`${selector}.*{[^}]*}`, 'm');
-    const match = cssRules.match(regex);
-
-    if (match) {
-        // Extract the rule content between the curly braces
-        var ruleContent = '';
-        if (!singleElements.includes(eleType)) {
-            ruleContent = match[0].replace(`${selector} ${eleType} {`, '').replace('}', '').trim();
+    //const eleType = document.getElementById(selector).classList[0] || ''
+    var value;
+    selectors.forEach(selector => {
+        const regex = new RegExp(`${selector}.*{[^}]*}`, 'gm');
+        const match = cssRules.match(regex);
+    
+        //console.log(regex, match);
+        if (match) {
+            // Extract the rule content between the curly braces
+            var ruleContent = match[0].replace(/.*{|}/g, '');
+            //console.log(ruleContent);
+            //if (!singleElements.includes(eleType)) {
+                //ruleContent = match[0].replace(`${selector} ${eleType} {`, '').replace('}', '').trim();
+            //} else {
+            //ruleContent = match[0].replace(`${selector} {`, '').replace('}', '').trim();
+            //}
+            // Convert rule content into an object with property-value pairs
+            const ruleObject = ruleContent.split(';').reduce((acc, curr) => {
+                if (curr.trim()) {
+                    let [prop, val] = curr.split(':');
+                    acc[prop.trim()] = val.trim();
+                }
+                return acc;
+            }, {});
+            value = ruleObject[property]
+            //console.log(ruleObject, property, '->', value);
+    
+            // Return the value of the specified property
+            
         } else {
-            ruleContent = match[0].replace(`${selector} {`, '').replace('}', '').trim();
+            //console.warn(`No rule found for selector: ${selector}`);
+            
         }
-
-        // Convert rule content into an object with property-value pairs
-        const ruleObject = ruleContent.split(';').reduce((acc, curr) => {
-            if (curr.trim()) {
-                let [prop, val] = curr.split(':');
-                acc[prop.trim()] = val.trim();
-            }
-            return acc;
-        }, {});
-
-        // Return the value of the specified property
-        return ruleObject[property] || null;
+    })
+    if (value) {
+        return value;
     } else {
-        console.warn(`No rule found for selector: ${selector}`);
         return null;
     }
 }
@@ -281,15 +311,15 @@ function addOrUpdateStyle(identifier, content, type) {
     const regex = new RegExp(`[#.]${identifier}.*{[^}]*}`, 'm');
 
     var char = '';
+    switch (type) {
+        case 'id':
+            char = '#';
+            break;
+        case 'class':
+            char = '#ground .';
+            break;
+    }
     if (regex.test(cssRules)) {
-        switch (type) {
-            case 'id':
-                char = '#';
-                break;
-            case 'class':
-                char = '.';
-                break;
-        }
         // If it exists, replace the existing rule with the new content
         if (!singleElements.includes(eleType) ) {
             cssRules = cssRules.replace(regex, `${char}${identifier} ${eleType} { ${content} }`);
@@ -297,14 +327,6 @@ function addOrUpdateStyle(identifier, content, type) {
             cssRules = cssRules.replace(regex, `${char}${identifier} { ${content} }`);
         }
     } else {
-        switch (type) {
-            case 'id':
-                char = '#';
-                break;
-            case 'class':
-                char = '.';
-                break;
-        }
         // If not, append the new rule
         if (!singleElements.includes(eleType)) {
             cssRules += `\n${char}${identifier} ${eleType} { ${content} }`;
@@ -319,7 +341,7 @@ function addOrUpdateStyle(identifier, content, type) {
 function applyCSS(id) {
     var styleSheetContent = '';
     const eleType = document.getElementById(id).classList[0]
-    Array.from(editMenu.querySelectorAll('#editMenu .classList li[data-changed]')).forEach(ele => {
+    Array.from(editMenu.querySelectorAll('.classList li[data-changed]')).forEach(ele => {
         if (singleElements.includes(eleType)) {
             currentEleEdit.style[`${ele.textContent}`] = '';
         } else {
@@ -327,7 +349,7 @@ function applyCSS(id) {
         }
         styleSheetContent += `${ele.textContent}:${ele.children[0].value};`;
         ele.style.display = 'flex';
-        classList.children[0].insertAdjacentElement('beforeend', ele);
+        //classList.children[0].insertAdjacentElement('beforeend', ele);
     })
     //console.log(id);
     if (styleSheetContent) {
@@ -337,7 +359,10 @@ function applyCSS(id) {
 }
 function addClass(self) {
     var identifier = overlay.getElementsByTagName('input')[0].value;
-    var styleSheetContent = overlay.getElementsByTagName('input')[1].value;
+    var styleSheetContent = '';
+    Array.from(overlay.querySelectorAll('.classList li[data-changed]')).forEach(ele => {
+        styleSheetContent += `${ele.textContent}:${ele.children[0].value};`;
+    })
 
     if (identifier && styleSheetContent) {
         addOrUpdateStyle(identifier, styleSheetContent, 'class');
@@ -361,6 +386,7 @@ function changeTag(self) {
     currentEleEdit.insertAdjacentElement('afterend', cloned);
     currentEleEdit.remove();
     currentEleEdit = cloned;
+    updateClassList(null)
     output.querySelector('pre').innerText = formatHTML(simplifyHtml(ground.innerHTML).trimStart());
 }
 function changeText(self) {
@@ -389,7 +415,7 @@ function searchRules(e) {
     /*classList.innerHTML = '';
     var headStyle = document.querySelector('head style');
     var computedStyles = getComputedStyle(currentEleEdit);*/
-    Object.entries(classList).forEach(cl => {
+    Array.from(classList).forEach(cl => {
         Array.from(cl.children).forEach(ele => {
             if (ele.tagName == 'DIV') {
                 return;
@@ -438,18 +464,9 @@ function setEvents(ele) {
             
             search.addEventListener('input', searchRules);
             search.style.margin = '1em 0 0 1em';
-            classList.class = 'classList';
+            classList.classList.add('classList');
             classList.innerHTML = '<div></div>';
-            Array.from(sortedRules).forEach(attr => {
-                if (headStyle && hasStyleRule(event.target.id, attr)) {
-                    var value = getStyleRuleValue(event.target.id, attr);
-                    classList.children[0].insertAdjacentHTML('beforeend', `<li data-changed="">${attr}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
-                } else {
-                    var value = computedStyles.getPropertyValue(attr);
-                    classList.insertAdjacentHTML('beforeend', `<li>${attr}<input type="text" value="${value}" oninput="this.parentElement.dataset.changed = '';" /></li>`);
-                }
-            })
-            
+            updateClassList(classList);
             inputFields.forEach(tagName => {
                 Array.from(edit.getElementsByTagName(tagName)).forEach((obj, i) => {
                     var attr = obj.name
@@ -465,7 +482,7 @@ function setEvents(ele) {
                         tag = currentEleEdit.children[0].tagName.toLowerCase();
                     }
                     if (['select', 'input'].includes(tagName)) {
-                        if (tag) {
+                        if (tag && !obj.hasAttribute('name')) {
                             obj.value = tag;
                             //console.log(tag, currentEleEdit);
                         }
@@ -526,7 +543,15 @@ function simplifyHtml() {
             }
         }
         // Remove unnecessary attributes
-        element.removeAttribute('class');
+        var classes = element.getAttribute('class');
+        if (classes) {
+            classes = classes.replace(/(^\w*|pointer-events-all|cursor-pointer)\s?/g, '');
+        }
+        if (classes == '') {
+            element.removeAttribute('class');
+        } else {
+            element.setAttribute('class', classes);
+        }
         element.removeAttribute('data-candrop');
         element.removeAttribute('data-id');
         element.removeAttribute('draggable');
@@ -583,8 +608,9 @@ function formatCSS(css) {
     css = css.replace(/\s+/g, ' ').replace(/\s*{\s*/g, ' {').replace(/\s*}\s*/g, '}').trim();
 
     // Regular expression to match ID selectors followed by other elements
-    const idSelectorRegex = /#\w+\s+[^\{]+/g;
+    const idSelectorRegex = /#\w+\s+[^\.\{]+/g;
     css = css.replace(idSelectorRegex, match => match.split(' ')[0]);
+    console.log(css);
 
     // Iterate over each character in the CSS string
     for (let i = 0; i < css.length; i++) {
@@ -592,7 +618,7 @@ function formatCSS(css) {
 
         if (char === '{') {
             // Increase indentation and add newline
-            formattedCSS += ' {\n';
+            formattedCSS += '{\n';
             indentLevel++;
             formattedCSS += getIndentation(indentLevel);
         } else if (char === '}') {
@@ -693,7 +719,7 @@ function showOverlay(type) {
             var classList = document.createElement('ul');
             search.addEventListener('input', searchRules);
             search.style.margin = '1em 0 0 1em';
-            classList.class = 'classList';
+            classList.classList.add('classList');
             classList.innerHTML = '<div></div>';
             Array.from(sortedRules).forEach(rule => {
                 classList.insertAdjacentHTML('beforeend', `<li>${rule}<input type="text" value="null" oninput="this.parentElement.dataset.changed = '';document.querySelector('#overlay .classList > div:nth-child(1)').append(this.parentElement); this.focus();" /></li>`);

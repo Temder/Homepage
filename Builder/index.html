@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Builder</title>
     <link rel="stylesheet" href="styles.css">
+    <style>ul {padding-left:1em;margin:0} div img {display:block;width:3em;height:3em;}</style>
 </head>
 
 <body ondrop="drop(event);" ondragover="allowDrop(event);">
@@ -39,6 +40,7 @@
                     <option value="form">Form</option>
                     <option value="p">Paragraph</option>
                 </select>
+                <div>Class<br><input type="text" name="class" oninput="changeAttribute(this, 'class')"></div>
             </div>
         </div>
         Container
@@ -47,12 +49,14 @@
         <div class="button pointer-events-all cursor-pointer" data-candrop="false">
             <button data-candrop="true"></button>
         </div>
-        <div hidden></div>
+        <div hidden>
+            <div>Class<br><input type="text" name="class" oninput="changeAttribute(this, 'class')"></div>
+        </div>
         Button
     </template>
     <template>
         <div class="img pointer-events-all cursor-pointer" data-candrop="false">
-            <img class="noedit" src="placeholder.png" alt="bild" style="display: block; width: 3em; height: 3em;" />
+            <img class="noedit" src="placeholder.png" alt="bild" />
         </div>
         <div hidden>
             <div>Source<br><input type="text" name="src" oninput="changeAttribute(this, 'src')"></div>
@@ -115,6 +119,20 @@
     <template>
         <span class="text pointer-events-all cursor-pointer" data-candrop="false">Text</span>
         <div hidden>
+            <div>Type<br>
+                <select oninput="changeTag(this)">
+                    <option value="i">Italic</option>
+                    <option value="em">Italic (Emphasis)</option>
+                    <option value="b">Bold</option>
+                    <option value="strong">Bold (Importance)</option>
+                    <option value="small">Small</option>
+                    <option value="sub">Small (Low)</option>
+                    <option value="sup">Small (High)</option>
+                    <option value="mark">Marked</option>
+                    <option value="s">Strikethrough</option>
+                    <option value="q">Quotation</option>
+                </select>
+            </div>Emphasis
             <div>Text<br><input type="text" oninput="changeText(this)"></div>
         </div>
         Text

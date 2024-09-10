@@ -164,8 +164,7 @@ menu .switch {
 }
 .classList li {
     display: flex;
-    height: 1.5em;
-    padding: 0 0.2em;
+    padding: 0.1em 0.2em;
     align-items: center;
     gap: 0.2em;
     border-bottom: solid var(--color-foreground) 1px;
@@ -232,6 +231,28 @@ menu .switch {
     background-color: var(--color-edit);
     color: red;
 }
+#editMenu option[value=i],
+#editMenu option[value=em] {
+    font-style: italic;
+}
+#editMenu option[value=b],
+#editMenu option[value=strong] {
+    font-weight: bold;
+}
+#editMenu option[value=sub],
+#editMenu option[value=sup],
+#editMenu option[value=small] {
+    font-size: 0.85em;
+}
+#editMenu option[value=mark] {
+    background-color: #ffff00ff;
+}
+#editMenu option[value=s] {
+
+}
+#editMenu option[value=q] {
+    quotes: "";
+}
 /* #endregion */
 
 /* #region Overlay */
@@ -242,12 +263,10 @@ menu .switch {
     height: calc(100% - 40vh);
     top: 0;
     left: 0;
-    padding: 15vh 15vw;
+    padding: 10vh 7vw 7vw;
     margin: 20vh 20vw;
     flex-direction: column;
     gap: 0.5em;
-    justify-content: center;
-    align-items: normal;
     border-radius: 10px;
     background-color: #4d4d4dea;
     z-index: 100;
@@ -257,7 +276,7 @@ menu .switch {
 }
 #overlay span {
     position: fixed;
-    top: calc(20vh + 1em);
+    top: calc(20vh + 0.5em);
     padding: 0.1em;
     font-size: 3em;
     line-height: 0.75;
@@ -269,16 +288,22 @@ menu .switch {
     filter: brightness(75%);
 }
 #overlay span:first-of-type {
-    left: calc(20vw + 1em);
+    left: calc(20vw + 0.5em);
     color: red;
 }
 #overlay span:last-of-type {
-    right: calc(20vw + 1em);
+    right: calc(20vw + 0.5em);
     color: #00ff00;
 }
 #overlay div {
     width: min-content;
     white-space: nowrap;
+}
+#overlay div:last-of-type {
+    width: initial;
+}
+#overlay li input {
+    margin-left: auto;
 }
 /* #endregion */
 
@@ -310,6 +335,7 @@ menu .switch {
 .container {
     width: 3em;
     min-height: 3em;
+    padding: 0.05px;
 }
 div.container {
     outline: solid 1px #00a800;
@@ -355,6 +381,11 @@ p.container {
 /* #endregion */
 
 /* #region Image */
+#standard img {
+    display: block;
+    width: 3em;
+    height: 3em;
+}
 .img {
     width: min-content;
     height: min-content;
@@ -380,6 +411,7 @@ a {
 .text {
     line-height: normal;
 }
+
 /* #endregion */
 
 /* #region Slider */
