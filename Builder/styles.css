@@ -189,7 +189,8 @@ menu .switch {
     max-width: 25em;
 }
 #editMenu > div:first-of-type select,
-#editMenu > div:first-of-type input {
+#editMenu > div:first-of-type input,
+#editMenu > div:first-of-type button {
     margin-top: 0.25em;
 }
 #editMenu hr {
@@ -248,10 +249,7 @@ menu .switch {
     background-color: #ffff00ff;
 }
 #editMenu option[value=s] {
-
-}
-#editMenu option[value=q] {
-    quotes: "";
+    text-decoration: line-through;
 }
 /* #endregion */
 
@@ -404,6 +402,9 @@ p.container {
 /* #region Link */
 a {
     pointer-events: none;
+}
+.a {
+    display: inline-flex;
 }
 /* #endregion */
 

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Builder</title>
     <link rel="stylesheet" href="styles.css">
-    <style>ul {padding-left:1em;margin:0} div img {display:block;width:3em;height:3em;}</style>
+    <style>ul {padding-left:1em;margin:0} div img {display:block;width:3em;height:3em;} .text {display:inline-block;}</style>
 </head>
 
 <body ondrop="drop(event);" ondragover="allowDrop(event);">
@@ -121,18 +121,22 @@
         <div hidden>
             <div>Type<br>
                 <select oninput="changeTag(this)">
+                    <option value="span">Normal</option>
                     <option value="i">Italic</option>
                     <option value="em">Italic (Emphasis)</option>
                     <option value="b">Bold</option>
                     <option value="strong">Bold (Importance)</option>
                     <option value="small">Small</option>
-                    <option value="sub">Small (Low)</option>
-                    <option value="sup">Small (High)</option>
+                    <option value="sub">Small (Low)ₗ</option>
+                    <option value="sup">Small (High)ʰ</option>
                     <option value="mark">Marked</option>
-                    <option value="s">Strikethrough</option>
-                    <option value="q">Quotation</option>
+                    <option value="s">S̵t̵r̵i̵k̵e̵t̵h̵r̵o̵u̵g̵h̵</option>
+                    <option value="del">S̵t̵r̵i̵k̵e̵t̵h̵r̵o̵u̵g̵h̵ ̵(̵R̵e̵m̵o̵v̵e̵d̵)̵</option>
+                    <option value="u">U̲n̲d̲e̲r̲l̲i̲n̲e̲d̲</option>
+                    <option value="ins">U̲n̲d̲e̲r̲l̲i̲n̲e̲d̲ ̲(̲I̲n̲s̲e̲r̲t̲e̲d̲)̲</option>
+                    <option value="q">"Quotation"</option>
                 </select>
-            </div>Emphasis
+            </div>
             <div>Text<br><input type="text" oninput="changeText(this)"></div>
         </div>
         Text
@@ -167,7 +171,7 @@
     <template>
         <ul class="list pointer-events-all cursor-pointer" data-candrop="false">
             <li class="noedit">1</li>
-            <li class="noedit">2</li>
+            <li class="noedit">3</li>
         </ul>
         <div hidden>
             <div>Type<br>
@@ -176,6 +180,7 @@
                     <option value="ol">Ordered List</option>
                 </select>
             </div>
+            <div>Items<br><button value="remove">-</button><img src onerror='console.log(this)'><button value="add">+</button></div>
         </div>
         List
     </template>
