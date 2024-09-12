@@ -327,6 +327,11 @@ menu .switch {
 .button {
     width: min-content;
 }
+.btn-round {
+    width: 20px;
+    border-radius: 10px;
+    border: solid gray 1px;
+}
 /* #endregion */
 
 /* #region Container/Hr */
