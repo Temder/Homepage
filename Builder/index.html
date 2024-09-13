@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Builder</title>
     <link rel="stylesheet" href="styles.css">
-    <style>ul {padding-left:1em;margin:0} div img {display:block;width:3em;height:3em;} .text {display:inline-block;}</style>
+    <style>ul, ol {padding-left:1em;margin:0} div img {display:block;width:3em;height:3em;} .text {display:inline-block;}</style>
 </head>
 
 <body ondrop="drop(event);" ondragover="allowDrop(event);">
@@ -170,8 +170,8 @@
     </template>
     <template>
         <ul class="list pointer-events-all cursor-pointer" data-candrop="false">
-            <li class="noedit">1</li>
-            <li class="noedit">3</li>
+            <li class="">1</li>
+            <li class="">2</li>
         </ul>
         <div hidden>
             <div>Type<br>
@@ -180,11 +180,11 @@
                     <option value="ol">Ordered List</option>
                 </select>
             </div>
-            <div>Items<br>
-                <button class="btn-round" value="remove">-</button>
+            <!--<div>Items<br>
+                <button class="btn-round" value="remove" onclick="this.nextElementSibling.textContent--">-</button>
                 <span><img src onerror="try { this.parentElement.textContent = ` ${currentEleEdit.children.length} ` } catch {}" hidden></span>
-                <button class="btn-round" value="add">+</button>
-            </div>
+                <button class="btn-round" value="add" onclick="this.previousElementSibling.textContent++">+</button>
+            </div>-->
         </div>
         List
     </template>

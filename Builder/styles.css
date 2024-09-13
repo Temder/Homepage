@@ -353,6 +353,7 @@ p.container {
     overflow: auto;
 }
 #ground .hr:before,
+#ground .list:before,
 #ground .container:before {
     display: none;
     position: absolute;
@@ -374,9 +375,14 @@ p.container {
 #ground .hr:before {
     display: block;
 }
+#ground .list:before {
+    transform: translateX(-1.5em);
+}
 #ground .hr {
     overflow: visible;
 }
+#ground .list:has(*:hover):before,
+#ground .list:hover:before,
 #ground .container:has(*:hover):before,
 #ground .container:hover:before {
     display: block;
