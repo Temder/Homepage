@@ -98,6 +98,12 @@ Array.from(templates).forEach(temp => {
                 search.style.margin = '1em 0 0 1em';
                 classList.classList.add('classList');
                 updateClassList(classList);
+                if (event.target.tagName == 'LI') {
+                    Array.from(edit.getElementsByTagName('select')).forEach(obj => {obj.parentElement.remove();})
+                }
+                if (['UL', 'OL'].includes(event.target.tagName)) {
+                    Array.from(edit.getElementsByTagName('input')).forEach(obj => {obj.parentElement.remove();})
+                }
                 inputFields.forEach(tagName => {
                     Array.from(edit.getElementsByTagName(tagName)).forEach((obj, i) => {
                         var attr = obj.name
@@ -339,6 +345,7 @@ function addOrUpdateStyle(identifier, content, type) {
     styleSheet.textContent = cssRules;
 }
 function applyCSS(id) {
+    console.log(id);
     var styleSheetContent = '';
     const eleType = document.getElementById(id).classList[0]
     Array.from(editMenu.querySelectorAll('.classList li[data-changed]')).forEach(ele => {
@@ -451,7 +458,8 @@ function setEvents(ele) {
             var classList = document.createElement('ul');
             var computedStyles = getComputedStyle(event.target);
             var headStyle = document.querySelector('head style');
-            var edit = document.querySelector(`.${event.target.classList[0]}`).parentNode.children[1].cloneNode(true);
+            var selector = document.querySelector(`.${event.target.classList[0]}`) || document.querySelector(`.${event.target.parentElement.classList[0]}`);
+            var edit = selector.parentNode.children[1].cloneNode(true);
 
             if (currentEleEdit) {
                 currentEleEdit.style.outline = '';
@@ -467,6 +475,12 @@ function setEvents(ele) {
             classList.classList.add('classList');
             classList.innerHTML = '<div></div>';
             updateClassList(classList);
+            if (event.target.tagName == 'LI') {
+                Array.from(edit.getElementsByTagName('select')).forEach(obj => {obj.parentElement.remove();})
+            }
+            if (['UL', 'OL'].includes(event.target.tagName)) {
+                Array.from(edit.getElementsByTagName('input')).forEach(obj => {obj.parentElement.remove();})
+            }
             inputFields.forEach(tagName => {
                 Array.from(edit.getElementsByTagName(tagName)).forEach((obj, i) => {
                     var attr = obj.name

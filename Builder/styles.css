@@ -305,6 +305,7 @@ menu .switch {
 }
 /* #endregion */
 
+
 /* #region Break */
 .br:before {
     content: '↩';
@@ -329,15 +330,20 @@ menu .switch {
 }
 .btn-round {
     width: 20px;
+    margin: 0 auto;
     border-radius: 10px;
     border: solid gray 1px;
+}
+#editMenu:has(.btn-round) {
+    text-align: center;
 }
 /* #endregion */
 
 /* #region Container/Hr */
 .container {
-    width: 3em;
+    min-width: 3em;
     min-height: 3em;
+    width: min-content;
     padding: 0.05px;
 }
 div.container {
@@ -353,7 +359,7 @@ p.container {
     overflow: auto;
 }
 #ground .hr:before,
-#ground .list:before,
+#ground .list:after,
 #ground .container:before {
     display: none;
     position: absolute;
@@ -375,14 +381,14 @@ p.container {
 #ground .hr:before {
     display: block;
 }
-#ground .list:before {
-    transform: translateX(-1.5em);
+#ground .list:after {
+    transform: translate(0.5em, -0.5em);
 }
 #ground .hr {
     overflow: visible;
 }
-#ground .list:has(*:hover):before,
-#ground .list:hover:before,
+#ground .list:has(*:hover):after,
+#ground .list:hover:after,
 #ground .container:has(*:hover):before,
 #ground .container:hover:before {
     display: block;
@@ -417,6 +423,10 @@ a {
 .a {
     display: inline-flex;
 }
+/* #endregion */
+
+/* #region List */
+
 /* #endregion */
 
 /* #region Text */

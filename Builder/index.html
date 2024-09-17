@@ -170,8 +170,8 @@
     </template>
     <template>
         <ul class="list pointer-events-all cursor-pointer" data-candrop="false">
-            <li class="">1</li>
-            <li class="">2</li>
+            <li>1</li>
+            <li>2</li>
         </ul>
         <div hidden>
             <div>Type<br>
@@ -180,6 +180,8 @@
                     <option value="ol">Ordered List</option>
                 </select>
             </div>
+            <div>Text<br><input type="text" oninput="changeText(this)"></div>
+            <div>Add Line<br><button class="btn-round" value="remove" onclick="currentEleEdit.insertAdjacentHTML('beforeend', `<li>${currentEleEdit.getElementsByTagName('li').length + 1}</li>`)">+</button></div>
             <!--<div>Items<br>
                 <button class="btn-round" value="remove" onclick="this.nextElementSibling.textContent--">-</button>
                 <span><img src onerror="try { this.parentElement.textContent = ` ${currentEleEdit.children.length} ` } catch {}" hidden></span>
