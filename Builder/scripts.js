@@ -1,9 +1,10 @@
+const remove = document.getElementById('remove');
 const editMenu = document.getElementById('editMenu');
 const ground = document.getElementById('ground');
 const output = document.getElementById('output');
+const overlay = document.getElementById('overlay');
 const stdEle = document.getElementById('standard');
 const templates = document.getElementsByTagName('template');
-const overlay = document.getElementById('overlay');
 
 const singleElements = ['container', 'heading', 'hr', 'list', 'pre', 'text', undefined];
 const indentBlocks = ['button', 'div', 'form', 'ol', 'p', 'pre', 'ul'];
@@ -17,8 +18,11 @@ editMenu.addEventListener('click', function (e) {
         editMenu.hidden = 'true';
         editMenu.style.display = 'none';
         editMenu.innerHTML = '';
+        currentEleEdit.setAttribute('draggable', 'true');
         currentEleEdit.style.outline = '';
         currentEleEdit.style.outlineOffset = '';
+        currentEleEdit.style.position = '';
+        remove.style.display = 'none';
         Array.from(editMenu.querySelectorAll('#editMenu .classList li[data-changed]')).forEach(ele => {
             ele.removeAttribute('data-changed')
         })
@@ -90,8 +94,12 @@ Array.from(templates).forEach(temp => {
                     currentEleEdit.style.outlineOffset = '';
                 }
                 currentEleEdit = event.target;
+                currentEleEdit.setAttribute('draggable', 'false');
                 currentEleEdit.style.outline = 'solid red 2px';
                 currentEleEdit.style.outlineOffset = '-2px';
+                currentEleEdit.insertAdjacentElement('beforeend', remove);
+                currentEleEdit.style.position = 'relative';
+                remove.style.display = 'block';
                 const eleType = currentEleEdit.classList[0]
 
                 search.addEventListener('input', searchRules);
@@ -172,6 +180,8 @@ Array.from(templates).forEach(temp => {
         }
         obj.oncontextmenu = function() {
             return false;
+        }
+        obj.onmouseover = function(event) {
         }
         ground.appendChild(obj);
         output.querySelector('pre').innerText = formatHTML(simplifyHtml(ground.innerHTML).trimStart());
@@ -548,12 +558,14 @@ function simplifyHtml() {
             const tagName = child.tagName.toLowerCase();
             
             // If the div class name matches the child's tag name, merge them
-            if (className.split(' ')[0] === tagName) {
-                for (const attr of element.attributes) {
-                    child.setAttribute(attr.name, attr.value);
+            if (className != '') {
+                if (className.split(' ')[0] === tagName) {
+                    for (const attr of element.attributes) {
+                        child.setAttribute(attr.name, attr.value);
+                    }
+                    element.replaceWith(child);
+                    element = child;
                 }
-                element.replaceWith(child);
-                element = child;
             }
         }
         // Remove unnecessary attributes

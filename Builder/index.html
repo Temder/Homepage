@@ -15,6 +15,17 @@
         <div id="presets"></div>
         <div id="ground" data-candrop="true">
             <div id="editMenu" hidden></div>
+            <button id="remove" onclick="this.parentElement.remove();editMenu.style.display = 'none';">
+                <svg class="noedit" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                        <path d="M4 6H20L18.4199 20.2209C18.3074 21.2337 17.4512 22 16.4321 22H7.56786C6.54876 22 5.69264 21.2337 5.5801 20.2209L4 6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M7.34491 3.14716C7.67506 2.44685 8.37973 2 9.15396 2H14.846C15.6203 2 16.3249 2.44685 16.6551 3.14716L18 6H6L7.34491 3.14716Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M2 6H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M10 11V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M14 11V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </g>
+                </svg>
+            </button>
         </div>
         <menu>
             <li>Container&nbsp;Borders<br><label class="switch">
@@ -61,6 +72,7 @@
         <div hidden>
             <div>Source<br><input type="text" name="src" oninput="changeAttribute(this, 'src')"></div>
             <div>Alt<br><input type="text" name="alt" oninput="changeAttribute(this, 'alt')"></div>
+            <div>Class<br><input type="text" name="class" oninput="changeAttribute(this, 'class')"></div>
         </div>
         Image
     </template>
@@ -96,6 +108,7 @@
                     <option value="week">Week</option>
                 </select>
             </div>
+            <div>Class<br><input type="text" name="class" oninput="changeAttribute(this, 'class')"></div>
         </div>
         Input
     </template>
@@ -113,6 +126,7 @@
                 </select>
             </div>
             <div>Text<br><input type="text" oninput="changeText(this)"></div>
+            <div>Class<br><input type="text" name="class" oninput="changeAttribute(this, 'class')"></div>
         </div>
         Heading
     </template>
@@ -138,6 +152,7 @@
                 </select>
             </div>
             <div>Text<br><input type="text" oninput="changeText(this)"></div>
+            <div>Class<br><input type="text" name="class" oninput="changeAttribute(this, 'class')"></div>
         </div>
         Text
     </template>
@@ -145,17 +160,22 @@
         <pre class="pre pointer-events-all cursor-pointer" data-candrop="false">Pre</pre>
         <div hidden>
             <div>Text<br><textarea type="text" oninput="changeText(this)"></textarea></div>
+            <div>Class<br><input type="text" name="class" oninput="changeAttribute(this, 'class')"></div>
         </div>
         Monospace
     </template>
     <template>
         <hr class="hr pointer-events-all cursor-pointer" data-candrop="false"></hr>
-        <div hidden></div>
+        <div hidden>
+            <div>Class<br><input type="text" name="class" oninput="changeAttribute(this, 'class')"></div>
+        </div>
         Line
     </template>
     <template>
         <span class="br pointer-events-all cursor-pointer" data-candrop="false"><br></span>
-        <div hidden></div>
+        <div hidden>
+            <div>Class<br><input type="text" name="class" oninput="changeAttribute(this, 'class')"></div>
+        </div>
         Break
     </template>
     <template>
@@ -165,13 +185,14 @@
         <div hidden>
             <div>Text<br><input type="text" oninput="changeText(this)"></div>
             <div>Href<br><input name="href" type="text" oninput="changeAttribute(this, 'href')"></div>
+            <div>Class<br><input type="text" name="class" oninput="changeAttribute(this, 'class')"></div>
         </div>
         Link
     </template>
     <template>
         <ul class="list pointer-events-all cursor-pointer" data-candrop="false">
-            <li>1</li>
-            <li>2</li>
+            <li>li</li>
+            <li>li</li>
         </ul>
         <div hidden>
             <div>Type<br>
@@ -181,12 +202,8 @@
                 </select>
             </div>
             <div>Text<br><input type="text" oninput="changeText(this)"></div>
-            <div>Add Line<br><button class="btn-round" value="remove" onclick="currentEleEdit.insertAdjacentHTML('beforeend', `<li>${currentEleEdit.getElementsByTagName('li').length + 1}</li>`)">+</button></div>
-            <!--<div>Items<br>
-                <button class="btn-round" value="remove" onclick="this.nextElementSibling.textContent--">-</button>
-                <span><img src onerror="try { this.parentElement.textContent = ` ${currentEleEdit.children.length} ` } catch {}" hidden></span>
-                <button class="btn-round" value="add" onclick="this.previousElementSibling.textContent++">+</button>
-            </div>-->
+            <div>Add Line<br><button class="btn-round" value="remove" onclick="currentEleEdit.insertAdjacentHTML('beforeend', `<li>li</li>`);">+</button><img src="" onerror="if (currentEleEdit && currentEleEdit.tagName == 'LI') this.parentElement.style.display = 'none';" style="display: none;" /></div>
+            <div>Class<br><input type="text" name="class" oninput="changeAttribute(this, 'class')"></div>
         </div>
         List
     </template>

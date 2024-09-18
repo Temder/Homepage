@@ -105,6 +105,9 @@ menu .switch {
     background-color: rgb(161, 159, 255);
     filter: brightness(75%);
 }
+#ground *[draggable=true]:hover {
+    position: relative;
+}
 #main {
     display: flex;
     flex-direction: row;
@@ -149,6 +152,24 @@ menu .switch {
     background-color: gray;
     cursor: unset !important;
 }
+/* #endregion */
+
+/* #region Remove */
+#remove {
+    display: none;
+    position: absolute;
+    width: 1em;
+    top: -2rem;
+    border: none;
+    color: red;
+    background-color: var(--color-edit);
+    z-index: 99;
+    line-height: 2rem;
+    font-size: 2rem;
+}
+/*#ground *[draggable=true]:hover #remove {
+    display: block;
+}*/
 /* #endregion */
 
 /* #region Edit Menu */
@@ -313,7 +334,7 @@ menu .switch {
 /* #endregion */
 
 /* #region Button */
-.button button {
+.button button:not(#remove) {
     display: inline-block;
     min-width: 3em;
     min-height: 1.25em;
