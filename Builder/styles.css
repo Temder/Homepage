@@ -66,6 +66,12 @@ menu button {
 menu .switch {
     margin-top: 0.5em;
 }
+#ground {
+    resize: both;
+    overflow: auto;
+    min-height: auto !important;
+    height: 20em;
+}
 #ground,
 #output {
     position: relative;

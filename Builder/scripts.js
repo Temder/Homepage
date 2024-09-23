@@ -7,7 +7,7 @@ const stdEle = document.getElementById('standard');
 const templates = document.getElementsByTagName('template');
 
 const singleElements = ['container', 'heading', 'hr', 'list', 'pre', 'text', undefined];
-const indentBlocks = ['button', 'div', 'form', 'ol', 'p', 'pre', 'ul'];
+const indentBlocks = ['button', 'div', 'form', 'ol', 'p', 'ul'];
 const inputFields = ['select', 'input', 'textarea'];
 
 var currentEleEdit = null;
@@ -23,6 +23,7 @@ editMenu.addEventListener('click', function (e) {
         currentEleEdit.style.outlineOffset = '';
         currentEleEdit.style.position = '';
         remove.style.display = 'none';
+        ground.insertAdjacentElement('afterbegin', remove);
         Array.from(editMenu.querySelectorAll('#editMenu .classList li[data-changed]')).forEach(ele => {
             ele.removeAttribute('data-changed')
         })
@@ -546,7 +547,11 @@ function setEvents(ele) {
 function simplifyHtml() {
     // Create a temporary DOM element to manipulate the HTML
     const groundClone = ground.cloneNode(true);
-    groundClone.children[0].remove();
+    Array.from(groundClone.children).forEach(child => {
+        if (['editMenu', 'remove'].includes(child.id)) {
+            groundClone.children[0].remove();
+        }
+    })
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = groundClone.innerHTML;
 
@@ -573,7 +578,7 @@ function simplifyHtml() {
         if (classes) {
             classes = classes.replace(/(^\w*|pointer-events-all|cursor-pointer)\s?/g, '');
         }
-        if (classes == '') {
+        if (['', null].includes(classes)) {
             element.removeAttribute('class');
         } else {
             element.setAttribute('class', classes);
