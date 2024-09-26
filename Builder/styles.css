@@ -66,12 +66,6 @@ menu button {
 menu .switch {
     margin-top: 0.5em;
 }
-#ground {
-    resize: both;
-    overflow: auto;
-    min-height: auto !important;
-    height: 20em;
-}
 #ground,
 #output {
     position: relative;
@@ -79,6 +73,12 @@ menu .switch {
     min-height: 20em;
     padding: 1em;
     border: solid var(--color-foreground) 2px;
+}
+#ground {
+    resize: both;
+    overflow: auto;
+    min-height: auto;
+    height: 20em;
 }
 #output {
     display: flex;
@@ -285,7 +285,7 @@ menu .switch {
     display: none;
     position: fixed;
     width: calc(100% - 40vw);
-    height: calc(100% - 40vh);
+    /*height: calc(100% - 40vh);*/
     top: 0;
     left: 0;
     padding: 10vh 7vw 7vw;
