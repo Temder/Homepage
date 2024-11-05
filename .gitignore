@@ -19,3 +19,4 @@ mysqlServer/Data/TOMS-LAPTOP*
 mysqlServer/Data/undo_001
 mysqlServer/Data/undo_002
 mysqlServer/my.ini
+*.code-workspace
