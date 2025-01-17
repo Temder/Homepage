@@ -13,6 +13,8 @@ function initThree() {
     const playerSpeed = 1;
     const velocity = new THREE.Vector3();
     const direction = new THREE.Vector3();
+    let rotationSpeed = 0.01; // Add this with other variables at the top
+    let rotationAngle = 0; // Add these variables at the top with other declarations
 
     const textureLoader = new THREE.TextureLoader();
     
@@ -76,10 +78,20 @@ function initThree() {
         player = new Physijs.SphereMesh(new THREE.SphereGeometry(5, 5, 5), new THREE.MeshBasicMaterial({ color: 'red' }));
         player.position.set(0, playerHeight, 0);
         scene.add(player);
-        camera.position.set(player.position.x, player.position.y + 25, player.position.z + 25);
-        camera.rotation.set(-1, 0, 0);
+        
+        // Update camera setup
+        camera.position.set(0, 10, 25); // Position relative to player
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
+        player.add(camera); // Attach camera as child of player
+        
+        // Initial player orientation
         player.lookAt(planet.position);
-        player.attach(camera);
+        const initQuat = new THREE.Quaternion();
+        const up = new THREE.Vector3(0, 1, 0);
+        const gravityDir = planet.position.clone().sub(player.position).normalize();
+        const playerUp = gravityDir.clone().multiplyScalar(-1);
+        initQuat.setFromUnitVectors(up, playerUp);
+        player.quaternion.copy(initQuat);
 
         // Keyboard controls
         document.addEventListener('keydown', (event) => {
@@ -135,29 +147,44 @@ function initThree() {
     function animate() {
         requestAnimationFrame(animate);
         if (locked) {
-            //direction.z = 1;
-            direction.z = Number(moveForward) - Number(moveBackward);
-            direction.normalize();
-
-            const lookDirection = new THREE.Vector3();
-            camera.getWorldDirection(lookDirection);
-            lookDirection.normalize();
+            // Calculate gravity direction and up vector
+            gravityDir = planet.position.clone().sub(player.position).normalize();
+            const playerUp = gravityDir.clone().multiplyScalar(-1);
             
+            // Update rotation angle based on input
+            if (moveRight) rotationAngle -= rotationSpeed;
+            if (moveLeft) rotationAngle += rotationSpeed;
+            
+            // Create base quaternion for surface alignment
+            const alignQuat = new THREE.Quaternion();
+            const up = new THREE.Vector3(0, 1, 0);
+            alignQuat.setFromUnitVectors(up, playerUp);
+            
+            // Create rotation quaternion
+            const rotationQuat = new THREE.Quaternion();
+            rotationQuat.setFromAxisAngle(playerUp, rotationAngle);
+            
+            // Combine rotations: first align with surface, then apply accumulated rotation
+            player.quaternion.multiplyQuaternions(rotationQuat, alignQuat);
+            
+            // Get player's forward direction for movement
+            const forward = new THREE.Vector3(0, 0, -1);
+            forward.applyQuaternion(player.quaternion);
+            forward.projectOnPlane(playerUp).normalize();
+            
+            // Calculate movement
             const moveDirection = new THREE.Vector3();
-            moveDirection.copy(lookDirection).multiplyScalar(direction.z).add(new THREE.Vector3(lookDirection.z, 0, -lookDirection.x).multiplyScalar(direction.x)).normalize().multiplyScalar(25);
-            player.lookAt(planet.position);
-            player.setLinearVelocity(moveDirection.multiplyScalar(2 * playerSpeed));
+            if (moveForward) moveDirection.add(forward);
+            if (moveBackward) moveDirection.sub(forward);
             
-            gravityDir = planet.position.clone().sub(player.position);
-            scene.setGravity(gravityDir.clone().multiplyScalar(100));
+            if (moveDirection.length() > 0) {
+                moveDirection.normalize();
+                player.setLinearVelocity(moveDirection.multiplyScalar(50 * playerSpeed));
+            } else {
+                player.setLinearVelocity(new THREE.Vector3(0, 0, 0));
+            }
 
-            if (moveRight) {
-                rot -= 0.025;
-            }
-            if (moveLeft) {
-                rot += 0.025;
-            }
-            player.rotateOnWorldAxis(player.position.clone().sub(planet.position).normalize(), rot);
+            scene.setGravity(gravityDir.multiplyScalar(100));
         }
         scene.simulate();
         renderer.render(scene, camera);

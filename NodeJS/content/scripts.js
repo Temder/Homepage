@@ -27,12 +27,17 @@ if (localStorage.getItem('volume')) {
 } else {
     var volume = 100;
 }
+if (localStorage.getItem('wave')) {
+    var showWave = localStorage.getItem('wave');
+} else {
+    var showWave = true;
+}
 //#endregion
 
 
 
 
-//#region functions
+//#region Functions
 function calculateRatio (a, b) {
     return (b == 0) ? a : calculateRatio (b, a%b);
 }
@@ -56,26 +61,25 @@ function loadPage(page) {
             if (document.getElementById('views-all')) {
                 fetchViews();
             }
-            if(document.getElementById('radios') != null) {
+            if (document.getElementById('radios') != null) {
                 radio(radios);
             }
-            if(document.getElementById('languageSelect') != null) {
+            if (document.getElementById('languageSelect') != null) {
                 document.getElementById('languageSelect').value = shortLang;
-            }
-            if(document.getElementById('volumeSlider') != null) {
                 document.getElementById('volumeSlider').value = volume;
                 document.getElementById('volumeSlider').nextElementSibling.textContent = `${volume} %`;
+                if (showWave == 'true') {
+                    document.getElementById('waveSwitch').checked = true;
+                }
             }
-            if (document.getElementById('cssImageGallery')) {
-                const imgGallery = document.getElementById('cssImageGallery');
+            if (document.getElementById('calendar')) {
+                const imgGallery = document.getElementsByClassName('cssImageGallery')[0];
                 for (let i = 0; i < 10; i++) {
                     var randID = Math.floor(Math.random() * 86);
                     var randWidth = Math.floor(Math.random() * 200) + 100;
                     var randHeight = Math.floor(Math.random() * 200) + 100;
-                    imgGallery.insertAdjacentHTML('afterbegin', `<div class="noselect" style="background-image: url('https://picsum.photos/id/${randID}/${randWidth}/${randHeight}');" tabindex="0"></div>`);
+                    imgGallery.insertAdjacentHTML('afterbegin', `<img src="https://picsum.photos/id/${randID}/${randWidth}/${randHeight}" tabindex="0"></div>`);
                 }
-            }
-            if (document.getElementById('calendar')) {
                 nav = document.getElementById('calendar-nav');
                 nav.addEventListener('click', function (e) {
                     if (e.offsetX > nav.offsetWidth) {
@@ -191,7 +195,7 @@ function loadPage(page) {
                             return numA - numB;
                         });
                         images.forEach(img => {
-                            document.getElementById('img-container').insertAdjacentHTML('afterbegin', `<img src="./images/${img}" />`);
+                            document.getElementById('img-container').insertAdjacentHTML('afterbegin', `<img src="./images/${img}" tabindex="0" />`);
                         });
                     } catch (error) {
                         console.error('Error fetching images:', error);
@@ -621,6 +625,7 @@ function getRandom(min, max) {
     return Math.random() * (max - min) + min;
 }
 
+const wave = document.getElementById('wave');
 var randDir = getRandom(200, 300);
 var rand = getRandom(-1, 0.5);
 var randColorChange = getRandom(9, 15);
@@ -638,7 +643,15 @@ for (let i = 0; i < 5; i++) {
                c250 ${randDir + 100}, 150 ${100 - i * randHeightChange * 0.75 + (randDir - 100) * rand}, 400 ${100 - i * randHeightChange * 0.75}
                L400 400;
                ${curve}" dur="5s" repeatCount="indefinite"/></path>`;
-    document.getElementById('wave').insertAdjacentHTML('afterbegin', svg);
+    wave.insertAdjacentHTML('afterbegin', svg);
+}
+function setWave(value) {
+    showWave = value;
+    localStorage.setItem('wave', value);
+    showHideEle(wave);
+}
+if (showWave == 'false') {
+    showHideEle(wave);
 }
 //#endregion
 
