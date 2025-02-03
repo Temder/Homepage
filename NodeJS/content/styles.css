@@ -8,6 +8,8 @@
     --color-main-fg: #333;
     --color-radio-hover-1: #33333380;
     --color-radio-hover-2: #cccccc80;
+    --color-text-shadow-1: white;
+    --color-text-shadow-2: black;
     --display-sun: block;
     --display-moon: none;
 }
@@ -27,6 +29,8 @@
         --color-main-fg: #eee;
         --color-radio-hover-1: #cccccc80;
         --color-radio-hover-2: #33333380;
+        --color-text-shadow-1: black;
+        --color-text-shadow-2: white;
         --display-sun: none;
         --display-moon: block;
     }
@@ -103,8 +107,17 @@ body {
     margin: 0;
     padding: 0;
     /*transition: background-color 0.3s, color 0.3s;*/
-    background-color: var(--color-main-bg);
+    background: var(--color-main-bg);
+    background-attachment: fixed !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    -webkit-background-size: cover !important;
+    -moz-background-size: cover !important;
+    -o-background-size: cover !important;
     color: var(--color-main-fg);
+    text-shadow: 2px 0 var(--color-text-shadow-1), -2px 0 var(--color-text-shadow-1), 0 2px var(--color-text-shadow-1), 0 -2px var(--color-text-shadow-1),
+                 1px 1px var(--color-text-shadow-1), -1px -1px var(--color-text-shadow-1), 1px -1px var(--color-text-shadow-1), -1px 1px var(--color-text-shadow-1);
 }
 button {
     border: solid 0.1em var(--color-main-fg);
@@ -276,7 +289,7 @@ input:checked + .slider:before {
 
 /*#region ChatGPT Snake*/
 #gameCanvas {
-    border: 1px solid #fff;
+    border: 1px solid var(--color-main-fg);
 }
 .snake-controls {
     display: grid;

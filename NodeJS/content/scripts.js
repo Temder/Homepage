@@ -32,6 +32,17 @@ if (localStorage.getItem('wave')) {
 } else {
     var showWave = true;
 }
+if (localStorage.getItem('background')) {
+    var background = JSON.parse(localStorage.getItem('background'));
+} else {
+    var background = {
+        type: 'color',
+        color: 'var(--color-main-bg)',
+        gradient: 'linear-gradient(purple, blue)',
+        image: 'url(./images/background.jpg)'
+    };
+    localStorage.setItem('background', JSON.stringify(background))
+}
 //#endregion
 
 
@@ -66,6 +77,7 @@ function loadPage(page) {
             }
             if (document.getElementById('languageSelect') != null) {
                 document.getElementById('languageSelect').value = shortLang;
+                document.getElementById('backgroundSelect').value = `${background.type}_${shortLang}`;
                 document.getElementById('volumeSlider').value = volume;
                 document.getElementById('volumeSlider').nextElementSibling.textContent = `${volume} %`;
                 if (showWave == 'true') {
@@ -243,6 +255,19 @@ document.querySelectorAll('nav > a').forEach(el => {
         el.classList.add('active');
     }
 })
+//#endregion
+
+
+
+
+//#region Background switcher
+function setBackgroundType(type) {
+    type = type.replace(`_${shortLang}`, '');
+    background.type = type;
+    document.body.style.background = background[`${type}`];
+    localStorage.setItem('background', JSON.stringify(background))
+}
+setBackgroundType(background.type);
 //#endregion
 
 
@@ -488,6 +513,8 @@ function setLanguage(lang) {
     shortLang = userLang.split('-')[0];
     document.body.setAttribute('id', 'lang-' + lang);
     localStorage.setItem('language', lang);
+    
+    document.getElementById('backgroundSelect').value = `${background.type}${shortLang}`;
 }
 //#endregion
 

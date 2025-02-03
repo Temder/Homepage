@@ -20,10 +20,10 @@
             <div class="center nowrap"></div>
         </div>
     </div>
-    <div class="wrapper" style="width: max-content;">
+    <div class="wrapper">
         <h3 class="de center">Welle</h3>
         <h3 class="en center">Wave</h3>
-        <div class="center-content" style="width: max-content;">
+        <div class="center-content">
             <span class="de">Versteckt</span>
             <span class="en">Hidden</span>
             <label class="switch">
@@ -32,6 +32,20 @@
             </label>
             <span class="de">Angezeigt</span>
             <span class="en">Shown</span>
+        </div>
+    </div>
+    <div class="wrapper">
+        <h3 class="de center">Hintergrund</h3>
+        <h3 class="en center">Background</h3>
+        <div>
+            <select id="backgroundSelect" onchange="setBackgroundType(this.value)">
+                <option value="color_de" class="de">Farbe</option>
+                <option value="color_en" class="en">Color</option>
+                <option value="image_de" class="de">Bild</option>
+                <option value="image_en" class="en">Image</option>
+                <option value="gradient_de" class="de">Gradient</option>
+                <option value="gradient_en" class="en">Gradient</option>
+            </select>
         </div>
     </div>
 </div>
