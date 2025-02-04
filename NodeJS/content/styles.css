@@ -18,6 +18,7 @@
     --nav-border-radius: 1.25rem;
     --radios: calc(2-1);
     --gallery-size: 7em;
+    --text-shadow-enabled: false;
 }
 @media (prefers-color-scheme: dark) {
     :root {
@@ -116,8 +117,8 @@ body {
     -moz-background-size: cover !important;
     -o-background-size: cover !important;
     color: var(--color-main-fg);
-    text-shadow: 2px 0 var(--color-text-shadow-1), -2px 0 var(--color-text-shadow-1), 0 2px var(--color-text-shadow-1), 0 -2px var(--color-text-shadow-1),
-                 1px 1px var(--color-text-shadow-1), -1px -1px var(--color-text-shadow-1), 1px -1px var(--color-text-shadow-1), -1px 1px var(--color-text-shadow-1);
+    text-shadow: calc(-2px * var(--text-shadow-enabled)) 0 var(--color-text-shadow-1), calc(-2px * var(--text-shadow-enabled)) 0 var(--color-text-shadow-1), 0 calc(2px * var(--text-shadow-enabled)) var(--color-text-shadow-1), 0 calc(-2px * var(--text-shadow-enabled)) var(--color-text-shadow-1),
+                 calc(1px * var(--text-shadow-enabled)) calc(1px * var(--text-shadow-enabled)) var(--color-text-shadow-1), calc(-1px * var(--text-shadow-enabled)) calc(-1px * var(--text-shadow-enabled)) var(--color-text-shadow-1), calc(1px * var(--text-shadow-enabled)) calc(-1px * var(--text-shadow-enabled)) var(--color-text-shadow-1), calc(1px * var(--text-shadow-enabled)) calc(1px * var(--text-shadow-enabled)) var(--color-text-shadow-1);
 }
 button {
     border: solid 0.1em var(--color-main-fg);

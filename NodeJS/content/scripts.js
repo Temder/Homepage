@@ -265,7 +265,12 @@ function setBackgroundType(type) {
     type = type.replace(`_${shortLang}`, '');
     background.type = type;
     document.body.style.background = background[`${type}`];
-    localStorage.setItem('background', JSON.stringify(background))
+    localStorage.setItem('background', JSON.stringify(background));
+    if (['image', 'gradient'].includes(type)) {
+        document.documentElement.style.setProperty('--text-shadow-enabled', '1');
+    } else {
+        document.documentElement.style.setProperty('--text-shadow-enabled', 'false');
+    }
 }
 setBackgroundType(background.type);
 //#endregion
@@ -514,7 +519,7 @@ function setLanguage(lang) {
     document.body.setAttribute('id', 'lang-' + lang);
     localStorage.setItem('language', lang);
     
-    document.getElementById('backgroundSelect').value = `${background.type}${shortLang}`;
+    document.getElementById('backgroundSelect').value = `${background.type}_${shortLang}`;
 }
 //#endregion
 
