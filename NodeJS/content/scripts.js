@@ -48,6 +48,12 @@ if (localStorage.getItem('background')) {
     };
     localStorage.setItem('background', JSON.stringify(background))
 }
+if (localStorage.getItem('color_picker_knob_position')) {
+    var color_picker_knob_position = JSON.parse(localStorage.getItem('color_picker_knob_position'));
+} else {
+    var color_picker_knob_position = { x: 0, y: 0 };
+    localStorage.setItem('color_picker_knob_position', JSON.stringify(color_picker_knob_position));
+}
 //#endregion
 
 
@@ -288,6 +294,7 @@ document.querySelectorAll('nav > a').forEach(el => {
 
 
 //#region Background switcher
+document.documentElement.style.setProperty('--color-main-bg-custom', background.color);
 function setBackgroundType(type) {
     type = type.replace(`_${shortLang}`, '');
     background.type = type;
@@ -363,8 +370,8 @@ function colorPicker() {
     let currentX = centerX;
     let currentY = centerY;
 
-    colorKnob.style.left = centerX + 'px';
-    colorKnob.style.top = centerY + 'px';
+    colorKnob.style.left = centerX + color_picker_knob_position.x + 'px';
+    colorKnob.style.top = centerY + color_picker_knob_position.y + 'px';
 
     function updateColor(x, y) {
         const pixel = ctx.getImageData(x, y, 1, 1).data;
@@ -406,6 +413,9 @@ function colorPicker() {
     function updateUI() {
         colorKnob.style.left = currentX + 'px';
         colorKnob.style.top = currentY + 'px';
+        color_picker_knob_position.x = parseInt(colorKnob.style.left) - centerX;
+        color_picker_knob_position.y = parseInt(colorKnob.style.top) - centerY;
+        localStorage.setItem('color_picker_knob_position', JSON.stringify(color_picker_knob_position));
         updateColor(currentX, currentY);
     }
 
