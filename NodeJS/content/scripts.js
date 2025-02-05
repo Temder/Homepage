@@ -32,6 +32,11 @@ if (localStorage.getItem('wave')) {
 } else {
     var showWave = true;
 }
+if (localStorage.getItem('theme')) {
+    var currentTheme = localStorage.getItem('theme');
+} else {
+    var currentTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? 'dark' : 'light';
+}
 if (localStorage.getItem('background')) {
     var background = JSON.parse(localStorage.getItem('background'));
 } else {
@@ -58,6 +63,21 @@ function fileExists(image_url){
     http.send();
     return http.status != 404;
 }
+function getLuminance(r, g, b) {
+    const [rs, gs, bs] = [r, g, b].map(c => {
+        c = c / 255;
+        return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+}
+function changeTheme() {
+    Object.entries(cssVariables).forEach(([key, val]) => {
+        var var1 = getComputedStyle(document.documentElement).getPropertyValue(key)
+        var var2 = getComputedStyle(document.documentElement).getPropertyValue(val)
+        document.documentElement.style.setProperty(key, var2);
+        document.documentElement.style.setProperty(val, var1);
+    })
+}
 //#endregion
 
 
@@ -68,11 +88,12 @@ function loadPage(page) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+            const urlFragment = window.location.hash.substring(1);
             document.getElementById('main').innerHTML = this.responseText;
-            if (document.getElementById('views-all')) {
+            if (urlFragment == 'home') {
                 fetchViews();
             }
-            if (document.getElementById('radios') != null) {
+            if (urlFragment == 'radio-stations') {
                 radio(radios);
             }
             if (document.getElementById('languageSelect') != null) {
@@ -84,7 +105,7 @@ function loadPage(page) {
                     document.getElementById('waveSwitch').checked = true;
                 }
             }
-            if (document.getElementById('calendar')) {
+            if (urlFragment == 'blog') {
                 const imgGallery = document.getElementsByClassName('cssImageGallery')[0];
                 for (let i = 0; i < 10; i++) {
                     var randID = Math.floor(Math.random() * 86);
@@ -134,13 +155,7 @@ function loadPage(page) {
                 initCalendar(true);
                 initSnake();
             }
-            if (document.getElementsByClassName('colorPicker')) {
-                colorPicker();
-            }
-            if (document.getElementById('threejs')) {
-                initThree();
-            }
-            if (document.getElementById('image-form')) {
+            if (urlFragment == 'image-generation') {
                 var generatedImage = document.getElementById('generated-image');
                 var width = document.getElementById('width');
                 var height = document.getElementById('height');
@@ -232,6 +247,15 @@ function loadPage(page) {
                     generatedImage.style.aspectRatio = `${selectedRatioSplit[0]} / ${selectedRatioSplit[1]}`;
                 });*/
             }
+            if (urlFragment == 'threejs') {
+                initThree();
+            }
+            if (urlFragment == 'settings') {
+                if (document.getElementById('backgroundSelect').value.includes('color')) {
+                    document.getElementsByClassName('colorPicker')[0].style.display = 'block';
+                    colorPicker();
+                }
+            }
         }
     };
     xhttp.open('GET', `/${page}`, true);
@@ -271,8 +295,15 @@ function setBackgroundType(type) {
     localStorage.setItem('background', JSON.stringify(background));
     if (['image', 'gradient'].includes(type)) {
         document.documentElement.style.setProperty('--text-shadow-enabled', '1');
+        if (document.getElementById('colorPicker')) {
+            document.getElementsByClassName('colorPicker')[0].style.display = 'none';
+        }
     } else {
         document.documentElement.style.setProperty('--text-shadow-enabled', 'false');
+        if (document.getElementById('colorPicker')) {
+            document.getElementsByClassName('colorPicker')[0].style.display = 'block';
+            colorPicker();
+        }
     }
 }
 setBackgroundType(background.type);
@@ -286,7 +317,7 @@ function colorPicker() {
     // Cache DOM elements
     const colorKnob = document.getElementById('colorKnob');
     const colorPicker = document.getElementById('colorPicker');
-    const colorDisplay = document.getElementById('colorDisplay');
+    //const colorDisplay = document.getElementById('colorDisplay');
     const ctx = colorPicker.getContext('2d');
     
     // Set canvas size
@@ -316,10 +347,10 @@ function colorPicker() {
 
     // Add white/black radial gradient
     const radialGradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius);
-    radialGradient.addColorStop(0, 'rgba(0, 0, 0, 1)');
+    radialGradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
     radialGradient.addColorStop(0.4, 'rgba(255, 255, 255, 0)');
     radialGradient.addColorStop(0.6, 'rgba(255, 255, 255, 0)');
-    radialGradient.addColorStop(1, 'rgba(255, 255, 255, 1)');
+    radialGradient.addColorStop(1, 'rgba(0, 0, 0, 1)');
     
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
@@ -338,9 +369,21 @@ function colorPicker() {
     function updateColor(x, y) {
         const pixel = ctx.getImageData(x, y, 1, 1).data;
         const color = `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]})`;
-        colorDisplay.textContent = `Selected Color: ${rgbToHex(pixel[0], pixel[1], pixel[2])}`;
-        colorDisplay.style.color = color;
+        //colorDisplay.textContent = `Selected Color: ${rgbToHex(pixel[0], pixel[1], pixel[2])}`;
+        //colorDisplay.style.color = color;
         colorKnob.style.backgroundColor = color;
+        document.documentElement.style.setProperty('--color-main-bg-custom', color);
+        background.color = color;
+        localStorage.setItem('background', JSON.stringify(background));
+
+        const luminance = getLuminance(pixel[0], pixel[1], pixel[2]);
+        const changeTo = luminance < 0.5 ? 'dark' : 'light';
+        if (changeTo != currentTheme) {
+            currentTheme = changeTo;
+            changeTheme();
+        }
+        document.body.style.backgroundColor = color;
+        //document.documentElement.style.setProperty('--color-main-fg', textColor);
     }
 
     function handleKnobPosition(e) {
@@ -770,6 +813,7 @@ function showHideEle(ele) {
 
 //#region Theme switcher
 var style = document.styleSheets[0].cssRules[0].style;
+var userTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 const cssVariables = {};
 for (let i = 1; i < style.length; i=i+2) {
   cssVariables[style[i-1]] = style[i];
@@ -777,14 +821,14 @@ for (let i = 1; i < style.length; i=i+2) {
 
 document.querySelectorAll('.changeTheme').forEach(el => {
     el.addEventListener('click', function() {
-        Object.entries(cssVariables).forEach(([key, val]) => {
-            var var1 = getComputedStyle(document.documentElement).getPropertyValue(key)
-            var var2 = getComputedStyle(document.documentElement).getPropertyValue(val)
-            document.documentElement.style.setProperty(key, var2);
-            document.documentElement.style.setProperty(val, var1);
-        })
+        changeTheme();
+        currentTheme = currentTheme == 'dark' ? 'light' : 'dark';
+        localStorage.setItem('theme', currentTheme);
     })
 })
+if (userTheme != currentTheme) {
+    changeTheme();
+}
 //#endregion
 
 
