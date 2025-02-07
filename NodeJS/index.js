@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var connection = mysql.createConnection({
   host: '127.0.0.1',
   user: 'root',//Temder
-  password: '13792846#',//Start123#
+  password: '',//Start123#
   database: 'homepage',
   dateStrings: true
 });
@@ -235,7 +235,7 @@ app.post('/generate-image', async (req, res) => {
     .catch(function (error) {
       console.error(error);
     });*/
-  try {
+  /*try {
     const directoryPath = path.join(__dirname, 'content/images');
     fs.readdir(directoryPath, (err, files) => {
       if (err) {
@@ -266,7 +266,7 @@ app.post('/generate-image', async (req, res) => {
       console.log(error);
     }
     res.status(500).json({ error: 'Failed to generate image' });
-  }
+  }*/
 });
 
 app.listen(PORT, () => {
