@@ -45,10 +45,9 @@ async function saveImage(imageUrl) {
 app.post('/generate', async (req, res) => {
     let browser;
     try {
-        //const ExtensionPath = 'NodeJS/craiyon/extensions/';
-        const { prompt } = req.body;
+        const { prompt, style, shape } = req.body;
         browser = await puppeteer.launch({
-            headless: true, // Make browser visible
+            headless: false, // Make browser visible
             slowMo: 50, // Slow down operations by 50ms
             args: [
                 //`--disable-extensions-except=${ExtensionPath}`,
@@ -68,27 +67,37 @@ app.post('/generate', async (req, res) => {
             waitUntil: 'networkidle0' 
         });
 
-
-        // Continue with rest of the process
-        await page.waitForSelector('textarea[name="text"]');
-        await page.type('textarea[name="text"]', prompt);
-        
+        // Handle cookie consent if present
         try {
-            // Wait for iframe to be present
-            await page.waitForSelector('#sp_message_iframe_1230780');
-            
-            // Get the iframe element
+            await page.waitForSelector('#sp_message_iframe_1230780', { timeout: 5000 });
             const frameHandle = await page.$('#sp_message_iframe_1230780');
             const frame = await frameHandle.contentFrame();
-            
-            // Wait for and click the accept button inside the iframe
             await frame.waitForSelector('button[title="Zustimmen"]');
             await frame.click('button[title="Zustimmen"]');
         } catch (error) {
-            console.error('Error handling the cookie popup:', error);
-            // Continue execution even if cookie handling fails
+            console.log('No cookie consent popup or already accepted');
         }
 
+        // Select style if provided
+        if (style) {
+            await page.waitForSelector('a.all-other-models');
+            await page.click('a.all-other-models');
+            await page.waitForSelector(`a.other-model-button[href*="${style}"]`);
+            await page.click(`a.other-model-button[href*="${style}"]`);
+        }
+
+        // Select shape if provided
+        if (shape) {
+            await page.waitForSelector('button[id="modelEditButton"]');
+            await page.click('button[id="modelEditButton"]');
+            await page.waitForSelector(`div[id="${shape}"]`);
+            await page.click(`div[id="${shape}"]`);
+        }
+
+        // Enter prompt and generate
+        await page.waitForSelector('textarea[name="text"]');
+        await page.type('textarea[name="text"]', prompt);
+        
         // Click generate button
         const generateButton = await page.waitForSelector('button[id="modelSubmitButton"]');
         await generateButton.click();

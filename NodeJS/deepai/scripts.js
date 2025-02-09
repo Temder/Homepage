@@ -4,6 +4,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     const loading = document.getElementById('loading');
     const imageGrid = document.getElementById('imageGrid');
     const savedImagesContainer = document.getElementById('savedImages');
+    const styleSelect = document.getElementById('styleSelect');
+    const shapeSelect = document.getElementById('shapeSelect');
+
+    // Sort style options
+    const options = Array.from(styleSelect.options);
+    
+    // Skip the first "No Specific Style" option
+    const firstOption = options.shift();
+    
+    // Sort remaining options by text
+    options.sort((a, b) => a.text.localeCompare(b.text));
+    
+    // Clear and rebuild select
+    styleSelect.innerHTML = '';
+    styleSelect.appendChild(firstOption);
+    options.forEach(option => styleSelect.appendChild(option));
+    styleSelect.value = '';
+    shapeSelect.value = 'edit_shape_3';
 
     // Load saved images
     async function loadSavedImages() {
@@ -25,6 +43,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     generateBtn.addEventListener('click', async () => {
         const prompt = promptInput.value.trim();
+        const style = styleSelect.value;
+        const shape = shapeSelect.value;
         if (!prompt) return;
 
         loading.style.display = 'block';
@@ -37,7 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ prompt })
+                body: JSON.stringify({ prompt, style, shape })
             });
 
             const data = await response.json();

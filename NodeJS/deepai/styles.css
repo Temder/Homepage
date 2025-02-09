@@ -1,3 +1,7 @@
+#loading {
+    display: none;
+}
+
 .image-grid {
     display: flex;
     justify-content: center;
@@ -20,8 +24,21 @@
 }
 
 .saved-images img {
-    max-width: 200px;
-    height: auto;
+    height: 15em;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#styleSelect {
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.input-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
 }
