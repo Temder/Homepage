@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepAI Image Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>AI Image Generator</h1>
+        <div class="input-section">
+            <input type="text" id="promptInput" placeholder="Enter your image description">
+            <button id="generateBtn">Generate</button>
+        </div>
+        <div class="loading" id="loading">Generating images...</div>
+        <div class="image-grid" id="imageGrid"></div>
+        <h2>Saved Images</h2>
+        <div class="saved-images" id="savedImages"></div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
