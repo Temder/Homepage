@@ -1,8 +1,11 @@
 const express = require('express');
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const path = require('path');
 const fs = require('fs');
-// Remove node-fetch require
+
+puppeteer.use(StealthPlugin());
+
 const app = express();
 const port = 3000;
 
@@ -42,38 +45,18 @@ async function saveImage(imageUrl) {
     return `/images/${filename}`;
 }
 
-app.post('/generate', async (req, res) => {
-    let browser;
+async function generateWithDeepAI(browser, prompt, style, shape) {
+    const page = await browser.newPage();
     try {
-        const { prompt, style, shape } = req.body;
-        browser = await puppeteer.launch({
-            headless: false, // Make browser visible
-            slowMo: 50, // Slow down operations by 50ms
-            args: [
-                //`--disable-extensions-except=${ExtensionPath}`,
-                //`--load-extension=${ExtensionPath}`,
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--window-size=1280,800' // Set a reasonable window size
-            ],
-            defaultViewport: {
-                width: 1280,
-                height: 800
-            }
-        });
+        await page.goto('https://deepai.org/machine-learning-model/text2img', { waitUntil: 'networkidle0' });
         
-        const page = await browser.newPage();
-        await page.goto('https://deepai.org/machine-learning-model/text2img', { 
-            waitUntil: 'networkidle0' 
-        });
-
         // Handle cookie consent if present
         try {
             await page.waitForSelector('#sp_message_iframe_1230780', { timeout: 5000 });
             const frameHandle = await page.$('#sp_message_iframe_1230780');
             const frame = await frameHandle.contentFrame();
-            await frame.waitForSelector('button[title="Zustimmen"]');
-            await frame.click('button[title="Zustimmen"]');
+            await frame.waitForSelector('button[title="Accept"], button[title="Zustimmen"]');
+            await frame.click('button[title="Accept"], button[title="Zustimmen"]');
         } catch (error) {
             console.log('No cookie consent popup or already accepted');
         }
@@ -117,11 +100,138 @@ app.post('/generate', async (req, res) => {
             return img && !img.classList.contains('placeholder-image') ? img.src : null;
         });
 
+        return imageUrl;
+    } finally {
+        await page.close();
+    }
+}
+
+async function generateWithPershot(browser, params) {
+    const page = await browser.newPage();
+    try {
+        // Set more realistic browser behavior
+        await page.setDefaultNavigationTimeout(60000);
+        await page.setViewport({ width: 1280, height: 800 });
+        
+        // Set a more browser-like user agent
+        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+
+        // Add browser-like characteristics
+        await page.evaluateOnNewDocument(() => {
+            Object.defineProperty(navigator, 'webdriver', {
+                get: () => undefined
+            });
+            Object.defineProperty(navigator, 'languages', {
+                get: () => ['en-US', 'en']
+            });
+        });
+
+        // Navigate with standard browser-like behavior
+        await page.goto('https://perchance.org/pershot', {
+            waitUntil: 'networkidle0',
+            timeout: 30000
+        });
+
+        // Wait for and handle potential verification popup
+        try {
+            const verificationSelector = '#verification-dialog'; // Adjust based on actual popup
+            await page.waitForSelector(verificationSelector, { timeout: 5000 });
+            if (await page.$(verificationSelector)) {
+                // Handle verification - this depends on the specific verification type
+                // For example, clicking a button or solving a simple challenge
+                await page.click('#verify-button'); // Adjust selector as needed
+                await page.waitForTimeout(2000);
+            }
+        } catch (e) {
+            console.log('No verification popup detected, continuing...');
+        }
+
+        // Rest of the existing generateWithPershot code...
+        await page.waitForSelector('#outputIframeEl', { timeout: 30000 });
+        const frameHandle = await page.$('#outputIframeEl');
+        const frame = await frameHandle.contentFrame();
+        
+        // Add random delays between actions to appear more human-like
+        await page.waitForTimeout(Math.random() * 1000 + 500);
+        
+        // Input prompt with human-like typing
+        await frame.waitForSelector('textarea[data-name="description"]');
+        await frame.type('textarea[data-name="description"]', params.prompt, {
+            delay: Math.random() * 100 + 50 // Random typing delay
+        });
+
+        // Input negative prompt if provided
+        if (params.negative) {
+            await frame.waitForSelector('textarea[data-name="negative"]');
+            await frame.type('textarea[data-name="negative"]', params.negative);
+        }
+
+        // Select style
+        if (params.style) {
+            await frame.waitForSelector('select[data-name="artStyle"]');
+            await frame.select('select[data-name="artStyle"]', `ref:optionKeyName:${params.style}`);
+        }
+
+        // Select number of images
+        await frame.waitForSelector('select[data-name="numImages"]');
+        await frame.select('select[data-name="numImages"]', '1');
+
+        // Click generate button
+        await frame.waitForSelector('#generateButtonEl');
+        await frame.click('#generateButtonEl');
+
+        // Wait for generated image and get its URL
+        await frame.waitForSelector('.t2i-image-ctn img', { timeout: 60000 });
+        const imageUrl = await frame.evaluate(() => {
+            const img = document.querySelector('.t2i-image-ctn img');
+            return img ? img.src : null;
+        });
+
+        return imageUrl;
+    } catch (error) {
+        console.error('Pershot generation error:', error);
+        throw error;
+    } finally {
+        await page.close();
+    }
+}
+
+app.post('/generate', async (req, res) => {
+    let browser;
+    try {
+        const { prompt, negative, style, shape, site } = req.body;
+        
+        browser = await puppeteer.launch({
+            headless: false, // Use false for debugging
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-infobars',
+                '--window-size=1280,800',
+                '--disable-dev-shm-usage',
+                '--disable-accelerated-2d-canvas',
+                '--disable-gpu',
+                '--hide-scrollbars',
+                '--disable-notifications'
+            ],
+            ignoreHTTPSErrors: true,
+            defaultViewport: {
+                width: 1280,
+                height: 800
+            }
+        });
+
+        let imageUrl;
+        if (site === 'deepai') {
+            imageUrl = await generateWithDeepAI(browser, prompt, style, shape);
+        } else if (site === 'pershot') {
+            imageUrl = await generateWithPershot(browser, { prompt, negative, style, shape });
+        }
+
         if (!imageUrl) {
             throw new Error('No image was generated');
         }
 
-        // After getting imageUrl, save it
         const savedImagePath = await saveImage(imageUrl);
         res.json({ images: [savedImagePath] });
     } catch (error) {

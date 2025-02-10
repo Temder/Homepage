@@ -1,0 +1,593 @@
+<iframe id="outputIframeEl"
+    src="https://cf5e145d72169180858a02a3f62f2277.perchance.org/pershot?__generatorLastEditTime=1738764151697"
+    fetchpriority="high" style="user-select:none;" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen=""
+    allow="fullscreen; clipboard-write; display-capture; camera; microphone"
+    sandbox="allow-popups allow-popups-to-escape-sandbox allow-forms allow-scripts allow-same-origin allow-top-navigation-by-user-activation allow-modals allow-downloads allow-pointer-lock">
+    <html style="color-scheme: dark; --box-color: #2a2a2a; --active-comment-channel-tab-color: #5b5b5b;">
+
+    <body id="output-container"
+        style="font-family: &quot;calibri&quot;; color: rgb(216, 212, 207); background-color: rgb(19, 21, 22);">
+
+
+        <div id="popupCtn"
+            style="display: none; position: fixed; top: 5%; left: 5%; width: 90%; height: 90%; background-color: white; z-index: 1000; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+            <button onclick="closePopup()"
+                style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer;">✖</button>
+            <iframe src="https://null.perchance.org/bw-priv" style="width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+
+        <div id="redPopupCtn"
+            style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 200px; background-color: #00254d; z-index: 1000; box-shadow: 0 0 10px rgba(0,0,0,0.5); padding: 20px; border-radius: 10px;">
+            <button onclick="closeRedPopup()"
+                style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer; color: white;">✖</button>
+            <p style="font-family: Calibri, sans-serif; color: white;"><big>Total visitors: <span
+                        id="generator-stats-004145560597968678">12,402</span><br>Last edit: <span
+                        id="generator-stats-07934026972920921">5 days ago</span></big></p>
+        </div>
+
+        <h1 id="pageTitleEl48759084793" style="font-size:1.2rem; margin-bottom:0.5rem;"></h1>
+        <h1 style="margin-bottom:0.5rem;font-size: 1.5rem;">AI Image Generator 📸</h1>
+
+        <div id="mainColumnEl85394739" style="margin:0 auto; max-width:1000px;">
+            <!-- NOTE: if you change 1000px to something else, ctrl+f for mainColumnEl85394739 and change the numImage-based stuff -->
+            <div id="userInputsCtn8462746262"
+                style="display:flex; padding:0.25rem; justify-content:center; flex-wrap:wrap;">
+
+                <div class="input-ctn input-type-paragraph takesUpFullRow" data-fold-toggle-state="hidden">
+                    <div class="input-inner" style="width:100%;">
+                        <div class="input-label">
+                            <span style="width:max-content;">✏ <b>Notepad</b></span>
+                            <span class="input-tip-btn"
+                                title="Just a little notepad for you - doesn't affect your generated images. It 'remembers' the text that you put in it even after you refresh/close this page.
+              
+              The text will only be forgotten if you clear your browser's &quot;site data&quot; (cookies, localStorage, etc.) for this particular site."
+                                onclick="alert(this.title)">ⓘ</span>
+                            <button
+                                onclick="let s = this.closest('.input-ctn').dataset.foldToggleState; if(s==='hidden') { this.closest('.input-ctn').dataset.foldToggleState='shown'; } else { this.closest('.input-ctn').dataset.foldToggleState='hidden'; }"
+                                class="input-toggle-button"></button>
+                        </div>
+                        <div class="input-wrapper">
+                            <div style="width:100%; position:relative;">
+                                <span style="display:none;" class="auto-suggest-btn">💭</span>
+                                <textarea style="padding-right:0; height:30vh;" class="paragraph-input"
+                                    data-name="scratchpad"
+                                    oninput="window.___inputElInputEvent746291937.bind(this)(event);"
+                                    placeholder="You can use this text box to store your prompts and other notes. The text you put here will be remembered even after you've closed/refreshed this page so long as you're not in in incognito browsing mode.
+              
+              Note: If you clear your &quot;site data&quot;/cookies for this site, your notepad data will be lost."></textarea>
+                            </div>
+
+                        </div>
+                        <div id="id04633945649552685404508987336034097" class="input-modifiers"
+                            style="display:flex;flex-wrap: wrap;"></div>
+                    </div>
+                </div>
+
+                <div class="input-ctn input-type-paragraph takesUpFullRow" data-fold-toggle-state="undefined">
+                    <div class="input-inner" style="width:100%;">
+                        <div class="input-label">
+                            <span style="width:max-content;"><b>📝 Prompt</b></span>
+                            <span class="input-tip-btn" title="Tip: If you write something like {blue|red|green} as part of your description, then a random one will be chosen for each image.
+              
+              You can see the prompt that was used for a particular generated image by hovering your mouse over it, or long-pressing on mobile.
+              
+              Add brackets around text (like this) to get the AI to pay more attention to it."
+                                onclick="alert(this.title)">ⓘ</span>
+
+                        </div>
+                        <div class="input-wrapper">
+                            <div style="width:100%; position:relative;">
+                                <span style="display:none;" class="auto-suggest-btn">💭</span>
+                                <textarea style="padding-right:0; height:4rem;" class="paragraph-input"
+                                    data-name="description"
+                                    oninput="window.___inputElInputEvent746291937.bind(this)(event);"
+                                    onkeyup="if(event.which === 13 &amp;&amp; !event.shiftKey) { document.querySelector('#generateButtonEl').click(); }"
+                                    onkeydown="if(event.which === 13 &amp;&amp; !event.shiftKey) { event.preventDefault(); }"
+                                    placeholder="time-traveling detective with a ghostly sidekick"></textarea>
+                            </div>
+                            <div class="random-input-btn-ctn" data-input-name="description"><button
+                                    class="random-input-btn">🎲</button><button class="ai-suggest-btn"
+                                    style="margin-top:0.25rem;">🧠</button></div>
+                        </div>
+                        <div id="id03791675417587783019245724398221797" class="input-modifiers"
+                            style="display:flex;flex-wrap: wrap;"></div>
+                    </div>
+                </div>
+
+                <div class="input-ctn input-type-paragraph takesUpFullRow" data-fold-toggle-state="shown">
+                    <div class="input-inner" style="width:100%;">
+                        <div class="input-label">
+                            <span style="width:max-content;"><b>🚫 Negative prompt </b>(optional)</span>
+                            <span class="input-tip-btn"
+                                title="Write things you don't want in the image here, such as: low quality, bad hands"
+                                onclick="alert(this.title)">ⓘ</span>
+                            <button
+                                onclick="let s = this.closest('.input-ctn').dataset.foldToggleState; if(s==='hidden') { this.closest('.input-ctn').dataset.foldToggleState='shown'; } else { this.closest('.input-ctn').dataset.foldToggleState='hidden'; }"
+                                class="input-toggle-button"></button>
+                        </div>
+                        <div class="input-wrapper">
+                            <div style="width:100%; position:relative;">
+                                <span style="display:none;" class="auto-suggest-btn">💭</span>
+                                <textarea style="padding-right:0; height:4rem;" class="paragraph-input"
+                                    data-name="negative"
+                                    oninput="window.___inputElInputEvent746291937.bind(this)(event);"
+                                    placeholder="Things you dont want in the image"></textarea>
+                            </div>
+
+                        </div>
+                        <div id="id0447410587301492408731608409422599" class="input-modifiers"
+                            style="display:flex;flex-wrap: wrap;"></div>
+                    </div>
+                </div>
+                <div class="input-ctn input-type-select">
+                    <div class="input-inner">
+                        <div class="input-label">
+                            <span style="width:max-content;">🔢 <b>Number of images</b></span>
+
+                        </div>
+                        <div class="input-wrapper">
+
+                            <select
+                                style=" width:-webkit-fill-available; width:-moz-available; width:fill-available; max-width:9rem;"
+                                data-name="numImages"
+                                onchange="window.___selectElChangeEvent746291937.bind(this)(event);">
+                                <option value="1" selected="">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="17">17</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="24">24</option>
+                                <option value="27">27</option>
+                                <option value="25">25</option>
+                                <option value="30">30</option>
+                                <option value="35">35</option>
+                                <option value="36">36</option>
+                                <option value="40">40</option>
+                                <option value="42">42</option>
+                                <option value="45">45</option>
+                                <option value="48">48</option>
+                                <option value="50">50</option>
+                                <option value="54">54</option>
+                                <option value="57">57</option>
+                                <option value="60">60</option>
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="input-ctn input-type-select">
+                    <div class="input-inner" style="">
+                        <div class="input-label">
+                            <span style="width:max-content;">🎨 <b>Art Style</b></span>
+
+                        </div>
+                        <div class="input-wrapper">
+
+                            <select
+                                style=" width:-webkit-fill-available; width:-moz-available; width:fill-available; max-width:9rem;"
+                                data-name="artStyle"
+                                onchange="window.___selectElChangeEvent746291937.bind(this)(event);">
+                                <option value="ref:optionKeyName:Painted Anime Plus" selected="">Painted Anime Plus
+                                </option>
+                                <option value="ref:optionKeyName:Painted Anime">Painted Anime</option>
+                                <option value="ref:optionKeyName:Casual Photo">Casual Photo</option>
+                                <option value="ref:optionKeyName:Cinematic">Cinematic</option>
+                                <option value="ref:optionKeyName:Digital Painting">Digital Painting</option>
+                                <option value="ref:optionKeyName:Realistic images">Realistic images</option>
+                                <option value="ref:optionKeyName:Realistic humans">Realistic humans</option>
+                                <option value="ref:optionKeyName:𝗡𝗼 𝘀𝘁𝘆𝗹𝗲">𝗡𝗼 𝘀𝘁𝘆𝗹𝗲</option>
+                                <option value="ref:optionKeyName:Anti-NSFW">Anti-NSFW</option>
+                                <option value="ref:optionKeyName:League of Legends">League of Legends</option>
+                                <option value="ref:optionKeyName:Concept Art">Concept Art</option>
+                                <option value="ref:optionKeyName:3D Disney Character">3D Disney Character</option>
+                                <option value="ref:optionKeyName:2D Disney Character">2D Disney Character</option>
+                                <option value="ref:optionKeyName:Disney Sketch">Disney Sketch</option>
+                                <option value="ref:optionKeyName:Concept Sketch">Concept Sketch</option>
+                                <option value="ref:optionKeyName:Painterly">Painterly</option>
+                                <option value="ref:optionKeyName:Oil Painting">Oil Painting</option>
+                                <option value="ref:optionKeyName:Oil Painting - Realism">Oil Painting - Realism</option>
+                                <option value="ref:optionKeyName:Oil Painting - Old">Oil Painting - Old</option>
+                                <option value="ref:optionKeyName:Professional Photo">Professional Photo</option>
+                                <option value="ref:optionKeyName:Anime">Anime</option>
+                                <option value="ref:optionKeyName:Drawn Anime">Drawn Anime</option>
+                                <option value="ref:optionKeyName:Cute Anime">Cute Anime</option>
+                                <option value="ref:optionKeyName:Soft Anime">Soft Anime</option>
+                                <option value="ref:optionKeyName:Mix Anime">Mix Anime</option>
+                                <option value="ref:optionKeyName:Fantasy Painting">Fantasy Painting</option>
+                                <option value="ref:optionKeyName:Fantasy Landscape">Fantasy Landscape</option>
+                                <option value="ref:optionKeyName:Fantasy Portrait">Fantasy Portrait</option>
+                                <option value="ref:optionKeyName:Studio Ghibli">Studio Ghibli</option>
+                                <option value="ref:optionKeyName:50s Enamel Sign">50s Enamel Sign</option>
+                                <option value="ref:optionKeyName:Vintage Comic">Vintage Comic</option>
+                                <option value="ref:optionKeyName:Franco-Belgian Comic">Franco-Belgian Comic</option>
+                                <option value="ref:optionKeyName:Tintin Comic">Tintin Comic</option>
+                                <option value="ref:optionKeyName:90s Comic">90s Comic</option>
+                                <option value="ref:optionKeyName:90s Superhero">90s Superhero</option>
+                                <option value="ref:optionKeyName:Medieval">Medieval</option>
+                                <option value="ref:optionKeyName:Pixel Art">Pixel Art</option>
+                                <option value="ref:optionKeyName:Cute Figurine">Cute Figurine</option>
+                                <option value="ref:optionKeyName:3D Emoji">3D Emoji</option>
+                                <option value="ref:optionKeyName:Illustration">Illustration</option>
+                                <option value="ref:optionKeyName:Flat Illustration">Flat Illustration</option>
+                                <option value="ref:optionKeyName:Watercolor">Watercolor</option>
+                                <option value="ref:optionKeyName:1990s Photo">1990s Photo</option>
+                                <option value="ref:optionKeyName:1980s Photo">1980s Photo</option>
+                                <option value="ref:optionKeyName:1970s Photo">1970s Photo</option>
+                                <option value="ref:optionKeyName:1960s Photo">1960s Photo</option>
+                                <option value="ref:optionKeyName:1950s Photo">1950s Photo</option>
+                                <option value="ref:optionKeyName:1940s Photo">1940s Photo</option>
+                                <option value="ref:optionKeyName:1930s Photo">1930s Photo</option>
+                                <option value="ref:optionKeyName:1920s Photo">1920s Photo</option>
+                                <option value="ref:optionKeyName:Vintage Pulp Art">Vintage Pulp Art</option>
+                                <option value="ref:optionKeyName:50s Infomercial Anime">50s Infomercial Anime</option>
+                                <option value="ref:optionKeyName:3D Pokemon">3D Pokemon</option>
+                                <option value="ref:optionKeyName:Painted Pokemon">Painted Pokemon</option>
+                                <option value="ref:optionKeyName:2D Pokemon">2D Pokemon</option>
+                                <option value="ref:optionKeyName:Vintage Anime">Vintage Anime</option>
+                                <option value="ref:optionKeyName:Neon Vintage Anime">Neon Vintage Anime</option>
+                                <option value="ref:optionKeyName:Manga">Manga</option>
+                                <option value="ref:optionKeyName:Fantasy World Map">Fantasy World Map</option>
+                                <option value="ref:optionKeyName:Fantasy City Map">Fantasy City Map</option>
+                                <option value="ref:optionKeyName:Old World Map">Old World Map</option>
+                                <option value="ref:optionKeyName:3D Isometric Icon">3D Isometric Icon</option>
+                                <option value="ref:optionKeyName:Flat Style Icon">Flat Style Icon</option>
+                                <option value="ref:optionKeyName:Flat Style Logo">Flat Style Logo</option>
+                                <option value="ref:optionKeyName:Game Art Icon">Game Art Icon</option>
+                                <option value="ref:optionKeyName:Digital Painting Icon">Digital Painting Icon</option>
+                                <option value="ref:optionKeyName:Concept Art Icon">Concept Art Icon</option>
+                                <option value="ref:optionKeyName:Cute 3D Icon">Cute 3D Icon</option>
+                                <option value="ref:optionKeyName:Cute 3D Icon 𝗦𝗲𝘁">Cute 3D Icon 𝗦𝗲𝘁</option>
+                                <option value="ref:optionKeyName:Crayon Drawing">Crayon Drawing</option>
+                                <option value="ref:optionKeyName:Pencil">Pencil</option>
+                                <option value="ref:optionKeyName:Tattoo Design">Tattoo Design</option>
+                                <option value="ref:optionKeyName:Waifu">Waifu</option>
+                                <option value="ref:optionKeyName:YuGiOh Art">YuGiOh Art</option>
+                                <option value="ref:optionKeyName:Traditional Japanese">Traditional Japanese</option>
+                                <option value="ref:optionKeyName:Nihonga Painting">Nihonga Painting</option>
+                                <option value="ref:optionKeyName:Claymation">Claymation</option>
+                                <option value="ref:optionKeyName:Furry - Painted">Furry - Painted</option>
+                                <option value="ref:optionKeyName:Furry - Drawn">Furry - Drawn</option>
+                                <option value="ref:optionKeyName:Furry - Cinematic">Furry - Cinematic</option>
+                                <option value="ref:optionKeyName:Cartoon">Cartoon</option>
+                                <option value="ref:optionKeyName:Cursed Photo">Cursed Photo</option>
+                                <option value="ref:optionKeyName:Developed by 9gin">Developed by 9gin</option>
+                                <option value="ref:optionKeyName:MTG Card">MTG Card</option>
+                                <option value="ref:optionKeyName:Jester">Jester</option>
+                                <option value="ref:optionKeyName:Ninja">Ninja</option>
+                                <option value="ref:optionKeyName:Random Girl 1">Random Girl 1</option>
+                                <option value="ref:optionKeyName:Random Girl 2">Random Girl 2</option>
+                                <option value="ref:optionKeyName:Lego">Lego</option>
+                                <option value="ref:optionKeyName:Skittles">Skittles</option>
+                                <option value="ref:optionKeyName:Webcore">Webcore</option>
+                                <option value="ref:optionKeyName:Terraria">Terraria</option>
+                                <option value="ref:optionKeyName:Final Fantasy">Final Fantasy</option>
+                                <option value="ref:optionKeyName:Star Wars Character">Star Wars Character</option>
+                                <option value="ref:optionKeyName:Star Wars Battle">Star Wars Battle</option>
+                                <option value="ref:optionKeyName:Dragonball">Dragonball</option>
+                                <option value="ref:optionKeyName:Undertale?">Undertale?</option>
+                                <option value="ref:optionKeyName:ENA">ENA</option>
+                                <option value="ref:optionKeyName:Neko (Catgirl)">Neko (Catgirl)</option>
+                                <option value="ref:optionKeyName:American Girl">American Girl</option>
+                                <option value="ref:optionKeyName:𝐍𝐒𝐅𝐖 - 𝐑𝐞𝐚𝐥𝐢𝐬𝐭𝐢𝐜">𝐍𝐒𝐅𝐖 -
+                                    𝐑𝐞𝐚𝐥𝐢𝐬𝐭𝐢𝐜</option>
+                                <option value="ref:optionKeyName:𝐍𝐒𝐅𝐖 - 𝐀𝐧𝐢𝐦𝐞">𝐍𝐒𝐅𝐖 - 𝐀𝐧𝐢𝐦𝐞</option>
+                                <option value="ref:optionKeyName:𝐍𝐒𝐅𝐖 - 𝐑𝐞𝐚𝐥𝐢𝐬𝐭𝐢𝐜 (Stronger)">𝐍𝐒𝐅𝐖 -
+                                    𝐑𝐞𝐚𝐥𝐢𝐬𝐭𝐢𝐜 (Stronger)</option>
+                                <option value="ref:optionKeyName:𝐍𝐒𝐅𝐖 - 𝐀𝐧𝐢𝐦𝐞 (Stronger)">𝐍𝐒𝐅𝐖 - 𝐀𝐧𝐢𝐦𝐞
+                                    (Stronger)</option>
+                                <option value="ref:optionKeyName:NSFW Painted Anime">NSFW Painted Anime</option>
+                                <option value="ref:optionKeyName:Realistic Human Generator">Realistic Human Generator
+                                </option>
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="input-ctn input-type-select">
+                    <div class="input-inner">
+                        <div class="input-label">
+                            <span style="width:max-content;">🎨 <b>Art Style Mixing</b></span>
+                            <span class="input-tip-btn"
+                                title="Real prompt = input prompt + art style + art style mixing"
+                                onclick="alert(this.title)">ⓘ</span>
+                        </div>
+                        <div class="input-wrapper">
+
+                            <select
+                                style=" width:-webkit-fill-available; width:-moz-available; width:fill-available; max-width:9rem;"
+                                data-name="artStyleMix"
+                                onchange="window.___selectElChangeEvent746291937.bind(this)(event);">
+                                <option value="ref:optionKeyName:Not Mix" selected="">Not Mix</option>
+                                <option value="ref:optionKeyName:NSFW">NSFW</option>
+                                <option value="ref:optionKeyName:Painted Anime Plus">Painted Anime Plus</option>
+                                <option value="ref:optionKeyName:Painted Anime">Painted Anime</option>
+                                <option value="ref:optionKeyName:Casual Photo">Casual Photo</option>
+                                <option value="ref:optionKeyName:Realistic images">Realistic images</option>
+                                <option value="ref:optionKeyName:Realistic humans">Realistic humans</option>
+                                <option value="ref:optionKeyName:Cinematic">Cinematic</option>
+                                <option value="ref:optionKeyName:Anti-NSFW">Anti-NSFW</option>
+                                <option value="ref:optionKeyName:League of Legends">League of Legends</option>
+                                <option value="ref:optionKeyName:Digital Painting">Digital Painting</option>
+                                <option value="ref:optionKeyName:Concept Art">Concept Art</option>
+                                <option value="ref:optionKeyName:3D Disney Character">3D Disney Character</option>
+                                <option value="ref:optionKeyName:2D Disney Character">2D Disney Character</option>
+                                <option value="ref:optionKeyName:Disney Sketch">Disney Sketch</option>
+                                <option value="ref:optionKeyName:Concept Sketch">Concept Sketch</option>
+                                <option value="ref:optionKeyName:Painterly">Painterly</option>
+                                <option value="ref:optionKeyName:Oil Painting">Oil Painting</option>
+                                <option value="ref:optionKeyName:Oil Painting - Realism">Oil Painting - Realism</option>
+                                <option value="ref:optionKeyName:Oil Painting - Old">Oil Painting - Old</option>
+                                <option value="ref:optionKeyName:Professional Photo">Professional Photo</option>
+                                <option value="ref:optionKeyName:Anime">Anime</option>
+                                <option value="ref:optionKeyName:Drawn Anime">Drawn Anime</option>
+                                <option value="ref:optionKeyName:Cute Anime">Cute Anime</option>
+                                <option value="ref:optionKeyName:Soft Anime">Soft Anime</option>
+                                <option value="ref:optionKeyName:Mix Anime">Mix Anime</option>
+                                <option value="ref:optionKeyName:Fantasy Painting">Fantasy Painting</option>
+                                <option value="ref:optionKeyName:Fantasy Landscape">Fantasy Landscape</option>
+                                <option value="ref:optionKeyName:Fantasy Portrait">Fantasy Portrait</option>
+                                <option value="ref:optionKeyName:Studio Ghibli">Studio Ghibli</option>
+                                <option value="ref:optionKeyName:50s Enamel Sign">50s Enamel Sign</option>
+                                <option value="ref:optionKeyName:Vintage Comic">Vintage Comic</option>
+                                <option value="ref:optionKeyName:Franco-Belgian Comic">Franco-Belgian Comic</option>
+                                <option value="ref:optionKeyName:Tintin Comic">Tintin Comic</option>
+                                <option value="ref:optionKeyName:90s Comic">90s Comic</option>
+                                <option value="ref:optionKeyName:90s Superhero">90s Superhero</option>
+                                <option value="ref:optionKeyName:Medieval">Medieval</option>
+                                <option value="ref:optionKeyName:Pixel Art">Pixel Art</option>
+                                <option value="ref:optionKeyName:Cute Figurine">Cute Figurine</option>
+                                <option value="ref:optionKeyName:3D Emoji">3D Emoji</option>
+                                <option value="ref:optionKeyName:Illustration">Illustration</option>
+                                <option value="ref:optionKeyName:Flat Illustration">Flat Illustration</option>
+                                <option value="ref:optionKeyName:Watercolor">Watercolor</option>
+                                <option value="ref:optionKeyName:1990s Photo">1990s Photo</option>
+                                <option value="ref:optionKeyName:1980s Photo">1980s Photo</option>
+                                <option value="ref:optionKeyName:1970s Photo">1970s Photo</option>
+                                <option value="ref:optionKeyName:1960s Photo">1960s Photo</option>
+                                <option value="ref:optionKeyName:1950s Photo">1950s Photo</option>
+                                <option value="ref:optionKeyName:1940s Photo">1940s Photo</option>
+                                <option value="ref:optionKeyName:1930s Photo">1930s Photo</option>
+                                <option value="ref:optionKeyName:1920s Photo">1920s Photo</option>
+                                <option value="ref:optionKeyName:Vintage Pulp Art">Vintage Pulp Art</option>
+                                <option value="ref:optionKeyName:50s Infomercial Anime">50s Infomercial Anime</option>
+                                <option value="ref:optionKeyName:3D Pokemon">3D Pokemon</option>
+                                <option value="ref:optionKeyName:Painted Pokemon">Painted Pokemon</option>
+                                <option value="ref:optionKeyName:2D Pokemon">2D Pokemon</option>
+                                <option value="ref:optionKeyName:Vintage Anime">Vintage Anime</option>
+                                <option value="ref:optionKeyName:Neon Vintage Anime">Neon Vintage Anime</option>
+                                <option value="ref:optionKeyName:Manga">Manga</option>
+                                <option value="ref:optionKeyName:Fantasy World Map">Fantasy World Map</option>
+                                <option value="ref:optionKeyName:Fantasy City Map">Fantasy City Map</option>
+                                <option value="ref:optionKeyName:Old World Map">Old World Map</option>
+                                <option value="ref:optionKeyName:3D Isometric Icon">3D Isometric Icon</option>
+                                <option value="ref:optionKeyName:Flat Style Icon">Flat Style Icon</option>
+                                <option value="ref:optionKeyName:Flat Style Logo">Flat Style Logo</option>
+                                <option value="ref:optionKeyName:Game Art Icon">Game Art Icon</option>
+                                <option value="ref:optionKeyName:Digital Painting Icon">Digital Painting Icon</option>
+                                <option value="ref:optionKeyName:Concept Art Icon">Concept Art Icon</option>
+                                <option value="ref:optionKeyName:Cute 3D Icon">Cute 3D Icon</option>
+                                <option value="ref:optionKeyName:Cute 3D Icon 𝗦𝗲𝘁">Cute 3D Icon 𝗦𝗲𝘁</option>
+                                <option value="ref:optionKeyName:Crayon Drawing">Crayon Drawing</option>
+                                <option value="ref:optionKeyName:Pencil">Pencil</option>
+                                <option value="ref:optionKeyName:Tattoo Design">Tattoo Design</option>
+                                <option value="ref:optionKeyName:Waifu">Waifu</option>
+                                <option value="ref:optionKeyName:YuGiOh Art">YuGiOh Art</option>
+                                <option value="ref:optionKeyName:Traditional Japanese">Traditional Japanese</option>
+                                <option value="ref:optionKeyName:Nihonga Painting">Nihonga Painting</option>
+                                <option value="ref:optionKeyName:Claymation">Claymation</option>
+                                <option value="ref:optionKeyName:Furry - Painted">Furry - Painted</option>
+                                <option value="ref:optionKeyName:Furry - Drawn">Furry - Drawn</option>
+                                <option value="ref:optionKeyName:Furry - Cinematic">Furry - Cinematic</option>
+                                <option value="ref:optionKeyName:Cartoon">Cartoon</option>
+                                <option value="ref:optionKeyName:Cursed Photo">Cursed Photo</option>
+                                <option value="ref:optionKeyName:Developed by 9gin">Developed by 9gin</option>
+                                <option value="ref:optionKeyName:MTG Card">MTG Card</option>
+                                <option value="ref:optionKeyName:Jester">Jester</option>
+                                <option value="ref:optionKeyName:Ninja">Ninja</option>
+                                <option value="ref:optionKeyName:Random Girl 1">Random Girl 1</option>
+                                <option value="ref:optionKeyName:Random Girl 2">Random Girl 2</option>
+                                <option value="ref:optionKeyName:Lego">Lego</option>
+                                <option value="ref:optionKeyName:Skittles">Skittles</option>
+                                <option value="ref:optionKeyName:Webcore">Webcore</option>
+                                <option value="ref:optionKeyName:Terraria">Terraria</option>
+                                <option value="ref:optionKeyName:Final Fantasy">Final Fantasy</option>
+                                <option value="ref:optionKeyName:Star Wars Character">Star Wars Character</option>
+                                <option value="ref:optionKeyName:Star Wars Battle">Star Wars Battle</option>
+                                <option value="ref:optionKeyName:Dragonball">Dragonball</option>
+                                <option value="ref:optionKeyName:Undertale?">Undertale?</option>
+                                <option value="ref:optionKeyName:ENA">ENA</option>
+                                <option value="ref:optionKeyName:Neko (Catgirl)">Neko (Catgirl)</option>
+                                <option value="ref:optionKeyName:American Girl">American Girl</option>
+                                <option value="ref:optionKeyName:𝐍𝐒𝐅𝐖 - 𝐑𝐞𝐚𝐥𝐢𝐬𝐭𝐢𝐜">𝐍𝐒𝐅𝐖 -
+                                    𝐑𝐞𝐚𝐥𝐢𝐬𝐭𝐢𝐜</option>
+                                <option value="ref:optionKeyName:𝐍𝐒𝐅𝐖 - 𝐀𝐧𝐢𝐦𝐞">𝐍𝐒𝐅𝐖 - 𝐀𝐧𝐢𝐦𝐞</option>
+                                <option value="ref:optionKeyName:𝐍𝐒𝐅𝐖 - 𝐑𝐞𝐚𝐥𝐢𝐬𝐭𝐢𝐜 (Stronger)">𝐍𝐒𝐅𝐖 -
+                                    𝐑𝐞𝐚𝐥𝐢𝐬𝐭𝐢𝐜 (Stronger)</option>
+                                <option value="ref:optionKeyName:𝐍𝐒𝐅𝐖 - 𝐀𝐧𝐢𝐦𝐞 (Stronger)">𝐍𝐒𝐅𝐖 - 𝐀𝐧𝐢𝐦𝐞
+                                    (Stronger)</option>
+                                <option value="ref:optionKeyName:NSFW Painted Anime">NSFW Painted Anime</option>
+                                <option value="ref:optionKeyName:Realistic Human Generator">Realistic Human Generator
+                                </option>
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="input-ctn input-type-select">
+                    <div class="input-inner">
+                        <div class="input-label">
+                            <span style="width:max-content;">🖼️ <b>Shape of image(s)</b> ㅤ</span>
+
+                        </div>
+                        <div class="input-wrapper">
+
+                            <select
+                                style=" width:-webkit-fill-available; width:-moz-available; width:fill-available; max-width:9rem;"
+                                data-name="shape" onchange="window.___selectElChangeEvent746291937.bind(this)(event);">
+                                <option value="512x768" selected="">Portrait(512x768px)</option>
+                                <option value="512x512">Square(512x512px)</option>
+                                <option value="768x512">Landscape(768x512px)</option>
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="input-ctn input-type-select">
+                    <div class="input-inner">
+                        <div class="input-label">
+                            <span style="width:max-content;">✒️ <b>Guidance scale</b></span>
+                            <span class="input-tip-btn"
+                                title="(You will not have to change this much unless you have a very specific use case.)This is how much the AI tries to copy your prompt. Low numbers let the AI wander more from your prompt(which sometims makes the image blurry), and high numbers make the AI try to stick to the prompt as much as possible(however this might create deformed of scrambled images if the prompt is not specific enough)"
+                                onclick="alert(this.title)">ⓘ</span>
+                        </div>
+                        <div class="input-wrapper">
+
+                            <select
+                                style=" width:-webkit-fill-available; width:-moz-available; width:fill-available; max-width:9rem;"
+                                data-name="Gscale" onchange="window.___selectElChangeEvent746291937.bind(this)(event);">
+                                <option value="7" selected="">default(7)</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-ctn input-type-text " data-fold-toggle-state="undefined">
+                    <div class="input-inner" style="">
+                        <div class="input-label">
+                            <span style="width:max-content;">🌱 <b>Image Seed</b> (Positive numbers only, VERY
+                                OPTIONAL)</span>
+                            <span class="input-tip-btn"
+                                title="(This is not used often, so don't use it if you don't understand it.)The seed determines the image. Same seed plus same prompt equals same image. leave blank or type &quot;-1&quot; for a random seed. This is mostly useful for replicating images or making slight edits because Same Seed + Similar Prompt = Similar Image."
+                                onclick="alert(this.title)">ⓘ</span>
+
+                        </div>
+                        <div class="input-wrapper">
+                            <div style="width:100%; position:relative;">
+                                <span style="display:none;" class="auto-suggest-btn">💭</span>
+                                <input style="padding-right:0;" class="text-input" data-name="seed" type="text"
+                                    oninput="window.___inputElInputEvent746291937.bind(this)(event);"
+                                    placeholder="Same seed + similar prompt = similar">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-ctn input-type-text " data-fold-toggle-state="undefined">
+                    <div class="input-inner" style="">
+                        <div class="input-label">
+                            <span style="width:max-content;">🏷️ <b>Title of image</b> (if shared to online
+                                gallery)</span>
+                            <span class="input-tip-btn"
+                                title="This will not affect your image, this is what the title of the image will be if it is shared in the gallery."
+                                onclick="alert(this.title)">ⓘ</span>
+
+                        </div>
+                        <div class="input-wrapper">
+                            <div style="width:100%; position:relative;">
+                                <span style="display:none;" class="auto-suggest-btn">💭</span>
+                                <input style="padding-right:0;" class="text-input" data-name="imagename" type="text"
+                                    oninput="window.___inputElInputEvent746291937.bind(this)(event);"
+                                    placeholder="Type a name for your image here.">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--<div style="margin:1rem 0; display: flex; align-items: center; justify-content: center;">
+              ➡️&nbsp;<button id="generateButtonEl" style="font-size:1.5rem;" onclick="window.___generateButtonClickEvent746291937(event);">✨ generate</button>&nbsp;⬅️
+              </div>-->
+
+            <div id="shareLinkOuterCtn2893827" style="display:none; margin-bottom:2rem;">
+                <button id="shareSettingsBtn758374" onclick="window.__generateSettingsShareLink084722()"
+                    style="font-size:70%;">🔗 share these settings</button>
+                <div id="shareLinkCtn83927376" style="display:none; margin-top:0.5rem; font-size:80%;">
+                    <input style="width:200px;" id="shareSettingsLinkInputEl759307" disabled=""> <button
+                        style="min-width:80px;"
+                        onclick="navigator.clipboard.writeText(shareSettingsLinkInputEl759307.value).then(r => this.innerHTML='✅'); setTimeout(() => this.innerHTML='copy link', 2000);">copy
+                        link</button>
+                    <div style="font-size:80%; opacity:0.7;">(this link contains a snapshot of the above settings)</div>
+                </div>
+            </div>
+
+            <div style="margin:1rem 0;">
+                <div style="display: flex;align-items: center;justify-content: center;"><span id="leftClickHelperEl"
+                        style="display: none;">click ➡&nbsp;</span><button id="generateButtonEl"
+                        style="font-size: 1.5rem; opacity: 1;"
+                        onclick="window.___generateButtonClickEvent746291937(event);">✨ generate</button><span
+                        id="rightClickHelperEl" style="display: none;">&nbsp;⬅ click</span></div>
+                <div id="bottomClickHelperEl" style="display: none;">
+                    <div>⬆</div>
+                    <div>click</div>
+                </div>
+            </div>
+
+            <div id="outputAreaEl"
+                style="margin-top:1rem; min-height:12rem; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; padding:0.25rem;">
+                <div class="t2i-image-ctn" style="margin:0.25rem; margin-bottom:0.6rem;; position:relative;"><iframe
+                        class="text-to-image-plugin-image-iframe id04364831525365216"
+                        data-already-added-intersection-observer="yes"
+                        data-src="https://image-generation.perchance.org/embed#%7B%22saveChannel%22%3A%22pershot%22%2C%22saveTitle%22%3A%22(Realistic%20images)%20%22%2C%22saveDescription%22%3A%22Upload%20Date%3A%2010%20Feb%2014%3A31%3A36%20(10%20Feb%2015%3A31%3A36)%2C%20Used%20'Realistic%20images'%20%2B%20'Not%20Mix'%20Art%20Style%2C%20GuidanceScale%3A%207%22%2C%22prompt%22%3A%22flower%20field%2C%20sunset%2C%20high%20quality%20image%2C%204k%2C%208k%2C%20HD%2C%20UHD%2C%20Sharp%20Focus%2C%20In%20Frame%2C%20%2C%22%2C%22seed%22%3A-1%2C%22resolution%22%3A%22768x512%22%2C%22guidanceScale%22%3A7%2C%22defaultGuidanceScale%22%3A7%2C%22negativePrompt%22%3A%22%2C%20low%20quality%2C%20deformed%2C%20blurry%2C%20bad%20art%2C%20drawing%2C%20painting%2C%20horrible%20resolutions%2C%20low%20DPI%2C%20low%20PPI%2C%20blurry%2C%20glitch%2C%20error%2C%20%2C%22%2C%22requestId%22%3A%220.6025686473656152%22%2C%22iframeId%22%3A%22id04364831525365216%22%2C%22referenceImage%22%3Anull%7D"
+                        style="border:0; background:transparent; height:300px; aspect-ratio:768/512; border-radius:3px;"
+                        src="https://image-generation.perchance.org/embed#%7B%22saveChannel%22%3A%22pershot%22%2C%22saveTitle%22%3A%22(Realistic%20images)%20%22%2C%22saveDescription%22%3A%22Upload%20Date%3A%2010%20Feb%2014%3A31%3A36%20(10%20Feb%2015%3A31%3A36)%2C%20Used%20'Realistic%20images'%20%2B%20'Not%20Mix'%20Art%20Style%2C%20GuidanceScale%3A%207%22%2C%22prompt%22%3A%22flower%20field%2C%20sunset%2C%20high%20quality%20image%2C%204k%2C%208k%2C%20HD%2C%20UHD%2C%20Sharp%20Focus%2C%20In%20Frame%2C%20%2C%22%2C%22seed%22%3A-1%2C%22resolution%22%3A%22768x512%22%2C%22guidanceScale%22%3A7%2C%22defaultGuidanceScale%22%3A7%2C%22negativePrompt%22%3A%22%2C%20low%20quality%2C%20deformed%2C%20blurry%2C%20bad%20art%2C%20drawing%2C%20painting%2C%20horrible%20resolutions%2C%20low%20DPI%2C%20low%20PPI%2C%20blurry%2C%20glitch%2C%20error%2C%20%2C%22%2C%22requestId%22%3A%220.6025686473656152%22%2C%22iframeId%22%3A%22id04364831525365216%22%2C%22referenceImage%22%3Anull%7D"></iframe>
+                    <div class="t2i-under-each-image-ctn">
+                        <div><button class="personality-chat-button"
+                                onclick="window.t2i_openCharacterDescriptionEditor(this.closest('.t2i-image-ctn'))">🎭
+                                persona / 💬 chat</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    </html>
+</iframe>
+</div>

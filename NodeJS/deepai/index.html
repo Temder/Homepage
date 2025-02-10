@@ -10,7 +10,12 @@
     <div class="container">
         <h1>AI Image Generator</h1>
         <div class="input-section">
+            <select id="siteSelect">
+                <option value="deepai">DeepAI</option>
+                <option value="pershot">Perchance PerShot</option>
+            </select>
             <input type="text" id="promptInput" placeholder="Enter your image description">
+            <input type="text" id="negativePromptInput" placeholder="Enter negative prompt (optional)" style="display: none;">
             <select id="styleSelect">
                 <option value="" selected>No Specific Style</option>
                 <option value="cute-creature">Cute Creature</option>
@@ -148,7 +153,9 @@
         <div class="loading" id="loading">Generating image...</div>
         <div class="image-grid" id="imageGrid"></div>
         <h2>Saved Images</h2>
-        <div class="saved-images" id="savedImages"></div>
+        <div class="saved-images cssImageGallery" id="savedImages">
+            <div class="closeGallery"></div>
+        </div>
     </div>
     <script src="scripts.js"></script>
 </body>
