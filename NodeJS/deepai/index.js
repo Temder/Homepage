@@ -128,20 +128,19 @@ async function generateWithPershot(browser, params) {
 
         // Navigate with standard browser-like behavior
         await page.goto('https://perchance.org/pershot', {
-            waitUntil: 'networkidle0',
-            timeout: 30000
+            waitUntil: 'networkidle0'
         });
 
         // Wait for and handle potential verification popup
         try {
-            const verificationSelector = '#verification-dialog'; // Adjust based on actual popup
-            await page.waitForSelector(verificationSelector, { timeout: 5000 });
-            if (await page.$(verificationSelector)) {
+            //const verificationSelector = '#verification-dialog'; // Adjust based on actual popup
+            //await page.waitForSelector(verificationSelector, { timeout: 5000 });
+            //if (await page.$(verificationSelector)) {
                 // Handle verification - this depends on the specific verification type
                 // For example, clicking a button or solving a simple challenge
-                await page.click('#verify-button'); // Adjust selector as needed
-                await page.waitForTimeout(2000);
-            }
+            await page.waitForSelector('button.css-47sehv', { timeout: 5000 })
+            await page.click('button.css-47sehv'); // Adjust selector as needed
+            //}
         } catch (e) {
             console.log('No verification popup detected, continuing...');
         }
@@ -152,7 +151,7 @@ async function generateWithPershot(browser, params) {
         const frame = await frameHandle.contentFrame();
         
         // Add random delays between actions to appear more human-like
-        await page.waitForTimeout(Math.random() * 1000 + 500);
+        //await page.waitForTimeout(Math.random() * 1000 + 500);
         
         // Input prompt with human-like typing
         await frame.waitForSelector('textarea[data-name="description"]');
