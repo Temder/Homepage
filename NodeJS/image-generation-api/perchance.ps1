@@ -1,5 +1,5 @@
 # Parameters for the requests
-$userKey = "d0b698f607e7c436e9890fd161aced90418d951b20cc41d9751299c16c63f43c"
+$userKey = "9a219f6681b16c9014044d64b42c465a24f6383296f5c7e16655f8832f2a75f1"
 $requestId = [math]::Round((Get-Random), 10).ToString("0.0000000000")
 $baseUrl = "https://image-generation.perchance.org/api"
 
@@ -17,8 +17,14 @@ $verificationStatusUrl = "$baseUrl/checkUserVerificationStatus?userKey=$userKey&
 $verificationStatus = Invoke-RestMethod -Uri $verificationStatusUrl
 $verificationStatus.status
 
+if ($verificationStatus.status -eq "not_verified") {
+    $userKey = $adAccessCode
+    $verificationStatusUrl = "$baseUrl/checkUserVerificationStatus?userKey=$userKey&__cacheBust=$(Get-CacheBuster)"
+    $verificationStatus = Invoke-RestMethod -Uri $verificationStatusUrl
+}
+
 # Step 3: Verify user (multiple attempts)
-while ("verified", "already_verified" -notcontains $verificationStatus.status) {
+while ("verified", "already_verified" -notcontains $verificationStatus.status -and "success", "already_verified" -notcontains $verifyResponse.status) {
     $verifyUserUrl = "$baseUrl/verifyUser?thread=5&__cacheBust=$(Get-CacheBuster)"
     $verifyResponse = Invoke-RestMethod -Uri $verifyUserUrl
     $verifyResponse
@@ -27,7 +33,7 @@ while ("verified", "already_verified" -notcontains $verificationStatus.status) {
 
 # Step 4: Generate image
 $params = @{
-    prompt = "sunset, city"
+    prompt = "woman, naked"
     seed = -1
     resolution = "512x768"
     guidanceScale = 7
@@ -37,6 +43,7 @@ $params = @{
     userKey = $userKey
     adAccessCode = $adAccessCode
     requestId = $requestId
+    maybeNsfw = "false"
 }
 
 $generateUrl = "$baseUrl/generate?" + 
@@ -46,7 +53,7 @@ $generateUrl = "$baseUrl/generate?" +
     "&__cacheBust=$(Get-CacheBuster)"
 
 $generateResponse = Invoke-RestMethod -Uri $generateUrl
-if ($generateResponse.status -eq "gen_failure") {
+if ($generateResponse.status -eq "invalid_key") {
     Write-Host "Failure when generating image.`n`nURL: $generateUrl`n`nResponse: $generateResponse"
 } else {
     Write-Host "Successfully generated image.`n`nURL: $generateUrl`n`nResponse: $generateResponse"
