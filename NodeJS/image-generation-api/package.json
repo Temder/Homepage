@@ -1,0 +1,9 @@
+{
+  "name": "image-generation-api",
+  "version": "1.0.0",
+  "description": "Perchance image generation API client",
+  "main": "perchance.js",
+  "dependencies": {
+    "axios": "^1.4.0"
+  }
+}

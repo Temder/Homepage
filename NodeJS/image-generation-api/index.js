@@ -1,10 +1,8 @@
 const express = require('express');
-const puppeteer = require('puppeteer-extra');
-const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+const puppeteer = require('puppeteer');
 const path = require('path');
 const fs = require('fs');
-
-puppeteer.use(StealthPlugin());
+const { generateImage } = require('./perchance');
 
 const app = express();
 const port = 3000;
@@ -105,26 +103,14 @@ async function generateWithDeepAI(browser, prompt, style, shape) {
         await page.close();
     }
 }
-
+generateImage('A beautiful sunset over the ocean');
 async function generateWithPershot(browser, params) {
-    const page = await browser.newPage();
+    generateImage(params.prompt);
+    /*const page = await browser.newPage();
     try {
         // Set more realistic browser behavior
         await page.setDefaultNavigationTimeout(60000);
         await page.setViewport({ width: 1280, height: 800 });
-        
-        // Set a more browser-like user agent
-        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
-
-        // Add browser-like characteristics
-        await page.evaluateOnNewDocument(() => {
-            Object.defineProperty(navigator, 'webdriver', {
-                get: () => undefined
-            });
-            Object.defineProperty(navigator, 'languages', {
-                get: () => ['en-US', 'en']
-            });
-        });
 
         // Navigate with standard browser-like behavior
         await page.goto('https://perchance.org/pershot', {
@@ -149,9 +135,6 @@ async function generateWithPershot(browser, params) {
         await page.waitForSelector('#outputIframeEl', { timeout: 30000 });
         const frameHandle = await page.$('#outputIframeEl');
         const frame = await frameHandle.contentFrame();
-        
-        // Add random delays between actions to appear more human-like
-        //await page.waitForTimeout(Math.random() * 1000 + 500);
         
         // Input prompt with human-like typing
         await frame.waitForSelector('textarea[data-name="description"]');
@@ -192,7 +175,7 @@ async function generateWithPershot(browser, params) {
         throw error;
     } finally {
         await page.close();
-    }
+    }*/
 }
 
 app.post('/generate', async (req, res) => {
@@ -224,7 +207,7 @@ app.post('/generate', async (req, res) => {
         if (site === 'deepai') {
             imageUrl = await generateWithDeepAI(browser, prompt, style, shape);
         } else if (site === 'pershot') {
-            imageUrl = await generateWithPershot(browser, { prompt, negative, style, shape });
+            imageUrl = await generateWithPershot({ prompt, negative, style, shape });
         }
 
         if (!imageUrl) {

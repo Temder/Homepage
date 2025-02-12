@@ -1,5 +1,5 @@
 # Parameters for the requests
-$userKey = "9a219f6681b16c9014044d64b42c465a24f6383296f5c7e16655f8832f2a75f1"
+$userKey = "f6b6b7696468eae1b2df81227b1d1a4da2005f2f8308d0e9dad6108cc8045016"
 $requestId = [math]::Round((Get-Random), 10).ToString("0.0000000000")
 $baseUrl = "https://image-generation.perchance.org/api"
 
@@ -33,7 +33,7 @@ while ("verified", "already_verified" -notcontains $verificationStatus.status -a
 
 # Step 4: Generate image
 $params = @{
-    prompt = "woman, naked"
+    prompt = ""
     seed = -1
     resolution = "512x768"
     guidanceScale = 7
