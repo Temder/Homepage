@@ -1,33 +1,37 @@
-var express = require('express');
-var mysql = require('mysql2');
 var bodyParser = require('body-parser');
-var axios = require('axios');
+var express = require('express');
 var fs = require('fs');
+var mysql = require('mysql2');
 var path = require('path');
 
 var app = express();
 var PORT = process.env.PORT || 8080;
 
-app.use(express.static(__dirname + '/content'));
+app.use(express.static(__dirname + '/src'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//#region Database connection
 var connection = mysql.createConnection({
   host: '127.0.0.1',
-  user: 'root',//Temder
-  password: '13792846#',//Start123#
+  user: 'root', //Temder
+  password: '', //Start123#
   database: 'homepage',
   dateStrings: true
 });
 
 connection.connect(function(error) {
   if (error) throw error;
-  console.log('Connected!');
+  console.log('Connected to the database');
 });
+//#endregion
 
-// Middleware to get client IP
+
+
+
+//#region IP getting
 app.use((req, res, next) => {
-  let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  let ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
 
   // Handle IPv4-mapped IPv6 addresses
   if (ip.includes('::ffff:')) {
@@ -37,8 +41,12 @@ app.use((req, res, next) => {
   req.clientIp = ip;
   next();
 });
+//#endregion
 
-// Middleware to log and update views count
+
+
+
+//#region Database update views
 app.use((req, res, next) => {
   if (req.url == '/api/views') {
     const clientIp = req.clientIp;
@@ -75,15 +83,19 @@ app.use((req, res, next) => {
     next();
   }
 });
+//#endregion
 
-// Create API endpoints to fetch the number of website views and calendar data
+
+
+
+//#region API endpoints views and calendar data
 app.get('/api/views', function(req, res, next) {
   connection.query('SELECT views FROM website_views', function (error, result, fields) {
     if (error) {
       res.status(500).send('Database query (get website views) failed');
       return;
     }
-    res.json({ count: result });
+    res.json(result);
     next();
   });
 });
@@ -104,38 +116,12 @@ app.get('/api/calendar/remove/*', function(req, res) {
     next();
   })
 });
+//#endregion
 
-// Get all images
-var imgCount = 0;
-app.get('/images', (req, res) => {
-  const directoryPath = path.join(__dirname, 'content/images');
-  fs.readdir(directoryPath, (err, files) => {
-    if (err) {
-      return res.status(500).send('Unable to scan directory: ' + err);
-    }
-    const images = files.filter(file => /\.(jpg|jpeg|png|gif)$/.test(file) && file.includes('generated_image'));
-    imgCount = images.length;
-    res.json(images);
-  });
-});
 
-// Get generation status
-app.get('/generationStatus', async (req, res) => {
-  try {
-    const response = await axios.get('http://localhost:7860/sdapi/v1/progress?skip_current_image=false', {});
-    res.json(response.data);
-    //res.json(response);
-  } catch (error) {
-    if (error.data) {
-      console.log(error.data);
-    } else {
-      console.log(error);
-    }
-    res.status(500).json({ error: 'Failed to generate image' });
-  }
-});
 
-// Handle form submission
+
+//#region Calendar event creation
 app.post('/create_event', (req, res) => {
   const { title, description, start_time, end_time, location, is_all_day } = req.body;
   const isAllDay = is_all_day ? 1 : 0;
@@ -148,8 +134,30 @@ app.post('/create_event', (req, res) => {
     res.send('New event created successfully');
   });
 });
+//#endregion
 
-// Handle image generation
+
+
+
+//#region Image getting
+var imgCount = 0;
+app.get('/images', (req, res) => {
+  const directoryPath = path.join(__dirname, 'src/graphics');
+  fs.readdir(directoryPath, (err, files) => {
+    if (err) {
+      return res.status(500).send('Unable to scan directory: ' + err);
+    }
+    const images = files.filter(file => /\.(jpg|jpeg|png|gif)$/.test(file) && file.includes('generated_image'));
+    imgCount = images.length;
+    res.json(images);
+  });
+});
+//#endregion
+
+
+
+
+//#region Image generation
 app.post('/generate-image', async (req, res) => {
   const { prompt, width, height } = req.body;
   /*const apiKey = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6IjdlYzA4NWQwNmM1ZTUxNzFlNjUwMTllMmFkMzA2NDdiIiwiY3JlYXRlZF9hdCI6IjIwMjQtMDctMDNUMDc6Mzk6MzQuNjU0ODU4In0.97IJq6HF-ZBZd6tfOPDLn14bSqRombLL050P0cBouL8'; //21ce9ad7-e57a-42e4-a163-13c2082a98b7 c86d07e2-65be-41c5-9fe7-185950a97f7f(keine credits)
@@ -268,6 +276,16 @@ app.post('/generate-image', async (req, res) => {
     res.status(500).json({ error: 'Failed to generate image' });
   }*/
 });
+//#endregion
+
+
+
+
+//#region Image generation status
+app.get('/generationStatus', async (req, res) => {
+  
+});
+//#endregion
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
