@@ -3,9 +3,31 @@ var express = require('express');
 var fs = require('fs');
 var mysql = require('mysql2');
 var path = require('path');
+var livereload = require('livereload');
+var connectLivereload = require('connect-livereload');
+
+// Create a livereload server with more specific configuration
+const liveReloadServer = livereload.createServer({
+  exts: ['html', 'css', 'js', 'png', 'gif', 'jpg', 'jpeg'],
+  delay: 0,
+  port: 35729
+});
+
+// Watch the entire src directory
+liveReloadServer.watch(path.join(__dirname, 'src'));
+
+// Wait for browser to connect before actually reloading
+liveReloadServer.server.once("connection", () => {
+  setTimeout(() => {
+    liveReloadServer.refresh("/");
+  }, 100);
+});
 
 var app = express();
 var PORT = process.env.PORT || 8080;
+
+// Important: Add livereload middleware before any other middleware
+app.use(connectLivereload());
 
 app.use(express.static(__dirname + '/src'));
 app.use(bodyParser.json());
@@ -88,7 +110,7 @@ app.use((req, res, next) => {
 
 
 
-//#region API endpoints views and calendar data
+//#region Views and calendar data
 app.get('/api/views', function(req, res, next) {
   connection.query('SELECT views FROM website_views', function (error, result, fields) {
     if (error) {
@@ -142,12 +164,13 @@ app.post('/create_event', (req, res) => {
 //#region Image getting
 var imgCount = 0;
 app.get('/images', (req, res) => {
-  const directoryPath = path.join(__dirname, 'src/graphics');
+  const directoryPath = './src/graphics/generated_images';
   fs.readdir(directoryPath, (err, files) => {
     if (err) {
       return res.status(500).send('Unable to scan directory: ' + err);
     }
-    const images = files.filter(file => /\.(jpg|jpeg|png|gif)$/.test(file) && file.includes('generated_image'));
+    const images = files.filter(file => /\.(jpg|jpeg|png|gif)$/.test(file) && file.includes('generated_image'))
+                        .map(file => path.join(directoryPath.replace('src/', ''), file));
     imgCount = images.length;
     res.json(images);
   });
@@ -249,7 +272,7 @@ app.post('/generate-image', async (req, res) => {
       if (err) {
         console.log('Unable to scan directory: ' + err);
       }
-      const images = files.filter(file => /\.(jpg|jpeg|png|gif)$/.test(file) && file.includes('generated_image'));
+      const images = files.filter(file => /\.(jp.|jp.g|png|g.f)$/.te.t(file).&& file.includes('generated_image'));
       imgCount = images.length;
     });
     

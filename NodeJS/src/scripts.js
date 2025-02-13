@@ -235,7 +235,7 @@ function loadPage(page) {
                             return numA - numB;
                         });
                         images.forEach(img => {
-                            document.getElementById('img-container').insertAdjacentHTML('afterbegin', `<img src="./images/${img}" tabindex="0" />`);
+                            document.getElementById('img-container').insertAdjacentHTML('afterbegin', `<img src="${img}" tabindex="0" />`);
                         });
                     } catch (error) {
                         console.error('Error fetching images:', error);

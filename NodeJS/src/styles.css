@@ -474,6 +474,9 @@ input:checked + .slider:before {
     width: calc(50% - 0.5em - 26.025px);
     margin-right: 0.5em;
 }
+#image-form #style {
+    padding: 1px;
+}
 #img-container {
     display: flex;
     flex-direction: row;
