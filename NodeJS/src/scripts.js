@@ -99,10 +99,10 @@ function loadPage(page) {
             if (urlFragment == 'home') {
                 fetchViews();
             }
-            if (urlFragment == 'radio-stations') {
+            else if (urlFragment == 'radio-stations') {
                 radio(radios);
             }
-            if (document.getElementById('languageSelect') != null) {
+            else if (document.getElementById('languageSelect') != null) {
                 document.getElementById('languageSelect').value = shortLang;
                 document.getElementById('backgroundSelect').value = `${background.type}_${shortLang}`;
                 document.getElementById('volumeSlider').value = volume;
@@ -111,7 +111,7 @@ function loadPage(page) {
                     document.getElementById('waveSwitch').checked = true;
                 }
             }
-            if (urlFragment == 'blog') {
+            else if (urlFragment == 'blog') {
                 const imgGallery = document.getElementsByClassName('cssImageGallery')[0];
                 for (let i = 0; i < 10; i++) {
                     var randID = Math.floor(Math.random() * 86);
@@ -160,8 +160,9 @@ function loadPage(page) {
                 });
                 initCalendar(true);
                 initSnake();
+                displayTiles();
             }
-            if (urlFragment == 'image-generation') {
+            else if (urlFragment == 'image-generation') {
                 var generatedImage = document.getElementById('generated-image');
                 var width = document.getElementById('width');
                 var height = document.getElementById('height');
@@ -257,10 +258,10 @@ function loadPage(page) {
                     generatedImage.style.aspectRatio = `${selectedRatioSplit[0]} / ${selectedRatioSplit[1]}`;
                 });*/
             }
-            if (urlFragment == 'threejs') {
+            else if (urlFragment == 'threejs') {
                 initThree();
             }
-            if (urlFragment == 'settings') {
+            else if (urlFragment == 'settings') {
                 if (document.getElementById('backgroundSelect').value.includes('color')) {
                     document.getElementsByClassName('colorPicker')[0].style.display = 'block';
                     colorPicker();
@@ -706,6 +707,44 @@ function changeDirection(event) {
 }
 
 document.addEventListener('keydown', changeDirection);
+//#endregion
+
+
+
+
+//#region Google sheets data to design
+async function fetchData() {
+    const response = await fetch('https://docs.google.com/spreadsheets/d/1zBpsrdUATURiaGNlYA5HARufxfV7wHWR2xjB8X5Z6fk/gviz/tq?tqx=out:json&gid=1614622755');
+    const text = await response.text();
+    const json = JSON.parse(text.substr(47).slice(0, -2));
+    return json.table;
+}
+
+function createTile(item, titles) {
+    const tile = document.createElement('div');
+    tile.className = 'tile';
+    tile.innerHTML = `
+        ${item.c[titles.indexOf('Bild')].v ? `<img src="${item.c[titles.indexOf('Bild')].v}" alt="${item.c[titles.indexOf('Name')].v}">` : ''}
+        <h3>${item.c[titles.indexOf('Name')].v}</h3>
+        ${item.c[titles.indexOf('Beschreibung')] ? `<span>${item.c[titles.indexOf('Beschreibung')].v}</span>` : ''}
+        <div>
+            <strong>${item.c[titles.indexOf('Preis')].v == 0.0 ? 'Preis nach Absprache' : `${item.c[titles.indexOf('Preis')].f} pro Woche`}</strong>
+            <div>${item.c[titles.indexOf('Verfügbar')].v} von ${item.c[titles.indexOf('Bestand')].v}<br>verfügbar</div>
+        </div>
+    `;
+    return tile;
+}
+
+async function displayTiles() {
+    const data = await fetchData();
+    const titles = data.cols.map(col => col.label);
+    const rows = data.rows;
+    const tileList = document.getElementById('tile-list');
+    rows.forEach(item => {
+        const tile = createTile(item, titles);
+        tileList.appendChild(tile);
+    });
+}
 //#endregion
 
 
