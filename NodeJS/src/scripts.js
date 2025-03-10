@@ -714,9 +714,10 @@ document.addEventListener('keydown', changeDirection);
 
 //#region Google sheets data to design
 async function fetchData() {
-    const response = await fetch('https://docs.google.com/spreadsheets/d/1zBpsrdUATURiaGNlYA5HARufxfV7wHWR2xjB8X5Z6fk/gviz/tq?tqx=out:json&gid=1614622755');
+    const response = await fetch('https://docs.google.com/spreadsheets/d/1zBpsrdUATURiaGNlYA5HARufxfV7wHWR2xjB8X5Z6fk/gviz/tq?tqx=out:json&gid=2025466131');
     const text = await response.text();
     const json = JSON.parse(text.substr(47).slice(0, -2));
+    console.log(json.table);
     return json.table;
 }
 
@@ -724,7 +725,7 @@ function createTile(item, titles) {
     const tile = document.createElement('div');
     tile.className = 'tile';
     tile.innerHTML = `
-        ${item.c[titles.indexOf('Bild')].v ? `<img src="${item.c[titles.indexOf('Bild')].v}" alt="${item.c[titles.indexOf('Name')].v}">` : ''}
+        ${item.c[titles.indexOf('Bild (URL)')].v ? `<img src="${item.c[titles.indexOf('Bild (URL)')].v}" alt="${item.c[titles.indexOf('Name')].v}">` : ''}
         <h3>${item.c[titles.indexOf('Name')].v}</h3>
         ${item.c[titles.indexOf('Beschreibung')] ? `<span>${item.c[titles.indexOf('Beschreibung')].v}</span>` : ''}
         <div>
@@ -737,7 +738,7 @@ function createTile(item, titles) {
 
 async function displayTiles() {
     const data = await fetchData();
-    const titles = data.cols.map(col => col.label);
+    const titles = data.cols.map(col => col.label !== "" ? col.label : null).filter(Boolean);
     const rows = data.rows;
     const tileList = document.getElementById('tile-list');
     rows.forEach(item => {

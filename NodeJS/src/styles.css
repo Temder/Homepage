@@ -601,7 +601,7 @@ nav {
     background-color: var(--color-header-bg-1);
     z-index: 1;
 }
-nav:before {
+/*nav:before {
     position: absolute;
     content: "";
     width: 100vw;
@@ -610,7 +610,7 @@ nav:before {
     left: 0;
     background-color: var(--color-main-bg-custom, var(--color-main-bg));
     z-index: 2;
-}
+}*/
 nav a {
     display: inline-block;
     position: relative;
@@ -637,6 +637,7 @@ nav a:hover:after,
     width: var(--nav-border-radius);
     height: var(--nav-border-radius);
     bottom: 0;
+    clip-path: content-box;
 }
 nav a:before {
     left: calc(var(--nav-border-radius) * -1);
